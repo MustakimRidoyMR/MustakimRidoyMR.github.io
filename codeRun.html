@@ -172,33 +172,50 @@
             line-height: 1.6;
         }
 
-   .preview-container {
-    background-color: white;
-    color: black;
-    border-radius: 0.5rem;
-    overflow: auto; /* changed from overflow: hidden */
-    height: 100%;
-    width: 100%;
-    padding: 1rem;
-   }
-         #preview-section {
-    height: 100%;
-    overflow: auto;
-    position: relative;
-}
+        /* Fixed preview container */
+        .preview-container {
+            background-color: white;
+            color: black;
+            border-radius: 0.5rem;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
 
-#preview-wrapper {
-    min-height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-         #output-display {
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    padding: 1rem;
-}
+        #preview-section {
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #preview-wrapper {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+        }
+
+        #output-display {
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            padding: 1rem;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* Make iframe full sized within the preview container */
+        #preview-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
 
         .bouncy {
             animation: bounce 0.6s;
@@ -282,6 +299,7 @@
             border: 8px solid #333;
             border-radius: 24px;
             transition: all 0.3s;
+            overflow: hidden;
         }
 
         .device-frame.mobile {
@@ -628,18 +646,16 @@
                         </div>
                     </div>
                     
-                    <!-- Preview Area -->
+                    <!-- Preview Area with Improved Scrolling -->
                     <div class="flex-grow overflow-hidden">
                         <!-- Preview Section -->
-                        <div id="preview-section" class="h-full p-4 overflow-auto">
-                            <div class="flex justify-center items-center h-full">
-                                <div id="preview-wrapper" class="h-full w-full flex justify-center">
-                                    <div id="preview-container" class="preview-container w-full">
-                                        <div id="output-display" class="w-full h-full flex justify-center items-center text-gray-400">
-                                            <div class="text-center">
-                                                <i class="fas fa-code text-5xl mb-4 text-indigo-200 dark:text-indigo-800"></i>
-                                                <p>Enter some code and click "Run" to see the preview</p>
-                                            </div>
+                        <div id="preview-section" class="h-full">
+                            <div id="preview-wrapper">
+                                <div id="preview-container" class="preview-container">
+                                    <div id="output-display" class="w-full h-full flex justify-center items-center text-gray-400">
+                                        <div class="text-center">
+                                            <i class="fas fa-code text-5xl mb-4 text-indigo-200 dark:text-indigo-800"></i>
+                                            <p>Enter some code and click "Run" to see the preview</p>
                                         </div>
                                     </div>
                                 </div>
@@ -1081,20 +1097,19 @@
                 <div class="mb-4">
                     <div class="flex justify-between items-center mb-4">
                         <p class="text-sm text-gray-600 dark:text-gray-400">
-                            Choose your AI provider:
+                            AI provider:
                         </p>
                         <div class="flex items-center">
-                            <span class="text-sm text-gray-600 dark:text-gray-400 mr-2">Custom API</span>
-                            <label class="ai-provider-switch">
-                                <input type="checkbox" id="ai-provider-toggle">
+                            <span class="text-sm text-gray-600 dark:text-gray-400 mr-2">MR Bot API</span>
+                            <label class="ai-provider-switch hidden">
+                                <input type="checkbox" id="ai-provider-toggle" disabled>
                                 <span class="slider"></span>
                             </label>
-                            <span class="text-sm text-gray-600 dark:text-gray-400 ml-2">Poe AI</span>
                         </div>
                     </div>
                     <div id="custom-ai-container" class="mb-4">
                         <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                            Using MR Bot at <span class="font-mono text-xs bg-gray-100 dark:bg-gray-700 px-1 py-0.5 rounded">https://example.ai</span>
+                            Using MR Bot API at <span class="font-mono text-xs bg-gray-100 dark:bg-gray-700 px-1 py-0.5 rounded">https://api.mrbot.com</span>
                         </p>
                     </div>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">
@@ -1157,8 +1172,7 @@
         let currentFile = 'index.html';
         let autoRefresh = false;
         let autoRefreshTimer = null;
-        let useCustomAI = true;
-        let customAIEndpoint = 'https://example.ai';
+        let mrBotApiEndpoint = 'https://api.mrbot.com';
         
         // Template definitions
         const templates = {
@@ -2760,15 +2774,6 @@
             // AI Helper button
             document.getElementById('ai-helper-btn').addEventListener('click', () => {
                 document.getElementById('ai-helper-modal').classList.remove('hidden');
-                
-                // Update AI provider display
-                updateAIProviderDisplay();
-            });
-            
-            // AI Provider toggle
-            document.getElementById('ai-provider-toggle').addEventListener('change', (e) => {
-                useCustomAI = !e.target.checked;
-                updateAIProviderDisplay();
             });
             
             // Close AI Helper modal button
@@ -2788,24 +2793,14 @@
             document.getElementById('send-to-ai-btn').addEventListener('click', () => {
                 const prompt = document.getElementById('ai-prompt').value.trim();
                 if (prompt) {
-                    showToast('Sending request to AI...', 'info');
+                    showToast('Sending request to MR Bot...', 'info');
                     document.getElementById('ai-helper-modal').classList.add('hidden');
                     
                     const currentCode = document.getElementById('code-editor').value;
                     const language = files[currentFile].language;
                     
-                    if (useCustomAI) {
-                        // Use custom AI API
-                        sendToCustomAI(prompt, currentCode, language);
-                    } else if (window.Poe) {
-                        // Use Poe AI API
-                        sendToPoeAI(prompt, currentCode, language);
-                    } else {
-                        // Fallback if no AI API is available
-                        setTimeout(() => {
-                            showToast("AI Helper not available in this environment", "error");
-                        }, 1500);
-                    }
+                    // Use MR Bot API
+                    sendToMrBotAPI(prompt, currentCode, language);
                 } else {
                     showToast('Please enter a prompt for the AI', 'error');
                 }
@@ -2921,36 +2916,24 @@
             });
         }
 
-        function updateAIProviderDisplay() {
-            const aiProviderInfo = document.getElementById('ai-provider-info');
-            const customAIContainer = document.getElementById('custom-ai-container');
-            
-            if (useCustomAI) {
-                aiProviderInfo.textContent = 'Using MR Bot to analyze code';
-                customAIContainer.classList.remove('hidden');
-            } else {
-                aiProviderInfo.textContent = 'Using Poe AI to analyze code';
-                customAIContainer.classList.add('hidden');
-            }
-        }
-
-        function sendToCustomAI(prompt, code, language) {
-            // Simulate API call to custom AI
-            showToast('Sending to MR Bot at ' + customAIEndpoint, 'info');
-            
+        function sendToMrBotAPI(prompt, code, language) {
             // Show loading state
             const loadingToastId = showToast('Processing with MR Bot...', 'info', 30000);
             
-            // Simulated API call
+            // We'll simulate the API call since we can't make actual network requests
+            console.info('💬 Sending to MR Bot API');
+            console.log(`Endpoint: ${mrBotApiEndpoint}`);
+            console.log(`Language: ${language}`);
+            console.log(`Prompt: ${prompt}`);
+            
+            // Switch to console and show the "response"
+            document.querySelector('.code-tab[data-target="console-section"]').click();
+            
+            // Simulate API response with a delay
             setTimeout(() => {
                 // Remove the loading toast
                 removeToast(loadingToastId);
-                
-                // Show success toast
                 showToast('Received response from MR Bot', 'success');
-                
-                // Switch to console and show the "response"
-                document.querySelector('.code-tab[data-target="console-section"]').click();
                 
                 console.info('💬 MR Bot Response:');
                 console.log('Analyzing your ' + language + ' code...');
@@ -2980,58 +2963,6 @@
                     console.log('3. Optimize for mobile devices');
                 }
             }, 2000);
-        }
-
-        function sendToPoeAI(prompt, code, language) {
-            // Register handler for AI response
-            window.Poe.registerHandler("ai-code-helper", (result) => {
-                const msg = result.responses[0];
-                
-                if (msg.status === "error") {
-                    showToast("Error: " + msg.statusText, "error");
-                } else if (msg.status === "complete") {
-                    showToast("AI assistance is ready!", "success");
-                    // Process the AI response
-                    const content = msg.content;
-                    
-                    // Try to extract code blocks from the markdown
-                    const codePattern = /```(?:\w+)?\n([\s\S]*?)```/g;
-                    let match;
-                    let foundCode = false;
-                    
-                    while ((match = codePattern.exec(content)) !== null) {
-                        // Found code block, use the first one
-                        document.getElementById('code-editor').value = match[1].trim();
-                        saveCurrentFile();
-                        updateCharCount();
-                        updateLineCount();
-                        updateLineNumbers();
-                        highlightCurrentLine();
-                        runCode();
-                        foundCode = true;
-                        break;
-                    }
-                    
-                    if (!foundCode) {
-                        // No code blocks found, show the complete response
-                        showToast("AI provided a response without code. Check the console.", "info");
-                        console.info("AI Response:", content);
-                    }
-                }
-            });
-            
-            try {
-                window.Poe.sendUserMessage(
-                    `@Claude-3.7-Sonnet Help me with this ${language} code. ${prompt}\n\nHere's my current code:\n\`\`\`${language}\n${code}\n\`\`\`\n\nIf you make changes to the code, please include the full updated code in a code block.`,
-                    {
-                        handler: "ai-code-helper",
-                        stream: false,
-                        openChat: false
-                    }
-                );
-            } catch (err) {
-                showToast("Error connecting to AI: " + err.message, "error");
-            }
         }
 
         function loadTemplate(templateName) {
@@ -3105,11 +3036,18 @@
         }
 
         function runCode() {
-            const previewContainer = document.getElementById('output-display');
+            const previewSection = document.getElementById('preview-section');
+            const previewContainer = document.getElementById('preview-container');
+            const outputDisplay = document.getElementById('output-display');
             const previewLoading = document.getElementById('preview-loading');
             const code = document.getElementById('code-editor').value;
 
             previewLoading.classList.remove('hidden');
+            
+            // Clear any previous iframe
+            if (document.getElementById('preview-frame')) {
+                document.getElementById('preview-frame').remove();
+            }
             
             setTimeout(() => {
                 try {
@@ -3118,11 +3056,28 @@
                     
                     // If we're running HTML, we need to set up the preview container
                     if (files[currentFile].language === 'html') {
-                        previewContainer.innerHTML = code;
+                        // Create an iframe for isolated preview environment
+                        const iframe = document.createElement('iframe');
+                        iframe.id = 'preview-frame';
+                        iframe.className = 'w-full h-full border-0';
+                        iframe.sandbox = 'allow-scripts allow-same-origin allow-forms';
+                        
+                        // Clear the output display and add the iframe
+                        outputDisplay.innerHTML = '';
+                        outputDisplay.appendChild(iframe);
+                        
+                        // Set content to the iframe
+                        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                        iframeDoc.open();
+                        iframeDoc.write(code);
+                        iframeDoc.close();
+                        
+                        // Adjust container to match input editor style
+                        outputDisplay.style.fontFamily = "'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', monospace";
                     } else if (files[currentFile].language === 'css') {
-                        previewContainer.innerHTML = `<style>${code}</style><div class="p-4 h-full overflow-auto"><div class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg"><h3 class="text-lg font-medium mb-2">CSS Preview</h3><p class="mb-3">This CSS is applied to this container:</p><div class="grid grid-cols-2 gap-4 mb-3"><div class="p-4 border border-gray-200 rounded bg-white">Element 1</div><div class="p-4 border border-gray-200 rounded bg-white">Element 2</div></div><div class="p-4 border border-gray-200 rounded bg-white">Element 3</div></div></div>`;
+                        outputDisplay.innerHTML = `<style>${code}</style><div class="p-4 h-full overflow-auto"><div class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg"><h3 class="text-lg font-medium mb-2">CSS Preview</h3><p class="mb-3">This CSS is applied to this container:</p><div class="grid grid-cols-2 gap-4 mb-3"><div class="p-4 border border-gray-200 rounded bg-white">Element 1</div><div class="p-4 border border-gray-200 rounded bg-white">Element 2</div></div><div class="p-4 border border-gray-200 rounded bg-white">Element 3</div></div></div>`;
                     } else if (files[currentFile].language === 'javascript' || files[currentFile].language === 'js') {
-                        previewContainer.innerHTML = '<div class="p-4 h-full overflow-auto"><div class="mb-3 text-sm"><i class="fas fa-info-circle mr-2 text-blue-500"></i>JavaScript output appears in the Console tab</div><div id="js-output" class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-900 text-sm font-mono h-64 overflow-auto"></div></div>';
+                        outputDisplay.innerHTML = '<div class="p-4 h-full overflow-auto"><div class="mb-3 text-sm"><i class="fas fa-info-circle mr-2 text-blue-500"></i>JavaScript output appears in the Console tab</div><div id="js-output" class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-900 text-sm font-mono h-64 overflow-auto"></div></div>';
                         
                         // Create a safe eval environment
                         try {
@@ -3153,18 +3108,18 @@
                             highlightErrorLine(error);
                         }
                     } else if (files[currentFile].language === 'typescript' || files[currentFile].language === 'ts') {
-                        previewContainer.innerHTML = '<div class="p-4 h-full overflow-auto"><div class="mb-3 text-yellow-600 dark:text-yellow-400 p-3 bg-yellow-50 dark:bg-yellow-900/30 rounded-lg"><i class="fas fa-exclamation-triangle mr-2"></i>TypeScript execution requires transpilation to JavaScript first.</div><div class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-900 text-sm font-mono h-64 overflow-auto"><pre>' + escapeHTML(code) + '</pre></div></div>';
+                        outputDisplay.innerHTML = '<div class="p-4 h-full overflow-auto"><div class="mb-3 text-yellow-600 dark:text-yellow-400 p-3 bg-yellow-50 dark:bg-yellow-900/30 rounded-lg"><i class="fas fa-exclamation-triangle mr-2"></i>TypeScript execution requires transpilation to JavaScript first.</div><div class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-900 text-sm font-mono h-64 overflow-auto"><pre>' + escapeHTML(code) + '</pre></div></div>';
                     } else if (files[currentFile].language === 'python' || files[currentFile].language === 'py') {
-                        previewContainer.innerHTML = '<div class="p-4 h-full overflow-auto"><div class="mb-3 text-yellow-600 dark:text-yellow-400 p-3 bg-yellow-50 dark:bg-yellow-900/30 rounded-lg"><i class="fas fa-exclamation-triangle mr-2"></i>Python execution is not supported in the browser environment.</div><div class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-900 text-sm font-mono h-64 overflow-auto"><pre>' + escapeHTML(code) + '</pre></div></div>';
+                        outputDisplay.innerHTML = '<div class="p-4 h-full overflow-auto"><div class="mb-3 text-yellow-600 dark:text-yellow-400 p-3 bg-yellow-50 dark:bg-yellow-900/30 rounded-lg"><i class="fas fa-exclamation-triangle mr-2"></i>Python execution is not supported in the browser environment.</div><div class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-900 text-sm font-mono h-64 overflow-auto"><pre>' + escapeHTML(code) + '</pre></div></div>';
                     } else if (files[currentFile].language === 'xml') {
-                        previewContainer.innerHTML = `<div class="p-4 h-full overflow-auto"><pre class="p-4 font-mono text-sm bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg overflow-auto">${escapeHTML(code)}</pre></div>`;
+                        outputDisplay.innerHTML = `<div class="p-4 h-full overflow-auto"><pre class="p-4 font-mono text-sm bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg overflow-auto">${escapeHTML(code)}</pre></div>`;
                     } else if (files[currentFile].language === 'json') {
                         try {
                             const jsonObj = JSON.parse(code);
                             const formattedJson = JSON.stringify(jsonObj, null, 2);
-                            previewContainer.innerHTML = `<div class="p-4 h-full overflow-auto"><pre class="p-4 font-mono text-sm bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg overflow-auto">${escapeHTML(formattedJson)}</pre></div>`;
+                            outputDisplay.innerHTML = `<div class="p-4 h-full overflow-auto"><pre class="p-4 font-mono text-sm bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg overflow-auto">${escapeHTML(formattedJson)}</pre></div>`;
                         } catch (error) {
-                            previewContainer.innerHTML = `<div class="p-4 h-full overflow-auto"><div class="mb-3 text-red-600 dark:text-red-400 p-3 bg-red-50 dark:bg-red-900/30 rounded-lg"><i class="fas fa-exclamation-circle mr-2"></i>JSON Parse Error: ${error.message}</div><pre class="p-4 font-mono text-sm bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg overflow-auto">${escapeHTML(code)}</pre></div>`;
+                            outputDisplay.innerHTML = `<div class="p-4 h-full overflow-auto"><div class="mb-3 text-red-600 dark:text-red-400 p-3 bg-red-50 dark:bg-red-900/30 rounded-lg"><i class="fas fa-exclamation-circle mr-2"></i>JSON Parse Error: ${error.message}</div><pre class="p-4 font-mono text-sm bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg overflow-auto">${escapeHTML(code)}</pre></div>`;
                         }
                     }
                     
@@ -3172,7 +3127,7 @@
                     updateSourceView();
                     
                 } catch (error) {
-                    previewContainer.innerHTML = `<div class="text-red-500 p-4 bg-red-50 dark:bg-red-900/20 rounded-lg"><i class="fas fa-exclamation-circle mr-2"></i>Error: ${error.message}</div>`;
+                    outputDisplay.innerHTML = `<div class="text-red-500 p-4 bg-red-50 dark:bg-red-900/20 rounded-lg"><i class="fas fa-exclamation-circle mr-2"></i>Error: ${error.message}</div>`;
                     console.error('Preview Error:', error.message);
                 }
                 
@@ -3191,20 +3146,16 @@
         }
 
         function updateDevicePreview(device) {
-            const previewWrapper = document.getElementById('preview-wrapper');
             const previewContainer = document.getElementById('preview-container');
             
             // Remove any existing device frame classes
             previewContainer.classList.remove('device-frame', 'mobile', 'tablet');
-            previewWrapper.classList.remove('items-center');
             
             // Apply the appropriate device frame
             if (device === 'mobile') {
                 previewContainer.classList.add('device-frame', 'mobile');
-                previewWrapper.classList.add('items-center');
             } else if (device === 'tablet') {
                 previewContainer.classList.add('device-frame', 'tablet');
-                previewWrapper.classList.add('items-center');
             } else if (device === 'desktop') {
                 // Desktop just uses max width
                 previewContainer.style.maxWidth = '1200px';
