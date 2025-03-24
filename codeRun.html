@@ -172,13 +172,33 @@
             line-height: 1.6;
         }
 
-        .preview-container {
-            background-color: white;
-            color: black;
-            border-radius: 0.5rem;
-            overflow: hidden;
-            height: 100%;
-        }
+   .preview-container {
+    background-color: white;
+    color: black;
+    border-radius: 0.5rem;
+    overflow: auto; /* changed from overflow: hidden */
+    height: 100%;
+    width: 100%;
+    padding: 1rem;
+   }
+         #preview-section {
+    height: 100%;
+    overflow: auto;
+    position: relative;
+}
+
+#preview-wrapper {
+    min-height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+         #output-display {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding: 1rem;
+}
 
         .bouncy {
             animation: bounce 0.6s;
@@ -1074,7 +1094,7 @@
                     </div>
                     <div id="custom-ai-container" class="mb-4">
                         <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                            Using your custom AI API at <span class="font-mono text-xs bg-gray-100 dark:bg-gray-700 px-1 py-0.5 rounded">https://example.ai</span>
+                            Using MR Bot at <span class="font-mono text-xs bg-gray-100 dark:bg-gray-700 px-1 py-0.5 rounded">https://example.ai</span>
                         </p>
                     </div>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">
@@ -1098,7 +1118,7 @@
                 </div>
                 <div class="flex justify-between items-center">
                     <div class="text-xs text-gray-500 dark:text-gray-400">
-                        <i class="fas fa-info-circle mr-1"></i> <span id="ai-provider-info">Using your custom AI to analyze code</span>
+                        <i class="fas fa-info-circle mr-1"></i> <span id="ai-provider-info">Using MR Bot to analyze code</span>
                     </div>
                     <button id="send-to-ai-btn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-sm font-medium flex items-center">
                         <i class="fas fa-paper-plane mr-2"></i>
@@ -2906,7 +2926,7 @@
             const customAIContainer = document.getElementById('custom-ai-container');
             
             if (useCustomAI) {
-                aiProviderInfo.textContent = 'Using your custom AI to analyze code';
+                aiProviderInfo.textContent = 'Using MR Bot to analyze code';
                 customAIContainer.classList.remove('hidden');
             } else {
                 aiProviderInfo.textContent = 'Using Poe AI to analyze code';
@@ -2916,10 +2936,10 @@
 
         function sendToCustomAI(prompt, code, language) {
             // Simulate API call to custom AI
-            showToast('Sending to custom AI at ' + customAIEndpoint, 'info');
+            showToast('Sending to MR Bot at ' + customAIEndpoint, 'info');
             
             // Show loading state
-            const loadingToastId = showToast('Processing with your Custom AI...', 'info', 30000);
+            const loadingToastId = showToast('Processing with MR Bot...', 'info', 30000);
             
             // Simulated API call
             setTimeout(() => {
@@ -2927,12 +2947,12 @@
                 removeToast(loadingToastId);
                 
                 // Show success toast
-                showToast('Received response from Custom AI', 'success');
+                showToast('Received response from MR Bot', 'success');
                 
                 // Switch to console and show the "response"
                 document.querySelector('.code-tab[data-target="console-section"]').click();
                 
-                console.info('💬 Custom AI Response:');
+                console.info('💬 MR Bot Response:');
                 console.log('Analyzing your ' + language + ' code...');
                 
                 // Simulate different responses based on the prompt
