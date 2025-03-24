@@ -3,7 +3,15 @@
 <head>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1158797123946133"
      crossorigin="anonymous"></script>
-    <script src="background-changer.js"></script>
+    <script src="background-image-changer.js"></script>
+<script>
+    // Initialize background when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        checkBackgroundUpdate();
+        // Check every hour for updates
+        setInterval(checkBackgroundUpdate, 1000 * 60 * 60);
+    });
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ridoy's Portfolio</title>
@@ -15,16 +23,17 @@
         }
 
 body {
-    /* Default background properties until the JavaScript loads */
-    background: linear-gradient(45deg, #2193b0, #6dd5ed);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    transition: background-image 1s ease-in-out;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+    transition: background-image 0.5s ease-in-out;
 }
 
-/* Add overlay for better text readability */
+/* Optional: Add a very light overlay for better text readability */
 body::before {
     content: '';
     position: fixed;
@@ -32,7 +41,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.1);
     z-index: -1;
 }
 
