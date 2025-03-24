@@ -1,7 +1,9 @@
 // Predefined background image URLs
 const backgroundImages = [
     'A futuristic technology-themed promotional image for MR Bot Company launching a revolutionary new product. The image should include a sleek, high-tech.webp',
-    'A professional and modern promotional image announcing global expansion. The image should feature a split view of two iconic international cityscapes,.webp'
+    'A professional and modern promotional image announcing global expansion. The image should feature a split view of two iconic international cityscapes,.webp',
+    'image1.jpg',
+    'image2.jpg'
 ];
 
 // Function to update background
