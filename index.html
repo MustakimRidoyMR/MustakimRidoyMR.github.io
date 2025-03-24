@@ -3,6 +3,7 @@
 <head>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1158797123946133"
      crossorigin="anonymous"></script>
+    <script src="background-changer.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ridoy's Portfolio</title>
@@ -13,12 +14,27 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            background: #f0f2f5;
-            color: #333;
-        }
+body {
+    /* Default background properties until the JavaScript loads */
+    background: linear-gradient(45deg, #2193b0, #6dd5ed);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    transition: background-image 1s ease-in-out;
+}
+
+/* Add overlay for better text readability */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: -1;
+}
 
         .container {
             max-width: 1200px;
@@ -110,11 +126,33 @@
                 <p>A sophisticated bot with advanced features and functionality.</p>
                 <a href="/MR-Bot/" class="project-link">Talk</a>
             </div>
+            
+            <p>Applications</p>
+            
             <div class="project-card">
                 <h2>Amazon Appstore</h2>
                 <p>Android Application and Games in Amazon Appstore</p>
                 <a href="https://amzn.to/3NOG3er" class="project-link">Install</a>
             </div>
+            
+            <p>Tools</p>
+            
+            <div class="project-card">
+                <h2>Editing Tools</h2>
+                <p>advanced editor tools with have a colorful animated UI and multiple editing options. This will include features for editing tools, and more.</p>
+                <a href="EditingTools.html" class="project-link">Coming soon</a>
+            </div>
+             <div class="project-card">
+                <h2>Developer tools</h2>
+                <p>Here advanced Developer tools with have a colorful animated UI and multiple necessary editing options.</p>
+                <a href="DeveloperTools.html" class="project-link">Coming soon</a>
+            </div>
+            <div class="project-card">
+                <h2>AI Tools</h2>
+                <p>advanced image editor with have a colorful animated UI and multiple editing options. This will include features for image manipulation, filters, drawing tools, and more.</p>
+                <a href="AiTools.html" class="project-link">Training AI... Please Wait</a>
+            </div>
+            <p>Others</p>
             <div class="project-card">
                 <h2>Image Editor</h2>
                 <p>advanced image editor with have a colorful animated UI and multiple editing options. This will include features for image manipulation, filters, drawing tools, and more.</p>
