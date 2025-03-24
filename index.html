@@ -111,6 +111,36 @@
             margin-top: 40px;
             color: #666;
         }
+
+        /* Add this new CSS */
+.section-label {
+    position: relative;
+    width: 100%;
+    text-align: right;
+    padding: 10px 20px;
+    margin: 20px 0;
+    font-weight: bold;
+    color: #666;
+    border-bottom: 2px solid #1a73e8;
+}
+
+.section-label::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    right: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to left, #1a73e8, transparent);
+}
+
+/* Update projects grid */
+.projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
     </style>
 </head>
 <body>
@@ -129,7 +159,7 @@
                 <a href="/MR-Bot/" class="project-link">Talk</a>
             </div>
             
-            <p>Applications</p>
+            <div class="section-label">Applications</div>
             
             <div class="project-card">
                 <h2>Amazon Appstore</h2>
@@ -137,7 +167,7 @@
                 <a href="https://amzn.to/3NOG3er" class="project-link">Install</a>
             </div>
             
-            <p>Tools</p>
+            <div class="section-label">Tools</div>
             
             <div class="project-card">
                 <h2>Editing Tools</h2>
@@ -154,7 +184,9 @@
                 <p>advanced image editor with have a colorful animated UI and multiple editing options. This will include features for image manipulation, filters, drawing tools, and more.</p>
                 <a href="/MR-Bot/locked.html" class="project-link">Training AI... Please Wait</a>
             </div>
-            <p>Others</p>
+            
+            <div class="section-label">Others</div>
+            
             <div class="project-card">
                 <h2>Image Editor</h2>
                 <p>advanced image editor with have a colorful animated UI and multiple editing options. This will include features for image manipulation, filters, drawing tools, and more.</p>
