@@ -6,7 +6,9 @@ const backgroundImages = [
     'https://www.skyweaver.net/images/media/wallpapers/wallpaper1.jpg',
     'https://e0.pxfuel.com/wallpapers/43/473/desktop-wallpaper-anime-nature.jpg',
     'https://wallpapercrafter.com/th800/411414-Anime-Landscape-Phone-Wallpaper.jpg',
-    'https://i.pinimg.com/736x/a3/a7/51/a3a7511380de5ac4e1d5bb3c0d278146.jpg'
+    'https://i.pinimg.com/736x/a3/a7/51/a3a7511380de5ac4e1d5bb3c0d278146.jpg',
+    'wallpaper1.jpg',
+    'wallpaper2.jpg'
 ];
 
 // Function to update background
