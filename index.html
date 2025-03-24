@@ -17,34 +17,41 @@
     <title>Ridoy's Portfolio</title>
     <style>
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    background-size: cover !important;
-    background-position: center center !important;
-    background-repeat: no-repeat !important;
-    background-attachment: fixed !important;
-    transition: background-image 0.5s ease-in-out;
-}
+    body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background-size: cover !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+        background-attachment: fixed !important;
+        transition: background-image 0.5s ease-in-out;
+        position: relative;
+    }
 
-/* Optional: Add a very light overlay for better text readability */
-/*body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.1);
-    z-index: -1;
-}*/
+    /* Add a semi-transparent overlay for better text readability */
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 0;
+    }
 
+    /* Make sure all content appears above the overlay */
+    .container, header, footer {
+        position: relative;
+        z-index: 1;
+    }
+/*
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -58,7 +65,7 @@ body {
             text-align: center;
             margin-bottom: 40px;
         }
-
+*/
         h1 {
             font-size: 2.5em;
             margin-bottom: 20px;
