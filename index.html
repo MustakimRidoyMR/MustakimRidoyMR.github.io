@@ -7,149 +7,449 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ridoy's Portfolio</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.9.1/dist/gsap.min.js"></script>
     <style>
+        :root {
+            --primary-color: #0d47a1;
+            --secondary-color: #005c1e;
+            --accent-color: #1a73e8;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --dark-overlay: rgba(0, 0, 0, 0.3);
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            --hover-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            --transition-speed: 0.4s;
+        }
+
         * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
 
-    body {
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-        background-size: cover !important;
-        background-position: center !important;
-        background-repeat: no-repeat !important;
-        background-attachment: fixed !important;
-        transition: background-image 0.5s ease-in-out;
-        position: relative;
-    }
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+            background-attachment: fixed !important;
+            transition: background-image 0.5s ease-in-out;
+            position: relative;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
 
-    /* Add a semi-transparent overlay for better text readability *//*
-    body::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 0;
-    }*/
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(77, 195, 255, 0.8);
+            pointer-events: none;
+            mix-blend-mode: difference;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease;
+            box-shadow: 0 0 15px rgba(77, 195, 255, 0.8),
+                        0 0 30px rgba(77, 195, 255, 0.6),
+                        0 0 45px rgba(77, 195, 255, 0.4);
+        }
+
+        .cursor-follower {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: transform 0.15s ease, width 0.2s ease, height 0.2s ease;
+        }
+
+        #background-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
         }
 
         header {
-            background: linear-gradient(135deg, #0d47a1,#005c1e);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             padding: 25px 0;
             text-align: center;
             margin-bottom: 40px;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, #0d47a1, transparent, #005c1e, transparent);
+            background-size: 400% 400%;
+            animation: headerGradient 15s ease infinite;
+            z-index: -1;
+            filter: blur(10px);
+        }
+
+        @keyframes headerGradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         h1 {
-            font-size: 2.5em;
+            font-size: 3.5em;
             margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            animation: fadeInDown 1s ease;
+            font-weight: 700;
+            letter-spacing: 1px;
         }
 
         .subtitle {
-            font-size: 1.2em;
+            font-size: 1.4em;
             opacity: 0.9;
+            animation: fadeIn 1.5s ease;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
         }
 
         .projects {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            gap: 30px;
             padding: 20px;
+            perspective: 1000px;
         }
 
         .project-card {
-            background: linear-gradient(135deg, white,#003c1e);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--card-shadow);
+            transition: all var(--transition-speed) ease;
+            transform-style: preserve-3d;
+            transform: translateZ(0) rotateX(0) rotateY(0);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+            z-index: 1;
+            transition: all 0.5s ease;
         }
 
         .project-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .project-card:hover::before {
+            opacity: 0;
         }
 
         .project-card h2 {
-            color: #1a73e8;
-            margin-bottom: 10px;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .project-card:hover h2 {
+            color: #0056b3;
         }
 
         .project-card p {
-            color: #666;
-            margin-bottom: 15px;
+            color: #444;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+            font-size: 1.05em;
+            line-height: 1.5;
         }
 
         .project-link {
             display: inline-block;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #0d47a1,green);
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             text-decoration: none;
-            border-radius: 5px;
-            transition: background 0.3s ease;
+            border-radius: 30px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s ease;
         }
 
         .project-link:hover {
-            background: green;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            background: var(--secondary-color);
+        }
+
+        .project-link:hover::before {
+            left: 100%;
+        }
+
+        .section-label {
+            position: relative;
+            width: 100%;
+            text-align: right;
+            padding: 15px 25px;
+            margin: 30px 0;
+            font-weight: bold;
+            color: #ffffff;
+            font-size: 1.3em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            animation: fadeInRight 0.8s ease forwards;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .section-label::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+        }
+
+        .section-label::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to left, var(--secondary-color), transparent);
         }
 
         footer {
             text-align: center;
-            padding: 20px;
-            margin-top: 40px;
-            color: #666;
+            padding: 30px;
+            margin-top: 60px;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
         }
 
-        /* Add this new CSS */
-.section-label {
-    position: relative;
-    width: 100%;
-    text-align: right;
-    padding: 10px 20px;
-    margin: 20px 0;
-    font-weight: bold;
-    color: #000000;
-    border-bottom: 2px solid #1a73e8;
-}
+        footer p {
+            font-size: 1.1em;
+            letter-spacing: 1px;
+        }
 
-.section-label::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    right: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(to left, green, transparent);
-}
+        /* Ad containers */
+        .ad-container {
+            margin: 40px auto;
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: 10px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+        }
 
-/* Update projects grid */
-.projects {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 20px;
-}
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .projects {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.5em;
+            }
+            
+            .subtitle {
+                font-size: 1.2em;
+            }
+            
+            .section-label {
+                font-size: 1.1em;
+                text-align: center;
+            }
+            
+            .project-card {
+                transform: none !important;
+            }
+            
+            .cursor, .cursor-follower {
+                display: none;
+            }
+            
+            * {
+                cursor: auto;
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --card-bg: rgba(30, 30, 30, 0.85);
+            }
+            
+            .project-card {
+                background: var(--card-bg);
+            }
+            
+            .project-card h2 {
+                color: #5D5CDE;
+            }
+            
+            .project-card p {
+                color: #cccccc;
+            }
+        }
     </style>
 </head>
 <body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    <canvas id="background-canvas"></canvas>
+    
     <header>
         <div class="container">
-            <h1>Welcome to My Portfolio</h1>
-            <div class="subtitle">Developer & Creative Designer</div>
+            <h1 class="animate__animated animate__fadeInDown">Welcome to My Portfolio</h1>
+            <div class="subtitle animate__animated animate__fadeIn animate__delay-1s">Developer & Creative Designer</div>
         </div>
     </header>
+
+    <!-- Ad container after header -->
+    <div class="container">
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1158797123946133"
+                 data-ad-slot="your-ad-slot"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
 
     <div class="container">
         <div class="projects">
@@ -160,22 +460,39 @@
             </div>
         </div>
     </div>
-            <div class="section-label">Applications</div>
+            
+    <div class="section-label">Applications</div>
     <div class="container">
         <div class="projects">
             <div class="project-card">
                 <h2>Amazon Appstore</h2>
                 <p>Our Android Application and Games in Amazon Appstore</p>
-                <a href="https://amzn.to/3NOG3er" class="project-link">Install</a>
+                <a href="https://amzn.to/3NOG3er" class="project-link" target="_blank">Install</a>
             </div>
          </div>
     </div>
-            <div class="section-label">Tools</div>
+    
+    <!-- Ad container between sections -->
+    <div class="container">
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1158797123946133"
+                 data-ad-slot="your-ad-slot"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+            
+    <div class="section-label">Tools</div>
     <div class="container">
         <div class="projects">
             <div class="project-card">
                 <h2>Editing Tools</h2>
-                <p>advanced editor tools with have a colorful animated UI and multiple editing options. This will include features for editing tools, and more.</p>
+                <p>Advanced editor tools with a colorful animated UI and multiple editing options. This will include features for editing tools, and more.</p>
                 <a href="/MR-Bot/locked.html" class="project-link">Coming soon</a>
             </div>
              <div class="project-card">
@@ -185,18 +502,19 @@
             </div>
             <div class="project-card">
                 <h2>AI Tools</h2>
-                <p>advanced image editor with have a colorful animated UI and multiple editing options. This will include features for image manipulation, filters, drawing tools, and more.</p>
+                <p>Advanced image editor with have a colorful animated UI and multiple editing options. This will include features for image manipulation, filters, drawing tools, and more.</p>
                 <a href="/MR-Bot/locked.html" class="project-link">Training AI... Please Wait(long time..)</a>
             </div>
          </div>
     </div>
-            <div class="section-label">Others</div>
+            
+    <div class="section-label">Others</div>
     <div class="container">
         <div class="projects">
             <div class="project-card">
                 <h2>Resources</h2>
                 <p>Download necessary resources files</p>
-                <a href="A futuristic technology-themed promotional image for MR Bot Company launching a revolutionary new product. The image should include a sleek, high-tech.webp" class="project-link" download="A futuristic technology-themed promotional image for MR Bot Company launching a revolutionary new product. The image should include a sleek, high-tech.webp">Download (this time only 1 files)</a>
+                <a href="A futuristic technology-themed promotional image for MR Bot Company launching a revolutionary new product. The image should include a sleek, high-tech.webp" class="project-link">Download (this time only 1 files)</a>
             </div>
             <div class="project-card">
                 <h2>Blogs | Ridoy's Tech Hub</h2>
@@ -205,16 +523,31 @@
             </div>
             <div class="project-card">
                 <h2>Image Editor</h2>
-                <p>advanced image editor with have a colorful animated UI and multiple editing options. This will include features for image manipulation, filters, drawing tools, and more.</p>
+                <p>Advanced image editor with have a colorful animated UI and multiple editing options. This will include features for image manipulation, filters, drawing tools, and more.</p>
                 <a href="imageEditor.html" class="project-link">Edit your image (this time only simple options)</a>
             </div>
             <!-- Add more project cards here -->
             <div class="project-card">
                 <h2>CodeCraft Pro</h2>
                 <h>v2.0</h>
-                <p>the page and code view to make it more professional for developers. The improvements will include a better code editor, more advanced UI, and expanded functionality.</p>
+                <p>The page and code view to make it more professional for developers. The improvements will include a better code editor, more advanced UI, and expanded functionality.</p>
                 <a href="codeRun.html" class="project-link">Run</a>
             </div>
+        </div>
+    </div>
+
+    <!-- Ad container before footer -->
+    <div class="container">
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1158797123946133"
+                 data-ad-slot="your-ad-slot"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
         </div>
     </div>
 
@@ -223,5 +556,157 @@
             <p>© 2025 Created by Ridoy. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        // Custom cursor effect
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+        
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, {
+                duration: 0.1,
+                x: e.clientX,
+                y: e.clientY
+            });
+            
+            gsap.to(cursorFollower, {
+                duration: 0.5,
+                x: e.clientX,
+                y: e.clientY
+            });
+        });
+        
+        // Expand cursor on links
+        document.querySelectorAll('a, button').forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                cursor.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+                cursorFollower.style.width = '50px';
+                cursorFollower.style.height = '50px';
+                cursorFollower.style.borderColor = 'rgba(29, 78, 216, 0.5)';
+            });
+            
+            link.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursor.style.backgroundColor = 'rgba(77, 195, 255, 0.8)';
+                cursorFollower.style.width = '40px';
+                cursorFollower.style.height = '40px';
+                cursorFollower.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+            });
+        });
+
+        // 3D Background with Three.js
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({
+            canvas: document.getElementById('background-canvas'),
+            alpha: true
+        });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        
+        // Create particles
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 5000;
+        
+        const posArray = new Float32Array(particlesCount * 3);
+        
+        for(let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 10;
+        }
+        
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.005,
+            color: 0xffffff,
+            transparent: true,
+            opacity: 0.8
+        });
+        
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+        
+        camera.position.z = 3;
+        
+        // Animation
+        const animate = () => {
+            requestAnimationFrame(animate);
+            particlesMesh.rotation.x += 0.0005;
+            particlesMesh.rotation.y += 0.0005;
+            renderer.render(scene, camera);
+        }
+        
+        animate();
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+        
+        // 3D card tilt effect
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                if (window.innerWidth > 768) { // Only on desktop
+                    const cardRect = card.getBoundingClientRect();
+                    const cardX = e.clientX - cardRect.left;
+                    const cardY = e.clientY - cardRect.top;
+                    
+                    const centerX = cardRect.width / 2;
+                    const centerY = cardRect.height / 2;
+                    
+                    const rotateX = (cardY - centerY) / 20;
+                    const rotateY = (centerX - cardX) / 20;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+                }
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
+            });
+        });
+        
+        // Animate cards on scroll
+        const cards = document.querySelectorAll('.project-card');
+        
+        const animateOnScroll = () => {
+            cards.forEach(card => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if (cardPosition < screenPosition) {
+                    card.style.opacity = "1";
+                    card.style.transform = "translateY(0)";
+                } else {
+                    card.style.opacity = "0";
+                    card.style.transform = "translateY(50px)";
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', animateOnScroll);
+        
+        // Initial animation
+        window.addEventListener('load', () => {
+            animateOnScroll();
+            
+            // Dark mode detection
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+            }
+            
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+                if (event.matches) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
