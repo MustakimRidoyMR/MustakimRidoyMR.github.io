@@ -7,7 +7,7 @@ async function getImagesFromGitHub() {
         const validImageExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
         
         // Fetch repository contents
-        const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${images}`);
+        const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${images}/`);
         const contents = await response.json();
         
         // Filter for image files
