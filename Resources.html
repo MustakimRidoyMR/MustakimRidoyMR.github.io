@@ -431,6 +431,64 @@
             transform: translate(-50%, -50%) scale(1);
             opacity: 1;
         }
+        
+        /* Comment Bottom Sheet styles */
+        .comment-bottom-sheet {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            transform: translateY(100%);
+            background-color: var(--bg-primary);
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.15);
+            max-height: 80vh;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            padding: 20px;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .comment-bottom-sheet.open {
+            transform: translateY(0);
+        }
+        
+        .comment-bottom-sheet-content {
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+        
+        .comment-sheet-handle {
+            width: 40px;
+            height: 5px;
+            background-color: var(--text-secondary);
+            border-radius: 3px;
+            margin: 0 auto 15px;
+            opacity: 0.5;
+        }
+        
+        .bottom-sheet-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .bottom-sheet-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        /* Make buttons have actual clickable hit areas */
+        .action-button {
+            position: relative;
+            z-index: 10;
+        }
     </style>
 </head>
 <body class="min-h-screen pb-20">
@@ -439,7 +497,7 @@
     <div class="blob" style="bottom: 10%; right: 10%;"></div>
     <div class="blob" style="top: 50%; left: 50%; animation-delay: 5s;"></div>
     
-    <!-- Enhanced mouse effects -->
+    <!-- Enhanced mouse effects (now with proper pointer-events) -->
     <div class="pointer-effect hidden md:block"></div>
     <div class="mouse-trailer hidden md:block"></div>
     
@@ -457,7 +515,7 @@
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 btn-hover-effect">
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors btn-hover-effect">
                         <i class="fas fa-moon text-xl dark:hidden" style="color: var(--text-primary);"></i>
                         <i class="fas fa-sun text-xl hidden dark:block" style="color: var(--text-primary);"></i>
                     </button>
@@ -632,28 +690,40 @@
         </div>
     </footer>
 
-    <!-- Comment Modal -->
-    <div id="comment-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4">
+    <!-- Comment Bottom Sheet -->
+    <div id="comment-bottom-sheet" class="comment-bottom-sheet">
+        <div class="comment-sheet-handle"></div>
+        <div class="comment-bottom-sheet-content">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-bold">Add Comment</h3>
-                <button id="close-comment-modal" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                <h3 class="text-xl font-bold">Comments</h3>
+                <button id="close-comment-sheet" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="mb-4">
-                <label for="comment-name" class="block mb-2 text-sm font-medium">Your Name</label>
-                <input type="text" id="comment-name" class="w-full px-3 py-2 border rounded-lg text-base bg-gray-100 dark:bg-gray-700 dark:border-gray-600" placeholder="Enter your name">
+            
+            <div id="comments-container" class="mb-6 space-y-3 max-h-[40vh] overflow-y-auto pb-4">
+                <!-- Comments will be loaded here -->
             </div>
-            <div class="mb-4">
-                <label for="comment-text" class="block mb-2 text-sm font-medium">Comment</label>
-                <textarea id="comment-text" rows="4" class="w-full px-3 py-2 border rounded-lg text-base bg-gray-100 dark:bg-gray-700 dark:border-gray-600" placeholder="Write your comment here..."></textarea>
+            
+            <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
+                <h4 class="font-semibold mb-4">Add Your Comment</h4>
+                <div class="mb-4">
+                    <label for="comment-name" class="block mb-2 text-sm font-medium">Your Name</label>
+                    <input type="text" id="comment-name" class="w-full px-3 py-2 border rounded-lg text-base bg-gray-100 dark:bg-gray-700 dark:border-gray-600" placeholder="Enter your name">
+                </div>
+                <div class="mb-4">
+                    <label for="comment-text" class="block mb-2 text-sm font-medium">Comment</label>
+                    <textarea id="comment-text" rows="3" class="w-full px-3 py-2 border rounded-lg text-base bg-gray-100 dark:bg-gray-700 dark:border-gray-600" placeholder="Write your comment here..."></textarea>
+                </div>
+                <button id="submit-comment" class="w-full btn-primary py-2 rounded-lg btn-hover-effect">
+                    Post Comment
+                </button>
             </div>
-            <button id="submit-comment" class="w-full btn-primary py-2 rounded-lg btn-hover-effect">
-                Post Comment
-            </button>
         </div>
     </div>
+
+    <!-- Bottom Sheet Overlay -->
+    <div id="bottom-sheet-overlay" class="bottom-sheet-overlay"></div>
 
     <!-- Share Modal -->
     <div id="share-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
@@ -719,57 +789,77 @@
             }
         });
 
-        // Enhanced mouse effects
+        // Enhanced mouse effects - modified to not interfere with button interactions
         const pointerEffect = document.querySelector('.pointer-effect');
         const mouseTrailer = document.querySelector('.mouse-trailer');
+        let isOverButton = false;
         
         if (window.innerWidth > 768) { // Only on desktop
             document.addEventListener('mousemove', (e) => {
-                // Small pointer
-                pointerEffect.style.left = `${e.clientX}px`;
-                pointerEffect.style.top = `${e.clientY}px`;
-                
-                // Trailing circle with delay
-                setTimeout(() => {
-                    mouseTrailer.style.left = `${e.clientX}px`;
-                    mouseTrailer.style.top = `${e.clientY}px`;
-                }, 100);
+                // Skip updating mouse effects if over a button or interactive element
+                if (!isOverButton) {
+                    // Small pointer
+                    pointerEffect.style.left = `${e.clientX}px`;
+                    pointerEffect.style.top = `${e.clientY}px`;
+                    
+                    // Trailing circle with delay
+                    setTimeout(() => {
+                        mouseTrailer.style.left = `${e.clientX}px`;
+                        mouseTrailer.style.top = `${e.clientY}px`;
+                    }, 100);
+                }
             });
 
             // Mouse interaction effects
             document.addEventListener('mousedown', () => {
-                pointerEffect.style.width = '30px';
-                pointerEffect.style.height = '30px';
-                pointerEffect.style.opacity = '0.8';
-                
-                mouseTrailer.style.width = '60px';
-                mouseTrailer.style.height = '60px';
-                mouseTrailer.style.opacity = '0.2';
+                if (!isOverButton) {
+                    pointerEffect.style.width = '30px';
+                    pointerEffect.style.height = '30px';
+                    pointerEffect.style.opacity = '0.8';
+                    
+                    mouseTrailer.style.width = '60px';
+                    mouseTrailer.style.height = '60px';
+                    mouseTrailer.style.opacity = '0.2';
+                }
             });
 
             document.addEventListener('mouseup', () => {
-                pointerEffect.style.width = '20px';
-                pointerEffect.style.height = '20px';
-                pointerEffect.style.opacity = '0.6';
-                
-                mouseTrailer.style.width = '40px';
-                mouseTrailer.style.height = '40px';
-                mouseTrailer.style.opacity = '0.3';
-            });
-            
-            // Button hover effect
-            document.querySelectorAll('button, a').forEach(elem => {
-                elem.addEventListener('mouseenter', () => {
-                    mouseTrailer.style.borderColor = 'var(--accent-color)';
-                    mouseTrailer.style.width = '60px';
-                    mouseTrailer.style.height = '60px';
-                });
-                
-                elem.addEventListener('mouseleave', () => {
-                    mouseTrailer.style.borderColor = 'var(--primary-color)';
+                if (!isOverButton) {
+                    pointerEffect.style.width = '20px';
+                    pointerEffect.style.height = '20px';
+                    pointerEffect.style.opacity = '0.6';
+                    
                     mouseTrailer.style.width = '40px';
                     mouseTrailer.style.height = '40px';
-                });
+                    mouseTrailer.style.opacity = '0.3';
+                }
+            });
+            
+            // Button hover effect with pointer disabling
+            document.addEventListener('mouseover', (e) => {
+                // Check if the element or any parent is a button, a, or has btn-hover-effect class
+                let targetEl = e.target;
+                while (targetEl != null) {
+                    if (
+                        targetEl.tagName === 'BUTTON' || 
+                        targetEl.tagName === 'A' || 
+                        targetEl.classList.contains('btn-hover-effect')
+                    ) {
+                        isOverButton = true;
+                        
+                        // Hide pointer effects over buttons
+                        pointerEffect.style.opacity = '0';
+                        mouseTrailer.style.borderColor = 'var(--accent-color)';
+                        
+                        return;
+                    }
+                    targetEl = targetEl.parentElement;
+                }
+                
+                // Reset when not over buttons
+                isOverButton = false;
+                pointerEffect.style.opacity = '0.6';
+                mouseTrailer.style.borderColor = 'var(--primary-color)';
             });
         }
 
@@ -859,6 +949,149 @@
             }
         }
 
+        // Comment Bottom Sheet Handling
+        const commentBottomSheet = document.getElementById('comment-bottom-sheet');
+        const bottomSheetOverlay = document.getElementById('bottom-sheet-overlay');
+        const closeCommentSheet = document.getElementById('close-comment-sheet');
+        const submitComment = document.getElementById('submit-comment');
+        let currentFileForComment = null;
+        
+        // Open comment bottom sheet
+        function openCommentBottomSheet(fileId) {
+            currentFileForComment = fileId;
+            commentBottomSheet.classList.add('open');
+            bottomSheetOverlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            
+            // Load comments for this file
+            renderCommentsInBottomSheet(fileId);
+            
+            // Add 3D animation effect
+            applyCommentSheet3DEffect();
+        }
+        
+        // Close comment bottom sheet
+        function closeCommentBottomSheet() {
+            commentBottomSheet.classList.remove('open');
+            bottomSheetOverlay.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        
+        // Apply 3D effect to comment sheet
+        function applyCommentSheet3DEffect() {
+            const content = document.querySelector('.comment-bottom-sheet-content');
+            content.style.transform = 'translateZ(30px)';
+            
+            setTimeout(() => {
+                content.style.transform = 'translateZ(0)';
+            }, 500);
+        }
+        
+        // Load comments into bottom sheet
+        function renderCommentsInBottomSheet(fileId) {
+            const commentsContainer = document.getElementById('comments-container');
+            commentsContainer.innerHTML = '';
+            
+            // Get comments from localStorage
+            const comments = JSON.parse(localStorage.getItem(`comments_${fileId}`) || '[]');
+            
+            if (comments.length === 0) {
+                commentsContainer.innerHTML = '<p class="text-center py-4 text-gray-500">No comments yet. Be the first to comment!</p>';
+                return;
+            }
+            
+            // Add comments
+            comments.forEach(comment => {
+                const date = new Date(comment.date);
+                const formattedDate = `${date.toLocaleDateString()} at ${date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+                
+                const commentHTML = `
+                    <div class="comment-bubble">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-semibold">${comment.name}</span>
+                            <span class="text-xs text-gray-500">${formattedDate}</span>
+                        </div>
+                        <p class="text-sm">${comment.text}</p>
+                    </div>
+                `;
+                
+                commentsContainer.innerHTML += commentHTML;
+            });
+        }
+        
+        // Set up event listeners for comment sheet
+        closeCommentSheet.addEventListener('click', closeCommentBottomSheet);
+        bottomSheetOverlay.addEventListener('click', closeCommentBottomSheet);
+        
+        // Enable drag to close for comment sheet
+        const dragHandle = document.querySelector('.comment-sheet-handle');
+        let startY = 0;
+        let currentY = 0;
+        
+        dragHandle.addEventListener('touchstart', (e) => {
+            startY = e.touches[0].clientY;
+        });
+        
+        dragHandle.addEventListener('touchmove', (e) => {
+            currentY = e.touches[0].clientY;
+            const deltaY = currentY - startY;
+            
+            if (deltaY > 0) { // Only allow dragging down
+                commentBottomSheet.style.transform = `translateY(${deltaY}px)`;
+            }
+        });
+        
+        dragHandle.addEventListener('touchend', () => {
+            const deltaY = currentY - startY;
+            
+            if (deltaY > 100) { // If dragged more than 100px, close the sheet
+                closeCommentBottomSheet();
+            } else {
+                // Reset position
+                commentBottomSheet.style.transform = '';
+            }
+        });
+        
+        // Submit comment from bottom sheet
+        submitComment.addEventListener('click', () => {
+            const name = document.getElementById('comment-name').value.trim();
+            const text = document.getElementById('comment-text').value.trim();
+            
+            if (!name || !text) {
+                showToast('Please enter your name and comment', 3000);
+                return;
+            }
+            
+            // Get existing comments
+            let fileComments = JSON.parse(localStorage.getItem(`comments_${currentFileForComment}`) || '[]');
+            
+            // Add new comment
+            fileComments.push({
+                name,
+                text,
+                date: new Date().toISOString()
+            });
+            
+            // Save updated comments
+            localStorage.setItem(`comments_${currentFileForComment}`, JSON.stringify(fileComments));
+            
+            // Update comment count
+            incrementCommentCount();
+            
+            // Update comments in bottom sheet
+            renderCommentsInBottomSheet(currentFileForComment);
+            
+            // Reset form
+            document.getElementById('comment-name').value = '';
+            document.getElementById('comment-text').value = '';
+            
+            // Show success toast
+            showToast('Comment added successfully!', 3000);
+            
+            // Apply 3D effect
+            applyCommentSheet3DEffect();
+        });
+
         // Simulate download count and store in localStorage
         let downloadCount = 0;
         let commentCount = 0;
@@ -886,60 +1119,28 @@
             document.getElementById('total-comments').textContent = commentCount;
         }
 
-        // Comment modal handling
-        const commentModal = document.getElementById('comment-modal');
-        const closeCommentModal = document.getElementById('close-comment-modal');
-        const submitComment = document.getElementById('submit-comment');
-        let currentFileForComment = null;
-
-        function openCommentModal(fileId) {
-            currentFileForComment = fileId;
-            commentModal.classList.remove('hidden');
+        // Count total comments from localStorage
+        function countTotalComments() {
+            let totalCount = 0;
+            
+            // Get all localStorage keys
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                
+                // Check if this is a comments key
+                if (key && key.startsWith('comments_')) {
+                    const comments = JSON.parse(localStorage.getItem(key) || '[]');
+                    totalCount += comments.length;
+                }
+            }
+            
+            // Update display
+            commentCount = totalCount;
+            document.getElementById('total-comments').textContent = commentCount;
+            localStorage.setItem('commentCount', commentCount);
+            
+            return totalCount;
         }
-
-        closeCommentModal.addEventListener('click', () => {
-            commentModal.classList.add('hidden');
-        });
-
-        submitComment.addEventListener('click', () => {
-            const name = document.getElementById('comment-name').value.trim();
-            const text = document.getElementById('comment-text').value.trim();
-            
-            if (!name || !text) {
-                showToast('Please enter your name and comment', 3000);
-                return;
-            }
-            
-            // Get existing comments
-            let fileComments = JSON.parse(localStorage.getItem(`comments_${currentFileForComment}`) || '[]');
-            
-            // Add new comment
-            fileComments.push({
-                name,
-                text,
-                date: new Date().toISOString()
-            });
-            
-            // Save updated comments
-            localStorage.setItem(`comments_${currentFileForComment}`, JSON.stringify(fileComments));
-            
-            // Update comment count
-            incrementCommentCount();
-            
-            // Update UI if comments section is open
-            const commentsSection = document.querySelector(`.comment-section[data-file="${currentFileForComment}"]`);
-            if (commentsSection && commentsSection.classList.contains('open')) {
-                renderComments(currentFileForComment);
-            }
-            
-            // Reset form and close modal
-            document.getElementById('comment-name').value = '';
-            document.getElementById('comment-text').value = '';
-            commentModal.classList.add('hidden');
-            
-            // Show success toast
-            showToast('Comment added successfully!', 3000);
-        });
 
         // Share modal handling
         const shareModal = document.getElementById('share-modal');
@@ -975,54 +1176,6 @@
                 console.error('Could not copy text: ', err);
             }
         });
-
-        // Render comments for a specific file
-        function renderComments(fileId) {
-            const commentsSection = document.querySelector(`.comment-section[data-file="${fileId}"]`);
-            if (!commentsSection) return;
-            
-            // Get comments from localStorage
-            const comments = JSON.parse(localStorage.getItem(`comments_${fileId}`) || '[]');
-            
-            // Clear current comments
-            const commentsContainer = commentsSection.querySelector('.comments-container');
-            commentsContainer.innerHTML = '';
-            
-            if (comments.length === 0) {
-                commentsContainer.innerHTML = '<p class="text-center py-4 text-gray-500">No comments yet. Be the first to comment!</p>';
-                return;
-            }
-            
-            // Add comments
-            comments.forEach(comment => {
-                const date = new Date(comment.date);
-                const formattedDate = `${date.toLocaleDateString()} at ${date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
-                
-                const commentHTML = `
-                    <div class="comment-bubble">
-                        <div class="flex justify-between items-center mb-1">
-                            <span class="font-semibold">${comment.name}</span>
-                            <span class="text-xs text-gray-500">${formattedDate}</span>
-                        </div>
-                        <p class="text-sm">${comment.text}</p>
-                    </div>
-                `;
-                
-                commentsContainer.innerHTML += commentHTML;
-            });
-        }
-
-        // Toggle comments section visibility
-        function toggleComments(fileId) {
-            const commentsSection = document.querySelector(`.comment-section[data-file="${fileId}"]`);
-            
-            if (commentsSection.classList.contains('open')) {
-                commentsSection.classList.remove('open');
-            } else {
-                commentsSection.classList.add('open');
-                renderComments(fileId);
-            }
-        }
 
         // File repository data and main app logic
         const owner = 'ridoy520';
@@ -1224,6 +1377,9 @@
                     // Get unique categories from files (not folders)
                     const categories = new Set(allFiles.filter(item => !item.isFolder).map(file => file.category));
                     document.getElementById('total-categories').textContent = categories.size;
+                    
+                    // Count total comments
+                    countTotalComments();
 
                     // Initialize display
                     filterFilesByCategory(currentCategory);
@@ -1333,7 +1489,7 @@
                     const folderHTML = `
                         <div class="perspective-container">
                             <div class="custom-card p-4 h-full flex flex-col rotate-card cursor-pointer" 
-                                 data-folder="${item.folderPath}" onclick="navigateToFolder('${item.folderPath}')">
+                                 data-folder="${item.folderPath}">
                                 <div class="flex items-center mb-3">
                                     <div class="rounded-full w-10 h-10 flex items-center justify-center mr-3" style="background-color: var(--bg-primary);">
                                         <i class="file-icon fas fa-folder"></i>
@@ -1358,6 +1514,10 @@
                     const fileIcon = getFileIcon(item.name);
                     const fileId = item.path.replace(/[^a-zA-Z0-9]/g, '_');
                     const likeCount = localStorage.getItem(`likeCount_${fileId}`) || 0;
+                    
+                    // Get comment count for this file
+                    const fileComments = JSON.parse(localStorage.getItem(`comments_${fileId}`) || '[]');
+                    const commentCount = fileComments.length;
 
                     const cardHTML = `
                         <div class="perspective-container">
@@ -1398,32 +1558,19 @@
                                 <div class="flex items-center justify-between mt-3 text-sm">
                                     <span class="text-gray-600 dark:text-gray-400">${formatFileSize(item.size)}</span>
                                     <div class="flex space-x-2">
-                                        <button class="like-button btn-primary px-2 py-1 rounded-md flex items-center space-x-1 btn-hover-effect" data-file="${fileId}">
+                                        <button class="like-button action-button btn-primary px-2 py-1 rounded-md flex items-center space-x-1 btn-hover-effect" data-file="${fileId}">
                                             <i class="fas fa-heart"></i> <span class="like-count">${likeCount}</span>
                                         </button>
-                                        <button class="comment-button px-2 py-1 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center space-x-1 btn-hover-effect" data-file="${fileId}" onclick="openCommentModal('${fileId}')">
-                                            <i class="fas fa-comment"></i>
+                                        <button class="comment-button action-button px-2 py-1 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center space-x-1 btn-hover-effect" data-file="${fileId}">
+                                            <i class="fas fa-comment"></i> <span class="comment-count">${commentCount}</span>
                                         </button>
-                                        <button class="share-button px-2 py-1 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center space-x-1 btn-hover-effect" onclick="openShareModal('${item.download_url}', '${item.name}')">
+                                        <button class="share-button action-button px-2 py-1 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center space-x-1 btn-hover-effect" data-file="${fileId}">
                                             <i class="fas fa-share-alt"></i>
                                         </button>
-                                        <a href="${item.download_url}" target="_blank" class="btn-primary px-3 py-1 rounded-md flex items-center space-x-1 btn-hover-effect" 
-                                           onclick="incrementDownloadCount(); showToast('Download started');">
+                                        <a href="${item.download_url}" target="_blank" class="action-button btn-primary px-3 py-1 rounded-md flex items-center space-x-1 btn-hover-effect" 
+                                           onclick="event.stopPropagation(); incrementDownloadCount(); showToast('Download started'); return true;">
                                            <i class="fas fa-download mr-1"></i> Download
                                         </a>
-                                    </div>
-                                </div>
-                                
-                                <!-- Comments section (initially hidden) -->
-                                <div class="comment-section mt-4" data-file="${fileId}">
-                                    <div class="flex justify-between items-center mb-2">
-                                        <h4 class="font-semibold">Comments</h4>
-                                        <button class="toggle-comments text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200" onclick="toggleComments('${fileId}')">
-                                            <i class="fas fa-chevron-down"></i>
-                                        </button>
-                                    </div>
-                                    <div class="comments-container">
-                                        <!-- Comments will be rendered here -->
                                     </div>
                                 </div>
                             </div>
@@ -1442,9 +1589,10 @@
                 });
             });
 
-            // Add event listeners for like buttons
+            // Add event listeners for action buttons
             document.querySelectorAll('.like-button').forEach(button => {
                 button.addEventListener('click', (e) => {
+                    e.stopPropagation();
                     const fileName = button.getAttribute('data-file');
                     let likeCount = parseInt(localStorage.getItem(`likeCount_${fileName}`) || 0, 10);
                     likeCount++;
@@ -1454,6 +1602,33 @@
                     
                     // Create flying hearts effect
                     createFlyingHearts(button, 5);
+                });
+            });
+            
+            // Comment button opens the bottom sheet instead of the old modal
+            document.querySelectorAll('.comment-button').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const fileId = button.getAttribute('data-file');
+                    openCommentBottomSheet(fileId);
+                });
+            });
+            
+            // Share button opens share modal
+            document.querySelectorAll('.share-button').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const cardEl = button.closest('.custom-card');
+                    const fileId = button.getAttribute('data-file');
+                    
+                    // Find the file data
+                    const fileData = paginatedFiles.find(file => 
+                        !file.isFolder && file.path.replace(/[^a-zA-Z0-9]/g, '_') === fileId
+                    );
+                    
+                    if (fileData) {
+                        openShareModal(fileData.download_url, fileData.name);
+                    }
                 });
             });
         }
@@ -1536,11 +1711,10 @@
                 fetchRepositoryContents();
             });
             
-            // Make navigateToFolder available globally
+            // Make functions available globally
             window.navigateToFolder = navigateToFolder;
-            window.openCommentModal = openCommentModal;
+            window.openCommentBottomSheet = openCommentBottomSheet;
             window.openShareModal = openShareModal;
-            window.toggleComments = toggleComments;
         }
 
         // Start the app
