@@ -11,6 +11,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/material.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/monokai.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/nord.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/solarized.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/cobalt.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/ayu-dark.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/ayu-mirage.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/htmlmixed/htmlmixed.min.js"></script>
@@ -21,6 +26,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/edit/matchbrackets.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/edit/closetag.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/fold/xml-fold.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/search/search.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/search/searchcursor.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/selection/active-line.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/fold/foldcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/fold/foldgutter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/fold/brace-fold.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/fold/comment-fold.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/lint/lint.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/xml.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/javascript.min.js"></script>
@@ -50,6 +63,16 @@
             --border-dark: #374151;
             --shadow-light: rgba(0, 0, 0, 0.1);
             --shadow-dark: rgba(0, 0, 0, 0.5);
+            
+            /* Theme variables */
+            --editor-selected-line-light: rgba(93, 92, 222, 0.1);
+            --editor-selected-line-dark: rgba(93, 92, 222, 0.3);
+            --editor-matchingbracket-light: rgba(255, 209, 102, 0.5);
+            --editor-matchingbracket-dark: rgba(255, 209, 102, 0.7);
+            --editor-selection-bg-light: rgba(93, 92, 222, 0.2);
+            --editor-selection-bg-dark: rgba(93, 92, 222, 0.4);
+            --editor-search-highlight-bg: rgba(255, 215, 0, 0.3);
+            --editor-search-highlight-bg-dark: rgba(255, 215, 0, 0.5);
         }
 
         .dark {
@@ -58,6 +81,10 @@
             --panel-bg: var(--panel-dark);
             --panel-border: var(--border-dark);
             --shadow: var(--shadow-dark);
+            --editor-selected-line: var(--editor-selected-line-dark);
+            --editor-matchingbracket: var(--editor-matchingbracket-dark);
+            --editor-selection-bg: var(--editor-selection-bg-dark);
+            --editor-search-highlight: var(--editor-search-highlight-bg-dark);
         }
 
         html:not(.dark) {
@@ -66,6 +93,10 @@
             --panel-bg: var(--panel-light);
             --panel-border: var(--border-light);
             --shadow: var(--shadow-light);
+            --editor-selected-line: var(--editor-selected-line-light);
+            --editor-matchingbracket: var(--editor-matchingbracket-light);
+            --editor-selection-bg: var(--editor-selection-bg-light);
+            --editor-search-highlight: var(--editor-search-highlight-bg);
         }
 
         body {
@@ -265,15 +296,65 @@
         }
 
         .CodeMirror-selected {
-            background-color: rgba(93, 92, 222, 0.2) !important;
-        }
-
-        .dark .CodeMirror-selected {
-            background-color: rgba(93, 92, 222, 0.3) !important;
+            background-color: var(--editor-selection-bg) !important;
         }
 
         .CodeMirror-cursor {
             border-left: 2px solid var(--primary) !important;
+        }
+
+        .CodeMirror-activeline-background {
+            background-color: var(--editor-selected-line) !important;
+        }
+
+        .CodeMirror-matchingbracket {
+            background-color: var(--editor-matchingbracket) !important;
+            color: inherit !important;
+            border-bottom: 1px solid var(--primary);
+        }
+
+        /* Search highlight */
+        .search-highlight {
+            background-color: var(--editor-search-highlight);
+        }
+
+        .search-highlight-selected {
+            background-color: rgba(255, 165, 0, 0.5);
+            border: 1px solid orange;
+        }
+
+        /* Search input container */
+        .search-container {
+            position: relative;
+        }
+
+        .search-buttons {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            display: flex;
+        }
+
+        .search-button {
+            height: 100%;
+            padding: 0 8px;
+            background-color: var(--panel-bg);
+            border-left: 1px solid var(--panel-border);
+            color: var(--text-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-button:hover {
+            background-color: rgba(93, 92, 222, 0.1);
+        }
+
+        .search-button:last-child {
+            border-top-right-radius: 0.25rem;
+            border-bottom-right-radius: 0.25rem;
         }
 
         .CodeMirror .cm-keyword {
@@ -315,6 +396,25 @@
 
         .CodeMirror .cm-attribute {
             color: #FFCB6B;
+        }
+
+        /* CodeMirror Foldgutter */
+        .CodeMirror-foldgutter {
+            width: 1.4em;
+        }
+
+        .CodeMirror-foldgutter-open,
+        .CodeMirror-foldgutter-folded {
+            cursor: pointer;
+            color: #6B7280;
+        }
+
+        .CodeMirror-foldgutter-open:after {
+            content: "▾";
+        }
+
+        .CodeMirror-foldgutter-folded:after {
+            content: "▸";
         }
 
         /* Fixed preview container */
@@ -362,6 +462,7 @@
             font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;
             font-size: 15px;
             line-height: 1.6;
+            scrollbar-width: thin;
         }
 
         /* Make iframe full sized within the preview container */
@@ -922,6 +1023,103 @@
             opacity: 1;
             transform: rotate(180deg);
         }
+        
+        /* Enhanced search styling */
+        .search-container {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .search-highlight-count {
+            position: absolute;
+            right: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.7rem;
+            color: var(--text-color);
+            background-color: var(--primary-light);
+            color: white;
+            border-radius: 1rem;
+            padding: 0.1rem 0.4rem;
+            pointer-events: none;
+        }
+        
+        /* Code theme selector */
+        .theme-selector {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+        }
+        
+        .theme-option {
+            border: 2px solid transparent;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .theme-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .theme-option.active {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--primary-light);
+        }
+        
+        .theme-preview {
+            height: 60px;
+            padding: 5px;
+            font-family: monospace;
+            font-size: 10px;
+        }
+        
+        .theme-name {
+            text-align: center;
+            padding: 5px;
+            font-size: 12px;
+            background-color: var(--panel-bg);
+        }
+        
+        /* Line highlight style */
+        .CodeMirror-activeline-background {
+            background-color: var(--editor-selected-line);
+        }
+        
+        /* Preview controls enhancement */
+        .preview-controls {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border-top: 1px solid var(--panel-border);
+            background-color: var(--panel-bg);
+        }
+        
+        .preview-device-button {
+            margin-right: 0.5rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            background-color: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.2s;
+        }
+        
+        .preview-device-button:hover {
+            background-color: rgba(93, 92, 222, 0.1);
+        }
+        
+        .preview-device-button.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary-dark);
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -1018,6 +1216,10 @@
                                     </button>
                                     <div class="tooltip" id="theme-tooltip">Change editor theme</div>
                                 </div>
+                            </div>
+                            <div class="search-container relative">
+                                <input type="text" id="search-input" class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded py-1 px-2 pr-16 text-sm focus:outline-none" placeholder="Search..." aria-label="Search in code">
+                                <div id="search-highlight-count" class="search-highlight-count hidden"></div>
                             </div>
                             <div class="flex space-x-2">
                                 <button id="copy-btn" class="tool-button clickable bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded py-1 px-3 text-sm flex items-center">
@@ -1516,7 +1718,7 @@
 
         <!-- Theme selector modal -->
         <div id="theme-modal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 hidden">
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full p-6 transform transition-all duration-300 scale-95 opacity-0 modal-content" id="theme-modal-content">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-3xl w-full p-6 transform transition-all duration-300 scale-95 opacity-0 modal-content" id="theme-modal-content">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-medium flex items-center">
                         <i class="fas fa-palette text-indigo-500 mr-2"></i>
@@ -1526,41 +1728,87 @@
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
-                <div class="mb-4 grid grid-cols-2 gap-4">
-                    <div class="theme-option clickable border border-gray-200 dark:border-gray-700 rounded-lg p-3 hover:border-indigo-500 dark:hover:border-indigo-500 transition-all duration-300 cursor-pointer card-3d" data-theme="dracula">
-                        <div class="h-16 mb-2 bg-gray-900 rounded overflow-hidden">
-                            <div class="p-2 text-xs text-pink-400 font-mono">function <span class="text-green-400">example</span>() {</div>
-                            <div class="px-4 text-xs text-yellow-300 font-mono">return true;</div>
-                            <div class="p-2 text-xs text-pink-400 font-mono">}</div>
+                <div class="mb-4 theme-selector">
+                    <div class="theme-option clickable active" data-theme="dracula">
+                        <div class="theme-preview" style="background-color: #282a36; color: #f8f8f2;">
+                            <span style="color: #ff79c6;">function</span> <span style="color: #50fa7b;">example</span>() {<br>
+                            &nbsp;&nbsp;<span style="color: #f1fa8c;">return</span> true;<br>
+                            }
                         </div>
-                        <div class="text-center text-sm font-medium">Dracula</div>
+                        <div class="theme-name">Dracula</div>
                     </div>
-                    <div class="theme-option clickable border border-gray-200 dark:border-gray-700 rounded-lg p-3 hover:border-indigo-500 dark:hover:border-indigo-500 transition-all duration-300 cursor-pointer card-3d" data-theme="monokai">
-                        <div class="h-16 mb-2 bg-gray-800 rounded overflow-hidden">
-                            <div class="p-2 text-xs text-red-400 font-mono">function <span class="text-green-400">example</span>() {</div>
-                            <div class="px-4 text-xs text-yellow-300 font-mono">return true;</div>
-                            <div class="p-2 text-xs text-red-400 font-mono">}</div>
+                    <div class="theme-option clickable" data-theme="monokai">
+                        <div class="theme-preview" style="background-color: #272822; color: #f8f8f2;">
+                            <span style="color: #f92672;">function</span> <span style="color: #a6e22e;">example</span>() {<br>
+                            &nbsp;&nbsp;<span style="color: #f8f8f2;">return</span> <span style="color: #ae81ff;">true</span>;<br>
+                            }
                         </div>
-                        <div class="text-center text-sm font-medium">Monokai</div>
+                        <div class="theme-name">Monokai</div>
                     </div>
-                    <div class="theme-option clickable border border-gray-200 dark:border-gray-700 rounded-lg p-3 hover:border-indigo-500 dark:hover:border-indigo-500 transition-all duration-300 cursor-pointer card-3d" data-theme="material">
-                        <div class="h-16 mb-2 bg-blue-900 rounded overflow-hidden">
-                            <div class="p-2 text-xs text-blue-300 font-mono">function <span class="text-amber-300">example</span>() {</div>
-                            <div class="px-4 text-xs text-orange-300 font-mono">return true;</div>
-                            <div class="p-2 text-xs text-blue-300 font-mono">}</div>
+                    <div class="theme-option clickable" data-theme="material">
+                        <div class="theme-preview" style="background-color: #263238; color: #EEFFFF;">
+                            <span style="color: #89DDFF;">function</span> <span style="color: #82AAFF;">example</span>() {<br>
+                            &nbsp;&nbsp;<span style="color: #89DDFF;">return</span> <span style="color: #F78C6C;">true</span>;<br>
+                            }
                         </div>
-                        <div class="text-center text-sm font-medium">Material</div>
+                        <div class="theme-name">Material</div>
                     </div>
-                    <div class="theme-option clickable border border-gray-200 dark:border-gray-700 rounded-lg p-3 hover:border-indigo-500 dark:hover:border-indigo-500 transition-all duration-300 cursor-pointer card-3d" data-theme="default">
-                        <div class="h-16 mb-2 bg-white dark:bg-gray-800 rounded overflow-hidden">
-                            <div class="p-2 text-xs text-blue-600 dark:text-blue-400 font-mono">function <span class="text-red-600 dark:text-red-400">example</span>() {</div>
-                            <div class="px-4 text-xs text-gray-800 dark:text-gray-300 font-mono">return true;</div>
-                            <div class="p-2 text-xs text-blue-600 dark:text-blue-400 font-mono">}</div>
+                    <div class="theme-option clickable" data-theme="cobalt">
+                        <div class="theme-preview" style="background-color: #002240; color: #FFFFFF;">
+                            <span style="color: #FF9D00;">function</span> <span style="color: #FFEE80;">example</span>() {<br>
+                            &nbsp;&nbsp;<span style="color: #FF9D00;">return</span> <span style="color: #FF628C;">true</span>;<br>
+                            }
                         </div>
-                        <div class="text-center text-sm font-medium">Default</div>
+                        <div class="theme-name">Cobalt</div>
+                    </div>
+                    <div class="theme-option clickable" data-theme="nord">
+                        <div class="theme-preview" style="background-color: #2E3440; color: #D8DEE9;">
+                            <span style="color: #81A1C1;">function</span> <span style="color: #88C0D0;">example</span>() {<br>
+                            &nbsp;&nbsp;<span style="color: #81A1C1;">return</span> <span style="color: #B48EAD;">true</span>;<br>
+                            }
+                        </div>
+                        <div class="theme-name">Nord</div>
+                    </div>
+                    <div class="theme-option clickable" data-theme="ayu-dark">
+                        <div class="theme-preview" style="background-color: #0A0E14; color: #B3B1AD;">
+                            <span style="color: #FF8F40;">function</span> <span style="color: #FFB454;">example</span>() {<br>
+                            &nbsp;&nbsp;<span style="color: #FF8F40;">return</span> <span style="color: #E6B450;">true</span>;<br>
+                            }
+                        </div>
+                        <div class="theme-name">Ayu Dark</div>
+                    </div>
+                    <div class="theme-option clickable" data-theme="ayu-mirage">
+                        <div class="theme-preview" style="background-color: #1F2430; color: #CBCCC6;">
+                            <span style="color: #FFA759;">function</span> <span style="color: #FFD580;">example</span>() {<br>
+                            &nbsp;&nbsp;<span style="color: #FFA759;">return</span> <span style="color: #D5FF80;">true</span>;<br>
+                            }
+                        </div>
+                        <div class="theme-name">Ayu Mirage</div>
+                    </div>
+                    <div class="theme-option clickable" data-theme="solarized">
+                        <div class="theme-preview" style="background-color: #002B36; color: #839496;">
+                            <span style="color: #268BD2;">function</span> <span style="color: #B58900;">example</span>() {<br>
+                            &nbsp;&nbsp;<span style="color: #268BD2;">return</span> <span style="color: #2AA198;">true</span>;<br>
+                            }
+                        </div>
+                        <div class="theme-name">Solarized</div>
+                    </div>
+                    <div class="theme-option clickable" data-theme="default">
+                        <div class="theme-preview light-preview" style="background-color: #ffffff; color: #000000;">
+                            <span style="color: #770088;">function</span> <span style="color: #0000FF;">example</span>() {<br>
+                            &nbsp;&nbsp;<span style="color: #770088;">return</span> <span style="color: #116644;">true</span>;<br>
+                            }
+                        </div>
+                        <div class="theme-name">Default Light</div>
                     </div>
                 </div>
-                <div class="text-center">
+                <div class="mt-4 flex justify-between items-center">
+                    <div class="text-sm">
+                        <label class="flex items-center">
+                            <input type="checkbox" id="highlight-active-line" class="mr-2 text-indigo-600" checked>
+                            <span>Highlight active line</span>
+                        </label>
+                    </div>
                     <button id="apply-theme-btn" class="clickable px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-sm font-medium btn-3d">
                         Apply Theme
                     </button>
@@ -1587,6 +1835,7 @@
     <div id="toast-container"></div>
 
     <script>
+     
         // ======== CORE FUNCTIONALITY ========
         
         // File system simulation
@@ -1605,6 +1854,7 @@
         let currentEditorTheme = 'dracula';
         let selectedTheme = 'dracula';
         let debounceTimer;
+        let highlightActiveLine = true;
         
         // Template definitions - empty as requested
         const templates = {};
@@ -1631,6 +1881,7 @@
                 } else {
                     document.documentElement.classList.remove('dark');
                 }
+                updateCodeMirrorTheme();
             });
 
             document.getElementById('theme-toggle').addEventListener('click', () => {
@@ -1732,12 +1983,21 @@
                 indentUnit: 2,
                 tabSize: 2,
                 indentWithTabs: false,
+                styleActiveLine: highlightActiveLine,
+                foldGutter: true,
+                gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
                 extraKeys: {
                     "Cmd-Enter": runCode,
                     "Ctrl-Enter": runCode,
                     "Shift-Alt-F": formatCode,
                     "Cmd-S": saveCurrentFile,
                     "Ctrl-S": saveCurrentFile,
+                    "Cmd-F": function(cm) {
+                        document.getElementById('search-input').focus();
+                    },
+                    "Ctrl-F": function(cm) {
+                        document.getElementById('search-input').focus();
+                    },
                     "Alt-1": () => document.querySelector('.code-tab[data-target="preview-section"]').click(),
                     "Alt-2": () => document.querySelector('.code-tab[data-target="console-section"]').click(),
                     "Alt-3": () => document.querySelector('.code-tab[data-target="source-section"]').click(),
@@ -1770,18 +2030,8 @@
             // Handle selection changes and cursor movement
             codeMirrorEditor.on('cursorActivity', updateSelectionInfo);
             
-            // Highlight active line
-            codeMirrorEditor.on('cursorActivity', () => {
-                const line = codeMirrorEditor.getCursor().line;
-                codeMirrorEditor.addLineClass(line, 'background', 'bg-indigo-50');
-                
-                // Remove highlight from other lines
-                for (let i = 0; i < codeMirrorEditor.lineCount(); i++) {
-                    if (i !== line) {
-                        codeMirrorEditor.removeLineClass(i, 'background', 'bg-indigo-50');
-                    }
-                }
-            });
+            // Update theme based on dark mode
+            updateCodeMirrorTheme();
         }
 
         function updateCodeMirrorTheme() {
@@ -1795,6 +2045,15 @@
             }
             
             currentEditorTheme = codeMirrorEditor.getOption('theme');
+            
+            // Update active line highlighting to ensure contrast with editor background
+            if (isDark) {
+                document.documentElement.style.setProperty('--editor-selected-line', 'var(--editor-selected-line-dark)');
+                document.documentElement.style.setProperty('--editor-selection-bg', 'var(--editor-selection-bg-dark)');
+            } else {
+                document.documentElement.style.setProperty('--editor-selected-line', 'var(--editor-selected-line-light)');
+                document.documentElement.style.setProperty('--editor-selection-bg', 'var(--editor-selection-bg-light)');
+            }
         }
 
         function initUI() {
@@ -1810,6 +2069,42 @@
             
             // Setup code tabs
             setupCodeTabs();
+            
+            // Initialize search buttons
+            initializeSearchButtons();
+            
+            // Set active theme in theme selector
+            document.querySelectorAll('.theme-option').forEach(option => {
+                if (option.getAttribute('data-theme') === currentEditorTheme) {
+                    option.classList.add('active');
+                }
+            });
+        }
+        
+        function initializeSearchButtons() {
+            const searchInput = document.getElementById('search-input');
+            const searchButtonsContainer = document.createElement('div');
+            searchButtonsContainer.id = 'search-buttons';
+            searchButtonsContainer.className = 'search-buttons';
+            
+            const prevButton = document.createElement('button');
+            prevButton.className = 'search-button';
+            prevButton.innerHTML = '<i class="fas fa-chevron-up"></i>';
+            prevButton.title = 'Previous match (Shift+Enter)';
+            prevButton.id = 'search-prev-btn';
+            
+            const nextButton = document.createElement('button');
+            nextButton.className = 'search-button';
+            nextButton.innerHTML = '<i class="fas fa-chevron-down"></i>';
+            nextButton.title = 'Next match (Enter)';
+            nextButton.id = 'search-next-btn';
+            
+            searchButtonsContainer.appendChild(prevButton);
+            searchButtonsContainer.appendChild(nextButton);
+            
+            // Update the parent container to ensure proper positioning
+            searchInput.parentNode.style.position = 'relative';
+            searchInput.parentNode.appendChild(searchButtonsContainer);
         }
 
         function setupCodeTabs() {
@@ -1993,6 +2288,7 @@
             
             // Run code button
             document.getElementById('run-btn').addEventListener('click', () => {
+                saveScrollPosition();
                 runCode();
                 animateButton('run-btn');
             });
@@ -2020,6 +2316,7 @@
             
             // Refresh preview button
             document.getElementById('refresh-btn').addEventListener('click', () => {
+                saveScrollPosition();
                 runCode();
                 animateButton('refresh-btn');
             });
@@ -2057,17 +2354,21 @@
                 option.addEventListener('click', () => {
                     // Remove active class from all options
                     document.querySelectorAll('.theme-option').forEach(opt => {
-                        opt.classList.remove('border-indigo-500', 'dark:border-indigo-500');
-                        opt.classList.add('border-gray-200', 'dark:border-gray-700');
+                        opt.classList.remove('active');
                     });
                     
                     // Add active class to selected option
-                    option.classList.remove('border-gray-200', 'dark:border-gray-700');
-                    option.classList.add('border-indigo-500', 'dark:border-indigo-500');
+                    option.classList.add('active');
                     
                     // Store the selected theme
                     selectedTheme = option.getAttribute('data-theme');
                 });
+            });
+            
+            // Active line highlighting toggle
+            document.getElementById('highlight-active-line').addEventListener('change', (e) => {
+                highlightActiveLine = e.target.checked;
+                codeMirrorEditor.setOption('styleActiveLine', highlightActiveLine);
             });
             
             // Apply theme button
@@ -2082,6 +2383,7 @@
                     document.getElementById('theme-modal-content').classList.remove('scale-100', 'opacity-100');
                 }, 300);
                 
+                updateCodeMirrorTheme();
                 showToast(`Theme changed to ${selectedTheme}`, 'success');
             });
             
@@ -2311,11 +2613,156 @@
                 });
             });
             
+            // Enhanced search functionality
+            document.getElementById('search-input').addEventListener('input', function() {
+                const query = this.value.toLowerCase();
+                if (!query) {
+                    // Clear all highlights if search is empty
+                    codeMirrorEditor.getAllMarks().forEach(mark => mark.clear());
+                    const countDisplay = document.getElementById('search-highlight-count');
+                    countDisplay.classList.add('hidden');
+                    return;
+                }
+                
+                // Clear previous highlights
+                codeMirrorEditor.getAllMarks().forEach(mark => mark.clear());
+                
+                // Add CSS for highlighting search results
+                if (!document.getElementById('search-highlight-style')) {
+                    const style = document.createElement('style');
+                    style.id = 'search-highlight-style';
+                    style.innerHTML = `
+                        .search-highlight {
+                            background-color: rgba(93, 92, 222, 0.3);
+                        }
+                        .search-highlight-selected {
+                            background-color: rgba(255, 215, 0, 0.5);
+                        }
+                        .dark .search-highlight {
+                            background-color: rgba(93, 92, 222, 0.5);
+                        }
+                        .dark .search-highlight-selected {
+                            background-color: rgba(255, 215, 0, 0.7);
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+                
+                // Search the document for matches
+                let cursor = codeMirrorEditor.getSearchCursor(query, { line: 0, ch: 0 }, { caseFold: true });
+                let foundCount = 0;
+                let firstLine = null;
+                
+                while (cursor.findNext()) {
+                    foundCount++;
+                    const from = cursor.from();
+                    const to = cursor.to();
+                    
+                    if (!firstLine) firstLine = from.line;
+                    
+                    // Mark the occurrence
+                    codeMirrorEditor.markText(from, to, { 
+                        className: 'search-highlight',
+                        clearOnEnter: false
+                    });
+                }
+                
+                // Update count display
+                const countDisplay = document.getElementById('search-highlight-count');
+                if (foundCount > 0) {
+                    countDisplay.textContent = `${foundCount}`;
+                    countDisplay.classList.remove('hidden');
+                } else {
+                    countDisplay.classList.add('hidden');
+                }
+                
+                // Scroll to first result if found
+                if (firstLine !== null) {
+                    codeMirrorEditor.scrollIntoView({line: firstLine, ch: 0}, 100);
+                    showToast(`Found ${foundCount} matches`, 'info', 1500);
+                } else {
+                    showToast('No matches found', 'info', 1500);
+                }
+            });
+            
+            // Search navigation (next/previous)
+            let currentMatch = 0;
+            
+            function highlightCurrentMatch() {
+                // Remove previous selection highlight
+                codeMirrorEditor.getAllMarks().forEach(mark => {
+                    if (mark.className === 'search-highlight-selected') {
+                        mark.clear();
+                    }
+                });
+                
+                // Get all highlight marks
+                const marks = codeMirrorEditor.getAllMarks().filter(mark => 
+                    mark.className === 'search-highlight'
+                );
+                
+                if (marks.length > 0) {
+                    // Ensure currentMatch is within bounds (use modulo for wrapping)
+                    currentMatch = (currentMatch + marks.length) % marks.length;
+                    
+                    const current = marks[currentMatch];
+                    if (current) {
+                        const pos = current.find();
+                        
+                        if (pos) {
+                            // Add special highlight to current match
+                            codeMirrorEditor.markText(pos.from, pos.to, { 
+                                className: 'search-highlight-selected',
+                                clearOnEnter: false
+                            });
+                            
+                            // Scroll to the match
+                            codeMirrorEditor.scrollIntoView({
+                                from: pos.from,
+                                to: pos.to
+                            }, 100);
+                            
+                            showToast(`Match ${currentMatch + 1} of ${marks.length}`, 'info', 1500);
+                        }
+                    }
+                }
+            }
+            
+            // Set up event listeners for search navigation
+            document.getElementById('search-next-btn').addEventListener('click', () => {
+                currentMatch++;
+                highlightCurrentMatch();
+            });
+            
+            document.getElementById('search-prev-btn').addEventListener('click', () => {
+                currentMatch--;
+                highlightCurrentMatch();
+            });
+            
+            // Search input keyboard shortcuts
+            const searchInput = document.getElementById('search-input');
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    if (e.shiftKey) {
+                        // Shift+Enter for previous
+                        e.preventDefault();
+                        currentMatch--;
+                        highlightCurrentMatch();
+                    } else {
+                        // Enter for next
+                        e.preventDefault();
+                        currentMatch++;
+                        highlightCurrentMatch();
+                    }
+                }
+            });
+            
             // Keyboard shortcuts
             document.addEventListener('keydown', (e) => {
                 // Run Code: Cmd/Ctrl + Enter
                 if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
                     e.preventDefault();
+                    saveScrollPosition();
                     runCode();
                     animateButton('run-btn');
                 }
@@ -2333,6 +2780,12 @@
                     saveCurrentFile();
                     showToast('File saved successfully!');
                     animateButton('save-btn');
+                }
+                
+                // Find: Cmd/Ctrl + F
+                if ((e.metaKey || e.ctrlKey) && e.key === 'f') {
+                    e.preventDefault();
+                    document.getElementById('search-input').focus();
                 }
                 
                 // Switch tabs: Alt + 1, Alt + 2, Alt + 3
@@ -2602,6 +3055,9 @@
                         setTimeout(() => {
                             iframe.style.opacity = '1';
                             iframe.style.transform = 'scale(1)';
+                            
+                            // Restore scroll position after a short delay
+                            setTimeout(restoreScrollPosition, 200);
                         }, 100);
                         
                     } else if (files[currentFile].language === 'css') {
@@ -2618,6 +3074,9 @@
                                     <div class="p-4 border border-gray-200 rounded bg-white shadow-sm transform transition-all duration-300 hover:scale-105">Element 3</div>
                                 </div>
                             </div>`;
+                            
+                        // Restore scroll position
+                        setTimeout(restoreScrollPosition, 100);
                     } else if (files[currentFile].language === 'javascript' || files[currentFile].language === 'js') {
                         outputDisplay.innerHTML = `
                             <div class="p-4 h-full overflow-auto">
@@ -2694,6 +3153,9 @@
                                 hljs.highlightElement(block);
                             });
                         }
+                        
+                        // Restore scroll position
+                        setTimeout(restoreScrollPosition, 100);
                     } else if (files[currentFile].language === 'python' || files[currentFile].language === 'py') {
                         outputDisplay.innerHTML = `
                             <div class="p-4 h-full overflow-auto">
@@ -2711,6 +3173,9 @@
                                 hljs.highlightElement(block);
                             });
                         }
+                        
+                        // Restore scroll position
+                        setTimeout(restoreScrollPosition, 100);
                     } else if (files[currentFile].language === 'xml') {
                         outputDisplay.innerHTML = `
                             <div class="p-4 h-full overflow-auto">
@@ -2723,6 +3188,9 @@
                                 hljs.highlightElement(block);
                             });
                         }
+                        
+                        // Restore scroll position
+                        setTimeout(restoreScrollPosition, 100);
                     } else if (files[currentFile].language === 'json') {
                         try {
                             const jsonObj = JSON.parse(code);
@@ -2738,6 +3206,9 @@
                                     hljs.highlightElement(block);
                                 });
                             }
+                            
+                            // Restore scroll position
+                            setTimeout(restoreScrollPosition, 100);
                         } catch (error) {
                             outputDisplay.innerHTML = `
                                 <div class="p-4 h-full overflow-auto">
@@ -3467,6 +3938,65 @@
                 .replace(/"/g, "&quot;")
                 .replace(/'/g, "&#039;");
         }
+        
+        // Implement scroll position saving functionality
+        function saveScrollPosition() {
+            const outputDisplay = document.getElementById('output-display');
+            const previewFrame = document.getElementById('preview-frame');
+            
+            if (!outputDisplay) return;
+            
+            // Store current scroll positions
+            localStorage.setItem('outputScrollTop', outputDisplay.scrollTop);
+            localStorage.setItem('outputScrollLeft', outputDisplay.scrollLeft);
+            
+            // If there's an iframe, store its scroll position too
+            if (previewFrame && previewFrame.contentWindow) {
+                try {
+                    const frameDoc = previewFrame.contentDocument || previewFrame.contentWindow.document;
+                    localStorage.setItem('iframeScrollTop', frameDoc.documentElement.scrollTop || frameDoc.body.scrollTop);
+                    localStorage.setItem('iframeScrollLeft', frameDoc.documentElement.scrollLeft || frameDoc.body.scrollLeft);
+                } catch (e) {
+                    console.warn('Could not save iframe scroll position:', e);
+                }
+            }
+        }
+
+        function restoreScrollPosition() {
+            const outputDisplay = document.getElementById('output-display');
+            const previewFrame = document.getElementById('preview-frame');
+            
+            if (!outputDisplay) return;
+            
+            // Restore container scroll positions
+            const outputScrollTop = localStorage.getItem('outputScrollTop');
+            const outputScrollLeft = localStorage.getItem('outputScrollLeft');
+            
+            if (outputScrollTop) outputDisplay.scrollTop = parseInt(outputScrollTop);
+            if (outputScrollLeft) outputDisplay.scrollLeft = parseInt(outputScrollLeft);
+            
+            // If there's an iframe, restore its scroll position too
+            if (previewFrame) {
+                previewFrame.addEventListener('load', () => {
+                    try {
+                        const frameDoc = previewFrame.contentDocument || previewFrame.contentWindow.document;
+                        const iframeScrollTop = localStorage.getItem('iframeScrollTop');
+                        const iframeScrollLeft = localStorage.getItem('iframeScrollLeft');
+                        
+                        if (iframeScrollTop) frameDoc.documentElement.scrollTop = frameDoc.body.scrollTop = parseInt(iframeScrollTop);
+                        if (iframeScrollLeft) frameDoc.documentElement.scrollLeft = frameDoc.body.scrollLeft = parseInt(iframeScrollLeft);
+                    } catch (e) {
+                        console.warn('Could not restore iframe scroll position:', e);
+                    }
+                });
+            }
+        }
+
+        // Add save scroll position to refresh button too
+        document.getElementById('refresh-btn').addEventListener('click', saveScrollPosition);
+
+        // Restore scroll position on page load and after code runs
+        window.addEventListener('load', restoreScrollPosition);
     </script>
 </body>
 </html>
