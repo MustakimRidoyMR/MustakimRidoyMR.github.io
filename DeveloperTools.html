@@ -515,6 +515,26 @@
                 <h2>ColorMaster</h2>
                 <h>v1.0</h>
                 <p>Advanced color picker and palette generator</p>
+            <m>read more...</m>
+            <pa>আপনি কি ওয়েব ডিজাইনার, গ্রাফিক ডিজাইনার, ডেভেলপার বা রঙের সাথে কাজ করতে ভালোবাসেন? তাহলে আপনার জন্য রয়েছে একটি অসাধারণ অনলাইন টুল—<n>ColorMaster</n>! এখানে আপনি সহজেই রঙ নির্বাচন, গ্রেডিয়েন্ট তৈরি এবং প্যালেট জেনারেট করতে পারবেন।</pa>
+
+<pa>আমাদের প্ল্যাটফর্মের মূল বৈশিষ্ট্যসমূহ:</pa>
+
+<pa><n>রঙ নির্বাচনকারী:</n> সহজেই আপনার পছন্দের রঙ নির্বাচন করুন এবং তার <n>HEX</n>, <n>RGB</n>, ও <n>HSL</n> মানগুলি পান। রঙ কপি করুন, র্যান্ডম রঙ জেনারেট করুন এবং আপনার প্যালেটে সংরক্ষণ করুন।</pa>
+
+<pa><n>গ্রেডিয়েন্ট জেনারেটর:</n> দুটি রঙের মধ্যে সুন্দর গ্রেডিয়েন্ট তৈরি করুন। বিভিন্ন দিক (যেমন, অনুভূমিক, উল্লম্ব, ডায়াগোনাল) এবং প্রকার (লিনিয়ার, র‍্যাডিয়াল, কনিক) নির্বাচন করে আপনার প্রয়োজন অনুযায়ী গ্রেডিয়েন্ট কাস্টমাইজ করুন। তৈরি করা গ্রেডিয়েন্টের <n>CSS</n> কোড কপি করুন এবং আপনার প্রজেক্টে ব্যবহার করুন।</pa>
+
+<pa><n>রঙ প্যালেট জেনারেটর:</n> বিভিন্ন প্যালেট প্রকার (কমপ্লিমেন্টারি, অ্যানালোগাস, ট্রায়াডিক, টেট্রাডিক, মনোক্রোম্যাটিক) ব্যবহার করে রঙের প্যালেট তৈরি করুন। এটি আপনার ডিজাইন প্রজেক্টের জন্য সঠিক রঙ সমন্বয় খুঁজে পেতে সহায়তা করবে।</pa>
+
+<pa><n>সংরক্ষিত রঙ:</n> আপনার প্রিয় রঙগুলি সংরক্ষণ করুন এবং প্রয়োজনে সেগুলো সহজেই পুনরায় ব্যবহার করুন।</pa>
+
+<pa><n>সাম্প্রতিক রঙ:</n> আপনার সাম্প্রতিক ব্যবহৃত রঙগুলির তালিকা দেখুন, যা আপনাকে দ্রুত পূর্বের রঙগুলিতে ফিরে যেতে সহায়তা করবে।</pa>
+
+<pa><n>রঙ প্যালেট এক্সপোর্ট:</n> আপনার তৈরি করা প্যালেটগুলি বিভিন্ন ফরম্যাটে (HEX কোড, RGB মান, HSL মান, CSS ভেরিয়েবল) এক্সপোর্ট করুন এবং আপনার প্রজেক্টে সহজেই ইমপোর্ট করুন।</pa>
+
+<pa>আমাদের <n>ColorMaster</n> টুলটি ব্যবহার করে আপনি আপনার ডিজাইন প্রজেক্টের জন্য নিখুঁত রঙ সমন্বয় খুঁজে পেতে এবং সেগুলো সহজেই পরিচালনা করতে সক্ষম হবেন। এটি সম্পূর্ণ বিনামূল্যে এবং ব্যবহার করা অত্যন্ত সহজ!</pa>
+
+<pa>আপনার রঙ সম্বন্ধীয় কাজকে আরও সহজ ও কার্যকর করতে এখনই <n>ColorMaster</n> ব্যবহার শুরু করুন!</pa>
               <a href="ColorMaster.html" class="project-link">Get Color</a>
             </div>
       </div>
@@ -543,40 +563,43 @@
 
     <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const projectCard = document.querySelector('.project-card');
-    const pElements = projectCard.querySelectorAll('p');
-    const mElements = projectCard.querySelectorAll('m');
-    const aElements = projectCard.querySelectorAll('a');
-    const paElements = projectCard.querySelectorAll('pa');
-    const nElements = projectCard.querySelectorAll('n');
+    const projectCards = document.querySelectorAll('.project-card');
 
-    // Page load e pa and n tag hide kora
-    paElements.forEach(element => {
-      element.style.display = 'none';
-    });
-    nElements.forEach(element => {
-      element.style.display = 'none';
-    });
+    projectCards.forEach(projectCard => {
+      const pElements = projectCard.querySelectorAll('p');
+      const mElements = projectCard.querySelectorAll('m');
+      const aElements = projectCard.querySelectorAll('a');
+      const paElements = projectCard.querySelectorAll('pa');
+      const nElements = projectCard.querySelectorAll('n');
 
-    let showPaAndN = false; // Initial state
-
-    projectCard.addEventListener('click', function() {
-      showPaAndN = !showPaAndN; // Toggle the state
-
-      pElements.forEach(element => {
-        element.style.display = showPaAndN ? 'none' : '';
-      });
-      mElements.forEach(element => {
-        element.style.display = showPaAndN ? 'none' : '';
-      });
-      aElements.forEach(element => {
-        element.style.display = showPaAndN ? 'none' : '';
-      });
+      // Page load e pa and n tag hide kora for this card
       paElements.forEach(element => {
-        element.style.display = showPaAndN ? '' : 'none';
+        element.style.display = 'none';
       });
       nElements.forEach(element => {
-        element.style.display = showPaAndN ? '' : 'none';
+        element.style.display = 'none';
+      });
+
+      let showPaAndN = false; // State specific to this card
+
+      projectCard.addEventListener('click', function() {
+        showPaAndN = !showPaAndN; // Toggle state for this card
+
+        pElements.forEach(element => {
+          element.style.display = showPaAndN ? 'none' : '';
+        });
+        mElements.forEach(element => {
+          element.style.display = showPaAndN ? 'none' : '';
+        });
+        aElements.forEach(element => {
+          element.style.display = showPaAndN ? 'none' : '';
+        });
+        paElements.forEach(element => {
+          element.style.display = showPaAndN ? '' : 'none';
+        });
+        nElements.forEach(element => {
+          element.style.display = showPaAndN ? '' : 'none';
+        });
       });
     });
   });
