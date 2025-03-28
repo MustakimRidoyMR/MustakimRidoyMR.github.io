@@ -157,6 +157,20 @@
             font-weight: 700;
             letter-spacing: 1px;
         }
+   
+  pa {
+    display: block; 
+    margin-bottom: 10px;
+    color: white;
+  }
+  n {
+    display: inline-block;
+    font-weight: bold;
+    color: #00FF9E;
+  }
+  m{
+    color:#00FF9E;
+  }
 
         .subtitle {
             font-size: 1.4em;
@@ -470,6 +484,30 @@
                 <h2>CodeCraft Pro</h2>
                 <h>v2.0</h>
                 <p>The page and code view to make it more professional for developers. The improvements will include a better code editor, more advanced UI, and expanded functionality.</p>
+              <m>read more...</m>
+              <pa>আপনি কি একজন ডেভেলপার, শিক্ষার্থী বা কোডিং প্রেমী? আপনার জন্য রয়েছে একটি অসাধারণ অনলাইন প্ল্যাটফর্ম—<n>CodeCraft Pro Runner</n>! এখানে আপনি সহজেই বিভিন্ন প্রোগ্রামিং ভাষায় কোড লিখতে, সম্পাদনা করতে এবং তাৎক্ষণিকভাবে আউটপুট দেখতে পারবেন।</pa>
+
+<pa>আমাদের প্ল্যাটফর্মের মূল বৈশিষ্ট্যসমূহ:</pa>
+
+<pa><n>লাইভ প্রিভিউ:</n> কোড চালানোর সাথে সাথে আউটপুট সরাসরি প্রিভিউ প্যানেলে দেখুন, যা দ্রুত ফলাফল পর্যালোচনায় সহায়তা করে।</pa>
+
+<pa><n>প্রো এডিটর:</n> সিনট্যাক্স হাইলাইটিং, লাইন নম্বর এবং কোড ফরম্যাটিং সুবিধা প্রদান করে, যা কোডিং অভিজ্ঞতাকে আরও উন্নত করে।</pa>
+
+<pa><n>কনসোল আউটপুট:</n> একটি ইন্টিগ্রেটেড কনসোল রয়েছে যা লগ এবং ত্রুটি প্রদর্শন করে, ডিবাগিং প্রক্রিয়াকে সহজ করে তোলে।</pa>
+
+<pa><n>ডেভেলপার টুলস:</n> এই প্ল্যাটফর্মে HTML ভ্যালিডেটর, CSS বিউটিফায়ার, JS ফরম্যাটার এবং রেসপন্সিভ টেস্টারের মতো বিভিন্ন ডেভেলপার টুলস অন্তর্ভুক্ত রয়েছে।</pa>
+
+<pa><n>কীবোর্ড শর্টকাটস:</n> দ্রুত নেভিগেশন এবং অপারেশনের জন্য বিভিন্ন কীবোর্ড শর্টকাটস সমর্থিত, যেমন কোড চালানো, ফরম্যাটিং এবং ফাইল সংরক্ষণ।</pa>
+
+<pa><n>জনপ্রিয় টেমপ্লেটস:</n> দ্রুত শুরু করার জন্য জনপ্রিয় টেমপ্লেটসমূহ উপলব্ধ, যা নতুন প্রজেক্ট শুরু করতে সহায়তা করে।</pa>
+
+<pa><n>এআই কোড সহকারী:</n> কোড বিশ্লেষণ, ত্রুটি সংশোধন, অপটিমাইজেশন এবং নতুন ফিচার সংযোজনের জন্য একটি এআই সহকারী অন্তর্ভুক্ত রয়েছে।</pa>
+
+<pa><n>রেসপন্সিভ টেস্টার:</n> বিভিন্ন স্ক্রিন সাইজে (মোবাইল, ট্যাবলেট, ডেস্কটপ) ডিজাইন টেস্ট করার সুবিধা প্রদান করে।</pa>
+
+<pa>এই প্ল্যাটফর্মটি ডেভেলপারদের জন্য একটি সম্পূর্ণ সমাধান, যেখানে তারা কোড লিখতে, পরীক্ষা করতে এবং শেয়ার করতে পারেন, সবকিছুই একটি ওয়েব ব্রাউজারের মাধ্যমে।</pa>
+
+<pa>আপনার কোডিং দক্ষতাকে আরও উন্নত করতে এবং সহজে প্রোগ্রামিং অভিজ্ঞতা উপভোগ করতে এখনই <n>CodeCraft Pro Runner</n> ব্যবহার শুরু করুন!</pa>
               <a href="codeRun.html" class="project-link">Run</a>
             </div>
           
@@ -504,6 +542,44 @@
     </footer>
 
     <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const projectCard = document.querySelector('.project-card');
+    const pElements = projectCard.querySelectorAll('p');
+    const mElements = projectCard.querySelectorAll('m');
+    const aElements = projectCard.querySelectorAll('a');
+    const paElements = projectCard.querySelectorAll('pa');
+    const nElements = projectCard.querySelectorAll('n');
+
+    // Page load e pa and n tag hide kora
+    paElements.forEach(element => {
+      element.style.display = 'none';
+    });
+    nElements.forEach(element => {
+      element.style.display = 'none';
+    });
+
+    let showPaAndN = false; // Initial state
+
+    projectCard.addEventListener('click', function() {
+      showPaAndN = !showPaAndN; // Toggle the state
+
+      pElements.forEach(element => {
+        element.style.display = showPaAndN ? 'none' : '';
+      });
+      mElements.forEach(element => {
+        element.style.display = showPaAndN ? 'none' : '';
+      });
+      aElements.forEach(element => {
+        element.style.display = showPaAndN ? 'none' : '';
+      });
+      paElements.forEach(element => {
+        element.style.display = showPaAndN ? '' : 'none';
+      });
+      nElements.forEach(element => {
+        element.style.display = showPaAndN ? '' : 'none';
+      });
+    });
+  });
         // Custom cursor effect
         const cursor = document.querySelector('.cursor');
         const cursorFollower = document.querySelector('.cursor-follower');
