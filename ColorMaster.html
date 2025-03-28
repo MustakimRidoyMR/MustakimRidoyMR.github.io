@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Color Picker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5D5CDE',
+                        secondary: '#9F9EF3',
+                        dark: {
+                            primary: '#181818',
+                            secondary: '#252525'
+                        },
+                        light: {
+                            primary: '#FFFFFF',
+                            secondary: '#F5F5F5'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #5D5CDE;
+            --secondary: #9F9EF3;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+        
+        .dark {
+            --primary-bg: #181818;
+            --secondary-bg: #252525;
+            --text-color: #F5F5F5;
+            --card-bg: #252525;
+            --tooltip-bg: #333;
+        }
+        
+        :not(.dark) {
+            --primary-bg: #FFFFFF;
+            --secondary-bg: #F5F5F5;
+            --text-color: #333;
+            --card-bg: #FFFFFF;
+            --tooltip-bg: #F5F5F5;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--secondary-bg);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+        }
+        
+        /* Mouse trail */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+        
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s;
+            z-index: 9998;
+        }
+        
+        /* Buttons & Interactive Elements */
+        .btn {
+            transition: transform 0.2s, filter 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        /* 3D Card effect */
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+        
+        .card-3d:hover {
+            transform: rotateX(5deg) rotateY(5deg);
+        }
+        
+        /* Gradient Animation */
+        .gradient-animation {
+            background: linear-gradient(-45deg, #5D5CDE, #9F9EF3, #32d189, #5D5CDE);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+        }
+        
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            background-color: var(--tooltip-bg);
+            color: var(--text-color);
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s, visibility 0.3s;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Glass effect */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Orbs animation */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.4;
+            transition: all 0.3s ease;
+            animation: float 10s infinite alternate;
+            z-index: -1;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+            50% {
+                transform: translateY(-30px) translateX(20px);
+            }
+            100% {
+                transform: translateY(0) translateX(0);
+            }
+        }
+        
+        /* Highlight for cards */
+        .highlight-border::before {
+            content: "";
+            position: absolute;
+            inset: -4px;
+            z-index: -1;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .highlight-border:hover::before {
+            opacity: 1;
+        }
+        
+        /* Custom range slider style */
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            background: #d3d3d3;
+            border-radius: 5px;
+            outline: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.15s ease-in-out;
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            border: 0;
+            transition: background 0.15s ease-in-out;
+        }
+        
+        /* Color display animation */
+        .copy-animation {
+            animation: ping 1s cubic-bezier(0, 0, 0.2, 1);
+        }
+        
+        @keyframes ping {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            75%, 100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+        
+        /* Color grid items */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 10px;
+        }
+        
+        .color-item {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .color-item:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-light-primary dark:bg-dark-primary text-gray-900 dark:text-white min-h-screen transition-colors duration-300">
+    <!-- Mouse cursor elements -->
+    <div class="cursor-dot hidden md:block"></div>
+    <div class="cursor-outline hidden md:block"></div>
+    
+    <!-- Decorative background orbs -->
+    <div class="orb" style="width: 300px; height: 300px; top: 10%; left: 5%; background: #5D5CDE; animation-delay: 0s;"></div>
+    <div class="orb" style="width: 250px; height: 250px; top: 60%; right: 10%; background: #9F9EF3; animation-delay: 2s;"></div>
+    <div class="orb" style="width: 200px; height: 200px; top: 40%; left: 50%; background: #32d189; animation-delay: 4s;"></div>
+    
+    <!-- Header -->
+    <header class="w-full px-6 py-4 flex justify-between items-center backdrop-blur-sm sticky top-0 z-10">
+        <div class="flex items-center">
+            <div class="w-12 h-12 rounded-lg bg-gradient-to-tr from-primary to-secondary flex items-center justify-center shadow-lg mr-3">
+                <svg class="w-7 h-7 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+                </svg>
+            </div>
+            <h1 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">ColorMaster</h1>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+            <!-- Color Modes Toggle -->
+            <button id="theme-toggle" class="p-2 rounded-full bg-light-secondary dark:bg-dark-secondary transition-all">
+                <svg id="sun-icon" class="w-6 h-6 text-yellow-500 hidden dark:inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+                <svg id="moon-icon" class="w-6 h-6 text-gray-700 inline dark:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+    
+    <main class="container mx-auto px-4 py-8 relative z-0">
+        <div class="grid grid-cols-1 lg:grid-cols-7 gap-6">
+            <!-- Main Color Picker Section -->
+            <div class="lg:col-span-4 relative">
+                <div class="card-3d bg-white dark:bg-dark-secondary rounded-2xl p-6 shadow-xl relative highlight-border mb-6">
+                    <h2 class="text-xl font-bold mb-4 text-center">Color Picker</h2>
+                    
+                    <!-- Main color display -->
+                    <div id="color-display" class="w-full h-40 rounded-xl mb-4 flex items-center justify-center shadow-inner relative overflow-hidden" style="background-color: #5D5CDE;">
+                        <span id="color-value" class="text-white text-xl font-bold">HEX: #5D5CDE</span>
+                        <div id="copy-indicator" class="absolute inset-0 bg-white opacity-0 pointer-events-none"></div>
+                    </div>
+                    
+                    <!-- Color Input Controls -->
+                    <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                        <div class="flex-1">
+                            <label class="block text-sm font-medium mb-1">HEX</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-2 text-gray-500">#</span>
+                                <input type="text" id="hex-input" class="w-full bg-light-secondary dark:bg-dark-primary rounded-lg p-3 pl-7 text-base focus:ring-2 focus:ring-primary outline-none" value="5D5CDE">
+                            </div>
+                        </div>
+                        
+                        <div class="flex-1">
+                            <label class="block text-sm font-medium mb-1">RGB</label>
+                            <input type="text" id="rgb-input" class="w-full bg-light-secondary dark:bg-dark-primary rounded-lg p-3 text-base focus:ring-2 focus:ring-primary outline-none" value="93, 92, 222">
+                        </div>
+                        
+                        <div class="flex-1">
+                            <label class="block text-sm font-medium mb-1">HSL</label>
+                            <input type="text" id="hsl-input" class="w-full bg-light-secondary dark:bg-dark-primary rounded-lg p-3 text-base focus:ring-2 focus:ring-primary outline-none" value="241°, 65%, 62%">
+                        </div>
+                    </div>
+                    
+                    <!-- RGB Sliders -->
+                    <div class="mb-6">
+                        <div class="mb-3">
+                            <div class="flex justify-between mb-1">
+                                <label class="text-sm font-medium">Red</label>
+                                <span id="red-value" class="text-sm">93</span>
+                            </div>
+                            <input type="range" id="red-slider" min="0" max="255" value="93" class="slider w-full">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="flex justify-between mb-1">
+                                <label class="text-sm font-medium">Green</label>
+                                <span id="green-value" class="text-sm">92</span>
+                            </div>
+                            <input type="range" id="green-slider" min="0" max="255" value="92" class="slider w-full">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="flex justify-between mb-1">
+                                <label class="text-sm font-medium">Blue</label>
+                                <span id="blue-value" class="text-sm">222</span>
+                            </div>
+                            <input type="range" id="blue-slider" min="0" max="255" value="222" class="slider w-full">
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="flex flex-wrap gap-2">
+                        <button id="copy-btn" class="btn tooltip px-4 py-2 bg-primary text-white rounded-lg hover:bg-opacity-90 flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+                            </svg>
+                            Copy
+                            <span class="tooltip-text">Copy to clipboard</span>
+                        </button>
+                        
+                        <button id="random-btn" class="btn tooltip px-4 py-2 bg-secondary text-white rounded-lg hover:bg-opacity-90 flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                            Random
+                            <span class="tooltip-text">Generate random color</span>
+                        </button>
+                        
+                        <button id="save-btn" class="btn tooltip px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-opacity-90 flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                            </svg>
+                            Save
+                            <span class="tooltip-text">Save to palette</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Gradient Generator -->
+                <div class="card-3d bg-white dark:bg-dark-secondary rounded-2xl p-6 shadow-xl relative highlight-border">
+                    <h2 class="text-xl font-bold mb-4 text-center">Gradient Generator</h2>
+                    
+                    <div id="gradient-display" class="w-full h-32 rounded-xl mb-4 flex items-center justify-center shadow-inner" style="background: linear-gradient(to right, #5D5CDE, #32d189);">
+                        <span id="gradient-code" class="text-white text-sm font-bold bg-black bg-opacity-30 p-2 rounded">linear-gradient(to right, #5D5CDE, #32d189)</span>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Start Color</label>
+                            <div class="flex">
+                                <input type="color" id="gradient-start" value="#5D5CDE" class="w-12 h-10 rounded-l-lg border-0">
+                                <input type="text" id="gradient-start-text" value="#5D5CDE" class="flex-grow bg-light-secondary dark:bg-dark-primary rounded-r-lg p-2 text-base">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-1">End Color</label>
+                            <div class="flex">
+                                <input type="color" id="gradient-end" value="#32d189" class="w-12 h-10 rounded-l-lg border-0">
+                                <input type="text" id="gradient-end-text" value="#32d189" class="flex-grow bg-light-secondary dark:bg-dark-primary rounded-r-lg p-2 text-base">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-1">Direction</label>
+                        <select id="gradient-direction" class="w-full bg-light-secondary dark:bg-dark-primary rounded-lg p-3 text-base focus:ring-2 focus:ring-primary outline-none">
+                            <option value="to right">Horizontal →</option>
+                            <option value="to left">Horizontal ←</option>
+                            <option value="to bottom">Vertical ↓</option>
+                            <option value="to top">Vertical ↑</option>
+                            <option value="to bottom right">Diagonal ↘</option>
+                            <option value="to bottom left">Diagonal ↙</option>
+                            <option value="to top right">Diagonal ↗</option>
+                            <option value="to top left">Diagonal ↖</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-1">Type</label>
+                        <div class="flex gap-3">
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="gradient-type" value="linear" checked class="w-4 h-4 text-primary">
+                                <span class="ml-2">Linear</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="gradient-type" value="radial" class="w-4 h-4 text-primary">
+                                <span class="ml-2">Radial</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="gradient-type" value="conic" class="w-4 h-4 text-primary">
+                                <span class="ml-2">Conic</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button id="copy-gradient-btn" class="btn px-4 py-2 bg-primary text-white rounded-lg hover:bg-opacity-90 flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+                        </svg>
+                        Copy CSS Code
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Right Sidebar Sections -->
+            <div class="lg:col-span-3">
+                <!-- Color Palette Suggestions -->
+                <div class="card-3d bg-white dark:bg-dark-secondary rounded-2xl p-6 shadow-xl relative highlight-border mb-6">
+                    <h2 class="text-xl font-bold mb-4 text-center">Color Palettes</h2>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-2">Palette Type</label>
+                        <select id="palette-type" class="w-full bg-light-secondary dark:bg-dark-primary rounded-lg p-3 text-base focus:ring-2 focus:ring-primary outline-none">
+                            <option value="complementary">Complementary</option>
+                            <option value="analogous">Analogous</option>
+                            <option value="triadic">Triadic</option>
+                            <option value="tetradic">Tetradic</option>
+                            <option value="monochromatic">Monochromatic</option>
+                        </select>
+                    </div>
+                    
+                    <div id="color-palette" class="grid grid-cols-5 gap-2 mb-4">
+                        <!-- Colors will be generated here -->
+                        <div class="color-item rounded-lg" style="background-color: #5D5CDE;"></div>
+                        <div class="color-item rounded-lg" style="background-color: #DE5C5D;"></div>
+                        <div class="color-item rounded-lg" style="background-color: #5DDE5C;"></div>
+                        <div class="color-item rounded-lg" style="background-color: #5CDEDE;"></div>
+                        <div class="color-item rounded-lg" style="background-color: #DE5CDE;"></div>
+                    </div>
+                    
+                    <button id="generate-palette-btn" class="btn w-full px-4 py-2 bg-secondary text-white rounded-lg hover:bg-opacity-90">
+                        Generate Palette
+                    </button>
+                </div>
+                
+                <!-- Saved Colors -->
+                <div class="card-3d bg-white dark:bg-dark-secondary rounded-2xl p-6 shadow-xl relative highlight-border mb-6">
+                    <h2 class="text-xl font-bold mb-4 text-center">Saved Colors</h2>
+                    
+                    <div id="saved-colors" class="color-grid mb-4 max-h-60 overflow-y-auto px-1">
+                        <!-- Saved colors will appear here -->
+                        <div class="color-item tooltip" style="background-color: #5D5CDE;">
+                            <span class="tooltip-text">#5D5CDE</span>
+                        </div>
+                        <div class="color-item tooltip" style="background-color: #DE5C5D;">
+                            <span class="tooltip-text">#DE5C5D</span>
+                        </div>
+                        <div class="color-item tooltip" style="background-color: #32d189;">
+                            <span class="tooltip-text">#32d189</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-2">
+                        <button id="clear-saved-btn" class="btn flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-opacity-90">
+                            Clear All
+                        </button>
+                        <button id="export-btn" class="btn flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-opacity-90">
+                            Export Palette
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Color History -->
+                <div class="card-3d bg-white dark:bg-dark-secondary rounded-2xl p-6 shadow-xl relative highlight-border">
+                    <h2 class="text-xl font-bold mb-4 text-center">Recent Colors</h2>
+                    
+                    <div id="color-history" class="color-grid mb-2">
+                        <!-- Color history will appear here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="py-6 px-6 text-center relative z-0 mt-10">
+        <p class="text-sm text-gray-600 dark:text-gray-400">© 2023 ColorMaster -- Advanced color picker and palette generator</p>
+    </footer>
+    
+    <!-- Export Modal -->
+    <div id="export-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden backdrop-blur-sm">
+        <div class="bg-white dark:bg-dark-secondary rounded-xl p-6 max-w-md w-full shadow-2xl glass-effect">
+            <h3 class="text-xl font-bold mb-4">Export Color Palette</h3>
+            
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-1">Format</label>
+                <select id="export-format" class="w-full bg-light-secondary dark:bg-dark-primary rounded-lg p-3 text-base focus:ring-2 focus:ring-primary outline-none">
+                    <option value="hex">HEX Codes</option>
+                    <option value="rgb">RGB Values</option>
+                    <option value="hsl">HSL Values</option>
+                    <option value="css">CSS Variables</option>
+                </select>
+            </div>
+            
+            <div class="mb-4">
+                <textarea id="export-text" class="w-full h-36 bg-light-secondary dark:bg-dark-primary rounded-lg p-3 text-base focus:ring-2 focus:ring-primary outline-none" readonly></textarea>
+            </div>
+            
+            <div class="flex gap-2">
+                <button id="copy-export-btn" class="btn flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-opacity-90">
+                    Copy to Clipboard
+                </button>
+                <button id="close-modal-btn" class="btn flex-1 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-opacity-90">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Initialize dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+        
+        // DOM elements
+        const themeToggle = document.getElementById('theme-toggle');
+        const hexInput = document.getElementById('hex-input');
+        const rgbInput = document.getElementById('rgb-input');
+        const hslInput = document.getElementById('hsl-input');
+        const redSlider = document.getElementById('red-slider');
+        const greenSlider = document.getElementById('green-slider');
+        const blueSlider = document.getElementById('blue-slider');
+        const redValue = document.getElementById('red-value');
+        const greenValue = document.getElementById('green-value');
+        const blueValue = document.getElementById('blue-value');
+        const colorDisplay = document.getElementById('color-display');
+        const colorValue = document.getElementById('color-value');
+        const copyBtn = document.getElementById('copy-btn');
+        const randomBtn = document.getElementById('random-btn');
+        const saveBtn = document.getElementById('save-btn');
+        const copyIndicator = document.getElementById('copy-indicator');
+        const gradientStart = document.getElementById('gradient-start');
+        const gradientEnd = document.getElementById('gradient-end');
+        const gradientStartText = document.getElementById('gradient-start-text');
+        const gradientEndText = document.getElementById('gradient-end-text');
+        const gradientDirection = document.getElementById('gradient-direction');
+        const gradientTypeInputs = document.querySelectorAll('input[name="gradient-type"]');
+        const gradientDisplay = document.getElementById('gradient-display');
+        const gradientCode = document.getElementById('gradient-code');
+        const copyGradientBtn = document.getElementById('copy-gradient-btn');
+        const paletteType = document.getElementById('palette-type');
+        const colorPalette = document.getElementById('color-palette');
+        const generatePaletteBtn = document.getElementById('generate-palette-btn');
+        const savedColors = document.getElementById('saved-colors');
+        const clearSavedBtn = document.getElementById('clear-saved-btn');
+        const exportBtn = document.getElementById('export-btn');
+        const colorHistory = document.getElementById('color-history');
+        const exportModal = document.getElementById('export-modal');
+        const exportFormat = document.getElementById('export-format');
+        const exportText = document.getElementById('export-text');
+        const copyExportBtn = document.getElementById('copy-export-btn');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        
+        // Current color state
+        let currentColor = {
+            r: 93,
+            g: 92,
+            b: 222
+        };
+        
+        // Arrays to store history and saved colors
+        let colorHistoryArray = [];
+        let savedColorsArray = [];
+        
+        // Mouse cursor effect
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        
+        if (window.innerWidth > 768) {
+            window.addEventListener('mousemove', (e) => {
+                const posX = e.clientX;
+                const posY = e.clientY;
+                
+                cursorDot.style.left = `${posX}px`;
+                cursorDot.style.top = `${posY}px`;
+                
+                // Add some delay to cursor outline for smooth effect
+                setTimeout(() => {
+                    cursorOutline.style.left = `${posX}px`;
+                    cursorOutline.style.top = `${posY}px`;
+                }, 80);
+            });
+        }
+        
+        // Theme toggle
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+        });
+        
+        // Update all UI elements based on RGB values
+        function updateColorUI(noHistory = false) {
+            // Calculate hex
+            const hexColor = rgbToHex(currentColor.r, currentColor.g, currentColor.b);
+            
+            // Calculate HSL
+            const hsl = rgbToHsl(currentColor.r, currentColor.g, currentColor.b);
+            
+            // Update inputs
+            hexInput.value = hexColor.substring(1); // Remove # from the hex
+            rgbInput.value = `${currentColor.r}, ${currentColor.g}, ${currentColor.b}`;
+            hslInput.value = `${Math.round(hsl.h)}°, ${Math.round(hsl.s)}%, ${Math.round(hsl.l)}%`;
+            
+            // Update sliders
+            redSlider.value = currentColor.r;
+            greenSlider.value = currentColor.g;
+            blueSlider.value = currentColor.b;
+            
+            // Update slider values
+            redValue.textContent = currentColor.r;
+            greenValue.textContent = currentColor.g;
+            blueValue.textContent = currentColor.b;
+            
+            // Update color display
+            colorDisplay.style.backgroundColor = hexColor;
+            colorValue.textContent = `HEX: ${hexColor}`;
+            
+            // Set appropriate text color based on background luminance
+            const luminance = (0.299 * currentColor.r + 0.587 * currentColor.g + 0.114 * currentColor.b) / 255;
+            if (luminance > 0.5) {
+                colorValue.classList.remove('text-white');
+                colorValue.classList.add('text-black');
+            } else {
+                colorValue.classList.remove('text-black');
+                colorValue.classList.add('text-white');
+            }
+            
+            // Add to history if not suppressed
+            if (!noHistory) {
+                addToHistory(hexColor);
+            }
+        }
+        
+        // Convert RGB to HEX
+        function rgbToHex(r, g, b) {
+            return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
+        }
+        
+        // Convert HEX to RGB
+        function hexToRgb(hex) {
+            hex = hex.replace(/^#/, '');
+            const bigint = parseInt(hex, 16);
+            return {
+                r: (bigint >> 16) & 255,
+                g: (bigint >> 8) & 255,
+                b: bigint & 255
+            };
+        }
+        
+        // Convert RGB to HSL
+        function rgbToHsl(r, g, b) {
+            r /= 255;
+            g /= 255;
+            b /= 255;
+            
+            const max = Math.max(r, g, b);
+            const min = Math.min(r, g, b);
+            let h, s, l = (max + min) / 2;
+            
+            if (max === min) {
+                h = s = 0; // achromatic
+            } else {
+                const d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                
+                switch (max) {
+                    case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                    case g: h = (b - r) / d + 2; break;
+                    case b: h = (r - g) / d + 4; break;
+                }
+                
+                h /= 6;
+            }
+            
+            return {
+                h: Math.round(h * 360),
+                s: Math.round(s * 100),
+                l: Math.round(l * 100)
+            };
+        }
+        
+        // Parse HSL string to object
+        function parseHsl(hslStr) {
+            const parts = hslStr.match(/\d+/g);
+            if (parts && parts.length >= 3) {
+                return {
+                    h: parseInt(parts[0]),
+                    s: parseInt(parts[1]),
+                    l: parseInt(parts[2])
+                };
+            }
+            return { h: 0, s: 0, l: 0 };
+        }
+        
+        // Convert HSL to RGB
+        function hslToRgb(h, s, l) {
+            h /= 360;
+            s /= 100;
+            l /= 100;
+            let r, g, b;
+            
+            if (s === 0) {
+                r = g = b = l; // achromatic
+            } else {
+                const hue2rgb = (p, q, t) => {
+                    if (t < 0) t += 1;
+                    if (t > 1) t -= 1;
+                    if (t < 1/6) return p + (q - p) * 6 * t;
+                    if (t < 1/2) return q;
+                    if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+                    return p;
+                };
+                
+                const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                const p = 2 * l - q;
+                
+                r = hue2rgb(p, q, h + 1/3);
+                g = hue2rgb(p, q, h);
+                b = hue2rgb(p, q, h - 1/3);
+            }
+            
+            return {
+                r: Math.round(r * 255),
+                g: Math.round(g * 255),
+                b: Math.round(b * 255)
+            };
+        }
+        
+        // Generate a random color
+        function getRandomColor() {
+            return {
+                r: Math.floor(Math.random() * 256),
+                g: Math.floor(Math.random() * 256),
+                b: Math.floor(Math.random() * 256)
+            };
+        }
+        
+        // Add a color to history
+        function addToHistory(hexColor) {
+            // Don't add if it's already the last color
+            if (colorHistoryArray.length > 0 && colorHistoryArray[0] === hexColor) {
+                return;
+            }
+            
+            // Add to the beginning
+            colorHistoryArray.unshift(hexColor);
+            
+            // Keep only the last 10 colors
+            if (colorHistoryArray.length > 10) {
+                colorHistoryArray.pop();
+            }
+            
+            // Update history UI
+            updateHistoryUI();
+        }
+        
+        // Update the color history UI
+        function updateHistoryUI() {
+            colorHistory.innerHTML = '';
+            colorHistoryArray.forEach(color => {
+                const item = document.createElement('div');
+                item.classList.add('color-item', 'tooltip');
+                item.style.backgroundColor = color;
+                
+                const tooltip = document.createElement('span');
+                tooltip.classList.add('tooltip-text');
+                tooltip.textContent = color;
+                
+                item.appendChild(tooltip);
+                
+                item.addEventListener('click', () => {
+                    const rgb = hexToRgb(color);
+                    currentColor = rgb;
+                    updateColorUI();
+                });
+                
+                colorHistory.appendChild(item);
+            });
+        }
+        
+        // Add a color to saved colors
+        function saveColor(hexColor) {
+            // Don't add duplicates
+            if (savedColorsArray.includes(hexColor)) {
+                return;
+            }
+            
+            savedColorsArray.push(hexColor);
+            updateSavedColorsUI();
+        }
+        
+        // Update the saved colors UI
+        function updateSavedColorsUI() {
+            savedColors.innerHTML = '';
+            savedColorsArray.forEach(color => {
+                const item = document.createElement('div');
+                item.classList.add('color-item', 'tooltip');
+                item.style.backgroundColor = color;
+                
+                const tooltip = document.createElement('span');
+                tooltip.classList.add('tooltip-text');
+                tooltip.textContent = color;
+                
+                item.appendChild(tooltip);
+                
+                item.addEventListener('click', () => {
+                    const rgb = hexToRgb(color);
+                    currentColor = rgb;
+                    updateColorUI();
+                });
+                
+                savedColors.appendChild(item);
+            });
+        }
+        
+        // Generate Color Palette
+        function generatePalette() {
+            const baseHex = rgbToHex(currentColor.r, currentColor.g, currentColor.b);
+            const baseHsl = rgbToHsl(currentColor.r, currentColor.g, currentColor.b);
+            const type = paletteType.value;
+            const palette = [];
+            
+            palette.push(baseHex); // Add the base color
+            
+            switch (type) {
+                case 'complementary':
+                    // Add complementary color (opposite on color wheel)
+                    const comp = { ...baseHsl, h: (baseHsl.h + 180) % 360 };
+                    const compRgb = hslToRgb(comp.h, comp.s, comp.l);
+                    palette.push(rgbToHex(compRgb.r, compRgb.g, compRgb.b));
+                    
+                    // Add variants with different lightness
+                    palette.push(rgbToHex(currentColor.r, currentColor.g, currentColor.b));
+                    
+                    const lighter = { ...baseHsl, l: Math.min(baseHsl.l + 20, 90) };
+                    const lighterRgb = hslToRgb(lighter.h, lighter.s, lighter.l);
+                    palette.push(rgbToHex(lighterRgb.r, lighterRgb.g, lighterRgb.b));
+                    
+                    const darker = { ...baseHsl, l: Math.max(baseHsl.l - 20, 10) };
+                    const darkerRgb = hslToRgb(darker.h, darker.s, darker.l);
+                    palette.push(rgbToHex(darkerRgb.r, darkerRgb.g, darkerRgb.b));
+                    break;
+                    
+                case 'analogous':
+                    // Add colors next to each other on the color wheel
+                    for (let i = -2; i <= 2; i++) {
+                        if (i === 0) continue; // Skip the base color (already added)
+                        
+                        const analogous = { ...baseHsl, h: (baseHsl.h + i * 30 + 360) % 360 };
+                        const analogousRgb = hslToRgb(analogous.h, analogous.s, analogous.l);
+                        palette.push(rgbToHex(analogousRgb.r, analogousRgb.g, analogousRgb.b));
+                    }
+                    break;
+                    
+                case 'triadic':
+                    // Add colors evenly spaced on the color wheel (120° apart)
+                    for (let i = 1; i <= 2; i++) {
+                        const triadic = { ...baseHsl, h: (baseHsl.h + i * 120) % 360 };
+                        const triadicRgb = hslToRgb(triadic.h, triadic.s, triadic.l);
+                        palette.push(rgbToHex(triadicRgb.r, triadicRgb.g, triadicRgb.b));
+                    }
+                    
+                    // Add variants
+                    const light = { ...baseHsl, l: Math.min(baseHsl.l + 15, 90) };
+                    const lightRgb = hslToRgb(light.h, light.s, light.l);
+                    palette.push(rgbToHex(lightRgb.r, lightRgb.g, lightRgb.b));
+                    
+                    const dark = { ...baseHsl, l: Math.max(baseHsl.l - 15, 10) };
+                    const darkRgb = hslToRgb(dark.h, dark.s, dark.l);
+                    palette.push(rgbToHex(darkRgb.r, darkRgb.g, darkRgb.b));
+                    break;
+                    
+                case 'tetradic':
+                    // Add colors forming a rectangle on the color wheel
+                    for (let i = 1; i <= 3; i++) {
+                        const angle = i === 2 ? 180 : (i * 90);
+                        const tetradic = { ...baseHsl, h: (baseHsl.h + angle) % 360 };
+                        const tetradicRgb = hslToRgb(tetradic.h, tetradic.s, tetradic.l);
+                        palette.push(rgbToHex(tetradicRgb.r, tetradicRgb.g, tetradicRgb.b));
+                    }
+                    
+                    // Add a variant
+                    const variant = { ...baseHsl, s: Math.max(baseHsl.s - 20, 10), l: Math.min(baseHsl.l + 20, 90) };
+                    const variantRgb = hslToRgb(variant.h, variant.s, variant.l);
+                    palette.push(rgbToHex(variantRgb.r, variantRgb.g, variantRgb.b));
+                    break;
+                    
+                case 'monochromatic':
+                    // Add shades and tints of the same hue
+                    for (let i = 1; i <= 4; i++) {
+                        const l = Math.max(Math.min(baseHsl.l + (i - 2) * 15, 90), 10);
+                        const mono = { ...baseHsl, l: l };
+                        const monoRgb = hslToRgb(mono.h, mono.s, mono.l);
+                        palette.push(rgbToHex(monoRgb.r, monoRgb.g, monoRgb.b));
+                    }
+                    break;
+            }
+            
+            // Update palette UI
+            updatePaletteUI(palette);
+        }
+        
+        // Update the palette UI
+        function updatePaletteUI(colors) {
+            colorPalette.innerHTML = '';
+            
+            colors.forEach(color => {
+                const item = document.createElement('div');
+                item.classList.add('color-item', 'tooltip');
+                item.style.backgroundColor = color;
+                
+                const tooltip = document.createElement('span');
+                tooltip.classList.add('tooltip-text');
+                tooltip.textContent = color;
+                
+                item.appendChild(tooltip);
+                
+                item.addEventListener('click', () => {
+                    const rgb = hexToRgb(color);
+                    currentColor = rgb;
+                    updateColorUI();
+                });
+                
+                colorPalette.appendChild(item);
+            });
+        }
+        
+        // Update gradient display
+        function updateGradient() {
+            const startColor = gradientStartText.value;
+            const endColor = gradientEndText.value;
+            const direction = gradientDirection.value;
+            let gradientType = 'linear-gradient';
+            
+            // Get the selected gradient type
+            gradientTypeInputs.forEach(input => {
+                if (input.checked) {
+                    if (input.value === 'radial') {
+                        gradientType = 'radial-gradient';
+                    } else if (input.value === 'conic') {
+                        gradientType = 'conic-gradient';
+                    }
+                }
+            });
+            
+            let gradientStr = '';
+            
+            if (gradientType === 'linear-gradient') {
+                gradientStr = `${gradientType}(${direction}, ${startColor}, ${endColor})`;
+            } else if (gradientType === 'radial-gradient') {
+                gradientStr = `${gradientType}(circle, ${startColor}, ${endColor})`;
+            } else if (gradientType === 'conic-gradient') {
+                gradientStr = `${gradientType}(from 0deg, ${startColor}, ${endColor})`;
+            }
+            
+            gradientDisplay.style.background = gradientStr;
+            gradientCode.textContent = gradientStr;
+        }
+        
+        // Export colors
+        function exportColors() {
+            if (savedColorsArray.length === 0) {
+                alert('No colors to export. Please save some colors first.');
+                return;
+            }
+            
+            const format = exportFormat.value;
+            let result = '';
+            
+            savedColorsArray.forEach((color, index) => {
+                const rgb = hexToRgb(color);
+                const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+                
+                switch (format) {
+                    case 'hex':
+                        result += `${color}\n`;
+                        break;
+                    case 'rgb':
+                        result += `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})\n`;
+                        break;
+                    case 'hsl':
+                        result += `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)\n`;
+                        break;
+                    case 'css':
+                        result += `--color-${index + 1}: ${color};\n`;
+                        break;
+                }
+            });
+            
+            exportText.value = result;
+            exportModal.classList.remove('hidden');
+        }
+        
+        // Copy text to clipboard
+        function copyToClipboard(text) {
+            // Create a temporary textarea
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                document.execCommand('copy');
+                return true;
+            } catch (err) {
+                console.error('Failed to copy: ', err);
+                return false;
+            } finally {
+                document.body.removeChild(textarea);
+            }
+        }
+        
+        // Show copy animation
+        function showCopyAnimation() {
+            copyIndicator.classList.add('copy-animation');
+            copyIndicator.style.opacity = '0.3';
+            
+            setTimeout(() => {
+                copyIndicator.classList.remove('copy-animation');
+                copyIndicator.style.opacity = '0';
+            }, 1000);
+        }
+        
+        // Event Listeners
+        
+        // RGB Sliders
+        redSlider.addEventListener('input', () => {
+            currentColor.r = parseInt(redSlider.value);
+            updateColorUI();
+        });
+        
+        greenSlider.addEventListener('input', () => {
+            currentColor.g = parseInt(greenSlider.value);
+            updateColorUI();
+        });
+        
+        blueSlider.addEventListener('input', () => {
+            currentColor.b = parseInt(blueSlider.value);
+            updateColorUI();
+        });
+        
+        // HEX Input
+        hexInput.addEventListener('input', () => {
+            const hexValue = hexInput.value.trim();
+            
+            // Add a leading hash if needed and handle both short and full hex
+            let hex = hexValue.startsWith('#') ? hexValue : '#' + hexValue;
+            
+            // Validate hex format
+            const hexRegex = /^#?([a-f\d]{3}|[a-f\d]{6})$/i;
+            if (hexRegex.test(hex)) {
+                // Convert 3-digit hex to 6-digit
+                if (hex.length === 4) {
+                    hex = '#' + hex[1] + hex[1] + hex[2] + hex[2] + hex[3] + hex[3];
+                } else if (hex.length === 3) {
+                    hex = '#' + hexValue[0] + hexValue[0] + hexValue[1] + hexValue[1] + hexValue[2] + hexValue[2];
+                }
+                
+                const rgb = hexToRgb(hex);
+                currentColor = rgb;
+                updateColorUI();
+            }
+        });
+        
+        // RGB Input
+        rgbInput.addEventListener('input', () => {
+            const rgbValue = rgbInput.value.trim();
+            const rgbRegex = /^(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})$/;
+            
+            const match = rgbValue.match(rgbRegex);
+            if (match) {
+                const r = Math.min(255, parseInt(match[1]));
+                const g = Math.min(255, parseInt(match[2]));
+                const b = Math.min(255, parseInt(match[3]));
+                
+                currentColor = { r, g, b };
+                updateColorUI();
+            }
+        });
+        
+        // HSL Input
+        hslInput.addEventListener('input', () => {
+            const hslValue = hslInput.value.trim();
+            const hslRegex = /^(\d{1,3})[°\s]*,\s*(\d{1,3})[%\s]*,\s*(\d{1,3})[%\s]*$/;
+            
+            const match = hslValue.match(hslRegex);
+            if (match) {
+                const h = Math.min(360, parseInt(match[1]));
+                const s = Math.min(100, parseInt(match[2]));
+                const l = Math.min(100, parseInt(match[3]));
+                
+                const rgb = hslToRgb(h, s, l);
+                currentColor = rgb;
+                updateColorUI();
+            }
+        });
+        
+        // Random Color Button
+        randomBtn.addEventListener('click', () => {
+            currentColor = getRandomColor();
+            updateColorUI();
+        });
+        
+        // Copy Button
+        copyBtn.addEventListener('click', () => {
+            const hexColor = rgbToHex(currentColor.r, currentColor.g, currentColor.b);
+            if (copyToClipboard(hexColor)) {
+                showCopyAnimation();
+            }
+        });
+        
+        // Save Button
+        saveBtn.addEventListener('click', () => {
+            const hexColor = rgbToHex(currentColor.r, currentColor.g, currentColor.b);
+            saveColor(hexColor);
+        });
+        
+        // Clear Saved Button
+        clearSavedBtn.addEventListener('click', () => {
+            savedColorsArray = [];
+            updateSavedColorsUI();
+        });
+        
+        // Export Button
+        exportBtn.addEventListener('click', () => {
+            exportColors();
+        });
+        
+        // Close Modal Button
+        closeModalBtn.addEventListener('click', () => {
+            exportModal.classList.add('hidden');
+        });
+        
+        // Copy Export Button
+        copyExportBtn.addEventListener('click', () => {
+            if (copyToClipboard(exportText.value)) {
+                copyExportBtn.textContent = 'Copied!';
+                setTimeout(() => {
+                    copyExportBtn.textContent = 'Copy to Clipboard';
+                }, 2000);
+            }
+        });
+        
+        // Generate Palette Button
+        generatePaletteBtn.addEventListener('click', () => {
+            generatePalette();
+        });
+        
+        // Gradient controls
+        gradientStart.addEventListener('input', () => {
+            gradientStartText.value = gradientStart.value;
+            updateGradient();
+        });
+        
+        gradientEnd.addEventListener('input', () => {
+            gradientEndText.value = gradientEnd.value;
+            updateGradient();
+        });
+        
+        gradientStartText.addEventListener('input', () => {
+            const value = gradientStartText.value.trim();
+            if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+                gradientStart.value = value;
+                updateGradient();
+            }
+        });
+        
+        gradientEndText.addEventListener('input', () => {
+            const value = gradientEndText.value.trim();
+            if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+                gradientEnd.value = value;
+                updateGradient();
+            }
+        });
+        
+        gradientDirection.addEventListener('change', updateGradient);
+        
+        gradientTypeInputs.forEach(input => {
+            input.addEventListener('change', updateGradient);
+        });
+        
+        // Copy Gradient Button
+        copyGradientBtn.addEventListener('click', () => {
+            if (copyToClipboard(gradientCode.textContent)) {
+                copyGradientBtn.textContent = 'Copied!';
+                setTimeout(() => {
+                    copyGradientBtn.textContent = 'Copy CSS Code';
+                }, 2000);
+            }
+        });
+        
+        // Initialize
+        updateColorUI(true);
+        updateGradient();
+        generatePalette();
+        
+        // Load data from localStorage if available
+        function loadFromLocalStorage() {
+            try {
+                // For code challenge (since localStorage is not available in the iframe)
+                // This code would work in a normal browser environment
+                
+                // In a real environment, you would do:
+                // const savedColors = localStorage.getItem('colorMasterSavedColors');
+                // if (savedColors) {
+                //     savedColorsArray = JSON.parse(savedColors);
+                //     updateSavedColorsUI();
+                // }
+                
+                // const colorHistory = localStorage.getItem('colorMasterHistory');
+                // if (colorHistory) {
+                //     colorHistoryArray = JSON.parse(colorHistory);
+                //     updateHistoryUI();
+                // }
+            } catch (e) {
+                console.error('Error loading data from localStorage:', e);
+            }
+        }
+        
+        // Save data to localStorage
+        function saveToLocalStorage() {
+            try {
+                // For code challenge (since localStorage is not available in the iframe)
+                // This code would work in a normal browser environment
+                
+                // In a real environment, you would do:
+                // localStorage.setItem('colorMasterSavedColors', JSON.stringify(savedColorsArray));
+                // localStorage.setItem('colorMasterHistory', JSON.stringify(colorHistoryArray));
+            } catch (e) {
+                console.error('Error saving data to localStorage:', e);
+            }
+        }
+        
+        // Save to localStorage whenever arrays change
+        function setupStoragePersistence() {
+            // We would set up Mutation Observers or proxy objects to watch for changes
+            // and trigger saveToLocalStorage() automatically
+            
+            // For simplicity in this demo, we'll skip the implementation
+        }
+        
+        // Initialize by attempting to load saved data
+        loadFromLocalStorage();
+    </script>
+</body>
+</html>
