@@ -32,6 +32,8 @@
                         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'wiggle': 'wiggle 1s ease-in-out infinite',
                         'float': 'float 3s ease-in-out infinite',
+                        'floating': 'floating 5s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
                     },
                     keyframes: {
                         wiggle: {
@@ -41,7 +43,23 @@
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
                             '50%': { transform: 'translateY(-10px)' },
+                        },
+                        floating: {
+                            '0%': { transform: 'translate(0, 0) rotate(0deg)' },
+                            '25%': { transform: 'translate(5px, -5px) rotate(2deg)' },
+                            '50%': { transform: 'translate(0, -10px) rotate(0deg)' },
+                            '75%': { transform: 'translate(-5px, -5px) rotate(-2deg)' },
+                            '100%': { transform: 'translate(0, 0) rotate(0deg)' },
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 5px rgba(93, 92, 222, 0.5)' },
+                            '100%': { boxShadow: '0 0 20px rgba(93, 92, 222, 0.8)' },
                         }
+                    },
+                    boxShadow: {
+                        'neo': '5px 5px 0px #000',
+                        'neo-white': '5px 5px 0px #fff',
+                        'neo-primary': '5px 5px 0px #5D5CDE',
                     }
                 }
             }
@@ -49,15 +67,15 @@
     </script>
     <style>
         .tool-btn {
-            @apply w-full flex items-center justify-center p-2 rounded-lg transition-all duration-300 hover:bg-primary-100 dark:hover:bg-primary-900;
+            @apply w-full flex items-center justify-center p-2 rounded-lg transition-all duration-300 hover:bg-primary-100 dark:hover:bg-primary-900 hover:shadow-md hover:-translate-y-0.5;
         }
         
         .tool-btn.active {
-            @apply bg-primary-200 dark:bg-primary-800;
+            @apply bg-primary-200 dark:bg-primary-800 shadow-inner;
         }
         
         .slider-thumb {
-            @apply appearance-none w-4 h-4 rounded-full bg-primary-700 cursor-pointer transition-all duration-200;
+            @apply appearance-none w-5 h-5 rounded-full bg-primary-700 cursor-pointer transition-all duration-200 hover:scale-110 hover:shadow-lg;
         }
         
         .slider-track {
@@ -87,11 +105,14 @@
             padding-bottom: 100%;
             border-radius: 8px;
             cursor: pointer;
-            transition: transform 0.2s ease-in-out;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
         .color-swatch:hover {
-            transform: scale(1.1);
+            transform: scale(1.15) rotate(5deg);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 10;
         }
         
         .filter-preview {
@@ -101,12 +122,41 @@
             background-position: center;
             margin: 0 auto;
             border-radius: 8px;
-            transition: transform 0.2s;
+            transition: all 0.3s;
             cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
         }
         
         .filter-preview:hover {
-            transform: scale(1.1);
+            transform: scale(1.2) translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        .sticker-item {
+            width: 60px;
+            height: 60px;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .sticker-item:hover {
+            transform: scale(1.2) rotate(5deg);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            z-index: 5;
+        }
+
+        .sticker-item img {
+            max-width: 80%;
+            max-height: 80%;
+            pointer-events: none;
         }
         
         .loading-spinner {
@@ -127,11 +177,11 @@
         }
         
         .icon-animate:hover {
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.1);
         }
         
         .panel-transition {
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         /* Dark mode colors for icons */
@@ -162,9 +212,323 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.7; }
         }
+
+        /* Custom cursor styles */
+        .cursor-brush {
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%235D5CDE' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 19l7-7 3 3-7 7-3-3z'%3E%3C/path%3E%3Cpath d='M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z'%3E%3C/path%3E%3Cpath d='M2 2l7.586 7.586'%3E%3C/path%3E%3Ccircle cx='11' cy='11' r='2'%3E%3C/circle%3E%3C/svg%3E") 0 24, auto;
+        }
+        
+        .cursor-eraser {
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%235D5CDE' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 20H7L3 16c-1.5-1.5-1.5-3.5 0-5l7-7c1.5-1.5 3.5-1.5 5 0l5 5c1.5 1.5 1.5 3.5 0 5l-4 4'%3E%3C/path%3E%3C/svg%3E") 0 24, auto;
+        }
+
+        .cursor-move {
+            cursor: move;
+        }
+
+        .cursor-text {
+            cursor: text;
+        }
+
+        .cursor-zoom-in {
+            cursor: zoom-in;
+        }
+
+        .cursor-zoom-out {
+            cursor: zoom-out;
+        }
+
+        /* 3D effects */
+        .btn-3d {
+            transition: all 0.2s;
+            box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
+            position: relative;
+            top: 0;
+        }
+
+        .btn-3d:active {
+            top: 3px;
+            box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        /* Gradient text */
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent; 
+            animation: gradient-shift 8s infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Selected element styling */
+        .selected-element {
+            outline: 2px dashed #5D5CDE;
+            outline-offset: 2px;
+            box-shadow: 0 0 15px rgba(93, 92, 222, 0.4);
+        }
+
+        /* Zoom controls */
+        .zoom-controls {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border-radius: 8px;
+            padding: 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            z-index: 100;
+        }
+
+        .dark .zoom-controls {
+            background: #2d3748;
+        }
+
+        .zoom-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            margin: 2px;
+            transition: all 0.2s;
+        }
+
+        .zoom-btn:hover {
+            background: rgba(93, 92, 222, 0.2);
+            transform: scale(1.1);
+        }
+
+        /* Layer panel */
+        .layer-item {
+            display: flex;
+            padding: 8px;
+            background: white;
+            border-radius: 4px;
+            margin-bottom: 4px;
+            cursor: pointer;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .dark .layer-item {
+            background: #2d3748;
+        }
+
+        .layer-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        .layer-item.active {
+            border-left: 4px solid #5D5CDE;
+        }
+
+        /* Tooltip styling */
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip:before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 5px 10px;
+            background: #333;
+            color: white;
+            border-radius: 4px;
+            white-space: nowrap;
+            font-size: 12px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.2s;
+        }
+
+        .tooltip:hover:before {
+            opacity: 1;
+            bottom: calc(100% + 5px);
+        }
+
+        /* For the mouse follower effect */
+        .mouse-follower {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(93, 92, 222, 0.3);
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s, width 0.3s, height 0.3s, background-color 0.3s;
+        }
+
+        .mouse-follower.active {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(93, 92, 222, 0.1);
+        }
+
+        /* Ad spaces styling */
+        .ad-space {
+            background: rgba(240, 240, 240, 0.8);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .dark .ad-space {
+            background: rgba(30, 30, 30, 0.8);
+        }
+
+        .ad-space::after {
+            content: "Advertisement";
+            position: absolute;
+            top: 2px;
+            right: 5px;
+            font-size: 10px;
+            opacity: 0.6;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(93, 92, 222, 0.5);
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(93, 92, 222, 0.8);
+        }
+
+        /* 3D Transform Elements */
+        .tilt-element {
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+        
+        .tilt-element:hover {
+            transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
+        }
+        
+        .tilt-element > * {
+            transform: translateZ(20px);
+        }
+
+        /* Blurred backgrounds */
+        .blur-bg {
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        /* Canvas background */
+        .canvas-bg {
+            background-image: linear-gradient(45deg, #f3f4f6 25%, transparent 25%), 
+                              linear-gradient(-45deg, #f3f4f6 25%, transparent 25%), 
+                              linear-gradient(45deg, transparent 75%, #f3f4f6 75%), 
+                              linear-gradient(-45deg, transparent 75%, #f3f4f6 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+
+        .dark .canvas-bg {
+            background-image: linear-gradient(45deg, #232323 25%, transparent 25%), 
+                              linear-gradient(-45deg, #232323 25%, transparent 25%), 
+                              linear-gradient(45deg, transparent 75%, #232323 75%), 
+                              linear-gradient(-45deg, transparent 75%, #232323 75%);
+        }
+
+        /* Glowing elements */
+        .glow-effect {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(93, 92, 222, 0.5), 0 0 10px rgba(93, 92, 222, 0.3);
+            }
+            to {
+                box-shadow: 0 0 10px rgba(93, 92, 222, 0.8), 0 0 20px rgba(93, 92, 222, 0.5);
+            }
+        }
+
+        /* Gradient border */
+        .gradient-border {
+            position: relative;
+            border-radius: 10px;
+            padding: 3px;
+            animation: gradient-rotate 3s linear infinite;
+            background: linear-gradient(45deg, #5D5CDE, #9795f0, #43cef9, #5D5CDE);
+            background-size: 400% 400%;
+        }
+        
+        .gradient-border-inner {
+            border-radius: 7px;
+            background: white;
+            padding: 10px;
+        }
+        
+        .dark .gradient-border-inner {
+            background: #1a202c;
+        }
+        
+        @keyframes gradient-rotate {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        /* Control handles for selected elements */
+        .control-handle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: white;
+            border: 2px solid #5D5CDE;
+            border-radius: 50%;
+            z-index: 100;
+        }
+
+        .control-handle-nw { top: -5px; left: -5px; cursor: nwse-resize; }
+        .control-handle-ne { top: -5px; right: -5px; cursor: nesw-resize; }
+        .control-handle-sw { bottom: -5px; left: -5px; cursor: nesw-resize; }
+        .control-handle-se { bottom: -5px; right: -5px; cursor: nwse-resize; }
+        .control-handle-n { top: -5px; left: 50%; transform: translateX(-50%); cursor: ns-resize; }
+        .control-handle-s { bottom: -5px; left: 50%; transform: translateX(-50%); cursor: ns-resize; }
+        .control-handle-w { left: -5px; top: 50%; transform: translateY(-50%); cursor: ew-resize; }
+        .control-handle-e { right: -5px; top: 50%; transform: translateY(-50%); cursor: ew-resize; }
+        .control-handle-rotate { top: -25px; left: 50%; transform: translateX(-50%); cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%235D5CDE' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M23 4v6h-6'/%3E%3Cpath d='M20.49 15a9 9 0 1 1-2.12-9.36L23 10'/%3E%3C/svg%3E") 12 12, auto; }
     </style>
 </head>
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen transition-colors duration-300">
+    <!-- Mouse follower -->
+    <div class="mouse-follower hidden"></div>
+
     <!-- Check for dark mode -->
     <script>
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -183,193 +547,463 @@
         <!-- Header Section -->
         <header class="mb-6">
             <div class="flex flex-col md:flex-row justify-between items-center">
-                <h1 class="text-3xl font-bold bg-gradient-to-r from-purple-600 via-primary-600 to-blue-600 text-transparent bg-clip-text animate-pulse-slow mb-4 md:mb-0">
-                    <i class="fas fa-paint-brush mr-2 floating-ui"></i> আকর্ষণীয় ইমেজ এডিটর
+                <h1 class="text-3xl font-bold gradient-text bg-gradient-to-r from-purple-600 via-primary-600 to-blue-600 mb-4 md:mb-0 animate-floating">
+                    <i class="fas fa-paint-brush mr-2"></i> আকর্ষণীয় ইমেজ এডিটর ✨
                 </h1>
-                <div class="flex space-x-3">
-                    <button id="upload-btn" class="bg-primary-700 hover:bg-primary-800 text-white font-medium py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 flex items-center">
+                <div class="flex flex-wrap gap-3">
+                    <button id="upload-btn" class="bg-primary-700 hover:bg-primary-800 text-white font-medium py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 flex items-center btn-3d">
                         <i class="fas fa-upload mr-2 icon-animate"></i> ইমেজ আপলোড
                     </button>
-                    <button id="save-btn" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 flex items-center">
+                    <button id="save-btn" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 flex items-center btn-3d">
                         <i class="fas fa-save mr-2 icon-animate"></i> সেভ করুন
+                    </button>
+                    <button id="undo-btn" class="bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 flex items-center btn-3d">
+                        <i class="fas fa-undo mr-2 icon-animate"></i> আনডু
+                    </button>
+                    <button id="redo-btn" class="bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 flex items-center btn-3d">
+                        <i class="fas fa-redo mr-2 icon-animate"></i> রিডু
                     </button>
                     <input type="file" id="file-input" accept="image/*" class="hidden">
                 </div>
             </div>
         </header>
 
+        <!-- Ad Space - Top -->
+        <div class="ad-space w-full h-24 mb-6 overflow-hidden flex items-center justify-center">
+            <div class="text-center">
+                <div class="text-gray-500 dark:text-gray-400 animate-pulse">Advertisement</div>
+                <div class="mt-1 text-sm text-gray-400 dark:text-gray-500">Your ad could be here</div>
+            </div>
+        </div>
+
         <!-- Main Content Section -->
         <main class="flex flex-col lg:flex-row gap-4">
             <!-- Toolbox Panel -->
-            <div class="lg:w-64 bg-gray-100 dark:bg-gray-800 rounded-xl p-4 shadow-lg">
-                <h2 class="text-xl font-semibold mb-4 text-center bg-gradient-to-r from-primary-600 to-purple-600 text-transparent bg-clip-text">এডিটিং টুলস</h2>
+            <div class="lg:w-64 bg-gray-100 dark:bg-gray-800 rounded-xl p-4 shadow-lg tilt-element">
+                <h2 class="text-xl font-semibold mb-4 text-center gradient-text bg-gradient-to-r from-primary-600 to-purple-600">এডিটিং টুলস</h2>
                 
                 <!-- Tool Buttons -->
-                <div class="grid grid-cols-2 gap-2 mb-4">
-                    <button data-tool="brush" class="tool-btn">
+                <div class="grid grid-cols-3 gap-2 mb-4">
+                    <button data-tool="brush" data-tooltip="ব্রাশ" class="tool-btn tooltip">
                         <i class="fas fa-paint-brush text-primary-700 dark:text-primary-400"></i>
                     </button>
-                    <button data-tool="eraser" class="tool-btn">
+                    <button data-tool="eraser" data-tooltip="ইরেজার" class="tool-btn tooltip">
                         <i class="fas fa-eraser text-primary-700 dark:text-primary-400"></i>
                     </button>
-                    <button data-tool="text" class="tool-btn">
+                    <button data-tool="text" data-tooltip="টেক্সট" class="tool-btn tooltip">
                         <i class="fas fa-font text-primary-700 dark:text-primary-400"></i>
                     </button>
-                    <button data-tool="shape" class="tool-btn">
+                    <button data-tool="shape" data-tooltip="শেপ" class="tool-btn tooltip">
                         <i class="fas fa-shapes text-primary-700 dark:text-primary-400"></i>
                     </button>
-                    <button data-tool="crop" class="tool-btn">
+                    <button data-tool="sticker" data-tooltip="স্টিকার" class="tool-btn tooltip">
+                        <i class="fas fa-sticky-note text-primary-700 dark:text-primary-400"></i>
+                    </button>
+                    <button data-tool="crop" data-tooltip="ক্রপ" class="tool-btn tooltip">
                         <i class="fas fa-crop-alt text-primary-700 dark:text-primary-400"></i>
                     </button>
-                    <button data-tool="rotate" class="tool-btn">
+                    <button data-tool="rotate" data-tooltip="রোটেট" class="tool-btn tooltip">
                         <i class="fas fa-redo text-primary-700 dark:text-primary-400"></i>
                     </button>
-                    <button data-tool="filter" class="tool-btn">
+                    <button data-tool="filter" data-tooltip="ফিল্টার" class="tool-btn tooltip">
                         <i class="fas fa-magic text-primary-700 dark:text-primary-400"></i>
                     </button>
-                    <button data-tool="adjust" class="tool-btn">
+                    <button data-tool="adjust" data-tooltip="এডজাস্ট" class="tool-btn tooltip">
                         <i class="fas fa-sliders-h text-primary-700 dark:text-primary-400"></i>
+                    </button>
+                    <button data-tool="select" data-tooltip="সিলেক্ট" class="tool-btn tooltip">
+                        <i class="fas fa-object-group text-primary-700 dark:text-primary-400"></i>
+                    </button>
+                    <button data-tool="zoom" data-tooltip="জুম" class="tool-btn tooltip">
+                        <i class="fas fa-search-plus text-primary-700 dark:text-primary-400"></i>
+                    </button>
+                    <button data-tool="effects" data-tooltip="ইফেক্টস" class="tool-btn tooltip">
+                        <i class="fas fa-sparkles text-primary-700 dark:text-primary-400"></i>
                     </button>
                 </div>
 
                 <!-- Brush Size -->
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-1">ব্রাশ সাইজ</label>
-                    <input type="range" id="brush-size" min="1" max="50" value="5" class="w-full">
-                    <div class="flex justify-between text-xs mt-1">
-                        <span>ছোট</span>
-                        <span>বড়</span>
+                <div class="mb-4 gradient-border">
+                    <div class="gradient-border-inner">
+                        <label class="block text-sm font-medium mb-1">ব্রাশ সাইজ</label>
+                        <input type="range" id="brush-size" min="1" max="50" value="5" class="w-full">
+                        <div class="flex justify-between text-xs mt-1">
+                            <span>ছোট</span>
+                            <span>বড়</span>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Color Picker -->
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-1">রঙ</label>
-                    <div class="flex items-center space-x-2">
-                        <input type="color" id="color-picker" value="#000000" class="w-10 h-10 rounded cursor-pointer border-0">
-                        <div class="color-palette flex-1">
-                            <div class="color-swatch" style="background-color: #ff0000"></div>
-                            <div class="color-swatch" style="background-color: #00ff00"></div>
-                            <div class="color-swatch" style="background-color: #0000ff"></div>
-                            <div class="color-swatch" style="background-color: #ffff00"></div>
-                            <div class="color-swatch" style="background-color: #ff00ff"></div>
-                            <div class="color-swatch" style="background-color: #00ffff"></div>
+                <div class="mb-4 gradient-border">
+                    <div class="gradient-border-inner">
+                        <label class="block text-sm font-medium mb-1 flex items-center justify-between">
+                            <span>রঙ</span>
+                            <button id="advanced-color" class="text-xs bg-primary-100 dark:bg-primary-900 px-2 py-1 rounded hover:bg-primary-200 dark:hover:bg-primary-800 transition-all">
+                                <i class="fas fa-palette mr-1"></i> উন্নত
+                            </button>
+                        </label>
+                        <div class="flex items-center space-x-2">
+                            <input type="color" id="color-picker" value="#000000" class="w-10 h-10 rounded cursor-pointer border-0">
+                            <div class="color-palette flex-1">
+                                <div class="color-swatch" style="background-color: #ff0000"></div>
+                                <div class="color-swatch" style="background-color: #00ff00"></div>
+                                <div class="color-swatch" style="background-color: #0000ff"></div>
+                                <div class="color-swatch" style="background-color: #ffff00"></div>
+                                <div class="color-swatch" style="background-color: #ff00ff"></div>
+                                <div class="color-swatch" style="background-color: #00ffff"></div>
+                                <div class="color-swatch" style="background-color: #ff8800"></div>
+                                <div class="color-swatch" style="background-color: #8800ff"></div>
+                                <div class="color-swatch" style="background-color: #00ff88"></div>
+                                <div class="color-swatch" style="background-color: #ff0088"></div>
+                                <div class="color-swatch" style="background-color: #88ff00"></div>
+                                <div class="color-swatch" style="background-color: #0088ff"></div>
+                            </div>
+                        </div>
+                        <!-- Gradient Presets -->
+                        <div class="mt-2" id="gradient-presets">
+                            <p class="text-xs mb-1">গ্রেডিয়েন্ট</p>
+                            <div class="grid grid-cols-3 gap-1">
+                                <div class="gradient-preset h-6 rounded-lg cursor-pointer" style="background: linear-gradient(to right, #ff0000, #ffff00)"></div>
+                                <div class="gradient-preset h-6 rounded-lg cursor-pointer" style="background: linear-gradient(to right, #00ff00, #0000ff)"></div>
+                                <div class="gradient-preset h-6 rounded-lg cursor-pointer" style="background: linear-gradient(to right, #ff00ff, #00ffff)"></div>
+                                <div class="gradient-preset h-6 rounded-lg cursor-pointer" style="background: linear-gradient(to right, #5D5CDE, #43cef9)"></div>
+                                <div class="gradient-preset h-6 rounded-lg cursor-pointer" style="background: linear-gradient(to right, #f953c6, #b91d73)"></div>
+                                <div class="gradient-preset h-6 rounded-lg cursor-pointer" style="background: linear-gradient(to right, #ee0979, #ff6a00)"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Tool-specific options (will be dynamically shown) -->
-                <div id="tool-options" class="hidden mt-4 p-3 bg-white dark:bg-gray-700 rounded-lg">
+                <div id="tool-options" class="hidden mt-4 p-3 bg-white dark:bg-gray-700 rounded-lg shadow-md transition-all duration-300">
                     <!-- Options will be inserted here -->
+                </div>
+                
+                <!-- Layers Panel -->
+                <div class="mt-4 gradient-border">
+                    <div class="gradient-border-inner">
+                        <h3 class="font-medium text-sm mb-2 flex items-center justify-between">
+                            <span>লেয়ারস</span>
+                            <button id="add-layer" class="text-xs bg-primary-100 dark:bg-primary-900 px-2 py-1 rounded hover:bg-primary-200 dark:hover:bg-primary-800 transition-all">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </h3>
+                        <div id="layers-container" class="max-h-40 overflow-y-auto">
+                            <!-- Layers will be added here -->
+                            <div class="layer-item active">
+                                <i class="fas fa-eye mr-2"></i>
+                                <span class="flex-1">Background</span>
+                                <i class="fas fa-trash text-red-500 cursor-pointer hover:text-red-700 transition-colors"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- Canvas Container -->
-            <div class="flex-1 bg-gray-200 dark:bg-gray-800 rounded-xl p-4 flex flex-col items-center justify-center relative min-h-[400px] shadow-lg">
-                <div id="canvas-container" class="relative w-full h-full flex items-center justify-center">
-                    <div id="upload-placeholder" class="text-center p-8 animate-float">
-                        <i class="fas fa-cloud-upload-alt text-6xl text-primary-500 mb-4"></i>
+            <div class="flex-1 bg-gray-200 dark:bg-gray-800 rounded-xl p-4 flex flex-col items-center justify-center relative min-h-[500px] shadow-lg">
+                <div id="canvas-container" class="relative w-full h-full flex items-center justify-center canvas-bg overflow-hidden">
+                    <div id="upload-placeholder" class="text-center p-8 animate-floating">
+                        <i class="fas fa-cloud-upload-alt text-6xl text-primary-500 mb-4 glow-effect"></i>
                         <p class="text-xl font-medium">ইমেজ আপলোড করুন শুরু করার জন্য</p>
                         <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">JPG, PNG, ও GIF সাপোর্টেড</p>
-                        <button id="mobile-upload-btn" class="mt-4 bg-primary-700 hover:bg-primary-800 text-white font-medium py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
+                        <button id="mobile-upload-btn" class="mt-4 bg-primary-700 hover:bg-primary-800 text-white font-medium py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 btn-3d">
                             <i class="fas fa-upload mr-2"></i> ইমেজ আপলোড
                         </button>
                     </div>
-                    <canvas id="canvas" class="hidden max-w-full max-h-full object-contain rounded shadow-xl"></canvas>
-                    <div id="loading-indicator" class="hidden absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded-lg">
+                    <div id="canvas-wrapper" class="hidden relative">
+                        <canvas id="canvas" class="max-w-full max-h-full object-contain rounded shadow-xl"></canvas>
+                        <!-- Selected Element Overlay -->
+                        <div id="selected-element-overlay" class="hidden absolute pointer-events-none"></div>
+                    </div>
+                    <div id="loading-indicator" class="hidden absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded-lg blur-bg z-50">
                         <div class="text-white text-center">
-                            <i class="fas fa-circle-notch loading-spinner text-3xl mb-2"></i>
-                            <p>প্রসেসিং...</p>
+                            <div class="w-16 h-16 mb-4 mx-auto relative">
+                                <div class="absolute inset-0 border-4 border-t-primary-500 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
+                                <div class="absolute inset-2 border-4 border-t-transparent border-r-primary-400 border-b-transparent border-l-transparent rounded-full animate-spin" style="animation-duration: 1.5s;"></div>
+                                <div class="absolute inset-4 border-4 border-t-transparent border-r-transparent border-b-primary-300 border-l-transparent rounded-full animate-spin" style="animation-duration: 2s;"></div>
+                            </div>
+                            <p class="text-lg">প্রসেসিং...</p>
+                            <p class="text-xs mt-2 max-w-xs text-gray-300">আপনার ইমেজ এখন প্রসেস হচ্ছে, কয়েক সেকেন্ড অপেক্ষা করুন</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Zoom controls -->
+                    <div id="zoom-controls" class="zoom-controls hidden">
+                        <div id="zoom-in" class="zoom-btn">
+                            <i class="fas fa-search-plus text-primary-700 dark:text-primary-400"></i>
+                        </div>
+                        <div id="zoom-value" class="zoom-btn text-center">100%</div>
+                        <div id="zoom-out" class="zoom-btn">
+                            <i class="fas fa-search-minus text-primary-700 dark:text-primary-400"></i>
+                        </div>
+                        <div id="zoom-reset" class="zoom-btn">
+                            <i class="fas fa-sync-alt text-primary-700 dark:text-primary-400"></i>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Adjustment Panel -->
-            <div class="lg:w-64 bg-gray-100 dark:bg-gray-800 rounded-xl p-4 shadow-lg hidden lg:block" id="adjustment-panel">
-                <h2 class="text-xl font-semibold mb-4 text-center bg-gradient-to-r from-blue-600 to-primary-600 text-transparent bg-clip-text">এডজাস্টমেন্টস</h2>
+            <div class="lg:w-64 bg-gray-100 dark:bg-gray-800 rounded-xl p-4 shadow-lg tilt-element" id="adjustment-panel">
+                <h2 class="text-xl font-semibold mb-4 text-center gradient-text bg-gradient-to-r from-blue-600 to-primary-600">এডজাস্টমেন্টস</h2>
                 
                 <!-- Brightness -->
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-1">ব্রাইটনেস</label>
-                    <input type="range" id="brightness" min="-100" max="100" value="0" class="w-full">
+                <div class="mb-4 gradient-border">
+                    <div class="gradient-border-inner">
+                        <label class="block text-sm font-medium mb-1">ব্রাইটনেস</label>
+                        <input type="range" id="brightness" min="-100" max="100" value="0" class="w-full">
+                        <div class="flex justify-between text-xs mt-1">
+                            <span>-100</span>
+                            <span>0</span>
+                            <span>+100</span>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- Contrast -->
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-1">কনট্রাস্ট</label>
-                    <input type="range" id="contrast" min="-100" max="100" value="0" class="w-full">
+                <div class="mb-4 gradient-border">
+                    <div class="gradient-border-inner">
+                        <label class="block text-sm font-medium mb-1">কনট্রাস্ট</label>
+                        <input type="range" id="contrast" min="-100" max="100" value="0" class="w-full">
+                        <div class="flex justify-between text-xs mt-1">
+                            <span>-100</span>
+                            <span>0</span>
+                            <span>+100</span>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- Saturation -->
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-1">স্যাচুরেশন</label>
-                    <input type="range" id="saturation" min="-100" max="100" value="0" class="w-full">
+                <div class="mb-4 gradient-border">
+                    <div class="gradient-border-inner">
+                        <label class="block text-sm font-medium mb-1">স্যাচুরেশন</label>
+                        <input type="range" id="saturation" min="-100" max="100" value="0" class="w-full">
+                        <div class="flex justify-between text-xs mt-1">
+                            <span>-100</span>
+                            <span>0</span>
+                            <span>+100</span>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- Blur -->
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-1">ব্লার</label>
-                    <input type="range" id="blur" min="0" max="10" value="0" step="0.1" class="w-full">
+                <div class="mb-4 gradient-border">
+                    <div class="gradient-border-inner">
+                        <label class="block text-sm font-medium mb-1">ব্লার</label>
+                        <input type="range" id="blur" min="0" max="20" value="0" step="0.1" class="w-full">
+                        <div class="flex justify-between text-xs mt-1">
+                            <span>0</span>
+                            <span>10</span>
+                            <span>20</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- New adjustments -->
+                <div class="mb-4 gradient-border">
+                    <div class="gradient-border-inner">
+                        <label class="block text-sm font-medium mb-1">কালার টিন্ট</label>
+                        <input type="range" id="tint" min="0" max="100" value="0" class="w-full">
+                        <div class="flex justify-between text-xs mt-1">
+                            <span>0</span>
+                            <span>50</span>
+                            <span>100</span>
+                        </div>
+                        <input type="color" id="tint-color" value="#5D5CDE" class="mt-2 w-full h-8 rounded cursor-pointer border-0">
+                    </div>
                 </div>
 
-                <!-- Filters -->
-                <div>
-                    <label class="block text-sm font-medium mb-2">ফিল্টারস</label>
-                    <div class="grid grid-cols-2 gap-2">
-                        <div class="text-center">
-                            <div class="filter-preview" data-filter="none">
-                                <div class="text-xs mt-1">নরমাল</div>
+                <!-- Filters with previews -->
+                <div class="gradient-border">
+                    <div class="gradient-border-inner">
+                        <label class="block text-sm font-medium mb-2">ফিল্টারস</label>
+                        <div class="grid grid-cols-2 gap-3 mb-2">
+                            <div class="text-center">
+                                <div class="filter-preview" data-filter="none">
+                                    <div class="text-xs mt-1">নরমাল</div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="filter-preview" data-filter="grayscale">
+                                    <div class="text-xs mt-1">গ্রেস্কেল</div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="filter-preview" data-filter="sepia">
+                                    <div class="text-xs mt-1">সেপিয়া</div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="filter-preview" data-filter="invert">
+                                    <div class="text-xs mt-1">ইনভার্ট</div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="filter-preview" data-filter="vintage">
+                                    <div class="text-xs mt-1">ভিনটেজ</div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="filter-preview" data-filter="blueprint">
+                                    <div class="text-xs mt-1">ব্লুপ্রিন্ট</div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="filter-preview" data-filter="xpro">
+                                    <div class="text-xs mt-1">X-Pro</div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="filter-preview" data-filter="cyberpunk">
+                                    <div class="text-xs mt-1">সাইবারপাঙ্ক</div>
+                                </div>
                             </div>
                         </div>
-                        <div class="text-center">
-                            <div class="filter-preview" data-filter="grayscale">
-                                <div class="text-xs mt-1">গ্রেস্কেল</div>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <div class="filter-preview" data-filter="sepia">
-                                <div class="text-xs mt-1">সেপিয়া</div>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <div class="filter-preview" data-filter="invert">
-                                <div class="text-xs mt-1">ইনভার্ট</div>
-                            </div>
-                        </div>
+                        
+                        <!-- More filters button -->
+                        <button id="more-filters-btn" class="w-full text-center py-1 text-xs bg-primary-100 dark:bg-primary-900 hover:bg-primary-200 dark:hover:bg-primary-800 rounded transition-colors flex items-center justify-center">
+                            <i class="fas fa-chevron-down mr-1"></i> আরও ফিল্টার দেখুন
+                        </button>
                     </div>
                 </div>
 
                 <!-- Reset button -->
-                <button id="reset-adjustments" class="mt-6 w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
+                <button id="reset-adjustments" class="mt-6 w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 btn-3d">
                     <i class="fas fa-undo mr-2"></i> রিসেট
                 </button>
             </div>
         </main>
 
+        <!-- Stickers Panel (Hidden by default) -->
+        <div id="stickers-panel" class="mt-4 bg-gray-100 dark:bg-gray-800 rounded-xl p-4 shadow-lg hidden">
+            <h2 class="text-xl font-semibold mb-4 flex items-center justify-between">
+                <span class="gradient-text bg-gradient-to-r from-yellow-400 to-pink-500">স্টিকারস</span>
+                <button id="close-stickers" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                    <i class="fas fa-times"></i>
+                </button>
+            </h2>
+            <div class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2">
+                <!-- Stickers will be dynamically generated -->
+            </div>
+        </div>
+
+        <!-- Ad Space - Middle -->
+        <div class="ad-space w-full h-28 my-6 overflow-hidden">
+            <div class="text-center">
+                <div class="text-gray-500 dark:text-gray-400 animate-pulse">Advertisement</div>
+                <div class="mt-1 text-sm text-gray-400 dark:text-gray-500">Your ad could be here</div>
+            </div>
+        </div>
+
         <!-- History Timeline -->
-        <div class="mt-6 bg-gray-100 dark:bg-gray-800 rounded-xl p-4 shadow-lg">
-            <h2 class="text-xl font-semibold mb-4 flex items-center">
-                <i class="fas fa-history mr-2 text-primary-700 dark:text-primary-400"></i> হিস্টোরি
+        <div class="mt-6 bg-gray-100 dark:bg-gray-800 rounded-xl p-4 shadow-lg tilt-element">
+            <h2 class="text-xl font-semibold mb-4 flex items-center gradient-text bg-gradient-to-r from-green-400 to-primary-600">
+                <i class="fas fa-history mr-2"></i> হিস্টোরি
             </h2>
             <div class="flex space-x-2 overflow-x-auto pb-2" id="history-timeline">
-                <div class="min-w-[100px] h-16 bg-gray-200 dark:bg-gray-700 rounded flex items-center justify-center text-center p-2 text-sm">
+                <div class="min-w-[100px] h-16 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center text-center p-2 text-sm shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
                     অরিজিনাল
                 </div>
                 <!-- History items will be added here -->
             </div>
         </div>
 
+        <!-- Effects Preview Section -->
+        <div id="effects-preview" class="mt-6 bg-gray-100 dark:bg-gray-800 rounded-xl p-4 shadow-lg hidden tilt-element">
+            <h2 class="text-xl font-semibold mb-4 flex items-center justify-between gradient-text bg-gradient-to-r from-pink-500 to-yellow-500">
+                <span>স্পেশাল ইফেক্টস</span>
+                <button id="close-effects" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                    <i class="fas fa-times"></i>
+                </button>
+            </h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <div class="effect-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1" data-effect="none">
+                    <div class="h-24 bg-gray-300 dark:bg-gray-700"></div>
+                    <div class="p-2 text-center text-sm">নরমাল</div>
+                </div>
+                <div class="effect-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1" data-effect="neon">
+                    <div class="h-24 bg-gray-300 dark:bg-gray-700"></div>
+                    <div class="p-2 text-center text-sm">নিওন গ্লো</div>
+                </div>
+                <div class="effect-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1" data-effect="painting">
+                    <div class="h-24 bg-gray-300 dark:bg-gray-700"></div>
+                    <div class="p-2 text-center text-sm">পেইন্টিং</div>
+                </div>
+                <div class="effect-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1" data-effect="glitch">
+                    <div class="h-24 bg-gray-300 dark:bg-gray-700"></div>
+                    <div class="p-2 text-center text-sm">গ্লিচ</div>
+                </div>
+                <div class="effect-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1" data-effect="duotone">
+                    <div class="h-24 bg-gray-300 dark:bg-gray-700"></div>
+                    <div class="p-2 text-center text-sm">ডুওটোন</div>
+                </div>
+                <div class="effect-item rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1" data-effect="pixel">
+                    <div class="h-24 bg-gray-300 dark:bg-gray-700"></div>
+                    <div class="p-2 text-center text-sm">পিক্সেল আর্ট</div>
+                </div>
+            </div>
+        </div>
+
         <!-- Footer -->
-        <footer class="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
+        <footer class="mt-8 text-center text-sm text-gray-500 dark:text-gray-400 relative">
+            <div class="ad-space w-full h-20 mb-4 overflow-hidden">
+                <div class="text-center">
+                    <div class="text-gray-500 dark:text-gray-400 animate-pulse">Advertisement</div>
+                    <div class="mt-1 text-sm text-gray-400 dark:text-gray-500">Your ad could be here</div>
+                </div>
+            </div>
             <p>এডিট করা ইমেজ সেভ করার জন্য, Mouse ডান ক্লিক করে "Save image as..." অপশন ব্যবহার করুন</p>
-            <p class="mt-2">© 2025 Ridoy Khan</p>
+            <p class="mt-2">© 2025 Ridoy Khan - Advanced Image Editor</p>
+            <button id="remove-ads-btn" class="mt-4 mx-auto block text-xs bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 px-3 py-1 rounded transition-colors">
+                <!--Remove Ads (Premium)-->
+            </button>
         </footer>
     </div>
 
     <!-- Notification Toast -->
-    <div id="toast" class="fixed bottom-4 right-4 bg-primary-700 text-white px-4 py-2 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300">
+    <div id="toast" class="fixed bottom-4 right-4 bg-primary-700 text-white px-4 py-2 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 z-50">
         অপারেশন সম্পন্ন হয়েছে!
+    </div>
+
+    <!-- Advanced Color Picker Modal -->
+    <div id="color-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-md w-full shadow-2xl transform transition-all">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold">উন্নত রঙ সিলেক্টর</h3>
+                <button id="close-color-modal" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1">কালার পিকার</label>
+                    <input type="color" id="modal-color-picker" value="#000000" class="w-full h-12 rounded cursor-pointer border-0">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">RGB</label>
+                    <div class="flex space-x-2">
+                        <input type="number" id="color-r" min="0" max="255" value="0" class="w-full p-2 border rounded text-center text-base">
+                        <input type="number" id="color-g" min="0" max="255" value="0" class="w-full p-2 border rounded text-center text-base">
+                        <input type="number" id="color-b" min="0" max="255" value="0" class="w-full p-2 border rounded text-center text-base">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Hex</label>
+                    <input type="text" id="color-hex" value="#000000" class="w-full p-2 border rounded text-base">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">রিসেন্ট কালারস</label>
+                    <div class="grid grid-cols-8 gap-1" id="recent-colors">
+                        <!-- Recent colors will be added here -->
+                    </div>
+                </div>
+                <button id="apply-color" class="w-full bg-primary-700 hover:bg-primary-800 text-white font-medium py-2 px-4 rounded-lg transition duration-300 btn-3d">
+                    এপ্লাই করুন
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- Main JavaScript -->
@@ -386,16 +1020,36 @@
         let originalImage = null;
         let undoStack = [];
         let redoStack = [];
+        let mouseFollower = document.querySelector('.mouse-follower');
+        let canvasScale = 1;
+        let canvasOffsetX = 0;
+        let canvasOffsetY = 0;
+        let isDragging = false;
+        let selectedElement = null;
+        let selectedElementType = null;
+        let elementsOnCanvas = [];
         let filters = {
             brightness: 0,
             contrast: 0,
             saturation: 0,
             blur: 0,
+            tint: 0,
+            tintColor: '#5D5CDE',
             currentFilter: 'none'
         };
 
         // Initialize the application
         function init() {
+            // Create mouse follower if it doesn't exist
+            if (!mouseFollower) {
+                mouseFollower = document.createElement('div');
+                mouseFollower.className = 'mouse-follower';
+                document.body.appendChild(mouseFollower);
+            }
+            
+            // Setup mouse follower
+            setupMouseFollower();
+            
             // Set up button event listeners
             document.getElementById('upload-btn').addEventListener('click', () => {
                 document.getElementById('file-input').click();
@@ -409,12 +1063,17 @@
             
             document.getElementById('save-btn').addEventListener('click', saveImage);
             
+            document.getElementById('undo-btn').addEventListener('click', undo);
+            document.getElementById('redo-btn').addEventListener('click', redo);
+            
             document.getElementById('brush-size').addEventListener('input', (e) => {
                 brushSize = parseInt(e.target.value);
+                updateCursor();
             });
             
             document.getElementById('color-picker').addEventListener('input', (e) => {
                 brushColor = e.target.value;
+                updateCursor();
             });
             
             // Set up tool buttons
@@ -424,6 +1083,7 @@
                     document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
                     button.classList.add('active');
                     updateToolOptions();
+                    updateCursor();
                 });
             });
             
@@ -432,20 +1092,42 @@
                 swatch.addEventListener('click', () => {
                     brushColor = getComputedStyle(swatch).backgroundColor;
                     document.getElementById('color-picker').value = rgbToHex(brushColor);
+                    updateCursor();
+                });
+            });
+            
+            // Set up gradient presets
+            document.querySelectorAll('.gradient-preset').forEach(preset => {
+                preset.addEventListener('click', () => {
+                    // We'll store the gradient info for later use
+                    const gradientStyle = getComputedStyle(preset).background;
+                    brushColor = gradientStyle;
                 });
             });
             
             // Set up adjustment sliders
-            ['brightness', 'contrast', 'saturation', 'blur'].forEach(adjustment => {
+            ['brightness', 'contrast', 'saturation', 'blur', 'tint'].forEach(adjustment => {
                 document.getElementById(adjustment).addEventListener('input', (e) => {
                     filters[adjustment] = parseFloat(e.target.value);
                     applyFilters();
                 });
             });
             
+            // Tint color picker
+            document.getElementById('tint-color').addEventListener('input', (e) => {
+                filters.tintColor = e.target.value;
+                if (filters.tint > 0) {
+                    applyFilters();
+                }
+            });
+            
             // Setup filter previews
             document.querySelectorAll('.filter-preview').forEach(preview => {
                 preview.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-preview').forEach(p => {
+                        p.style.border = 'none';
+                    });
+                    preview.style.border = '2px solid #5D5CDE';
                     filters.currentFilter = preview.dataset.filter;
                     applyFilters();
                 });
@@ -454,7 +1136,71 @@
             // Reset button
             document.getElementById('reset-adjustments').addEventListener('click', resetAdjustments);
             
+            // More filters button
+            document.getElementById('more-filters-btn').addEventListener('click', toggleMoreFilters);
+            
+            // Zoom controls
+            document.getElementById('zoom-in').addEventListener('click', () => zoomCanvas(0.1));
+            document.getElementById('zoom-out').addEventListener('click', () => zoomCanvas(-0.1));
+            document.getElementById('zoom-reset').addEventListener('click', resetZoom);
+            
+            // Advanced color picker
+            document.getElementById('advanced-color').addEventListener('click', openColorModal);
+            document.getElementById('close-color-modal').addEventListener('click', closeColorModal);
+            document.getElementById('apply-color').addEventListener('click', applyAdvancedColor);
+            
+            // Synchronize color inputs in the modal
+            document.getElementById('modal-color-picker').addEventListener('input', syncColorFromPicker);
+            document.getElementById('color-r').addEventListener('input', syncColorFromRGB);
+            document.getElementById('color-g').addEventListener('input', syncColorFromRGB);
+            document.getElementById('color-b').addEventListener('input', syncColorFromRGB);
+            document.getElementById('color-hex').addEventListener('input', syncColorFromHex);
+            
+            // Effects panel
+            document.querySelectorAll('.effect-item').forEach(item => {
+                item.addEventListener('click', () => applyEffect(item.dataset.effect));
+            });
+            
+            // Close effects panel
+            document.getElementById('close-effects').addEventListener('click', () => {
+                document.getElementById('effects-preview').classList.add('hidden');
+            });
+            
+            // Stickers panel
+            document.getElementById('close-stickers').addEventListener('click', () => {
+                document.getElementById('stickers-panel').classList.add('hidden');
+            });
+            
+            // Prepare stickers
+            generateStickers();
+            
+            // Layer management
+            document.getElementById('add-layer').addEventListener('click', addNewLayer);
+            
+            // Premium button (just for show)
+            document.getElementById('remove-ads-btn').addEventListener('click', () => {
+                showToast('প্রিমিয়াম ফিচার শিগগিরই আসছে!');
+            });
+            
             // Add canvas event listeners once an image is loaded
+        }
+
+        // Setup mouse follower effect
+        function setupMouseFollower() {
+            mouseFollower.classList.remove('hidden');
+            
+            document.addEventListener('mousemove', (e) => {
+                mouseFollower.style.left = `${e.clientX}px`;
+                mouseFollower.style.top = `${e.clientY}px`;
+            });
+            
+            document.addEventListener('mousedown', () => {
+                mouseFollower.classList.add('active');
+            });
+            
+            document.addEventListener('mouseup', () => {
+                mouseFollower.classList.remove('active');
+            });
         }
 
         // Handle image upload
@@ -473,8 +1219,11 @@
                     // Hide upload placeholder
                     document.getElementById('upload-placeholder').classList.add('hidden');
                     
-                    // Show canvas
-                    canvas.classList.remove('hidden');
+                    // Show canvas wrapper
+                    document.getElementById('canvas-wrapper').classList.remove('hidden');
+                    
+                    // Show zoom controls
+                    document.getElementById('zoom-controls').classList.remove('hidden');
                     
                     // Reset canvas and context
                     setupCanvas(img);
@@ -488,6 +1237,7 @@
                     // Reset history
                     undoStack = [];
                     redoStack = [];
+                    elementsOnCanvas = [];
                     
                     // Add event listeners to canvas
                     setupCanvasListeners();
@@ -500,6 +1250,9 @@
                     
                     // Set up filter previews with the actual image
                     setupFilterPreviews(img);
+                    
+                    // Add the base layer
+                    updateLayersPanel();
                     
                     // Save initial state
                     saveState();
@@ -536,11 +1289,42 @@
             // Draw image on canvas
             ctx.drawImage(img, 0, 0, canvasWidth, canvasHeight);
             
+            // Reset zoom and position
+            canvasScale = 1;
+            canvasOffsetX = 0;
+            canvasOffsetY = 0;
+            updateCanvasTransform();
+            
             // Add a subtle animation
             canvas.classList.add('shake-animation');
             setTimeout(() => {
                 canvas.classList.remove('shake-animation');
             }, 820);
+        }
+
+        // Update canvas transform based on scale and offset
+        function updateCanvasTransform() {
+            canvas.style.transform = `scale(${canvasScale}) translate(${canvasOffsetX}px, ${canvasOffsetY}px)`;
+            document.getElementById('zoom-value').textContent = `${Math.round(canvasScale * 100)}%`;
+        }
+
+        // Zoom canvas
+        function zoomCanvas(delta) {
+            const newScale = canvasScale + delta;
+            
+            // Limit min and max zoom
+            if (newScale >= 0.1 && newScale <= 5) {
+                canvasScale = newScale;
+                updateCanvasTransform();
+            }
+        }
+
+        // Reset zoom
+        function resetZoom() {
+            canvasScale = 1;
+            canvasOffsetX = 0;
+            canvasOffsetY = 0;
+            updateCanvasTransform();
         }
 
         // Set up event listeners for canvas drawing
@@ -552,6 +1336,24 @@
             canvas.addEventListener('mouseup', stopDrawing);
             canvas.addEventListener('touchend', stopDrawing);
             canvas.addEventListener('mouseout', stopDrawing);
+            canvas.addEventListener('wheel', handleCanvasWheel);
+        }
+
+        // Handle canvas wheel event for zooming
+        function handleCanvasWheel(e) {
+            e.preventDefault();
+            
+            // Zoom in/out with Ctrl+Wheel
+            if (e.ctrlKey) {
+                const delta = e.deltaY > 0 ? -0.1 : 0.1;
+                zoomCanvas(delta);
+            } 
+            // Pan with just wheel
+            else {
+                canvasOffsetX -= e.deltaX * 0.5;
+                canvasOffsetY -= e.deltaY * 0.5;
+                updateCanvasTransform();
+            }
         }
 
         // Handle touch events
@@ -575,13 +1377,79 @@
             canvas.dispatchEvent(mouseEvent);
         }
 
+        // Update the cursor based on the active tool
+        function updateCursor() {
+            // First remove any existing cursor classes
+            canvas.classList.remove('cursor-brush', 'cursor-eraser', 'cursor-text', 'cursor-move', 'cursor-zoom-in', 'cursor-zoom-out');
+            
+            switch (activeTool) {
+                case 'brush':
+                    canvas.classList.add('cursor-brush');
+                    break;
+                case 'eraser':
+                    canvas.classList.add('cursor-eraser');
+                    break;
+                case 'text':
+                    canvas.classList.add('cursor-text');
+                    break;
+                case 'select':
+                    canvas.classList.add('cursor-move');
+                    break;
+                case 'zoom':
+                    canvas.classList.add('cursor-zoom-in');
+                    break;
+                default:
+                    // Use default cursor
+                    break;
+            }
+        }
+
         // Start drawing
         function startDrawing(e) {
+            // Get the correct coordinates considering the zoom and offset
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            
+            const x = (e.clientX - rect.left) * scaleX;
+            const y = (e.clientY - rect.top) * scaleY;
+            
+            if (activeTool === 'select') {
+                // Check if we're clicking on an existing element
+                const clickedElement = findElementAt(x, y);
+                
+                if (clickedElement) {
+                    selectedElement = clickedElement;
+                    selectedElementType = clickedElement.type;
+                    isDragging = true;
+                    
+                    // Show selection controls
+                    showSelectionControls(clickedElement);
+                } else {
+                    // Deselect if clicking empty space
+                    deselectElement();
+                    
+                    // Start canvas dragging instead
+                    isDragging = true;
+                }
+                
+                lastX = x;
+                lastY = y;
+                return;
+            }
+            
+            if (activeTool === 'zoom') {
+                // Zoom in on click, Shift+click to zoom out
+                if (e.shiftKey) {
+                    zoomCanvas(-0.1);
+                } else {
+                    zoomCanvas(0.1);
+                }
+                return;
+            }
+            
             isDrawing = true;
-            [lastX, lastY] = [
-                e.clientX - canvas.getBoundingClientRect().left,
-                e.clientY - canvas.getBoundingClientRect().top
-            ];
+            [lastX, lastY] = [x, y];
             
             // For some tools, we want to capture the state before drawing
             if (['brush', 'eraser'].includes(activeTool)) {
@@ -591,10 +1459,47 @@
 
         // Draw on canvas
         function draw(e) {
+            if (isDragging && activeTool === 'select') {
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+                
+                const x = (e.clientX - rect.left) * scaleX;
+                const y = (e.clientY - rect.top) * scaleY;
+                
+                if (selectedElement) {
+                    // Move the selected element
+                    const dx = x - lastX;
+                    const dy = y - lastY;
+                    
+                    selectedElement.x += dx;
+                    selectedElement.y += dy;
+                    
+                    // Redraw canvas
+                    redrawCanvas();
+                    
+                    // Update selection controls
+                    updateSelectionControls();
+                } else {
+                    // Pan the canvas
+                    canvasOffsetX += (x - lastX) / canvasScale;
+                    canvasOffsetY += (y - lastY) / canvasScale;
+                    updateCanvasTransform();
+                }
+                
+                lastX = x;
+                lastY = y;
+                return;
+            }
+            
             if (!isDrawing) return;
             
-            const x = e.clientX - canvas.getBoundingClientRect().left;
-            const y = e.clientY - canvas.getBoundingClientRect().top;
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            
+            const x = (e.clientX - rect.left) * scaleX;
+            const y = (e.clientY - rect.top) * scaleY;
             
             if (activeTool === 'brush') {
                 ctx.lineWidth = brushSize;
@@ -605,6 +1510,11 @@
                 ctx.moveTo(lastX, lastY);
                 ctx.lineTo(x, y);
                 ctx.stroke();
+                
+                // Add some sparkle effect during drawing
+                if (Math.random() > 0.8) {
+                    drawSparkle(x, y);
+                }
             } else if (activeTool === 'eraser') {
                 ctx.lineWidth = brushSize;
                 ctx.lineCap = 'round';
@@ -621,24 +1531,82 @@
             [lastX, lastY] = [x, y];
         }
 
+        // Draw sparkle effect
+        function drawSparkle(x, y) {
+            const size = brushSize * 0.5;
+            const color = brushColor === '#000000' ? '#5D5CDE' : brushColor;
+            
+            ctx.save();
+            ctx.globalAlpha = Math.random() * 0.7 + 0.3;
+            ctx.fillStyle = color;
+            
+            // Draw the sparkle
+            ctx.beginPath();
+            for (let i = 0; i < 8; i++) {
+                const angle = i * Math.PI / 4;
+                const radius = Math.random() * size + size;
+                const starX = x + Math.cos(angle) * radius;
+                const starY = y + Math.sin(angle) * radius;
+                
+                if (i === 0) {
+                    ctx.moveTo(starX, starY);
+                } else {
+                    ctx.lineTo(starX, starY);
+                }
+                
+                // Add inner points for star shape
+                const innerRadius = size * 0.5;
+                const innerAngle = angle + Math.PI / 8;
+                const innerX = x + Math.cos(innerAngle) * innerRadius;
+                const innerY = y + Math.sin(innerAngle) * innerRadius;
+                ctx.lineTo(innerX, innerY);
+            }
+            
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+        }
+
         // Stop drawing
         function stopDrawing() {
             if (isDrawing) {
                 isDrawing = false;
                 saveState();
             }
+            
+            isDragging = false;
         }
 
         // Apply all filters to the canvas
         function applyFilters() {
             if (!originalImage) return;
             
-            // Reset canvas to original image
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(originalImage, 0, 0, canvas.width, canvas.height);
+            // Show loading indicator for complex operations
+            document.getElementById('loading-indicator').classList.remove('hidden');
             
-            // Apply filters
-            if (filters.brightness !== 0 || filters.contrast !== 0 || filters.saturation !== 0 || filters.blur !== 0 || filters.currentFilter !== 'none') {
+            // Use setTimeout to allow the UI to update before heavy processing
+            setTimeout(() => {
+                // Reset canvas to original image
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(originalImage, 0, 0, canvas.width, canvas.height);
+                
+                // Apply filters
+                applyBasicFilters();
+                applyAdvancedFilters();
+                
+                // Redraw elements on canvas
+                redrawElements();
+                
+                // Hide loading indicator
+                document.getElementById('loading-indicator').classList.add('hidden');
+                
+                saveState();
+            }, 10);
+        }
+
+        // Apply basic filters (brightness, contrast, saturation, blur)
+        function applyBasicFilters() {
+            if (filters.brightness !== 0 || filters.contrast !== 0 || filters.saturation !== 0 || filters.tint > 0 || filters.currentFilter !== 'none') {
                 const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
                 const data = imageData.data;
                 
@@ -655,38 +1623,356 @@
                     data[i + 1] = clamp(factor * (data[i + 1] - 128) + 128);
                     data[i + 2] = clamp(factor * (data[i + 2] - 128) + 128);
                     
-                    // Apply current filter
-                    if (filters.currentFilter === 'grayscale') {
-                        const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-                        data[i] = avg;
-                        data[i + 1] = avg;
-                        data[i + 2] = avg;
-                    } else if (filters.currentFilter === 'sepia') {
-                        const r = data[i];
-                        const g = data[i + 1];
-                        const b = data[i + 2];
-                        data[i] = clamp(r * 0.393 + g * 0.769 + b * 0.189);
-                        data[i + 1] = clamp(r * 0.349 + g * 0.686 + b * 0.168);
-                        data[i + 2] = clamp(r * 0.272 + g * 0.534 + b * 0.131);
-                    } else if (filters.currentFilter === 'invert') {
-                        data[i] = 255 - data[i];
-                        data[i + 1] = 255 - data[i + 1];
-                        data[i + 2] = 255 - data[i + 2];
+                    // Apply tint if enabled
+                    if (filters.tint > 0) {
+                        const tintStrength = filters.tint / 100;
+                        const tintR = parseInt(filters.tintColor.slice(1, 3), 16);
+                        const tintG = parseInt(filters.tintColor.slice(3, 5), 16);
+                        const tintB = parseInt(filters.tintColor.slice(5, 7), 16);
+                        
+                        data[i] = clamp(data[i] * (1 - tintStrength) + tintR * tintStrength);
+                        data[i + 1] = clamp(data[i + 1] * (1 - tintStrength) + tintG * tintStrength);
+                        data[i + 2] = clamp(data[i + 2] * (1 - tintStrength) + tintB * tintStrength);
                     }
+                    
+                    // Apply current filter
+                    applyFilterToPixel(data, i);
                 }
                 
                 ctx.putImageData(imageData, 0, 0);
+            }
+            
+            // Apply blur (we apply this last to avoid iterating through pixels again)
+            if (filters.blur > 0) {
+                ctx.filter = `blur(${filters.blur}px)`;
+                ctx.drawImage(canvas, 0, 0);
+                ctx.filter = 'none';
+            }
+        }
+
+        // Apply filter to a specific pixel
+        function applyFilterToPixel(data, i) {
+            switch (filters.currentFilter) {
+                case 'grayscale':
+                    const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+                    data[i] = avg;
+                    data[i + 1] = avg;
+                    data[i + 2] = avg;
+                    break;
+                    
+                case 'sepia':
+                    const r = data[i];
+                    const g = data[i + 1];
+                    const b = data[i + 2];
+                    data[i] = clamp(r * 0.393 + g * 0.769 + b * 0.189);
+                    data[i + 1] = clamp(r * 0.349 + g * 0.686 + b * 0.168);
+                    data[i + 2] = clamp(r * 0.272 + g * 0.534 + b * 0.131);
+                    break;
+                    
+                case 'invert':
+                    data[i] = 255 - data[i];
+                    data[i + 1] = 255 - data[i + 1];
+                    data[i + 2] = 255 - data[i + 2];
+                    break;
+                    
+                case 'vintage':
+                    // Sepia-like with reduced saturation and yellowish tint
+                    let vr = data[i];
+                    let vg = data[i + 1];
+                    let vb = data[i + 2];
+                    
+                    // Apply sepia
+                    data[i] = clamp(vr * 0.393 + vg * 0.769 + vb * 0.189);
+                    data[i + 1] = clamp(vr * 0.349 + vg * 0.686 + vb * 0.168);
+                    data[i + 2] = clamp(vr * 0.272 + vg * 0.534 + vb * 0.131);
+                    
+                    // Add vintage tint
+                    data[i] = clamp(data[i] * 1.1);
+                    data[i + 1] = clamp(data[i + 1] * 1.05);
+                    data[i + 2] = clamp(data[i + 2] * 0.9);
+                    break;
+                    
+                case 'blueprint':
+                    // Blueprint style (high blue, low others)
+                    const bpIntensity = (data[i] + data[i + 1] + data[i + 2]) / 3;
+                    data[i] = clamp(bpIntensity * 0.1);  // Very low red
+                    data[i + 1] = clamp(bpIntensity * 0.3); // Low green
+                    data[i + 2] = clamp(bpIntensity * 1.2); // High blue
+                    break;
+                    
+                case 'xpro':
+                    // Cross-processing effect
+                    data[i] = clamp(data[i] * 1.25); // Boost red
+                    data[i + 1] = clamp(data[i + 1]); // Normal green
+                    data[i + 2] = clamp(data[i + 2] * 0.7); // Reduced blue
+                    break;
+                    
+                case 'cyberpunk':
+                    // High contrast neon effect
+                    data[i] = clamp(data[i] < 128 ? data[i] * 0.4 : data[i] * 1.4);
+                    data[i + 1] = clamp(data[i + 1] < 128 ? data[i + 1] * 0.4 : data[i + 1] * 1.4);
+                    data[i + 2] = clamp(data[i + 2] < 128 ? data[i + 2] * 0.4 : data[i + 2] * 1.4);
+                    
+                    // Add a slight purple/blue tint to highlights
+                    if (data[i] > 200 && data[i + 1] > 200 && data[i + 2] > 200) {
+                        data[i] = clamp(data[i] * 0.9);
+                        data[i + 1] = clamp(data[i + 1] * 0.8);
+                        data[i + 2] = clamp(data[i + 2] * 1.2);
+                    }
+                    break;
+            }
+        }
+
+        // Apply advanced visual filters
+        function applyAdvancedFilters() {
+            // Future implementation for more complex effects
+        }
+
+        // Apply special effects
+        function applyEffect(effect) {
+            if (!ctx) return;
+            
+            saveState();
+            document.getElementById('loading-indicator').classList.remove('hidden');
+            
+            setTimeout(() => {
+                switch (effect) {
+                    case 'neon':
+                        applyNeonEffect();
+                        break;
+                    case 'painting':
+                        applyPaintingEffect();
+                        break;
+                    case 'glitch':
+                        applyGlitchEffect();
+                        break;
+                    case 'duotone':
+                        applyDuotoneEffect();
+                        break;
+                    case 'pixel':
+                        applyPixelEffect();
+                        break;
+                }
                 
-                // Apply blur (we apply this last to avoid iterating through pixels again)
-                if (filters.blur > 0) {
-                    // This is a simple implementation, real blur would use convolution
-                    ctx.filter = `blur(${filters.blur}px)`;
-                    ctx.drawImage(canvas, 0, 0);
-                    ctx.filter = 'none';
+                document.getElementById('loading-indicator').classList.add('hidden');
+                saveState();
+            }, 100);
+        }
+
+        // Apply neon glow effect
+        function applyNeonEffect() {
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+            
+            // Increase contrast dramatically
+            for (let i = 0; i < data.length; i += 4) {
+                // Boost vibrance
+                const max = Math.max(data[i], data[i + 1], data[i + 2]);
+                if (max > 100) {
+                    const multiplier = 1.5;
+                    data[i] = clamp(data[i] * multiplier);
+                    data[i + 1] = clamp(data[i + 1] * multiplier);
+                    data[i + 2] = clamp(data[i + 2] * multiplier);
+                } else {
+                    // Darken shadows
+                    data[i] = clamp(data[i] * 0.5);
+                    data[i + 1] = clamp(data[i + 1] * 0.5);
+                    data[i + 2] = clamp(data[i + 2] * 0.5);
                 }
             }
             
-            saveState();
+            ctx.putImageData(imageData, 0, 0);
+            
+            // Add glow using shadow
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = canvas.width;
+            tempCanvas.height = canvas.height;
+            const tempCtx = tempCanvas.getContext('2d');
+            
+            // Draw original to temp canvas
+            tempCtx.drawImage(canvas, 0, 0);
+            
+            // Clear original and add glow
+            ctx.shadowColor = '#00ffff';
+            ctx.shadowBlur = 20;
+            ctx.drawImage(tempCanvas, 0, 0);
+            
+            // Draw again with different color glow
+            ctx.shadowColor = '#ff00ff';
+            ctx.shadowBlur = 15;
+            ctx.globalCompositeOperation = 'lighter';
+            ctx.drawImage(tempCanvas, 0, 0);
+            
+            // Reset
+            ctx.shadowBlur = 0;
+            ctx.globalCompositeOperation = 'source-over';
+            
+            showToast('নিওন গ্লো ইফেক্ট অ্যাপ্লাইড!');
+        }
+
+        // Apply painting effect
+        function applyPaintingEffect() {
+            // Oil painting like effect
+            const radius = 4;
+            const intensity = 80;
+            
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const original = new Uint8ClampedArray(imageData.data);
+            const data = imageData.data;
+            
+            for (let y = 0; y < canvas.height; y++) {
+                for (let x = 0; x < canvas.width; x++) {
+                    const pixelIndex = (y * canvas.width + x) * 4;
+                    
+                    // Simple pixel averaging for oil painting effect
+                    let r = 0, g = 0, b = 0, count = 0;
+                    
+                    for (let dy = -radius; dy <= radius; dy++) {
+                        for (let dx = -radius; dx <= radius; dx++) {
+                            const nx = x + dx;
+                            const ny = y + dy;
+                            
+                            if (nx >= 0 && nx < canvas.width && ny >= 0 && ny < canvas.height) {
+                                const neighborIndex = (ny * canvas.width + nx) * 4;
+                                r += original[neighborIndex];
+                                g += original[neighborIndex + 1];
+                                b += original[neighborIndex + 2];
+                                count++;
+                            }
+                        }
+                    }
+                    
+                    // Set the pixel to the average color
+                    if (count > 0) {
+                        data[pixelIndex] = r / count;
+                        data[pixelIndex + 1] = g / count;
+                        data[pixelIndex + 2] = b / count;
+                    }
+                }
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+            showToast('পেইন্টিং ইফেক্ট অ্যাপ্লাইড!');
+        }
+
+        // Apply glitch effect
+        function applyGlitchEffect() {
+            const iterations = 5;
+            
+            // Save original image
+            const originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            
+            // Create buffer for manipulation
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = canvas.width;
+            tempCanvas.height = canvas.height;
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCtx.putImageData(originalImageData, 0, 0);
+            
+            // Apply glitch
+            for (let i = 0; i < iterations; i++) {
+                // Random channel shift
+                const channel = Math.floor(Math.random() * 3); // 0=R, 1=G, 2=B
+                const shiftX = Math.floor(Math.random() * 20) - 10;
+                
+                const sliceY = Math.floor(Math.random() * canvas.height);
+                const sliceHeight = Math.floor(Math.random() * 50) + 10;
+                
+                // Get the slice data
+                const sliceData = tempCtx.getImageData(0, sliceY, canvas.width, sliceHeight);
+                const data = sliceData.data;
+                
+                // Shift the color channel
+                for (let j = 0; j < data.length; j += 4) {
+                    if (j + shiftX * 4 >= 0 && j + shiftX * 4 < data.length) {
+                        data[j + channel] = data[j + shiftX * 4 + channel];
+                    }
+                }
+                
+                // Put the slice back
+                tempCtx.putImageData(sliceData, 0, sliceY);
+            }
+            
+            // Redraw with glitch effect
+            ctx.drawImage(tempCanvas, 0, 0);
+            
+            showToast('গ্লিচ ইফেক্ট অ্যাপ্লাইড!');
+        }
+
+        // Apply duotone effect
+        function applyDuotoneEffect() {
+            const color1 = '#5D5CDE'; // Primary color
+            const color2 = '#FF4577'; // Secondary color
+            
+            // Parse colors
+            const r1 = parseInt(color1.substr(1, 2), 16);
+            const g1 = parseInt(color1.substr(3, 2), 16);
+            const b1 = parseInt(color1.substr(5, 2), 16);
+            
+            const r2 = parseInt(color2.substr(1, 2), 16);
+            const g2 = parseInt(color2.substr(3, 2), 16);
+            const b2 = parseInt(color2.substr(5, 2), 16);
+            
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+            
+            for (let i = 0; i < data.length; i += 4) {
+                // Convert to grayscale
+                const gray = (data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114) / 255;
+                
+                // Interpolate between the two colors
+                data[i] = clamp(r1 + gray * (r2 - r1));
+                data[i + 1] = clamp(g1 + gray * (g2 - g1));
+                data[i + 2] = clamp(b1 + gray * (b2 - b1));
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+            showToast('ডুওটোন ইফেক্ট অ্যাপ্লাইড!');
+        }
+
+        // Apply pixel art effect
+        function applyPixelEffect() {
+            const pixelSize = 10;
+            
+            const tempCanvas = document.createElement('canvas');
+            const tempCtx = tempCanvas.getContext('2d');
+            
+            // Scale down
+            tempCanvas.width = Math.floor(canvas.width / pixelSize);
+            tempCanvas.height = Math.floor(canvas.height / pixelSize);
+            
+            // Draw at lower resolution
+            tempCtx.drawImage(canvas, 0, 0, tempCanvas.width, tempCanvas.height);
+            
+            // Clear original canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw pixelated version back to original canvas
+            ctx.imageSmoothingEnabled = false;
+            ctx.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
+            
+            showToast('পিক্সেল আর্ট ইফেক্ট অ্যাপ্লাইড!');
+        }
+
+        // Show more filters
+        function toggleMoreFilters() {
+            const btn = document.getElementById('more-filters-btn');
+            
+            if (btn.querySelector('i').classList.contains('fa-chevron-down')) {
+                // Show effects panel
+                document.getElementById('effects-preview').classList.remove('hidden');
+                btn.querySelector('i').classList.remove('fa-chevron-down');
+                btn.querySelector('i').classList.add('fa-chevron-up');
+                btn.textContent = ' ফিল্টার বন্ধ করুন';
+                btn.prepend(document.createElement('i')).className = 'fas fa-chevron-up mr-1';
+            } else {
+                // Hide effects panel
+                document.getElementById('effects-preview').classList.add('hidden');
+                btn.querySelector('i').classList.remove('fa-chevron-up');
+                btn.querySelector('i').classList.add('fa-chevron-down');
+                btn.textContent = ' আরও ফিল্টার দেখুন';
+                btn.prepend(document.createElement('i')).className = 'fas fa-chevron-down mr-1';
+            }
         }
 
         // Reset all adjustments
@@ -696,6 +1982,8 @@
                 contrast: 0,
                 saturation: 0,
                 blur: 0,
+                tint: 0,
+                tintColor: '#5D5CDE',
                 currentFilter: 'none'
             };
             
@@ -704,6 +1992,13 @@
             document.getElementById('contrast').value = 0;
             document.getElementById('saturation').value = 0;
             document.getElementById('blur').value = 0;
+            document.getElementById('tint').value = 0;
+            document.getElementById('tint-color').value = '#5D5CDE';
+            
+            // Remove border from all filter previews
+            document.querySelectorAll('.filter-preview').forEach(p => {
+                p.style.border = 'none';
+            });
             
             if (originalImage) {
                 applyFilters();
@@ -714,9 +2009,40 @@
         // Save current canvas state to history
         function saveState() {
             if (ctx) {
-                undoStack.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+                undoStack.push({
+                    imageData: ctx.getImageData(0, 0, canvas.width, canvas.height),
+                    elements: JSON.parse(JSON.stringify(elementsOnCanvas))
+                });
                 redoStack = [];
                 updateHistoryPanel();
+            }
+        }
+
+        // Undo last action
+        function undo() {
+            if (undoStack.length > 1) { // Keep at least the initial state
+                redoStack.push(undoStack.pop());
+                const prevState = undoStack[undoStack.length - 1];
+                ctx.putImageData(prevState.imageData, 0, 0);
+                elementsOnCanvas = JSON.parse(JSON.stringify(prevState.elements));
+                updateHistoryPanel();
+                showToast('আনডু করা হয়েছে!');
+            } else {
+                showToast('আর আনডু করা যাবে না!');
+            }
+        }
+
+        // Redo last undone action
+        function redo() {
+            if (redoStack.length > 0) {
+                const nextState = redoStack.pop();
+                undoStack.push(nextState);
+                ctx.putImageData(nextState.imageData, 0, 0);
+                elementsOnCanvas = JSON.parse(JSON.stringify(nextState.elements));
+                updateHistoryPanel();
+                showToast('রিডু করা হয়েছে!');
+            } else {
+                showToast('আর রিডু করা যাবে না!');
             }
         }
 
@@ -733,15 +2059,33 @@
             // Add undo stack items
             for (let i = 0; i < undoStack.length; i++) {
                 const item = document.createElement('div');
-                item.className = 'min-w-[100px] h-16 bg-primary-100 dark:bg-primary-900 rounded flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-primary-200 dark:hover:bg-primary-800 text-sm';
-                item.textContent = `এডিট ${i + 1}`;
+                
+                if (i === 0) {
+                    // This is the original item already in the DOM
+                    continue;
+                }
+                
+                item.className = 'min-w-[100px] h-16 bg-primary-100 dark:bg-primary-900 rounded-lg flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-primary-200 dark:hover:bg-primary-800 transform hover:-translate-y-1 hover:shadow-lg text-sm';
+                
+                // Create a mini thumbnail
+                const thumbnail = document.createElement('div');
+                thumbnail.className = 'absolute inset-0 opacity-20';
+                
+                // Add timestamp 
+                const time = new Date();
+                const timeStr = time.getHours().toString().padStart(2, '0') + ':' + 
+                                time.getMinutes().toString().padStart(2, '0') + ':' + 
+                                time.getSeconds().toString().padStart(2, '0');
+                
+                item.textContent = `এডিট ${i} (${timeStr})`;
                 item.dataset.index = i;
                 item.addEventListener('click', () => {
                     // Go to that state
                     for (let j = undoStack.length - 1; j > i; j--) {
                         redoStack.push(undoStack.pop());
                     }
-                    ctx.putImageData(undoStack[i], 0, 0);
+                    ctx.putImageData(undoStack[i].imageData, 0, 0);
+                    elementsOnCanvas = JSON.parse(JSON.stringify(undoStack[i].elements));
                     updateHistoryPanel();
                 });
                 timeline.appendChild(item);
@@ -752,14 +2096,36 @@
         function saveImage() {
             if (!canvas) return;
             
-            // Show toast with instructions
-            showToast('ইমেজ সেভ করতে Mouse ডান ক্লিক করুন ও "Save image as..." নির্বাচন করুন');
-            
-            // Highlight the canvas with animation
+            // Apply fancy animation when saving
             canvas.classList.add('shake-animation');
             setTimeout(() => {
                 canvas.classList.remove('shake-animation');
             }, 820);
+            
+            // Create a new canvas with white background
+            const exportCanvas = document.createElement('canvas');
+            exportCanvas.width = canvas.width;
+            exportCanvas.height = canvas.height;
+            const exportCtx = exportCanvas.getContext('2d');
+            
+            // Fill with white background first
+            exportCtx.fillStyle = '#ffffff';
+            exportCtx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
+            
+            // Draw our edited image on top
+            exportCtx.drawImage(canvas, 0, 0);
+            
+            try {
+                // Try to trigger download
+                const link = document.createElement('a');
+                link.download = 'edited_image_' + new Date().getTime() + '.png';
+                link.href = exportCanvas.toDataURL('image/png');
+                link.click();
+                showToast('ইমেজ সেভ করা হয়েছে!');
+            } catch (e) {
+                // If download doesn't work, show instructions
+                showToast('ইমেজ সেভ করতে Mouse ডান ক্লিক করুন ও "Save image as..." নির্বাচন করুন');
+            }
         }
 
         // Setup filter previews with the actual image
@@ -792,6 +2158,7 @@
                 
                 // Apply filter
                 const filter = preview.dataset.filter;
+                
                 if (filter === 'grayscale') {
                     const imageData = previewCtx.getImageData(0, 0, 70, 70);
                     const data = imageData.data;
@@ -823,115 +2190,768 @@
                         data[i + 2] = 255 - data[i + 2];
                     }
                     previewCtx.putImageData(imageData, 0, 0);
+                } else if (filter === 'vintage') {
+                    const imageData = previewCtx.getImageData(0, 0, 70, 70);
+                    const data = imageData.data;
+                    for (let i = 0; i < data.length; i += 4) {
+                        // Apply sepia first
+                        const r = data[i];
+                        const g = data[i + 1];
+                        const b = data[i + 2];
+                        data[i] = clamp(r * 0.393 + g * 0.769 + b * 0.189);
+                        data[i + 1] = clamp(r * 0.349 + g * 0.686 + b * 0.168);
+                        data[i + 2] = clamp(r * 0.272 + g * 0.534 + b * 0.131);
+                        
+                        // Add vintage tint
+                        data[i] = clamp(data[i] * 1.1);
+                        data[i + 1] = clamp(data[i + 1] * 1.05);
+                        data[i + 2] = clamp(data[i + 2] * 0.9);
+                    }
+                    previewCtx.putImageData(imageData, 0, 0);
+                } else if (filter === 'blueprint') {
+                    const imageData = previewCtx.getImageData(0, 0, 70, 70);
+                    const data = imageData.data;
+                    for (let i = 0; i < data.length; i += 4) {
+                        const intensity = (data[i] + data[i + 1] + data[i + 2]) / 3;
+                        data[i] = clamp(intensity * 0.1);
+                        data[i + 1] = clamp(intensity * 0.3);
+                        data[i + 2] = clamp(intensity * 1.2);
+                    }
+                    previewCtx.putImageData(imageData, 0, 0);
+                } else if (filter === 'xpro') {
+                    const imageData = previewCtx.getImageData(0, 0, 70, 70);
+                    const data = imageData.data;
+                    for (let i = 0; i < data.length; i += 4) {
+                        data[i] = clamp(data[i] * 1.25);
+                        data[i + 1] = clamp(data[i + 1]);
+                        data[i + 2] = clamp(data[i + 2] * 0.7);
+                    }
+                    previewCtx.putImageData(imageData, 0, 0);
+                } else if (filter === 'cyberpunk') {
+                    const imageData = previewCtx.getImageData(0, 0, 70, 70);
+                    const data = imageData.data;
+                    for (let i = 0; i < data.length; i += 4) {
+                        data[i] = clamp(data[i] < 128 ? data[i] * 0.4 : data[i] * 1.4);
+                        data[i + 1] = clamp(data[i + 1] < 128 ? data[i + 1] * 0.4 : data[i + 1] * 1.4);
+                        data[i + 2] = clamp(data[i + 2] < 128 ? data[i + 2] * 0.4 : data[i + 2] * 1.4);
+                        
+                        if (data[i] > 200 && data[i + 1] > 200 && data[i + 2] > 200) {
+                            data[i] = clamp(data[i] * 0.9);
+                            data[i + 1] = clamp(data[i + 1] * 0.8);
+                            data[i + 2] = clamp(data[i + 2] * 1.2);
+                        }
+                    }
+                    previewCtx.putImageData(imageData, 0, 0);
                 }
                 
                 // Set preview background
                 preview.style.backgroundImage = `url(${previewCanvas.toDataURL()})`;
+                
+                // Also update the effects previews
+                setupEffectsPreview(img);
             });
         }
 
-        // Show toast notification
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.classList.remove('translate-y-20', 'opacity-0');
+        // Setup the effects preview with actual image
+        function setupEffectsPreview(img) {
+            const effectItems = document.querySelectorAll('.effect-item');
             
-            setTimeout(() => {
-                toast.classList.add('translate-y-20', 'opacity-0');
-            }, 3000);
+            effectItems.forEach(item => {
+                const effectDiv = item.querySelector('div:first-child');
+                const effect = item.dataset.effect;
+                
+                if (effect === 'none') {
+                    // Just display the original image scaled down
+                    effectDiv.style.backgroundImage = `url(${img.src})`;
+                    effectDiv.style.backgroundSize = 'cover';
+                    effectDiv.style.backgroundPosition = 'center';
+                    return;
+                }
+                
+                // Create a temporary canvas for the effect preview
+                const tempCanvas = document.createElement('canvas');
+                tempCanvas.width = 150;
+                tempCanvas.height = 100;
+                const tempCtx = tempCanvas.getContext('2d');
+                
+                // Scale and draw the image
+                const aspectRatio = img.width / img.height;
+                let drawWidth, drawHeight, drawX, drawY;
+                
+                if (aspectRatio > 1.5) {
+                    drawHeight = 100;
+                    drawWidth = 100 * aspectRatio;
+                    drawX = (150 - drawWidth) / 2;
+                    drawY = 0;
+                } else {
+                    drawWidth = 150;
+                    drawHeight = 150 / aspectRatio;
+                    drawX = 0;
+                    drawY = (100 - drawHeight) / 2;
+                }
+                
+                tempCtx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
+                
+                // Apply the effect preview
+                switch (effect) {
+                    case 'neon':
+                        // Simplified neon effect for preview
+                        tempCtx.shadowColor = '#00ffff';
+                        tempCtx.shadowBlur = 10;
+                        tempCtx.drawImage(tempCanvas, 0, 0);
+                        tempCtx.shadowColor = '#ff00ff';
+                        tempCtx.shadowBlur = 5;
+                        tempCtx.globalCompositeOperation = 'lighter';
+                        tempCtx.drawImage(tempCanvas, 0, 0);
+                        tempCtx.shadowBlur = 0;
+                        tempCtx.globalCompositeOperation = 'source-over';
+                        break;
+                        
+                    case 'painting':
+                        // Simplified painting effect
+                        const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+                        const data = imageData.data;
+                        
+                        for (let y = 0; y < tempCanvas.height; y += 3) {
+                            for (let x = 0; x < tempCanvas.width; x += 3) {
+                                const idx = (y * tempCanvas.width + x) * 4;
+                                const r = data[idx];
+                                const g = data[idx + 1];
+                                const b = data[idx + 2];
+                                
+                                // Fill a 3x3 block with the same color
+                                for (let by = 0; by < 3; by++) {
+                                    for (let bx = 0; bx < 3; bx++) {
+                                        if (y + by < tempCanvas.height && x + bx < tempCanvas.width) {
+                                            const blockIdx = ((y + by) * tempCanvas.width + (x + bx)) * 4;
+                                            data[blockIdx] = r;
+                                            data[blockIdx + 1] = g;
+                                            data[blockIdx + 2] = b;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                        tempCtx.putImageData(imageData, 0, 0);
+                        break;
+                        
+                    case 'glitch':
+                        // Simplified glitch effect
+                        const glitchData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+                        const glitchPixels = glitchData.data;
+                        
+                        // Random channel shift
+                        const shiftX = Math.floor(Math.random() * 10) - 5;
+                        
+                        for (let y = 0; y < tempCanvas.height; y++) {
+                            if (Math.random() > 0.7) {
+                                for (let x = 0; x < tempCanvas.width; x++) {
+                                    const idx = (y * tempCanvas.width + x) * 4;
+                                    const channel = Math.floor(Math.random() * 3);
+                                    
+                                    // Shift the channel to the left or right
+                                    if (x + shiftX >= 0 && x + shiftX < tempCanvas.width) {
+                                        const shiftIdx = (y * tempCanvas.width + (x + shiftX)) * 4;
+                                        glitchPixels[idx + channel] = glitchPixels[shiftIdx + channel];
+                                    }
+                                }
+                            }
+                        }
+                        
+                        tempCtx.putImageData(glitchData, 0, 0);
+                        break;
+                        
+                    case 'duotone':
+                        // Duotone effect with preset colors
+                        const duotoneData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+                        const duoPixels = duotoneData.data;
+                        
+                        // Colors for duotone
+                        const r1 = 93, g1 = 92, b1 = 222; // #5D5CDE
+                        const r2 = 255, g2 = 69, b2 = 119; // #FF4577
+                        
+                        for (let i = 0; i < duoPixels.length; i += 4) {
+                            const gray = (duoPixels[i] * 0.299 + duoPixels[i + 1] * 0.587 + duoPixels[i + 2] * 0.114) / 255;
+                            
+                            duoPixels[i] = clamp(r1 + gray * (r2 - r1));
+                            duoPixels[i + 1] = clamp(g1 + gray * (g2 - g1));
+                            duoPixels[i + 2] = clamp(b1 + gray * (b2 - b1));
+                        }
+                        
+                        tempCtx.putImageData(duotoneData, 0, 0);
+                        break;
+                        
+                    case 'pixel':
+                        // Pixelate
+                        const pixelSize = 5;
+                        const pixelCanvas = document.createElement('canvas');
+                        const pixelCtx = pixelCanvas.getContext('2d');
+                        
+                        pixelCanvas.width = Math.floor(tempCanvas.width / pixelSize);
+                        pixelCanvas.height = Math.floor(tempCanvas.height / pixelSize);
+                        
+                        // Draw at lower resolution
+                        pixelCtx.drawImage(tempCanvas, 0, 0, pixelCanvas.width, pixelCanvas.height);
+                        
+                        // Clear original canvas
+                        tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+                        
+                        // Draw pixelated version back
+                        tempCtx.imageSmoothingEnabled = false;
+                        tempCtx.drawImage(pixelCanvas, 0, 0, tempCanvas.width, tempCanvas.height);
+                        break;
+                }
+                
+                // Set the effect preview
+                effectDiv.style.backgroundImage = `url(${tempCanvas.toDataURL()})`;
+                effectDiv.style.backgroundSize = 'cover';
+                effectDiv.style.backgroundPosition = 'center';
+            });
         }
 
-        // Update tool options based on selected tool
-        function updateToolOptions() {
-            const toolOptions = document.getElementById('tool-options');
-            toolOptions.innerHTML = '';
+        // Generate stickers
+        function generateStickers() {
+            const stickersContainer = document.querySelector('#stickers-panel .grid');
             
-            if (activeTool === 'text') {
-                toolOptions.classList.remove('hidden');
-                toolOptions.innerHTML = `
-                    <div>
-                        <label class="block text-sm font-medium mb-1">টেক্সট</label>
-                        <input type="text" id="text-input" class="w-full p-2 border rounded-lg text-base" placeholder="আপনার টেক্সট লিখুন...">
-                        <button id="add-text-btn" class="mt-2 w-full bg-primary-700 hover:bg-primary-800 text-white font-medium py-1 px-2 rounded-lg transition duration-300 ease-in-out">
-                            যোগ করুন
-                        </button>
-                    </div>
-                `;
+            // Clear existing stickers
+            stickersContainer.innerHTML = '';
+            
+            // Define sticker categories
+            const stickerCategories = [
+                {
+                    name: 'Emojis',
+                    stickers: ['😀', '😂', '😍', '👍', '🎉', '❤️', '🔥', '⭐', '🌈', '🍕', '🚀', '🎮', '📱', '💻', '🎵', '🎬', '📷', '🌍', '🏆', '💰']
+                },
+                {
+                    name: 'Shapes',
+                    stickers: [
+                        generateStickerSVG('circle', '#FF5757'),
+                        generateStickerSVG('square', '#57FF8D'),
+                        generateStickerSVG('triangle', '#57D0FF'),
+                        generateStickerSVG('star', '#FFDE59'),
+                        generateStickerSVG('heart', '#FF57B9'),
+                        generateStickerSVG('hexagon', '#C957FF'),
+                        generateStickerSVG('cloud', '#57FFE8'),
+                        generateStickerSVG('speech', '#FF9E57')
+                    ]
+                }
+            ];
+            
+            // Generate category headers and stickers
+            stickerCategories.forEach(category => {
+                // Create category header
+                const categoryHeader = document.createElement('div');
+                categoryHeader.className = 'col-span-full text-sm font-medium mt-2 mb-1';
+                categoryHeader.textContent = category.name;
+                stickersContainer.appendChild(categoryHeader);
                 
-                // Add event listener
-                document.getElementById('add-text-btn').addEventListener('click', addText);
-            } else if (activeTool === 'shape') {
-                toolOptions.classList.remove('hidden');
-                toolOptions.innerHTML = `
-                    <div>
-                        <label class="block text-sm font-medium mb-1">শেপ</label>
-                        <div class="grid grid-cols-2 gap-2">
-                            <button data-shape="rectangle" class="shape-btn p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300">
-                                <div class="w-full h-6 border-2 border-primary-700 dark:border-primary-400"></div>
-                            </button>
-                            <button data-shape="circle" class="shape-btn p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300">
-                                <div class="w-6 h-6 mx-auto rounded-full border-2 border-primary-700 dark:border-primary-400"></div>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                
-                // Add event listeners
-                document.querySelectorAll('.shape-btn').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        addShape(btn.dataset.shape);
+                // Create stickers
+                category.stickers.forEach(sticker => {
+                    const stickerItem = document.createElement('div');
+                    stickerItem.className = 'sticker-item';
+                    
+                    if (typeof sticker === 'string') {
+                        // Emoji sticker
+                        stickerItem.innerHTML = `<span class="text-2xl">${sticker}</span>`;
+                        stickerItem.dataset.stickerType = 'emoji';
+                        stickerItem.dataset.stickerContent = sticker;
+                    } else {
+                        // SVG sticker
+                        stickerItem.innerHTML = sticker;
+                        stickerItem.dataset.stickerType = 'svg';
+                        stickerItem.dataset.stickerContent = sticker;
+                    }
+                    
+                    // Add click event to add sticker to canvas
+                    stickerItem.addEventListener('click', () => {
+                        addStickerToCanvas(stickerItem.dataset.stickerType, stickerItem.dataset.stickerContent);
                     });
+                    
+                    stickersContainer.appendChild(stickerItem);
                 });
-            } else if (activeTool === 'crop') {
-                toolOptions.classList.remove('hidden');
-                toolOptions.innerHTML = `
-                    <div>
-                        <p class="text-sm mb-2">কাটার সাইজ নির্ধারণ করুন:</p>
-                        <div class="grid grid-cols-2 gap-2">
-                            <button data-ratio="1:1" class="crop-btn p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300">
-                                1:1 (বর্গাকার)
-                            </button>
-                            <button data-ratio="4:3" class="crop-btn p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300">
-                                4:3
-                            </button>
-                            <button data-ratio="16:9" class="crop-btn p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300">
-                                16:9
-                            </button>
-                            <button data-ratio="free" class="crop-btn p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300">
-                                ফ্রি-ফর্ম
-                            </button>
-                        </div>
-                    </div>
-                `;
-            } else if (activeTool === 'rotate') {
-                toolOptions.classList.remove('hidden');
-                toolOptions.innerHTML = `
-                    <div>
-                        <div class="flex justify-between">
-                            <button id="rotate-left" class="p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300">
-                                <i class="fas fa-undo text-primary-700 dark:text-primary-400"></i> 90° বামে
-                            </button>
-                            <button id="rotate-right" class="p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300">
-                                <i class="fas fa-redo text-primary-700 dark:text-primary-400"></i> 90° ডানে
-                            </button>
-                        </div>
-                        <button id="flip-horizontal" class="mt-2 w-full p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300">
-                            <i class="fas fa-arrows-alt-h text-primary-700 dark:text-primary-400"></i> আড়াআড়ি ফ্লিপ
-                        </button>
-                        <button id="flip-vertical" class="mt-2 w-full p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300">
-                            <i class="fas fa-arrows-alt-v text-primary-700 dark:text-primary-400"></i> লম্বালম্বি ফ্লিপ
-                        </button>
-                    </div>
-                `;
-                
-                // Add event listeners
-                document.getElementById('rotate-left').addEventListener('click', () => rotateImage(-90));
-                document.getElementById('rotate-right').addEventListener('click', () => rotateImage(90));
-                document.getElementById('flip-horizontal').addEventListener('click', () => flipImage('horizontal'));
-                document.getElementById('flip-vertical').addEventListener('click', () => flipImage('vertical'));
-            } else {
-                toolOptions.classList.add('hidden');
+            });
+        }
+
+        // Generate SVG stickers
+        function generateStickerSVG(shape, color) {
+            const size = 40;
+            
+            switch (shape) {
+                case 'circle':
+                    return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+                        <circle cx="${size/2}" cy="${size/2}" r="${size/2 - 2}" fill="${color}" />
+                    </svg>`;
+                case 'square':
+                    return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+                        <rect x="2" y="2" width="${size - 4}" height="${size - 4}" fill="${color}" />
+                    </svg>`;
+                case 'triangle':
+                    return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+                        <polygon points="${size/2},2 ${size-2},${size-2} 2,${size-2}" fill="${color}" />
+                    </svg>`;
+                case 'star':
+                    const points = [];
+                    for (let i = 0; i < 5; i++) {
+                        // Outer point
+                        const outerAngle = i * 2 * Math.PI / 5 - Math.PI / 2;
+                        const outerX = size/2 + (size/2 - 2) * Math.cos(outerAngle);
+                        const outerY = size/2 + (size/2 - 2) * Math.sin(outerAngle);
+                        points.push(`${outerX},${outerY}`);
+                        
+                        // Inner point
+                        const innerAngle = outerAngle + Math.PI / 5;
+                        const innerX = size/2 + (size/4 - 1) * Math.cos(innerAngle);
+                        const innerY = size/2 + (size/4 - 1) * Math.sin(innerAngle);
+                        points.push(`${innerX},${innerY}`);
+                    }
+                    return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+                        <polygon points="${points.join(' ')}" fill="${color}" />
+                    </svg>`;
+                case 'heart':
+                    return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+                        <path d="M${size/2},${size*0.8} C${size*0.8},${size*0.6} ${size},${size*0.4} ${size*0.8},${size*0.2} C${size*0.6},0 ${size*0.4},0 ${size/2},${size*0.2} C${size*0.6},0 ${size*0.4},0 ${size*0.2},${size*0.2} C0,${size*0.4} ${size*0.2},${size*0.6} ${size/2},${size*0.8}" fill="${color}" />
+                    </svg>`;
+                case 'hexagon':
+                    const hexPoints = [];
+                    for (let i = 0; i < 6; i++) {
+                        const angle = i * Math.PI / 3;
+                        const x = size/2 + (size/2 - 2) * Math.cos(angle);
+                        const y = size/2 + (size/2 - 2) * Math.sin(angle);
+                        hexPoints.push(`${x},${y}`);
+                    }
+                    return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+                        <polygon points="${hexPoints.join(' ')}" fill="${color}" />
+                    </svg>`;
+                case 'cloud':
+                    return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+                        <path d="M${size*0.8},${size*0.6} C${size*0.9},${size*0.5} ${size*0.9},${size*0.3} ${size*0.8},${size*0.2} C${size*0.7},${size*0.1} ${size*0.5},${size*0.1} ${size*0.4},${size*0.2} C${size*0.3},${size*0.1} ${size*0.2},${size*0.1} ${size*0.1},${size*0.2} C0,${size*0.3} 0,${size*0.5} ${size*0.1},${size*0.6} Z" fill="${color}" />
+                    </svg>`;
+                case 'speech':
+                    return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+                        <path d="M2,2 L${size-2},2 L${size-2},${size*0.7} L${size*0.7},${size*0.7} L${size/2},${size-2} L${size*0.3},${size*0.7} L2,${size*0.7} Z" fill="${color}" />
+                    </svg>`;
+                default:
+                    return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+                        <rect width="${size}" height="${size}" fill="${color}" />
+                    </svg>`;
             }
+        }
+
+        // Add sticker to canvas
+        function addStickerToCanvas(type, content) {
+            if (!ctx) return;
+            
+            saveState();
+            
+            // Position sticker in the center of the canvas
+            const x = canvas.width / 2;
+            const y = canvas.height / 2;
+            const size = Math.min(canvas.width, canvas.height) / 4;
+            
+            if (type === 'emoji') {
+                // Draw emoji
+                ctx.font = `${size}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(content, x, y);
+                
+                // Add to elements list
+                elementsOnCanvas.push({
+                    type: 'sticker',
+                    stickerType: 'emoji',
+                    content: content,
+                    x: x,
+                    y: y,
+                    size: size,
+                    rotation: 0
+                });
+            } else if (type === 'svg') {
+                // Convert SVG to image and draw
+                const img = new Image();
+                const svgBlob = new Blob([content], { type: 'image/svg+xml' });
+                const url = URL.createObjectURL(svgBlob);
+                
+                img.onload = function() {
+                    // Draw the SVG
+                    ctx.drawImage(img, x - size/2, y - size/2, size, size);
+                    
+                    // Add to elements list
+                    elementsOnCanvas.push({
+                        type: 'sticker',
+                        stickerType: 'svg',
+                        content: content,
+                        x: x,
+                        y: y,
+                        width: size,
+                        height: size,
+                        rotation: 0
+                    });
+                    
+                    URL.revokeObjectURL(url);
+                    saveState();
+                };
+                
+                img.src = url;
+            }
+            
+            showToast('স্টিকার যোগ করা হয়েছে!');
+            
+            // Close stickers panel
+            document.getElementById('stickers-panel').classList.add('hidden');
+        }
+
+        // Find element at coordinates
+        function findElementAt(x, y) {
+            // Search from top (last added) to bottom
+            for (let i = elementsOnCanvas.length - 1; i >= 0; i--) {
+                const element = elementsOnCanvas[i];
+                
+                // Basic hit testing based on element type
+                if (element.type === 'sticker') {
+                    const halfWidth = element.width ? element.width / 2 : element.size / 2;
+                    const halfHeight = element.height ? element.height / 2 : element.size / 2;
+                    
+                    if (x >= element.x - halfWidth && 
+                        x <= element.x + halfWidth && 
+                        y >= element.y - halfHeight && 
+                        y <= element.y + halfHeight) {
+                        return element;
+                    }
+                } else if (element.type === 'text') {
+                    // Text hit testing
+                    ctx.font = `${element.size}px Arial`;
+                    const metrics = ctx.measureText(element.content);
+                    const width = metrics.width;
+                    const height = element.size;
+                    
+                    if (x >= element.x - width/2 && 
+                        x <= element.x + width/2 && 
+                        y >= element.y - height/2 && 
+                        y <= element.y + height/2) {
+                        return element;
+                    }
+                } else if (element.type === 'shape') {
+                    // Shape hit testing
+                    if (x >= element.x && 
+                        x <= element.x + element.width && 
+                        y >= element.y && 
+                        y <= element.y + element.height) {
+                        return element;
+                    }
+                }
+            }
+            
+            return null;
+        }
+
+        // Show selection controls around element
+        function showSelectionControls(element) {
+            const overlay = document.getElementById('selected-element-overlay');
+            overlay.classList.remove('hidden');
+            
+            // Position and size the overlay based on element type
+            updateSelectionControls();
+        }
+
+        // Update selection controls position and size
+        function updateSelectionControls() {
+            if (!selectedElement) return;
+            
+            const overlay = document.getElementById('selected-element-overlay');
+            const rect = canvas.getBoundingClientRect();
+            
+            // Calculate position and size based on element type
+            let left, top, width, height;
+            
+            if (selectedElement.type === 'sticker') {
+                width = selectedElement.width || selectedElement.size;
+                height = selectedElement.height || selectedElement.size;
+                left = selectedElement.x - width/2;
+                top = selectedElement.y - height/2;
+            } else if (selectedElement.type === 'text') {
+                ctx.font = `${selectedElement.size}px Arial`;
+                const metrics = ctx.measureText(selectedElement.content);
+                width = metrics.width;
+                height = selectedElement.size;
+                left = selectedElement.x - width/2;
+                top = selectedElement.y - height/2;
+            } else if (selectedElement.type === 'shape') {
+                left = selectedElement.x;
+                top = selectedElement.y;
+                width = selectedElement.width;
+                height = selectedElement.height;
+            }
+            
+            // Convert canvas coordinates to screen coordinates
+            const scaleX = rect.width / canvas.width;
+            const scaleY = rect.height / canvas.height;
+            
+            // Position overlay
+            overlay.style.left = `${left * scaleX}px`;
+            overlay.style.top = `${top * scaleY}px`;
+            overlay.style.width = `${width * scaleX}px`;
+            overlay.style.height = `${height * scaleY}px`;
+            
+            // Create control handles if they don't exist
+            if (!overlay.querySelector('.control-handle')) {
+                // Create resize handles
+                const handles = ['nw', 'ne', 'sw', 'se', 'n', 's', 'w', 'e'];
+                handles.forEach(position => {
+                    const handle = document.createElement('div');
+                    handle.className = `control-handle control-handle-${position}`;
+                    handle.dataset.position = position;
+                    overlay.appendChild(handle);
+                    
+                    // Add resize functionality
+                    handle.addEventListener('mousedown', startResize);
+                });
+                
+                // Create rotate handle
+                const rotateHandle = document.createElement('div');
+                rotateHandle.className = 'control-handle control-handle-rotate';
+                rotateHandle.innerHTML = '<i class="fas fa-undo-alt"></i>';
+                overlay.appendChild(rotateHandle);
+                
+                // Add delete button
+                const deleteBtn = document.createElement('div');
+                deleteBtn.className = 'absolute -top-8 -right-8 bg-red-500 text-white w-6 h-6 rounded-full flex items-center justify-center cursor-pointer hover:bg-red-600 transition-colors';
+                deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
+                deleteBtn.addEventListener('click', deleteSelectedElement);
+                overlay.appendChild(deleteBtn);
+            }
+        }
+
+        // Start resizing element
+        function startResize(e) {
+            e.stopPropagation();
+            
+            const position = e.target.dataset.position;
+            const startX = e.clientX;
+            const startY = e.clientY;
+            
+            // Store original element dimensions
+            const originalWidth = selectedElement.width || selectedElement.size;
+            const originalHeight = selectedElement.height || selectedElement.size;
+            const originalX = selectedElement.x;
+            const originalY = selectedElement.y;
+            
+            function handleResize(e) {
+                const deltaX = e.clientX - startX;
+                const deltaY = e.clientY - startY;
+                
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+                
+                const scaledDeltaX = deltaX * scaleX;
+                const scaledDeltaY = deltaY * scaleY;
+                
+                // Apply resize based on handle position
+                let newWidth = originalWidth;
+                let newHeight = originalHeight;
+                let newX = originalX;
+                let newY = originalY;
+                
+                // Handle horizontal resizing
+                if (position.includes('e')) {
+                    newWidth = Math.max(20, originalWidth + scaledDeltaX);
+                } else if (position.includes('w')) {
+                    newWidth = Math.max(20, originalWidth - scaledDeltaX);
+                    if (selectedElement.type === 'sticker') {
+                        newX = originalX + (scaledDeltaX / 2);
+                    } else if (selectedElement.type === 'shape') {
+                        newX = originalX + scaledDeltaX;
+                    }
+                }
+                
+                // Handle vertical resizing
+                if (position.includes('s')) {
+                    newHeight = Math.max(20, originalHeight + scaledDeltaY);
+                } else if (position.includes('n')) {
+                    newHeight = Math.max(20, originalHeight - scaledDeltaY);
+                    if (selectedElement.type === 'sticker') {
+                        newY = originalY + (scaledDeltaY / 2);
+                    } else if (selectedElement.type === 'shape') {
+                        newY = originalY + scaledDeltaY;
+                    }
+                }
+                
+                // Update element dimensions
+                if (selectedElement.type === 'sticker') {
+                    if (selectedElement.stickerType === 'emoji') {
+                        selectedElement.size = newWidth;
+                    } else {
+                        selectedElement.width = newWidth;
+                        selectedElement.height = newHeight;
+                    }
+                    selectedElement.x = newX;
+                    selectedElement.y = newY;
+                } else if (selectedElement.type === 'text') {
+                    selectedElement.size = newHeight;
+                    selectedElement.x = newX;
+                    selectedElement.y = newY;
+                } else if (selectedElement.type === 'shape') {
+                    selectedElement.width = newWidth;
+                    selectedElement.height = newHeight;
+                    selectedElement.x = newX;
+                    selectedElement.y = newY;
+                }
+                
+                // Redraw canvas
+                redrawCanvas();
+                
+                // Update selection controls
+                updateSelectionControls();
+            }
+            
+            function stopResize() {
+                document.removeEventListener('mousemove', handleResize);
+                document.removeEventListener('mouseup', stopResize);
+                saveState();
+            }
+            
+            document.addEventListener('mousemove', handleResize);
+            document.addEventListener('mouseup', stopResize);
+        }
+
+        // Delete selected element
+        function deleteSelectedElement() {
+            if (!selectedElement) return;
+            
+            // Find and remove the element
+            const index = elementsOnCanvas.indexOf(selectedElement);
+            if (index > -1) {
+                elementsOnCanvas.splice(index, 1);
+            }
+            
+            // Redraw canvas
+            redrawCanvas();
+            
+            // Hide selection controls
+            deselectElement();
+            
+            // Save state
+            saveState();
+            
+            showToast('এলিমেন্ট ডিলিট করা হয়েছে!');
+        }
+
+        // Deselect current element
+        function deselectElement() {
+            selectedElement = null;
+            document.getElementById('selected-element-overlay').classList.add('hidden');
+        }
+
+        // Redraw canvas with all elements
+        function redrawCanvas() {
+            if (!ctx || !originalImage) return;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw background image with filters
+            ctx.drawImage(originalImage, 0, 0, canvas.width, canvas.height);
+            
+            // Apply filters
+            applyBasicFilters();
+            
+            // Draw all elements
+            redrawElements();
+        }
+
+        // Redraw all elements on canvas
+        function redrawElements() {
+            elementsOnCanvas.forEach(element => {
+                if (element.type === 'sticker') {
+                    if (element.stickerType === 'emoji') {
+                        // Draw emoji
+                        ctx.font = `${element.size}px Arial`;
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText(element.content, element.x, element.y);
+                    } else if (element.stickerType === 'svg') {
+                        // Convert SVG to image and draw
+                        const img = new Image();
+                        const svgBlob = new Blob([element.content], { type: 'image/svg+xml' });
+                        const url = URL.createObjectURL(svgBlob);
+                        
+                        img.onload = function() {
+                            // Save context state
+                            ctx.save();
+                            
+                            // Apply rotation if needed
+                            if (element.rotation) {
+                                ctx.translate(element.x, element.y);
+                                ctx.rotate(element.rotation * Math.PI / 180);
+                                ctx.translate(-element.x, -element.y);
+                            }
+                            
+                            // Draw the SVG
+                            ctx.drawImage(
+                                img, 
+                                element.x - element.width/2, 
+                                element.y - element.height/2, 
+                                element.width, 
+                                element.height
+                            );
+                            
+                            // Restore context state
+                            ctx.restore();
+                            
+                            URL.revokeObjectURL(url);
+                        };
+                        
+                        img.src = url;
+                    }
+                } else if (element.type === 'text') {
+                    // Draw text
+                    ctx.font = `${element.size}px Arial`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillStyle = element.color;
+                    
+                    // Apply rotation if any
+                    ctx.save();
+                    if (element.rotation) {
+                        ctx.translate(element.x, element.y);
+                        ctx.rotate(element.rotation * Math.PI / 180);
+                        ctx.translate(-element.x, -element.y);
+                    }
+                    
+                    ctx.fillText(element.content, element.x, element.y);
+                    ctx.restore();
+                } else if (element.type === 'shape') {
+                    // Draw shape
+                    ctx.save();
+                    ctx.fillStyle = element.color;
+                    
+                    if (element.rotation) {
+                        const centerX = element.x + element.width/2;
+                        const centerY = element.y + element.height/2;
+                        ctx.translate(centerX, centerY);
+                        ctx.rotate(element.rotation * Math.PI / 180);
+                        ctx.translate(-centerX, -centerY);
+                    }
+                    
+                    if (element.shape === 'rectangle') {
+                        ctx.fillRect(element.x, element.y, element.width, element.height);
+                    } else if (element.shape === 'circle') {
+                        const radius = Math.min(element.width, element.height) / 2;
+                        ctx.beginPath();
+                        ctx.arc(
+                            element.x + element.width/2, 
+                            element.y + element.height/2, 
+                            radius, 
+                            0, 
+                            Math.PI * 2
+                        );
+                        ctx.fill();
+                    }
+                    
+                    ctx.restore();
+                }
+            });
         }
 
         // Add text to canvas
@@ -949,11 +2969,26 @@
             saveState();
             
             // Add text at center of canvas
-            ctx.font = `${brushSize * 2}px Arial`;
+            const size = brushSize * 2;
+            const x = canvas.width / 2;
+            const y = canvas.height / 2;
+            
+            ctx.font = `${size}px Arial`;
             ctx.fillStyle = brushColor;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+            ctx.fillText(text, x, y);
+            
+            // Add to elements list
+            elementsOnCanvas.push({
+                type: 'text',
+                content: text,
+                x: x,
+                y: y,
+                size: size,
+                color: brushColor,
+                rotation: 0
+            });
             
             textInput.value = '';
             showToast('টেক্সট যোগ করা হয়েছে!');
@@ -975,10 +3010,34 @@
             
             if (shape === 'rectangle') {
                 ctx.fillRect(centerX - size/2, centerY - size/2, size, size);
+                
+                // Add to elements list
+                elementsOnCanvas.push({
+                    type: 'shape',
+                    shape: 'rectangle',
+                    x: centerX - size/2,
+                    y: centerY - size/2,
+                    width: size,
+                    height: size,
+                    color: brushColor,
+                    rotation: 0
+                });
             } else if (shape === 'circle') {
                 ctx.beginPath();
                 ctx.arc(centerX, centerY, size/2, 0, Math.PI * 2);
                 ctx.fill();
+                
+                // Add to elements list
+                elementsOnCanvas.push({
+                    type: 'shape',
+                    shape: 'circle',
+                    x: centerX - size/2,
+                    y: centerY - size/2,
+                    width: size,
+                    height: size,
+                    color: brushColor,
+                    rotation: 0
+                });
             }
             
             showToast('শেপ যোগ করা হয়েছে!');
@@ -1023,6 +3082,10 @@
             ctx.drawImage(tempCanvas, 0, 0);
             
             showToast('ইমেজ ঘোরানো হয়েছে!');
+            
+            // Update filter previews
+            setupFilterPreviews(originalImage);
+            
             saveState();
         }
 
@@ -1063,9 +3126,399 @@
             saveState();
         }
 
+        // Update tool options based on selected tool
+        function updateToolOptions() {
+            const toolOptions = document.getElementById('tool-options');
+            toolOptions.innerHTML = '';
+            
+            // Hide other panels
+            document.getElementById('stickers-panel').classList.add('hidden');
+            
+            if (activeTool === 'text') {
+                toolOptions.classList.remove('hidden');
+                toolOptions.innerHTML = `
+                    <div>
+                        <label class="block text-sm font-medium mb-1">টেক্সট</label>
+                        <input type="text" id="text-input" class="w-full p-2 border rounded-lg text-base" placeholder="আপনার টেক্সট লিখুন...">
+                        <div class="flex space-x-2 mt-2">
+                            <select id="font-selector" class="flex-1 p-2 border rounded-lg text-base">
+                                <option value="Arial">Arial</option>
+                                <option value="Verdana">Verdana</option>
+                                <option value="Times New Roman">Times New Roman</option>
+                                <option value="Courier New">Courier New</option>
+                                <option value="Impact">Impact</option>
+                            </select>
+                            <button id="text-bold" class="p-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+                                <i class="fas fa-bold"></i>
+                            </button>
+                            <button id="text-italic" class="p-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+                                <i class="fas fa-italic"></i>
+                            </button>
+                        </div>
+                        <button id="add-text-btn" class="mt-2 w-full bg-primary-700 hover:bg-primary-800 text-white font-medium py-1 px-2 rounded-lg transition duration-300 ease-in-out btn-3d">
+                            যোগ করুন
+                        </button>
+                    </div>
+                `;
+                
+                // Add event listener
+                document.getElementById('add-text-btn').addEventListener('click', addText);
+            } else if (activeTool === 'shape') {
+                toolOptions.classList.remove('hidden');
+                toolOptions.innerHTML = `
+                    <div>
+                        <label class="block text-sm font-medium mb-1">শেপ</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button data-shape="rectangle" class="shape-btn p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300">
+                                <div class="w-full h-6 border-2 border-primary-700 dark:border-primary-400"></div>
+                            </button>
+                            <button data-shape="circle" class="shape-btn p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300">
+                                <div class="w-6 h-6 mx-auto rounded-full border-2 border-primary-700 dark:border-primary-400"></div>
+                            </button>
+                            <button data-shape="triangle" class="shape-btn p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300">
+                                <div class="w-6 h-6 mx-auto" style="border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 17px solid #5D5CDE;"></div>
+                            </button>
+                            <button data-shape="star" class="shape-btn p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300">
+                                <div class="w-6 h-6 mx-auto">★</div>
+                            </button>
+                            <button data-shape="heart" class="shape-btn p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300">
+                                <div class="w-6 h-6 mx-auto">❤</div>
+                            </button>
+                            <button data-shape="custom" class="shape-btn p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300">
+                                <div class="w-6 h-6 mx-auto flex items-center justify-center">
+                                    <i class="fas fa-draw-polygon text-primary-700 dark:text-primary-400"></i>
+                                </div>
+                            </button>
+                        </div>
+                        
+                        <div class="mt-2">
+                            <label class="block text-sm font-medium mb-1">ফিল স্টাইল</label>
+                            <div class="flex space-x-2">
+                                <button data-fill="solid" class="fill-btn flex-1 p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300 active">
+                                    সলিড
+                                </button>
+                                <button data-fill="outline" class="fill-btn flex-1 p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300">
+                                    আউটলাইন
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Add event listeners
+                document.querySelectorAll('.shape-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        addShape(btn.dataset.shape);
+                    });
+                });
+            } else if (activeTool === 'crop') {
+                toolOptions.classList.remove('hidden');
+                toolOptions.innerHTML = `
+                    <div>
+                        <p class="text-sm mb-2">কাটার সাইজ নির্ধারণ করুন:</p>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button data-ratio="1:1" class="crop-btn p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300">
+                                1:1 (বর্গাকার)
+                            </button>
+                            <button data-ratio="4:3" class="crop-btn p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300">
+                                4:3
+                            </button>
+                            <button data-ratio="16:9" class="crop-btn p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300">
+                                16:9
+                            </button>
+                            <button data-ratio="free" class="crop-btn p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300">
+                                ফ্রি-ফর্ম
+                            </button>
+                        </div>
+                        <button id="apply-crop" class="mt-2 w-full bg-primary-700 hover:bg-primary-800 text-white font-medium py-1 px-2 rounded-lg transition duration-300 ease-in-out btn-3d">
+                            কাট এপ্লাই করুন
+                        </button>
+                    </div>
+                `;
+            } else if (activeTool === 'rotate') {
+                toolOptions.classList.remove('hidden');
+                toolOptions.innerHTML = `
+                    <div>
+                        <div class="flex justify-between">
+                            <button id="rotate-left" class="p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300 flex items-center justify-center flex-1 mr-1">
+                                <i class="fas fa-undo text-primary-700 dark:text-primary-400 mr-1"></i> 90° বামে
+                            </button>
+                            <button id="rotate-right" class="p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300 flex items-center justify-center flex-1 ml-1">
+                                <i class="fas fa-redo text-primary-700 dark:text-primary-400 mr-1"></i> 90° ডানে
+                            </button>
+                        </div>
+                        <div class="mt-2">
+                            <label class="block text-sm font-medium mb-1">কাস্টম রোটেশন</label>
+                            <input type="range" id="rotation-angle" min="-180" max="180" value="0" class="w-full">
+                            <div class="flex justify-between text-xs mt-1">
+                                <span>-180°</span>
+                                <span>0°</span>
+                                <span>180°</span>
+                            </div>
+                        </div>
+                        <button id="apply-rotation" class="mt-2 w-full bg-primary-700 hover:bg-primary-800 text-white font-medium py-1 px-2 rounded-lg transition duration-300 ease-in-out btn-3d">
+                            রোটেশন এপ্লাই করুন
+                        </button>
+                        <div class="mt-4 border-t pt-2">
+                            <button id="flip-horizontal" class="w-full p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300 mb-2">
+                                <i class="fas fa-arrows-alt-h text-primary-700 dark:text-primary-400 mr-1"></i> আড়াআড়ি ফ্লিপ
+                            </button>
+                            <button id="flip-vertical" class="w-full p-2 bg-white dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-300">
+                                <i class="fas fa-arrows-alt-v text-primary-700 dark:text-primary-400 mr-1"></i> লম্বালম্বি ফ্লিপ
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                // Add event listeners
+                document.getElementById('rotate-left').addEventListener('click', () => rotateImage(-90));
+                document.getElementById('rotate-right').addEventListener('click', () => rotateImage(90));
+                document.getElementById('flip-horizontal').addEventListener('click', () => flipImage('horizontal'));
+                document.getElementById('flip-vertical').addEventListener('click', () => flipImage('vertical'));
+            } else if (activeTool === 'sticker') {
+                // Show stickers panel
+                document.getElementById('stickers-panel').classList.remove('hidden');
+                toolOptions.classList.add('hidden');
+            } else if (activeTool === 'effects') {
+                // Show effects panel
+                document.getElementById('effects-preview').classList.remove('hidden');
+                toolOptions.classList.add('hidden');
+            } else {
+                toolOptions.classList.add('hidden');
+            }
+        }
+
+        // Add a new layer
+        function addNewLayer() {
+            // Implemented as a placeholder
+            showToast('নতুন লেয়ার যোগ করা হয়েছে!');
+            updateLayersPanel();
+        }
+
+        // Update layers panel
+        function updateLayersPanel() {
+            const layersContainer = document.getElementById('layers-container');
+            
+            // Clear existing layers (except the background)
+            while (layersContainer.children.length > 1) {
+                layersContainer.removeChild(layersContainer.lastChild);
+            }
+            
+            // Add layers for each element on canvas
+            elementsOnCanvas.forEach((element, index) => {
+                const layerItem = document.createElement('div');
+                layerItem.className = 'layer-item';
+                
+                // Set layer content based on element type
+                let icon, name;
+                if (element.type === 'text') {
+                    icon = 'fa-font';
+                    name = `Text: "${element.content.substring(0, 10)}${element.content.length > 10 ? '...' : ''}"`;
+                } else if (element.type === 'shape') {
+                    icon = 'fa-shapes';
+                    name = `Shape: ${element.shape}`;
+                } else if (element.type === 'sticker') {
+                    icon = 'fa-sticky-note';
+                    name = `Sticker: ${element.stickerType}`;
+                }
+                
+                layerItem.innerHTML = `
+                    <i class="fas ${icon} mr-2"></i>
+                    <span class="flex-1">${name}</span>
+                    <i class="fas fa-eye text-primary-600 cursor-pointer hover:text-primary-800 transition-colors mr-2"></i>
+                    <i class="fas fa-trash text-red-500 cursor-pointer hover:text-red-700 transition-colors"></i>
+                `;
+                
+                // Add event listeners
+                const visibilityToggle = layerItem.querySelector('.fa-eye');
+                visibilityToggle.addEventListener('click', () => {
+                    // Toggle visibility
+                    if (visibilityToggle.classList.contains('text-primary-600')) {
+                        visibilityToggle.classList.remove('text-primary-600');
+                        visibilityToggle.classList.add('text-gray-400');
+                        element.hidden = true;
+                    } else {
+                        visibilityToggle.classList.add('text-primary-600');
+                        visibilityToggle.classList.remove('text-gray-400');
+                        element.hidden = false;
+                    }
+                    redrawCanvas();
+                });
+                
+                const deleteBtn = layerItem.querySelector('.fa-trash');
+                deleteBtn.addEventListener('click', () => {
+                    // Remove element
+                    elementsOnCanvas.splice(index, 1);
+                    redrawCanvas();
+                    updateLayersPanel();
+                    saveState();
+                });
+                
+                // Add click event to select the element
+                layerItem.addEventListener('click', (e) => {
+                    if (!e.target.classList.contains('fa-eye') && !e.target.classList.contains('fa-trash')) {
+                        selectedElement = element;
+                        selectedElementType = element.type;
+                        
+                        // Show selection controls
+                        showSelectionControls(element);
+                        
+                        // Highlight layer
+                        document.querySelectorAll('.layer-item').forEach(item => {
+                            item.classList.remove('active');
+                        });
+                        layerItem.classList.add('active');
+                    }
+                });
+                
+                layersContainer.appendChild(layerItem);
+            });
+        }
+
+        // Open advanced color modal
+        function openColorModal() {
+            document.getElementById('color-modal').classList.remove('hidden');
+            
+            // Set initial color
+            document.getElementById('modal-color-picker').value = brushColor;
+            
+            // Update RGB inputs
+            const hexColor = brushColor.startsWith('#') ? brushColor : rgbToHex(brushColor);
+            document.getElementById('color-hex').value = hexColor;
+            
+            // Set RGB values
+            const r = parseInt(hexColor.substr(1, 2), 16);
+            const g = parseInt(hexColor.substr(3, 2), 16);
+            const b = parseInt(hexColor.substr(5, 2), 16);
+            
+            document.getElementById('color-r').value = r;
+            document.getElementById('color-g').value = g;
+            document.getElementById('color-b').value = b;
+            
+            // Set up recent colors
+            setupRecentColors();
+        }
+
+        // Setup recent colors in the modal
+        function setupRecentColors() {
+            // This would normally pull from localStorage, but we'll use a simple array here
+            const recentColorsContainer = document.getElementById('recent-colors');
+            const recentColors = [
+                '#FF5757', '#57FF8D', '#57D0FF', '#FFDE59', '#FF57B9', 
+                '#C957FF', '#57FFE8', '#FF9E57', '#5D5CDE', '#000000'
+            ];
+            
+            recentColorsContainer.innerHTML = '';
+            
+            recentColors.forEach(color => {
+                const colorBtn = document.createElement('div');
+                colorBtn.className = 'w-full aspect-square rounded-sm cursor-pointer hover:scale-110 transition-transform';
+                colorBtn.style.backgroundColor = color;
+                colorBtn.addEventListener('click', () => {
+                    document.getElementById('modal-color-picker').value = color;
+                    syncColorFromPicker({ target: { value: color } });
+                });
+                recentColorsContainer.appendChild(colorBtn);
+            });
+        }
+
+        // Close color modal
+        function closeColorModal() {
+            document.getElementById('color-modal').classList.add('hidden');
+        }
+
+        // Apply the selected color from the advanced color picker
+        function applyAdvancedColor() {
+            brushColor = document.getElementById('modal-color-picker').value;
+            document.getElementById('color-picker').value = brushColor;
+            closeColorModal();
+            updateCursor();
+        }
+
+        // Sync color from color picker to RGB and Hex inputs
+        function syncColorFromPicker(e) {
+            const hexColor = e.target.value;
+            document.getElementById('color-hex').value = hexColor;
+            
+            // Convert to RGB
+            const r = parseInt(hexColor.substr(1, 2), 16);
+            const g = parseInt(hexColor.substr(3, 2), 16);
+            const b = parseInt(hexColor.substr(5, 2), 16);
+            
+            document.getElementById('color-r').value = r;
+            document.getElementById('color-g').value = g;
+            document.getElementById('color-b').value = b;
+        }
+
+        // Sync color from RGB inputs to color picker and Hex input
+        function syncColorFromRGB() {
+            const r = clamp(parseInt(document.getElementById('color-r').value) || 0, 0, 255);
+            const g = clamp(parseInt(document.getElementById('color-g').value) || 0, 0, 255);
+            const b = clamp(parseInt(document.getElementById('color-b').value) || 0, 0, 255);
+            
+            document.getElementById('color-r').value = r;
+            document.getElementById('color-g').value = g;
+            document.getElementById('color-b').value = b;
+            
+            const hexColor = `#${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`;
+            document.getElementById('color-hex').value = hexColor;
+            document.getElementById('modal-color-picker').value = hexColor;
+        }
+
+        // Sync color from Hex input to color picker and RGB inputs
+        function syncColorFromHex(e) {
+            let hexColor = e.target.value;
+            
+            // Ensure it starts with #
+            if (!hexColor.startsWith('#')) {
+                hexColor = '#' + hexColor;
+            }
+            
+            // Validate hex
+            if (/^#[0-9A-F]{6}$/i.test(hexColor)) {
+                document.getElementById('color-hex').value = hexColor;
+                document.getElementById('modal-color-picker').value = hexColor;
+                
+                // Convert to RGB
+                const r = parseInt(hexColor.substr(1, 2), 16);
+                const g = parseInt(hexColor.substr(3, 2), 16);
+                const b = parseInt(hexColor.substr(5, 2), 16);
+                
+                document.getElementById('color-r').value = r;
+                document.getElementById('color-g').value = g;
+                document.getElementById('color-b').value = b;
+            }
+        }
+
+        // Convert RGB component to hex
+        function componentToHex(c) {
+            const hex = c.toString(16);
+            return hex.length == 1 ? "0" + hex : hex;
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            // Add some animation for effect
+            setTimeout(() => {
+                toast.classList.add('shake-animation');
+            }, 100);
+            
+            setTimeout(() => {
+                toast.classList.remove('shake-animation');
+            }, 500);
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
         // Utility function: Clamp value between 0 and 255
         function clamp(value) {
-            return Math.max(0, Math.min(255, value));
+            return Math.max(0, Math.min(255, Math.round(value)));
         }
 
         // Utility function: Convert RGB to Hex
