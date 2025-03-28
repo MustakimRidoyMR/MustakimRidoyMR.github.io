@@ -25,11 +25,18 @@
                     animation: {
                         'float': 'float 3s ease-in-out infinite',
                         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                        'spin-slow': 'spin 8s linear infinite',
+                        'wiggle': 'wiggle 1s ease-in-out infinite',
                     },
                     keyframes: {
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
                             '50%': { transform: 'translateY(-10px)' },
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' },
                         }
                     }
                 }
@@ -53,6 +60,7 @@
 
         body {
             overflow-x: hidden;
+            cursor: none;
         }
         
         .dark {
@@ -99,6 +107,8 @@
             pointer-events: none;
             transform: translate(-50%, -50%);
             z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
         }
         
         .cursor-outline {
@@ -109,32 +119,83 @@
             position: fixed;
             pointer-events: none;
             transform: translate(-50%, -50%);
-            transition: width 0.2s, height 0.2s;
+            transition: all 0.3s ease-out;
             z-index: 9998;
+            opacity: 0.7;
+            animation: pulse 2s infinite;
+        }
+
+        /* Pulse animation for cursor */
+        @keyframes pulse {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.05);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        /* Show normal cursor on small screens */
+        @media (max-width: 768px) {
+            body {
+                cursor: auto;
+            }
         }
         
         /* Buttons & Interactive Elements */
         .btn {
-            transition: transform 0.2s, filter 0.2s;
+            position: relative;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+        
+        .btn:hover:before {
+            width: 100%;
         }
         
         .btn:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.1);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(0,0,0,0.15), 0 5px 5px rgba(0,0,0,0.12);
         }
         
         .btn:active {
-            transform: translateY(1px);
+            transform: translateY(0);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15), 0 1px 3px rgba(0,0,0,0.1);
         }
         
         /* 3D Card effect */
         .card-3d {
             transform-style: preserve-3d;
-            transition: transform 0.5s ease;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            will-change: transform;
+            perspective: 1000px;
         }
         
         .card-3d:hover {
-            transform: rotateX(5deg) rotateY(5deg);
+            transform: rotateX(5deg) rotateY(5deg) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.1);
+        }
+        
+        .card-3d .card-content {
+            transform: translateZ(20px);
+            transition: transform 0.5s ease;
         }
         
         /* Gradient Animation */
@@ -174,15 +235,17 @@
             left: 50%;
             transform: translateX(-50%);
             opacity: 0;
-            transition: opacity 0.3s, visibility 0.3s;
+            transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             font-size: 14px;
             white-space: nowrap;
+            transform-origin: bottom;
         }
         
         .tooltip:hover .tooltip-text {
             visibility: visible;
             opacity: 1;
+            transform: translateX(-50%) translateY(-5px);
         }
         
         /* Glass effect */
@@ -191,6 +254,7 @@
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
         
         .dark .glass-effect {
@@ -204,33 +268,88 @@
             border-radius: 50%;
             filter: blur(40px);
             opacity: 0.4;
-            transition: all 0.3s ease;
-            animation: float 10s infinite alternate;
+            transition: all 1s ease;
             z-index: -1;
+            animation-duration: 15s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
         }
         
-        @keyframes float {
+        .orb-1 {
+            animation-name: float-1;
+        }
+        
+        .orb-2 {
+            animation-name: float-2;
+        }
+        
+        .orb-3 {
+            animation-name: float-3;
+        }
+        
+        @keyframes float-1 {
             0% {
-                transform: translateY(0) translateX(0);
+                transform: translateY(0) translateX(0) scale(1);
             }
-            50% {
-                transform: translateY(-30px) translateX(20px);
+            33% {
+                transform: translateY(-50px) translateX(30px) scale(1.1);
+            }
+            66% {
+                transform: translateY(20px) translateX(-20px) scale(0.9);
             }
             100% {
-                transform: translateY(0) translateX(0);
+                transform: translateY(0) translateX(0) scale(1);
+            }
+        }
+        
+        @keyframes float-2 {
+            0% {
+                transform: translateY(0) translateX(0) scale(1);
+            }
+            33% {
+                transform: translateY(30px) translateX(-50px) scale(1.05);
+            }
+            66% {
+                transform: translateY(-30px) translateX(10px) scale(0.95);
+            }
+            100% {
+                transform: translateY(0) translateX(0) scale(1);
+            }
+        }
+        
+        @keyframes float-3 {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0) scale(1);
+            }
+            33% {
+                transform: translateY(-20px) translateX(20px) rotate(5deg) scale(1.1);
+            }
+            66% {
+                transform: translateY(40px) translateX(-30px) rotate(-5deg) scale(0.9);
+            }
+            100% {
+                transform: translateY(0) translateX(0) rotate(0) scale(1);
             }
         }
         
         /* Highlight for cards */
+        .highlight-border {
+            position: relative;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
         .highlight-border::before {
             content: "";
             position: absolute;
             inset: -4px;
             z-index: -1;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
+            background: linear-gradient(-45deg, var(--primary), var(--secondary), #32d189, var(--primary));
+            background-size: 400% 400%;
             border-radius: 20px;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.5s ease;
+            animation: gradient 15s ease infinite;
         }
         
         .highlight-border:hover::before {
@@ -242,9 +361,10 @@
             -webkit-appearance: none;
             width: 100%;
             height: 8px;
-            background: #d3d3d3;
+            background: linear-gradient(to right, #d3d3d3, var(--primary));
             border-radius: 5px;
             outline: none;
+            transition: background 0.3s ease;
         }
         
         input[type="range"]::-webkit-slider-thumb {
@@ -254,7 +374,13 @@
             background: var(--primary);
             border-radius: 50%;
             cursor: pointer;
-            transition: background 0.15s ease-in-out;
+            transition: all 0.15s ease-in-out;
+            box-shadow: 0 0 0 4px rgba(93, 92, 222, 0.1);
+        }
+        
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 0 6px rgba(93, 92, 222, 0.2);
         }
         
         input[type="range"]::-moz-range-thumb {
@@ -264,7 +390,13 @@
             border-radius: 50%;
             cursor: pointer;
             border: 0;
-            transition: background 0.15s ease-in-out;
+            transition: all 0.15s ease-in-out;
+            box-shadow: 0 0 0 4px rgba(93, 92, 222, 0.1);
+        }
+        
+        input[type="range"]::-moz-range-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 0 6px rgba(93, 92, 222, 0.2);
         }
         
         /* Color display animation */
@@ -294,43 +426,147 @@
             aspect-ratio: 1;
             border-radius: 8px;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         
         .color-item:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transform: scale(1.1) rotate(3deg);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            z-index: 1;
+        }
+        
+        .color-item::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+            opacity: 0;
+            transform: scale(0.5);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        
+        .color-item:hover::after {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        /* Animated input fields */
+        input:focus, select:focus, textarea:focus {
+            animation: pulse-border 1.5s infinite;
+        }
+        
+        @keyframes pulse-border {
+            0% {
+                box-shadow: 0 0 0 0 rgba(93, 92, 222, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 6px rgba(93, 92, 222, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(93, 92, 222, 0);
+            }
+        }
+        
+        /* Animated button effects */
+        .btn-animated {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-animated::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+        
+        .btn-animated:hover::after {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        
+        /* Heading animations */
+        .animate-heading {
+            background: linear-gradient(90deg, var(--primary), var(--secondary), #32d189, var(--primary));
+            background-size: 300% 100%;
+            animation: gradient-text 10s ease infinite;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            transition: all 0.3s ease;
+        }
+        
+        @keyframes gradient-text {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        /* Floating cards effect */
+        .floating-card {
+            animation: float-card 6s ease-in-out infinite;
+            perspective: 1000px;
+        }
+        
+        @keyframes float-card {
+            0% {
+                transform: translateY(0px) translateZ(0);
+            }
+            50% {
+                transform: translateY(-10px) translateZ(20px);
+            }
+            100% {
+                transform: translateY(0px) translateZ(0);
+            }
         }
     </style>
 </head>
 <body class="bg-light-primary dark:bg-dark-primary text-gray-900 dark:text-white min-h-screen transition-colors duration-300">
-    <!-- Mouse cursor elements -->
+    <!-- Mouse cursor elements - uses fixed positioning -->
     <div class="cursor-dot hidden md:block"></div>
     <div class="cursor-outline hidden md:block"></div>
     
     <!-- Decorative background orbs -->
-    <div class="orb" style="width: 300px; height: 300px; top: 10%; left: 5%; background: #5D5CDE; animation-delay: 0s;"></div>
-    <div class="orb" style="width: 250px; height: 250px; top: 60%; right: 10%; background: #9F9EF3; animation-delay: 2s;"></div>
-    <div class="orb" style="width: 200px; height: 200px; top: 40%; left: 50%; background: #32d189; animation-delay: 4s;"></div>
+    <div class="orb orb-1" style="width: 300px; height: 300px; top: 10%; left: 5%; background: #5D5CDE;"></div>
+    <div class="orb orb-2" style="width: 250px; height: 250px; top: 60%; right: 10%; background: #9F9EF3;"></div>
+    <div class="orb orb-3" style="width: 200px; height: 200px; top: 40%; left: 50%; background: #32d189;"></div>
     
     <!-- Header -->
-    <header class="w-full px-6 py-4 flex justify-between items-center backdrop-blur-sm sticky top-0 z-10">
+    <header class="w-full px-6 py-4 flex justify-between items-center backdrop-blur-sm sticky top-0 z-10 glass-effect">
         <div class="flex items-center">
-            <div class="w-12 h-12 rounded-lg bg-gradient-to-tr from-primary to-secondary flex items-center justify-center shadow-lg mr-3">
-                <svg class="w-7 h-7 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div class="w-12 h-12 rounded-lg bg-gradient-to-tr from-primary to-secondary flex items-center justify-center shadow-lg mr-3 animate-bounce-slow">
+                <svg class="w-7 h-7 text-white animate-pulse-slow" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
                 </svg>
             </div>
-            <h1 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">ColorMaster</h1>
+            <h1 class="text-2xl font-bold animate-heading">ColorMaster</h1>
         </div>
         
         <div class="flex items-center space-x-4">
             <!-- Color Modes Toggle -->
-            <button id="theme-toggle" class="p-2 rounded-full bg-light-secondary dark:bg-dark-secondary transition-all">
-                <svg id="sun-icon" class="w-6 h-6 text-yellow-500 hidden dark:inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <button id="theme-toggle" class="p-2 rounded-full bg-light-secondary dark:bg-dark-secondary transition-all btn-animated">
+                <svg id="sun-icon" class="w-6 h-6 text-yellow-500 hidden dark:inline animate-spin-slow" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
                 </svg>
-                <svg id="moon-icon" class="w-6 h-6 text-gray-700 inline dark:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg id="moon-icon" class="w-6 h-6 text-gray-700 inline dark:hidden animate-wiggle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
                 </svg>
             </button>
@@ -341,222 +577,232 @@
         <div class="grid grid-cols-1 lg:grid-cols-7 gap-6">
             <!-- Main Color Picker Section -->
             <div class="lg:col-span-4 relative">
-                <div class="card-3d bg-white dark:bg-dark-secondary rounded-2xl p-6 shadow-xl relative highlight-border mb-6">
-                    <h2 class="text-xl font-bold mb-4 text-center">Color Picker</h2>
-                    
-                    <!-- Main color display -->
-                    <div id="color-display" class="w-full h-40 rounded-xl mb-4 flex items-center justify-center shadow-inner relative overflow-hidden" style="background-color: #5D5CDE;">
-                        <span id="color-value" class="text-white text-xl font-bold">HEX: #5D5CDE</span>
-                        <div id="copy-indicator" class="absolute inset-0 bg-white opacity-0 pointer-events-none"></div>
-                    </div>
-                    
-                    <!-- Color Input Controls -->
-                    <div class="flex flex-col sm:flex-row gap-4 mb-6">
-                        <div class="flex-1">
-                            <label class="block text-sm font-medium mb-1">HEX</label>
-                            <div class="relative">
-                                <span class="absolute inset-y-0 left-0 flex items-center pl-2 text-gray-500">#</span>
-                                <input type="text" id="hex-input" class="w-full bg-light-secondary dark:bg-dark-primary rounded-lg p-3 pl-7 text-base focus:ring-2 focus:ring-primary outline-none" value="5D5CDE">
+                <div class="card-3d floating-card bg-white dark:bg-dark-secondary rounded-2xl p-6 shadow-xl relative highlight-border mb-6">
+                    <div class="card-content">
+                        <h2 class="text-xl font-bold mb-4 text-center animate-heading">Color Picker</h2>
+                        
+                        <!-- Main color display -->
+                        <div id="color-display" class="w-full h-40 rounded-xl mb-4 flex items-center justify-center shadow-inner relative overflow-hidden" style="background-color: #5D5CDE;">
+                            <span id="color-value" class="text-white text-xl font-bold backdrop-blur-sm bg-black bg-opacity-20 px-3 py-1 rounded-lg">HEX: #5D5CDE</span>
+                            <div id="copy-indicator" class="absolute inset-0 bg-white opacity-0 pointer-events-none"></div>
+                        </div>
+                        
+                        <!-- Color Input Controls -->
+                        <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                            <div class="flex-1">
+                                <label class="block text-sm font-medium mb-1">HEX</label>
+                                <div class="relative">
+                                    <span class="absolute inset-y-0 left-0 flex items-center pl-2 text-gray-500">#</span>
+                                    <input type="text" id="hex-input" class="w-full bg-light-secondary dark:bg-dark-primary rounded-lg p-3 pl-7 text-base focus:ring-2 focus:ring-primary outline-none" value="5D5CDE">
+                                </div>
+                            </div>
+                            
+                            <div class="flex-1">
+                                <label class="block text-sm font-medium mb-1">RGB</label>
+                                <input type="text" id="rgb-input" class="w-full bg-light-secondary dark:bg-dark-primary rounded-lg p-3 text-base focus:ring-2 focus:ring-primary outline-none" value="93, 92, 222">
+                            </div>
+                            
+                            <div class="flex-1">
+                                <label class="block text-sm font-medium mb-1">HSL</label>
+                                <input type="text" id="hsl-input" class="w-full bg-light-secondary dark:bg-dark-primary rounded-lg p-3 text-base focus:ring-2 focus:ring-primary outline-none" value="241°, 65%, 62%">
                             </div>
                         </div>
                         
-                        <div class="flex-1">
-                            <label class="block text-sm font-medium mb-1">RGB</label>
-                            <input type="text" id="rgb-input" class="w-full bg-light-secondary dark:bg-dark-primary rounded-lg p-3 text-base focus:ring-2 focus:ring-primary outline-none" value="93, 92, 222">
-                        </div>
-                        
-                        <div class="flex-1">
-                            <label class="block text-sm font-medium mb-1">HSL</label>
-                            <input type="text" id="hsl-input" class="w-full bg-light-secondary dark:bg-dark-primary rounded-lg p-3 text-base focus:ring-2 focus:ring-primary outline-none" value="241°, 65%, 62%">
-                        </div>
-                    </div>
-                    
-                    <!-- RGB Sliders -->
-                    <div class="mb-6">
-                        <div class="mb-3">
-                            <div class="flex justify-between mb-1">
-                                <label class="text-sm font-medium">Red</label>
-                                <span id="red-value" class="text-sm">93</span>
+                        <!-- RGB Sliders -->
+                        <div class="mb-6">
+                            <div class="mb-3">
+                                <div class="flex justify-between mb-1">
+                                    <label class="text-sm font-medium">Red</label>
+                                    <span id="red-value" class="text-sm">93</span>
+                                </div>
+                                <input type="range" id="red-slider" min="0" max="255" value="93" class="slider w-full">
                             </div>
-                            <input type="range" id="red-slider" min="0" max="255" value="93" class="slider w-full">
-                        </div>
-                        
-                        <div class="mb-3">
-                            <div class="flex justify-between mb-1">
-                                <label class="text-sm font-medium">Green</label>
-                                <span id="green-value" class="text-sm">92</span>
+                            
+                            <div class="mb-3">
+                                <div class="flex justify-between mb-1">
+                                    <label class="text-sm font-medium">Green</label>
+                                    <span id="green-value" class="text-sm">92</span>
+                                </div>
+                                <input type="range" id="green-slider" min="0" max="255" value="92" class="slider w-full">
                             </div>
-                            <input type="range" id="green-slider" min="0" max="255" value="92" class="slider w-full">
-                        </div>
-                        
-                        <div class="mb-3">
-                            <div class="flex justify-between mb-1">
-                                <label class="text-sm font-medium">Blue</label>
-                                <span id="blue-value" class="text-sm">222</span>
+                            
+                            <div class="mb-3">
+                                <div class="flex justify-between mb-1">
+                                    <label class="text-sm font-medium">Blue</label>
+                                    <span id="blue-value" class="text-sm">222</span>
+                                </div>
+                                <input type="range" id="blue-slider" min="0" max="255" value="222" class="slider w-full">
                             </div>
-                            <input type="range" id="blue-slider" min="0" max="255" value="222" class="slider w-full">
                         </div>
-                    </div>
-                    
-                    <!-- Action Buttons -->
-                    <div class="flex flex-wrap gap-2">
-                        <button id="copy-btn" class="btn tooltip px-4 py-2 bg-primary text-white rounded-lg hover:bg-opacity-90 flex items-center">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
-                            </svg>
-                            Copy
-                            <span class="tooltip-text">Copy to clipboard</span>
-                        </button>
                         
-                        <button id="random-btn" class="btn tooltip px-4 py-2 bg-secondary text-white rounded-lg hover:bg-opacity-90 flex items-center">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-                            </svg>
-                            Random
-                            <span class="tooltip-text">Generate random color</span>
-                        </button>
-                        
-                        <button id="save-btn" class="btn tooltip px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-opacity-90 flex items-center">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
-                            </svg>
-                            Save
-                            <span class="tooltip-text">Save to palette</span>
-                        </button>
+                        <!-- Action Buttons -->
+                        <div class="flex flex-wrap gap-2">
+                            <button id="copy-btn" class="btn btn-animated tooltip px-4 py-2 bg-primary text-white rounded-lg hover:bg-opacity-90 flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+                                </svg>
+                                Copy
+                                <span class="tooltip-text">Copy to clipboard</span>
+                            </button>
+                            
+                            <button id="random-btn" class="btn btn-animated tooltip px-4 py-2 bg-secondary text-white rounded-lg hover:bg-opacity-90 flex items-center">
+                                <svg class="w-5 h-5 mr-2 animate-spin-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                </svg>
+                                Random
+                                <span class="tooltip-text">Generate random color</span>
+                            </button>
+                            
+                            <button id="save-btn" class="btn btn-animated tooltip px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-opacity-90 flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                                </svg>
+                                Save
+                                <span class="tooltip-text">Save to palette</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- Gradient Generator -->
-                <div class="card-3d bg-white dark:bg-dark-secondary rounded-2xl p-6 shadow-xl relative highlight-border">
-                    <h2 class="text-xl font-bold mb-4 text-center">Gradient Generator</h2>
-                    
-                    <div id="gradient-display" class="w-full h-32 rounded-xl mb-4 flex items-center justify-center shadow-inner" style="background: linear-gradient(to right, #5D5CDE, #32d189);">
-                        <span id="gradient-code" class="text-white text-sm font-bold bg-black bg-opacity-30 p-2 rounded">linear-gradient(to right, #5D5CDE, #32d189)</span>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <label class="block text-sm font-medium mb-1">Start Color</label>
-                            <div class="flex">
-                                <input type="color" id="gradient-start" value="#5D5CDE" class="w-12 h-10 rounded-l-lg border-0">
-                                <input type="text" id="gradient-start-text" value="#5D5CDE" class="flex-grow bg-light-secondary dark:bg-dark-primary rounded-r-lg p-2 text-base">
+                <div class="card-3d floating-card bg-white dark:bg-dark-secondary rounded-2xl p-6 shadow-xl relative highlight-border">
+                    <div class="card-content">
+                        <h2 class="text-xl font-bold mb-4 text-center animate-heading">Gradient Generator</h2>
+                        
+                        <div id="gradient-display" class="w-full h-32 rounded-xl mb-4 flex items-center justify-center shadow-inner" style="background: linear-gradient(to right, #5D5CDE, #32d189);">
+                            <span id="gradient-code" class="text-white text-sm font-bold bg-black bg-opacity-30 p-2 rounded backdrop-blur-sm">linear-gradient(to right, #5D5CDE, #32d189)</span>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Start Color</label>
+                                <div class="flex">
+                                    <input type="color" id="gradient-start" value="#5D5CDE" class="w-12 h-10 rounded-l-lg border-0">
+                                    <input type="text" id="gradient-start-text" value="#5D5CDE" class="flex-grow bg-light-secondary dark:bg-dark-primary rounded-r-lg p-2 text-base">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium mb-1">End Color</label>
+                                <div class="flex">
+                                    <input type="color" id="gradient-end" value="#32d189" class="w-12 h-10 rounded-l-lg border-0">
+                                    <input type="text" id="gradient-end-text" value="#32d189" class="flex-grow bg-light-secondary dark:bg-dark-primary rounded-r-lg p-2 text-base">
+                                </div>
                             </div>
                         </div>
                         
-                        <div>
-                            <label class="block text-sm font-medium mb-1">End Color</label>
-                            <div class="flex">
-                                <input type="color" id="gradient-end" value="#32d189" class="w-12 h-10 rounded-l-lg border-0">
-                                <input type="text" id="gradient-end-text" value="#32d189" class="flex-grow bg-light-secondary dark:bg-dark-primary rounded-r-lg p-2 text-base">
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium mb-1">Direction</label>
+                            <select id="gradient-direction" class="w-full bg-light-secondary dark:bg-dark-primary rounded-lg p-3 text-base focus:ring-2 focus:ring-primary outline-none">
+                                <option value="to right">Horizontal →</option>
+                                <option value="to left">Horizontal ←</option>
+                                <option value="to bottom">Vertical ↓</option>
+                                <option value="to top">Vertical ↑</option>
+                                <option value="to bottom right">Diagonal ↘</option>
+                                <option value="to bottom left">Diagonal ↙</option>
+                                <option value="to top right">Diagonal ↗</option>
+                                <option value="to top left">Diagonal ↖</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium mb-1">Type</label>
+                            <div class="flex gap-3">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="gradient-type" value="linear" checked class="w-4 h-4 text-primary">
+                                    <span class="ml-2">Linear</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="gradient-type" value="radial" class="w-4 h-4 text-primary">
+                                    <span class="ml-2">Radial</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="gradient-type" value="conic" class="w-4 h-4 text-primary">
+                                    <span class="ml-2">Conic</span>
+                                </label>
                             </div>
                         </div>
+                        
+                        <button id="copy-gradient-btn" class="btn btn-animated px-4 py-2 bg-primary text-white rounded-lg hover:bg-opacity-90 flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+                            </svg>
+                            Copy CSS Code
+                        </button>
                     </div>
-                    
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium mb-1">Direction</label>
-                        <select id="gradient-direction" class="w-full bg-light-secondary dark:bg-dark-primary rounded-lg p-3 text-base focus:ring-2 focus:ring-primary outline-none">
-                            <option value="to right">Horizontal →</option>
-                            <option value="to left">Horizontal ←</option>
-                            <option value="to bottom">Vertical ↓</option>
-                            <option value="to top">Vertical ↑</option>
-                            <option value="to bottom right">Diagonal ↘</option>
-                            <option value="to bottom left">Diagonal ↙</option>
-                            <option value="to top right">Diagonal ↗</option>
-                            <option value="to top left">Diagonal ↖</option>
-                        </select>
-                    </div>
-                    
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium mb-1">Type</label>
-                        <div class="flex gap-3">
-                            <label class="inline-flex items-center">
-                                <input type="radio" name="gradient-type" value="linear" checked class="w-4 h-4 text-primary">
-                                <span class="ml-2">Linear</span>
-                            </label>
-                            <label class="inline-flex items-center">
-                                <input type="radio" name="gradient-type" value="radial" class="w-4 h-4 text-primary">
-                                <span class="ml-2">Radial</span>
-                            </label>
-                            <label class="inline-flex items-center">
-                                <input type="radio" name="gradient-type" value="conic" class="w-4 h-4 text-primary">
-                                <span class="ml-2">Conic</span>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <button id="copy-gradient-btn" class="btn px-4 py-2 bg-primary text-white rounded-lg hover:bg-opacity-90 flex items-center">
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
-                        </svg>
-                        Copy CSS Code
-                    </button>
                 </div>
             </div>
             
             <!-- Right Sidebar Sections -->
             <div class="lg:col-span-3">
                 <!-- Color Palette Suggestions -->
-                <div class="card-3d bg-white dark:bg-dark-secondary rounded-2xl p-6 shadow-xl relative highlight-border mb-6">
-                    <h2 class="text-xl font-bold mb-4 text-center">Color Palettes</h2>
-                    
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium mb-2">Palette Type</label>
-                        <select id="palette-type" class="w-full bg-light-secondary dark:bg-dark-primary rounded-lg p-3 text-base focus:ring-2 focus:ring-primary outline-none">
-                            <option value="complementary">Complementary</option>
-                            <option value="analogous">Analogous</option>
-                            <option value="triadic">Triadic</option>
-                            <option value="tetradic">Tetradic</option>
-                            <option value="monochromatic">Monochromatic</option>
-                        </select>
+                <div class="card-3d floating-card bg-white dark:bg-dark-secondary rounded-2xl p-6 shadow-xl relative highlight-border mb-6">
+                    <div class="card-content">
+                        <h2 class="text-xl font-bold mb-4 text-center animate-heading">Color Palettes</h2>
+                        
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium mb-2">Palette Type</label>
+                            <select id="palette-type" class="w-full bg-light-secondary dark:bg-dark-primary rounded-lg p-3 text-base focus:ring-2 focus:ring-primary outline-none">
+                                <option value="complementary">Complementary</option>
+                                <option value="analogous">Analogous</option>
+                                <option value="triadic">Triadic</option>
+                                <option value="tetradic">Tetradic</option>
+                                <option value="monochromatic">Monochromatic</option>
+                            </select>
+                        </div>
+                        
+                        <div id="color-palette" class="grid grid-cols-5 gap-2 mb-4">
+                            <!-- Colors will be generated here -->
+                            <div class="color-item rounded-lg" style="background-color: #5D5CDE;"></div>
+                            <div class="color-item rounded-lg" style="background-color: #DE5C5D;"></div>
+                            <div class="color-item rounded-lg" style="background-color: #5DDE5C;"></div>
+                            <div class="color-item rounded-lg" style="background-color: #5CDEDE;"></div>
+                            <div class="color-item rounded-lg" style="background-color: #DE5CDE;"></div>
+                        </div>
+                        
+                        <button id="generate-palette-btn" class="btn btn-animated w-full px-4 py-2 bg-secondary text-white rounded-lg hover:bg-opacity-90">
+                            Generate Palette
+                        </button>
                     </div>
-                    
-                    <div id="color-palette" class="grid grid-cols-5 gap-2 mb-4">
-                        <!-- Colors will be generated here -->
-                        <div class="color-item rounded-lg" style="background-color: #5D5CDE;"></div>
-                        <div class="color-item rounded-lg" style="background-color: #DE5C5D;"></div>
-                        <div class="color-item rounded-lg" style="background-color: #5DDE5C;"></div>
-                        <div class="color-item rounded-lg" style="background-color: #5CDEDE;"></div>
-                        <div class="color-item rounded-lg" style="background-color: #DE5CDE;"></div>
-                    </div>
-                    
-                    <button id="generate-palette-btn" class="btn w-full px-4 py-2 bg-secondary text-white rounded-lg hover:bg-opacity-90">
-                        Generate Palette
-                    </button>
                 </div>
                 
                 <!-- Saved Colors -->
-                <div class="card-3d bg-white dark:bg-dark-secondary rounded-2xl p-6 shadow-xl relative highlight-border mb-6">
-                    <h2 class="text-xl font-bold mb-4 text-center">Saved Colors</h2>
-                    
-                    <div id="saved-colors" class="color-grid mb-4 max-h-60 overflow-y-auto px-1">
-                        <!-- Saved colors will appear here -->
-                        <div class="color-item tooltip" style="background-color: #5D5CDE;">
-                            <span class="tooltip-text">#5D5CDE</span>
+                <div class="card-3d floating-card bg-white dark:bg-dark-secondary rounded-2xl p-6 shadow-xl relative highlight-border mb-6">
+                    <div class="card-content">
+                        <h2 class="text-xl font-bold mb-4 text-center animate-heading">Saved Colors</h2>
+                        
+                        <div id="saved-colors" class="color-grid mb-4 max-h-60 overflow-y-auto px-1">
+                            <!-- Saved colors will appear here -->
+                            <div class="color-item tooltip" style="background-color: #5D5CDE;">
+                                <span class="tooltip-text">#5D5CDE</span>
+                            </div>
+                            <div class="color-item tooltip" style="background-color: #DE5C5D;">
+                                <span class="tooltip-text">#DE5C5D</span>
+                            </div>
+                            <div class="color-item tooltip" style="background-color: #32d189;">
+                                <span class="tooltip-text">#32d189</span>
+                            </div>
                         </div>
-                        <div class="color-item tooltip" style="background-color: #DE5C5D;">
-                            <span class="tooltip-text">#DE5C5D</span>
+                        
+                        <div class="flex gap-2">
+                            <button id="clear-saved-btn" class="btn btn-animated flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-opacity-90">
+                                Clear All
+                            </button>
+                            <button id="export-btn" class="btn btn-animated flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-opacity-90">
+                                Export Palette
+                            </button>
                         </div>
-                        <div class="color-item tooltip" style="background-color: #32d189;">
-                            <span class="tooltip-text">#32d189</span>
-                        </div>
-                    </div>
-                    
-                    <div class="flex gap-2">
-                        <button id="clear-saved-btn" class="btn flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-opacity-90">
-                            Clear All
-                        </button>
-                        <button id="export-btn" class="btn flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-opacity-90">
-                            Export Palette
-                        </button>
                     </div>
                 </div>
                 
                 <!-- Color History -->
-                <div class="card-3d bg-white dark:bg-dark-secondary rounded-2xl p-6 shadow-xl relative highlight-border">
-                    <h2 class="text-xl font-bold mb-4 text-center">Recent Colors</h2>
-                    
-                    <div id="color-history" class="color-grid mb-2">
-                        <!-- Color history will appear here -->
+                <div class="card-3d floating-card bg-white dark:bg-dark-secondary rounded-2xl p-6 shadow-xl relative highlight-border">
+                    <div class="card-content">
+                        <h2 class="text-xl font-bold mb-4 text-center animate-heading">Recent Colors</h2>
+                        
+                        <div id="color-history" class="color-grid mb-2">
+                            <!-- Color history will appear here -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -565,13 +811,13 @@
     
     <!-- Footer -->
     <footer class="py-6 px-6 text-center relative z-0 mt-10">
-        <p class="text-sm text-gray-600 dark:text-gray-400">© 2023 ColorMaster -- Advanced color picker and palette generator</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">© 2025 Ridoy Khan ColorMaster -- Advanced color picker and palette generator</p>
     </footer>
     
     <!-- Export Modal -->
     <div id="export-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden backdrop-blur-sm">
-        <div class="bg-white dark:bg-dark-secondary rounded-xl p-6 max-w-md w-full shadow-2xl glass-effect">
-            <h3 class="text-xl font-bold mb-4">Export Color Palette</h3>
+        <div class="bg-white dark:bg-dark-secondary rounded-xl p-6 max-w-md w-full shadow-2xl glass-effect transform transition-all duration-300 scale-100">
+            <h3 class="text-xl font-bold mb-4 animate-heading">Export Color Palette</h3>
             
             <div class="mb-4">
                 <label class="block text-sm font-medium mb-1">Format</label>
@@ -588,10 +834,10 @@
             </div>
             
             <div class="flex gap-2">
-                <button id="copy-export-btn" class="btn flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-opacity-90">
+                <button id="copy-export-btn" class="btn btn-animated flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-opacity-90">
                     Copy to Clipboard
                 </button>
-                <button id="close-modal-btn" class="btn flex-1 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-opacity-90">
+                <button id="close-modal-btn" class="btn btn-animated flex-1 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-opacity-90">
                     Close
                 </button>
             </div>
@@ -662,29 +908,100 @@
         let colorHistoryArray = [];
         let savedColorsArray = [];
         
-        // Mouse cursor effect
+        // Mouse cursor effect - fixed properly for better interactions
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
         
         if (window.innerWidth > 768) {
-            window.addEventListener('mousemove', (e) => {
+            document.addEventListener('mousemove', (e) => {
                 const posX = e.clientX;
                 const posY = e.clientY;
                 
-                cursorDot.style.left = `${posX}px`;
-                cursorDot.style.top = `${posY}px`;
-                
-                // Add some delay to cursor outline for smooth effect
-                setTimeout(() => {
-                    cursorOutline.style.left = `${posX}px`;
-                    cursorOutline.style.top = `${posY}px`;
-                }, 80);
+                // Use requestAnimationFrame for smoother cursor movement
+                requestAnimationFrame(() => {
+                    if (cursorDot) {
+                        cursorDot.style.left = `${posX}px`;
+                        cursorDot.style.top = `${posY}px`;
+                    }
+                    
+                    if (cursorOutline) {
+                        // Add some delay to cursor outline for smooth effect
+                        setTimeout(() => {
+                            cursorOutline.style.left = `${posX}px`;
+                            cursorOutline.style.top = `${posY}px`;
+                        }, 80);
+                    }
+                });
+            });
+            
+            // Enhanced cursor interactions with clickable elements
+            const buttons = document.querySelectorAll('button');
+            const inputs = document.querySelectorAll('input');
+            const colorItems = document.querySelectorAll('.color-item');
+            
+            // Helper function to handle cursor hover states
+            const handleCursorHover = (element, isHover) => {
+                element.addEventListener(isHover ? 'mouseenter' : 'mouseleave', () => {
+                    if (cursorDot && cursorOutline) {
+                        if (isHover) {
+                            cursorDot.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                            cursorOutline.style.width = '20px';
+                            cursorOutline.style.height = '20px';
+                            cursorOutline.style.opacity = '0.3';
+                            cursorOutline.style.backgroundColor = 'var(--primary)';
+                        } else {
+                            cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
+                            cursorOutline.style.width = '40px';
+                            cursorOutline.style.height = '40px';
+                            cursorOutline.style.opacity = '0.7';
+                            cursorOutline.style.backgroundColor = 'transparent';
+                        }
+                    }
+                });
+            };
+            
+            // Apply hover effect to all interactive elements
+            buttons.forEach(button => {
+                handleCursorHover(button, true);
+                handleCursorHover(button, false);
+            });
+            
+            inputs.forEach(input => {
+                handleCursorHover(input, true);
+                handleCursorHover(input, false);
+            });
+            
+            colorItems.forEach(item => {
+                handleCursorHover(item, true);
+                handleCursorHover(item, false);
             });
         }
         
-        // Theme toggle
+        // Theme toggle with animation
         themeToggle.addEventListener('click', () => {
             document.documentElement.classList.toggle('dark');
+            
+            // Add animation effect when toggling
+            const themeSwitcher = document.createElement('div');
+            themeSwitcher.classList.add('fixed', 'inset-0', 'z-50', 'pointer-events-none');
+            themeSwitcher.style.background = document.documentElement.classList.contains('dark') ? 
+                'radial-gradient(circle at center, rgba(24, 24, 24, 0) 0%, rgba(24, 24, 24, 1) 100%)' : 
+                'radial-gradient(circle at center, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%)';
+            themeSwitcher.style.opacity = '0';
+            document.body.appendChild(themeSwitcher);
+            
+            // Animate the transition
+            requestAnimationFrame(() => {
+                themeSwitcher.style.transition = 'opacity 0.3s ease';
+                themeSwitcher.style.opacity = '1';
+                
+                setTimeout(() => {
+                    themeSwitcher.style.opacity = '0';
+                    setTimeout(() => {
+                        document.body.removeChild(themeSwitcher);
+                    }, 300);
+                }, 300);
+            });
         });
         
         // Update all UI elements based on RGB values
@@ -724,10 +1041,20 @@
                 colorValue.classList.add('text-white');
             }
             
+            // Update slider background color
+            updateSliderColors();
+            
             // Add to history if not suppressed
             if (!noHistory) {
                 addToHistory(hexColor);
             }
+        }
+        
+        // Update slider background colors for a visual indication
+        function updateSliderColors() {
+            redSlider.style.background = `linear-gradient(to right, #ff0000 0%, #ff0000 ${(currentColor.r / 255) * 100}%, #d3d3d3 ${(currentColor.r / 255) * 100}%)`;
+            greenSlider.style.background = `linear-gradient(to right, #00ff00 0%, #00ff00 ${(currentColor.g / 255) * 100}%, #d3d3d3 ${(currentColor.g / 255) * 100}%)`;
+            blueSlider.style.background = `linear-gradient(to right, #0000ff 0%, #0000ff ${(currentColor.b / 255) * 100}%, #d3d3d3 ${(currentColor.b / 255) * 100}%)`;
         }
         
         // Convert RGB to HEX
@@ -868,9 +1195,14 @@
                 item.appendChild(tooltip);
                 
                 item.addEventListener('click', () => {
-                    const rgb = hexToRgb(color);
-                    currentColor = rgb;
-                    updateColorUI();
+                    // Add a visual feedback when clicked
+                    item.classList.add('animate-ping');
+                    setTimeout(() => {
+                        item.classList.remove('animate-ping');
+                        const rgb = hexToRgb(color);
+                        currentColor = rgb;
+                        updateColorUI();
+                    }, 300);
                 });
                 
                 colorHistory.appendChild(item);
@@ -886,6 +1218,30 @@
             
             savedColorsArray.push(hexColor);
             updateSavedColorsUI();
+            
+            // Add visual feedback
+            const feedbackElement = document.createElement('div');
+            feedbackElement.classList.add('fixed', 'z-50', 'top-1/2', 'left-1/2', 'transform', '-translate-x-1/2', '-translate-y-1/2', 'bg-primary', 'text-white', 'rounded-lg', 'py-2', 'px-4', 'pointer-events-none');
+            feedbackElement.textContent = 'Color Saved!';
+            feedbackElement.style.opacity = '0';
+            feedbackElement.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            
+            document.body.appendChild(feedbackElement);
+            
+            // Animate the feedback
+            requestAnimationFrame(() => {
+                feedbackElement.style.opacity = '1';
+                feedbackElement.style.transform = 'translate(-50%, -50%) scale(1.2)';
+                
+                setTimeout(() => {
+                    feedbackElement.style.opacity = '0';
+                    feedbackElement.style.transform = 'translate(-50%, -50%) scale(0.8)';
+                    
+                    setTimeout(() => {
+                        document.body.removeChild(feedbackElement);
+                    }, 300);
+                }, 1500);
+            });
         }
         
         // Update the saved colors UI
@@ -903,9 +1259,14 @@
                 item.appendChild(tooltip);
                 
                 item.addEventListener('click', () => {
-                    const rgb = hexToRgb(color);
-                    currentColor = rgb;
-                    updateColorUI();
+                    // Add a visual feedback when clicked
+                    item.classList.add('animate-ping');
+                    setTimeout(() => {
+                        item.classList.remove('animate-ping');
+                        const rgb = hexToRgb(color);
+                        currentColor = rgb;
+                        updateColorUI();
+                    }, 300);
                 });
                 
                 savedColors.appendChild(item);
@@ -995,8 +1356,16 @@
                     break;
             }
             
-            // Update palette UI
-            updatePaletteUI(palette);
+            // Update palette UI with animation
+            colorPalette.style.opacity = '0.5';
+            colorPalette.style.transform = 'scale(0.95)';
+            colorPalette.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            
+            setTimeout(() => {
+                updatePaletteUI(palette);
+                colorPalette.style.opacity = '1';
+                colorPalette.style.transform = 'scale(1)';
+            }, 300);
         }
         
         // Update the palette UI
@@ -1015,9 +1384,14 @@
                 item.appendChild(tooltip);
                 
                 item.addEventListener('click', () => {
-                    const rgb = hexToRgb(color);
-                    currentColor = rgb;
-                    updateColorUI();
+                    // Add a visual feedback when clicked
+                    item.classList.add('animate-ping');
+                    setTimeout(() => {
+                        item.classList.remove('animate-ping');
+                        const rgb = hexToRgb(color);
+                        currentColor = rgb;
+                        updateColorUI();
+                    }, 300);
                 });
                 
                 colorPalette.appendChild(item);
@@ -1052,6 +1426,8 @@
                 gradientStr = `${gradientType}(from 0deg, ${startColor}, ${endColor})`;
             }
             
+            // Apply with transition effect
+            gradientDisplay.style.transition = 'background 0.5s ease';
             gradientDisplay.style.background = gradientStr;
             gradientCode.textContent = gradientStr;
         }
@@ -1059,7 +1435,29 @@
         // Export colors
         function exportColors() {
             if (savedColorsArray.length === 0) {
-                alert('No colors to export. Please save some colors first.');
+                // Use proper visual feedback instead of alert
+                const feedbackElement = document.createElement('div');
+                feedbackElement.classList.add('fixed', 'z-50', 'top-1/2', 'left-1/2', 'transform', '-translate-x-1/2', '-translate-y-1/2', 'bg-red-500', 'text-white', 'rounded-lg', 'py-2', 'px-4', 'pointer-events-none');
+                feedbackElement.textContent = 'No colors to export. Please save some colors first.';
+                feedbackElement.style.opacity = '0';
+                feedbackElement.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                
+                document.body.appendChild(feedbackElement);
+                
+                // Animate the feedback
+                requestAnimationFrame(() => {
+                    feedbackElement.style.opacity = '1';
+                    feedbackElement.style.transform = 'translate(-50%, -50%) scale(1.1)';
+                    
+                    setTimeout(() => {
+                        feedbackElement.style.opacity = '0';
+                        feedbackElement.style.transform = 'translate(-50%, -50%) scale(0.9)';
+                        
+                        setTimeout(() => {
+                            document.body.removeChild(feedbackElement);
+                        }, 300);
+                    }, 2000);
+                });
                 return;
             }
             
@@ -1087,7 +1485,19 @@
             });
             
             exportText.value = result;
+            
+            // Show modal with animation
             exportModal.classList.remove('hidden');
+            exportModal.style.opacity = '0';
+            exportModal.style.transition = 'opacity 0.3s ease';
+            
+            const modalContent = exportModal.querySelector('.glass-effect');
+            modalContent.style.transform = 'scale(0.9)';
+            
+            requestAnimationFrame(() => {
+                exportModal.style.opacity = '1';
+                modalContent.style.transform = 'scale(1)';
+            });
         }
         
         // Copy text to clipboard
@@ -1194,10 +1604,48 @@
             }
         });
         
-        // Random Color Button
+        // Random Color Button with enhanced animation
         randomBtn.addEventListener('click', () => {
-            currentColor = getRandomColor();
-            updateColorUI();
+            // Create a visual effect for randomizing
+            const dots = [];
+            for (let i = 0; i < 20; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('absolute', 'rounded-full', 'pointer-events-none');
+                dot.style.width = `${Math.random() * 10 + 5}px`;
+                dot.style.height = dot.style.width;
+                dot.style.left = `${Math.random() * 100}%`;
+                dot.style.top = `${Math.random() * 100}%`;
+                dot.style.backgroundColor = `hsl(${Math.random() * 360}, 80%, 60%)`;
+                dot.style.transform = 'scale(0)';
+                dot.style.opacity = '0';
+                dot.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+                colorDisplay.appendChild(dot);
+                dots.push(dot);
+            }
+            
+            // Animate the dots
+            requestAnimationFrame(() => {
+                dots.forEach(dot => {
+                    dot.style.transform = `translate(${(Math.random() - 0.5) * 200}px, ${(Math.random() - 0.5) * 200}px) scale(1)`;
+                    dot.style.opacity = '1';
+                });
+                
+                setTimeout(() => {
+                    dots.forEach(dot => {
+                        dot.style.opacity = '0';
+                    });
+                    
+                    setTimeout(() => {
+                        dots.forEach(dot => {
+                            dot.remove();
+                        });
+                        
+                        // Set the new random color
+                        currentColor = getRandomColor();
+                        updateColorUI();
+                    }, 500);
+                }, 500);
+            });
         });
         
         // Copy Button
@@ -1205,6 +1653,23 @@
             const hexColor = rgbToHex(currentColor.r, currentColor.g, currentColor.b);
             if (copyToClipboard(hexColor)) {
                 showCopyAnimation();
+                
+                // Add a notification
+                copyBtn.innerHTML = `
+                    <svg class="w-5 h-5 mr-2 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Copied!
+                `;
+                
+                setTimeout(() => {
+                    copyBtn.innerHTML = `
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+                        </svg>
+                        Copy
+                    `;
+                }, 2000);
             }
         });
         
@@ -1216,8 +1681,38 @@
         
         // Clear Saved Button
         clearSavedBtn.addEventListener('click', () => {
-            savedColorsArray = [];
-            updateSavedColorsUI();
+            // Visual confirmation effect
+            const initialContent = clearSavedBtn.innerHTML;
+            clearSavedBtn.innerHTML = 'Are you sure?';
+            clearSavedBtn.style.background = '#ff4d4d';
+            
+            // Create a timeout for the confirmation
+            const revertTimeout = setTimeout(() => {
+                clearSavedBtn.innerHTML = initialContent;
+                clearSavedBtn.style.background = '';
+            }, 3000);
+            
+            // Set up a one-time event listener for confirmation
+            const confirmClear = () => {
+                clearTimeout(revertTimeout);
+                clearSavedBtn.removeEventListener('click', confirmClear);
+                
+                // Clear the colors with visual feedback
+                savedColorsArray = [];
+                updateSavedColorsUI();
+                
+                // Show success message
+                clearSavedBtn.innerHTML = 'Cleared!';
+                clearSavedBtn.style.background = '#4CAF50';
+                
+                // Revert back after a delay
+                setTimeout(() => {
+                    clearSavedBtn.innerHTML = initialContent;
+                    clearSavedBtn.style.background = '';
+                }, 1500);
+            };
+            
+            clearSavedBtn.addEventListener('click', confirmClear);
         });
         
         // Export Button
@@ -1227,17 +1722,39 @@
         
         // Close Modal Button
         closeModalBtn.addEventListener('click', () => {
-            exportModal.classList.add('hidden');
+            // Hide with animation
+            exportModal.style.opacity = '0';
+            const modalContent = exportModal.querySelector('.glass-effect');
+            modalContent.style.transform = 'scale(0.9)';
+            
+            setTimeout(() => {
+                exportModal.classList.add('hidden');
+            }, 300);
+        });
+        
+        // Click outside modal to close
+        exportModal.addEventListener('click', (e) => {
+            if (e.target === exportModal) {
+                closeModalBtn.click();
+            }
         });
         
         // Copy Export Button
         copyExportBtn.addEventListener('click', () => {
             if (copyToClipboard(exportText.value)) {
                 copyExportBtn.textContent = 'Copied!';
+                copyExportBtn.style.background = '#4CAF50';
+                
                 setTimeout(() => {
                     copyExportBtn.textContent = 'Copy to Clipboard';
+                    copyExportBtn.style.background = '';
                 }, 2000);
             }
+        });
+        
+        // Export Format Change
+        exportFormat.addEventListener('change', () => {
+            exportColors();
         });
         
         // Generate Palette Button
@@ -1245,7 +1762,7 @@
             generatePalette();
         });
         
-        // Gradient controls
+        // Gradient controls with visual feedback
         gradientStart.addEventListener('input', () => {
             gradientStartText.value = gradientStart.value;
             updateGradient();
@@ -1281,9 +1798,20 @@
         // Copy Gradient Button
         copyGradientBtn.addEventListener('click', () => {
             if (copyToClipboard(gradientCode.textContent)) {
-                copyGradientBtn.textContent = 'Copied!';
+                copyGradientBtn.innerHTML = `
+                    <svg class="w-5 h-5 mr-2 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Copied!
+                `;
+                
                 setTimeout(() => {
-                    copyGradientBtn.textContent = 'Copy CSS Code';
+                    copyGradientBtn.innerHTML = `
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+                        </svg>
+                        Copy CSS Code
+                    `;
                 }, 2000);
             }
         });
@@ -1292,6 +1820,66 @@
         updateColorUI(true);
         updateGradient();
         generatePalette();
+        
+        // Add animations to background orbs on scrolling
+        window.addEventListener('scroll', () => {
+            const orbs = document.querySelectorAll('.orb');
+            const scrollY = window.scrollY;
+            
+            orbs.forEach((orb, index) => {
+                const speed = 0.05 + (index * 0.02);
+                const yPos = scrollY * speed;
+                orb.style.transform = `translateY(${yPos}px)`;
+            });
+        });
+        
+        // Create a confetti effect function for special actions
+        function createConfetti() {
+            const confettiContainer = document.createElement('div');
+            confettiContainer.style.position = 'fixed';
+            confettiContainer.style.top = '0';
+            confettiContainer.style.left = '0';
+            confettiContainer.style.width = '100%';
+            confettiContainer.style.height = '100%';
+            confettiContainer.style.pointerEvents = 'none';
+            confettiContainer.style.zIndex = '9999';
+            document.body.appendChild(confettiContainer);
+            
+            const colors = ['#5D5CDE', '#9F9EF3', '#32d189', '#DE5C5D', '#5CDEDE'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'absolute';
+                confetti.style.width = `${Math.random() * 10 + 5}px`;
+                confetti.style.height = `${Math.random() * 5 + 2}px`;
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.borderRadius = `${Math.random() * 3}px`;
+                confetti.style.top = '0';
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.transform = 'translateY(-100%)';
+                confetti.style.animation = `confetti ${Math.random() * 3 + 2}s ease-in-out forwards`;
+                confettiContainer.appendChild(confetti);
+                
+                // Create the confetti animation dynamically
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes confetti {
+                        0% {
+                            transform: translateY(-100%) rotate(0deg);
+                        }
+                        100% {
+                            transform: translateY(${window.innerHeight}px) rotate(${Math.random() * 360}deg);
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            // Remove the confetti after they fall
+            setTimeout(() => {
+                confettiContainer.remove();
+            }, 5000);
+        }
         
         // Load data from localStorage if available
         function loadFromLocalStorage() {
@@ -1330,16 +1918,13 @@
             }
         }
         
-        // Save to localStorage whenever arrays change
-        function setupStoragePersistence() {
-            // We would set up Mutation Observers or proxy objects to watch for changes
-            // and trigger saveToLocalStorage() automatically
-            
-            // For simplicity in this demo, we'll skip the implementation
-        }
-        
         // Initialize by attempting to load saved data
         loadFromLocalStorage();
+        
+        // Add confetti for first-time users (simulating a welcome effect)
+        setTimeout(() => {
+            createConfetti();
+        }, 1000);
     </script>
 </body>
 </html>
