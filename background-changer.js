@@ -1,49 +1,48 @@
-async function fetchContentsRecursively(owner, repo, path = '') {
+// Function to fetch images from GitHub repository recursively
+async function fetchImagesRecursive(path = '') {
     try {
+        const owner = 'ridoy520';
+        const repo = 'ridoy520.github.io';
+        const validImageExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
+        
+        // Fetch repository contents (including subdirectories)
         const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`);
         const contents = await response.json();
-        const validImageExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
-        let allImages = [];
+        
+        let imageFiles = [];
 
-        for (const item of contents) {
-            if (item.type === 'file') {
-                const extension = item.name.toLowerCase().slice(item.name.lastIndexOf('.'));
+        for (const file of contents) {
+            if (file.type === 'file') {
+                // Extract file extension and check if it's an image
+                const extension = file.name.toLowerCase().slice(file.name.lastIndexOf('.'));
                 if (validImageExtensions.includes(extension)) {
-                    allImages.push(item.download_url);
+                    imageFiles.push(file.download_url);
                 }
-            } else if (item.type === 'dir') {
-                // রিকার্সিভলি সাব-ফোল্ডার চেক করা
-                const subDirImages = await fetchContentsRecursively(owner, repo, item.path);
-                allImages = allImages.concat(subDirImages);
+            } else if (file.type === 'dir') {
+                // If it's a directory, recursively fetch images inside it
+                const subDirImages = await fetchImagesRecursive(file.path);
+                imageFiles = imageFiles.concat(subDirImages);
             }
         }
-        
-        return allImages;
+
+        return imageFiles;
     } catch (error) {
-        console.error(`Error fetching contents for path ${path}:`, error);
+        console.error('Error fetching images:', error);
         return [];
     }
 }
 
+// Function to get images from GitHub and cache them
 async function getImagesFromGitHub() {
-    try {
-        const owner = 'ridoy520';
-        const repo = 'ridoy520.github.io';
-        
-        // সব ফোল্ডার থেকে ছবি নেওয়া
-        const backgroundImages = await fetchContentsRecursively(owner, repo);
-        
-        // localStorage-এ সেভ করা
-        localStorage.setItem('backgroundImages', JSON.stringify(backgroundImages));
-        localStorage.setItem('imagesLastUpdated', new Date().toISOString());
-        
-        return backgroundImages;
-    } catch (error) {
-        console.error('Error fetching images:', error);
-        return JSON.parse(localStorage.getItem('backgroundImages')) || [];
-    }
-}
+    const images = await fetchImagesRecursive(); // Fetch images from all directories
 
+    if (images.length > 0) {
+        localStorage.setItem('backgroundImages', JSON.stringify(images));
+        localStorage.setItem('imagesLastUpdated', new Date().toISOString());
+    }
+
+    return images.length > 0 ? images : JSON.parse(localStorage.getItem('backgroundImages')) || [];
+}
 
 // Function to check if images need to be updated
 async function getBackgroundImages() {
