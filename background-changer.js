@@ -109,8 +109,8 @@ async function updateBackground() {
         document.body.style.backgroundPosition = 'center';
         document.body.style.backgroundRepeat = 'no-repeat';
         document.body.style.backgroundAttachment = 'fixed';
-        document.body.style.filter = 'blur(5px)'; /* ব্লার ইফেক্ট যোগ করা হলো */
-        document.body.style.webkitFilter = 'blur(5px)'; /* Safari-এর জন্য */
+        document.body.style.filter = 'blur(30px)'; /* ব্লার ইফেক্ট যোগ করা হলো */
+        document.body.style.webkitFilter = 'blur(30px)'; /* Safari-এর জন্য */
 
         // Save current background
         localStorage.setItem('currentBackground', imageUrl);
