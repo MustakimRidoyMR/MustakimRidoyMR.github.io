@@ -58,7 +58,7 @@ async function getBackgroundImages() {
     return JSON.parse(cachedImages);
 }
 
-/*// Modified updateBackground function
+// Modified updateBackground function
 async function updateBackground() {
     const images = await getBackgroundImages();
     
@@ -110,105 +110,6 @@ async function checkBackgroundUpdate() {
     const lastUpdateDate = new Date(lastUpdate);
     const currentDate = new Date();
     
-    if (lastUpdateDate.getDate() !== currentDate.getDate() ||
-        lastUpdateDate.getMonth() !== currentDate.getMonth() ||
-        lastUpdateDate.getFullYear() !== currentDate.getFullYear()) {
-        await updateBackground();
-    }
-}
-
-// Check every hour
-setInterval(checkBackgroundUpdate, 1000 * 60 * 60);*/
-
-async function updateBackground() {
-    const images = await getBackgroundImages();
-
-    if (images.length === 0) {
-        console.error('No images available');
-        return;
-    }
-
-    const randomIndex = Math.floor(Math.random() * images.length);
-    const imageUrl = images[randomIndex];
-
-    const img = new Image();
-    img.onload = function() {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-
-        // ব্লার ফিল্টার প্রয়োগ (এটি একটি সরলীকৃত উদাহরণ)
-        const blurredCanvas = blurCanvas(canvas, 15); // 5px ব্লার রেডিয়াস
-
-        // ব্লার করা ক্যানভাসকে ডেটা URL এ রূপান্তর করুন
-        const blurredDataURL = blurredCanvas.toDataURL();
-
-        // ব্যাকগ্রাউন্ডে সেট করুন
-        document.body.style.backgroundImage = `url('${blurredDataURL}')`;
-        document.body.style.backgroundSize = 'cover';
-        document.body.style.backgroundPosition = 'center';
-        document.body.style.backgroundRepeat = 'no-repeat';
-        document.body.style.backgroundAttachment = 'fixed';
-    };
-    img.src = imageUrl;
-
-    localStorage.setItem('currentBackground', imageUrl);
-    localStorage.setItem('lastBackgroundUpdate', new Date().toISOString());
-}
-
-function blurCanvas(canvas, blurAmount) {
-    const ctx = canvas.getContext('2d');
-    const tempCanvas = document.createElement('canvas');
-    const tempCtx = tempCanvas.getContext('2d');
-
-    tempCanvas.width = canvas.width;
-    tempCanvas.height = canvas.height;
-
-    // একাধিকবার ইমেজটিকে ছোট করে এবং বড় করে ব্লার ইফেক্ট তৈরি করা হচ্ছে
-    for (let i = 1; i <= blurAmount; i += 2) {
-        tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
-        tempCtx.drawImage(canvas, 0, 0, canvas.width * 0.5, canvas.height * 0.5);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
-    }
-
-    return canvas;
-}
-
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    const lastBackground = localStorage.getItem('currentBackground');
-    if (lastBackground) {
-        const img = new Image();
-        img.onload = function() {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img, 0, 0);
-            const blurredCanvas = blurCanvas(canvas, 5);
-            const blurredDataURL = blurredCanvas.toDataURL();
-            document.body.style.backgroundImage = `url('${blurredDataURL}')`;
-        };
-        img.src = lastBackground;
-    }
-    checkBackgroundUpdate();
-});
-
-// Modified checkBackgroundUpdate function
-async function checkBackgroundUpdate() {
-    const lastUpdate = localStorage.getItem('lastBackgroundUpdate');
-
-    if (!lastUpdate) {
-        await updateBackground();
-        return;
-    }
-
-    const lastUpdateDate = new Date(lastUpdate);
-    const currentDate = new Date();
-
     if (lastUpdateDate.getDate() !== currentDate.getDate() ||
         lastUpdateDate.getMonth() !== currentDate.getMonth() ||
         lastUpdateDate.getFullYear() !== currentDate.getFullYear()) {
