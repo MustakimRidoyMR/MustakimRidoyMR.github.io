@@ -58,7 +58,7 @@ async function getBackgroundImages() {
     return JSON.parse(cachedImages);
 }
 
-// Modified updateBackground function
+/*// Modified updateBackground function
 async function updateBackground() {
     const images = await getBackgroundImages();
     
@@ -81,6 +81,37 @@ async function updateBackground() {
         document.body.style.backgroundRepeat = 'no-repeat';
         document.body.style.backgroundAttachment = 'fixed';
         
+        // Save current background
+        localStorage.setItem('currentBackground', imageUrl);
+        localStorage.setItem('lastBackgroundUpdate', new Date().toISOString());
+    };
+}*/
+
+// Modified updateBackground function
+async function updateBackground() {
+    const images = await getBackgroundImages();
+
+    if (images.length === 0) {
+        console.error('No images available');
+        return;
+    }
+
+    const randomIndex = Math.floor(Math.random() * images.length);
+    const imageUrl = images[randomIndex];
+
+    // Create a new image object to preload
+    const img = new Image();
+    img.src = imageUrl;
+
+    img.onload = function() {
+        document.body.style.backgroundImage = `url('${imageUrl}')`;
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundPosition = 'center';
+        document.body.style.backgroundRepeat = 'no-repeat';
+        document.body.style.backgroundAttachment = 'fixed';
+        document.body.style.filter = 'blur(5px)'; /* ব্লার ইফেক্ট যোগ করা হলো */
+        document.body.style.webkitFilter = 'blur(5px)'; /* Safari-এর জন্য */
+
         // Save current background
         localStorage.setItem('currentBackground', imageUrl);
         localStorage.setItem('lastBackgroundUpdate', new Date().toISOString());
