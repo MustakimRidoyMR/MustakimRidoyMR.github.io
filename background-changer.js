@@ -139,7 +139,7 @@ async function updateBackground() {
         backgroundWrapper.style.backgroundPosition = 'center';
         backgroundWrapper.style.backgroundRepeat = 'no-repeat';
         backgroundWrapper.style.backgroundAttachment = 'fixed';
-        backgroundWrapper.style.filter = 'blur(15px)'; // Blur effect যোগ করি
+        backgroundWrapper.style.filter = 'blur(10px)'; // Blur effect যোগ করি
         
         // Scale করি যাতে blur এর edge না দেখা যায়
         backgroundWrapper.style.transform = 'scale(1.1)';
