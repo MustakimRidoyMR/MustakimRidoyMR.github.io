@@ -140,7 +140,7 @@ async function updateBackground() {
         ctx.drawImage(img, 0, 0);
 
         // ব্লার ফিল্টার প্রয়োগ (এটি একটি সরলীকৃত উদাহরণ)
-        const blurredCanvas = blurCanvas(canvas, 5); // 5px ব্লার রেডিয়াস
+        const blurredCanvas = blurCanvas(canvas, 15); // 5px ব্লার রেডিয়াস
 
         // ব্লার করা ক্যানভাসকে ডেটা URL এ রূপান্তর করুন
         const blurredDataURL = blurredCanvas.toDataURL();
