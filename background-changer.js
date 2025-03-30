@@ -58,7 +58,7 @@ async function getBackgroundImages() {
     return JSON.parse(cachedImages);
 }
 
-// Modified updateBackground function
+/*// Modified updateBackground function
 async function updateBackground() {
     const images = await getBackgroundImages();
     
@@ -93,6 +93,72 @@ document.addEventListener('DOMContentLoaded', function() {
     const lastBackground = localStorage.getItem('currentBackground');
     if (lastBackground) {
         document.body.style.backgroundImage = `url('${lastBackground}')`;
+    }
+    
+    checkBackgroundUpdate();
+});*/
+    // Modified updateBackground function with blur effect
+async function updateBackground() {
+    const images = await getBackgroundImages();
+    
+    if (images.length === 0) {
+        console.error('No images available');
+        return;
+    }
+    
+    const randomIndex = Math.floor(Math.random() * images.length);
+    const imageUrl = images[randomIndex];
+    
+    // Create a new image object to preload
+    const img = new Image();
+    img.src = imageUrl;
+    
+    img.onload = function() {
+        // প্রথমে একটি wrapper div তৈরি করি যা blur effect ধারণ করবে
+        let backgroundWrapper = document.getElementById('background-wrapper');
+        
+        if (!backgroundWrapper) {
+            backgroundWrapper = document.createElement('div');
+            backgroundWrapper.id = 'background-wrapper';
+            
+            // Wrapper এর style সেট করি
+            backgroundWrapper.style.position = 'fixed';
+            backgroundWrapper.style.top = '0';
+            backgroundWrapper.style.left = '0';
+            backgroundWrapper.style.width = '100%';
+            backgroundWrapper.style.height = '100%';
+            backgroundWrapper.style.zIndex = '-1'; // সবার পিছনে রাখি
+            
+            // body তে wrapper যোগ করি
+            document.body.insertBefore(backgroundWrapper, document.body.firstChild);
+        }
+        
+        // Wrapper এ background image সেট করি blur effect সহ
+        backgroundWrapper.style.backgroundImage = `url('${imageUrl}')`;
+        backgroundWrapper.style.backgroundSize = 'cover';
+        backgroundWrapper.style.backgroundPosition = 'center';
+        backgroundWrapper.style.backgroundRepeat = 'no-repeat';
+        backgroundWrapper.style.backgroundAttachment = 'fixed';
+        backgroundWrapper.style.filter = 'blur(5px)'; // Blur effect যোগ করি
+        
+        // Scale করি যাতে blur এর edge না দেখা যায়
+        backgroundWrapper.style.transform = 'scale(1.1)';
+        
+        // Save current background
+        localStorage.setItem('currentBackground', imageUrl);
+        localStorage.setItem('lastBackgroundUpdate', new Date().toISOString());
+    };
+}
+
+// Add necessary CSS to body
+document.addEventListener('DOMContentLoaded', function() {
+    // Set body background to transparent
+    document.body.style.background = 'none';
+    
+    // Try to restore last background
+    const lastBackground = localStorage.getItem('currentBackground');
+    if (lastBackground) {
+        updateBackground();
     }
     
     checkBackgroundUpdate();
