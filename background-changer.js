@@ -65,7 +65,7 @@ function createLoadingDialog() {
     loadingDialog.innerHTML = `
         <div class="loading-content">
             <div class="loading-spinner"></div>
-            <p>পেজটি লোড হচ্ছে...</p>
+            <p>Loading...</p>
         </div>
     `;
     
