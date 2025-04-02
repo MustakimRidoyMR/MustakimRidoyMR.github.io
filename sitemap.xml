@@ -7,36 +7,126 @@
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
-
-    <!-- টেক টিউটোরিয়াল পেজ -->
+<!--01-->
     <url>
-        <loc>https://mustakimridoymr.github.io/tech-tutorials.html</loc>
+        <loc>https://MustakimRidoyMR.github.io/ColorMaster.html</loc>
         <lastmod>2025-04-02</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
 
-    <!-- প্রোগ্রামিং রিসোর্স পেজ -->
+    <!-- 02 -->
     <url>
-        <loc>https://mustakimridoymr.github.io/programming-resources.html</loc>
+        <loc>https://MustakimRidoyMR.github.io/DeveloperTools.html</loc>
         <lastmod>2025-04-02</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
 
-    <!-- ডেভেলপার টুলস পেজ -->
+    <!-- 03 -->
     <url>
-        <loc>https://mustakimridoymr.github.io/dev-tools.html</loc>
+        <loc>https://mustakimridoymr.github.io/EditingTools.html</loc>
         <lastmod>2025-04-02</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
 
-    <!-- টেকনিক্যাল ব্লগ পেজ -->
+    <!-- 04 -->
     <url>
-        <loc>https://mustakimridoymr.github.io/tech-blog.html</loc>
+        <loc>https://mustakimridoymr.github.io/Resources.html</loc>
+        <lastmod>2025-04-02</lastmod>
+        <changefreq>always</changefreq>
+        <priority>1.0</priority>
+    </url>
+            <!--05-->
+    <url>
+        <loc>https://MustakimRidoyMR.github.io/codeRun.html</loc>
+        <lastmod>2025-04-02</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- 06 -->
+    <url>
+        <loc>https://MustakimRidoyMR.github.io/imageEditor.html</loc>
+        <lastmod>2025-04-02</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- 07 -->
+    <url>
+        <loc>https://mustakimridoymr.github.io/index.html</loc>
+        <lastmod>2025-04-02</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- 08 -->
+    <url>
+        <loc>https://mustakimridoymr.github.io/MR-Bot/Press.html</loc>
         <lastmod>2025-04-02</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+    </url>
+            <!--09-->
+    <url>
+        <loc>https://MustakimRidoyMR.github.io/MR-Bot/PrivacyPolicy.html</loc>
+        <lastmod>2025-04-02</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- 10 -->
+    <url>
+        <loc>https://MustakimRidoyMR.github.io/MR-Bot/ResetPassword.html</loc>
+        <lastmod>2025-04-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.1</priority>
+    </url>
+
+    <!-- 11 -->
+    <url>
+        <loc>https://mustakimridoymr.github.io/MR-Bot/TermsOfService.html</loc>
+        <lastmod>2025-04-02</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- 12 -->
+    <url>
+        <loc>https://mustakimridoymr.github.io/MR-Bot/careers.html</loc>
+        <lastmod>2025-04-02</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+            <!--13-->
+    <url>
+        <loc>https://MustakimRidoyMR.github.io/MR-Bot/index.html</loc>
+        <lastmod>2025-04-02</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- 14 -->
+    <url>
+        <loc>https://MustakimRidoyMR.github.io/MR-Bot/locked.html</loc>
+        <lastmod>2025-04-02</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <!-- 15 -->
+    <url>
+        <loc>https://mustakimridoymr.github.io/MR-Bot/login.html</loc>
+        <lastmod>2025-04-02</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+            <!-- 16 -->
+    <url>
+        <loc>https://mustakimridoymr.github.io/MR-Bot/register.html</loc>
+        <lastmod>2025-04-02</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
     </url>
 </urlset>
