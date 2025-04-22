@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Scanner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary: #5D5CDE;
+            --primary-dark: #4a49c0;
+            --secondary: #FF6B6B;
+            --accent: #41E2BA;
+            --light: #f0f0f0;
+            --dark: #181818;
+            --text-light: #f8f8f8;
+            --text-dark: #333;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .dark {
+            --bg-primary: var(--dark);
+            --text-primary: var(--text-light);
+        }
+
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            transition: transform 0.1s;
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(93, 92, 222, 0.5);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9998;
+            transition: width 0.2s, height 0.2s, transform 0.2s;
+        }
+
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .bg-gradient {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+        }
+
+        .dark .glass-effect {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn-primary:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .btn-primary:hover:before {
+            left: 100%;
+        }
+
+        .rotate-3d {
+            transform: perspective(800px) rotateY(15deg);
+            transition: transform 0.5s ease;
+        }
+
+        .rotate-3d:hover {
+            transform: perspective(800px) rotateY(0deg);
+        }
+
+        .shadow-glow {
+            box-shadow: 0 0 15px rgba(93, 92, 222, 0.5);
+        }
+
+        .dark .shadow-glow {
+            box-shadow: 0 0 15px rgba(93, 92, 222, 0.8);
+        }
+
+        #cameraContainer, #resultContainer {
+            transition: height 0.3s ease;
+        }
+
+        #scanAreaOverlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            border: 2px dashed var(--primary);
+            border-radius: 12px;
+            box-shadow: 0 0 0 99999px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+            animation: scan 2s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            50% { top: calc(100% - 2px); }
+            100% { top: 0; }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .ad-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, #f3f4f6, #e5e7eb);
+            color: #9ca3af;
+            font-weight: 500;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            animation: adBlink 3s infinite alternate;
+        }
+
+        .dark .ad-placeholder {
+            background: linear-gradient(45deg, #374151, #1f2937);
+            color: #9ca3af;
+        }
+
+        @keyframes adBlink {
+            0% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        /* Dark mode styles */
+        .dark {
+            background-color: var(--dark);
+            color: var(--text-light);
+        }
+
+        .dark .cursor-outline {
+            border-color: rgba(93, 92, 222, 0.8);
+        }
+
+        .dark .bg-white {
+            background-color: #242424;
+        }
+
+        .dark .text-gray-800 {
+            color: var(--text-light);
+        }
+
+        .dark .text-gray-600 {
+            color: #a0aec0;
+        }
+
+        .dark .bg-gray-100 {
+            background-color: #2d2d2d;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50 text-gray-800 flex flex-col">
+    <div class="cursor-dot hidden md:block"></div>
+    <div class="cursor-outline hidden md:block"></div>
+
+    <!-- Header -->
+    <header class="bg-gradient text-white shadow-md">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <h1 class="text-3xl font-bold flex items-center mb-4 md:mb-0">
+                    <span class="mr-2">📱</span> QR Scanner Pro
+                </h1>
+                <div class="flex space-x-4 items-center">
+                    <button id="themeSwitcher" class="p-2 rounded-full hover:bg-white/20 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Ad Space -->
+    <div class="ad-placeholder w-full h-24 my-4">
+        <p>AdSense Banner (728×90)</p>
+    </div>
+
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            <!-- Intro Section -->
+            <section class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-600">Scan QR Codes Instantly</h2>
+                <p class="text-xl text-gray-600 mb-8">Upload an image or use your camera to scan QR codes quickly and easily.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-effect rounded-xl p-6 hover-scale shadow-glow rotate-3d">
+                        <div class="h-12 w-12 mx-auto mb-4 rounded-full bg-purple-100 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Camera Scan</h3>
+                        <p class="text-gray-600 mb-4">Use your device camera to scan QR codes in real-time.</p>
+                        <button id="cameraBtn" class="btn-primary py-2 px-6 rounded-lg font-medium w-full">Open Camera</button>
+                    </div>
+                    
+                    <div class="glass-effect rounded-xl p-6 hover-scale shadow-glow rotate-3d">
+                        <div class="h-12 w-12 mx-auto mb-4 rounded-full bg-indigo-100 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Image Upload</h3>
+                        <p class="text-gray-600 mb-4">Upload an image containing a QR code to scan.</p>
+                        <label for="fileInput" class="btn-primary py-2 px-6 rounded-lg font-medium block text-center cursor-pointer w-full">Upload Image</label>
+                        <input type="file" id="fileInput" accept="image/*" class="hidden">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Side Ad -->
+            <div class="hidden md:block float-right ad-placeholder w-72 h-[600px] ml-4 mb-4">
+                <p>AdSense Skyscraper (160×600)</p>
+            </div>
+
+            <!-- Scanner Section -->
+            <section id="scannerSection" class="mb-12 hidden">
+                <div class="glass-effect rounded-xl p-6 mb-8">
+                    <h3 class="text-2xl font-bold mb-4 text-center">QR Code Scanner</h3>
+                    
+                    <!-- Camera Container -->
+                    <div id="cameraContainer" class="relative w-full max-w-md mx-auto h-0 overflow-hidden bg-gray-900 rounded-lg">
+                        <video id="video" class="absolute inset-0 w-full h-full object-cover"></video>
+                        <div id="scanAreaOverlay" class="hidden">
+                            <div class="scan-line"></div>
+                        </div>
+                        <canvas id="canvas" class="hidden absolute inset-0 w-full h-full"></canvas>
+                    </div>
+                    
+                    <!-- Image Preview -->
+                    <div id="imagePreview" class="relative w-full max-w-md mx-auto hidden mb-4">
+                        <img id="previewImg" class="w-full rounded-lg" alt="Preview">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-center mt-4 space-x-4">
+                        <button id="captureBtn" class="hidden btn-primary py-2 px-6 rounded-lg font-medium">Capture</button>
+                        <button id="stopCameraBtn" class="hidden bg-red-500 hover:bg-red-600 text-white py-2 px-6 rounded-lg font-medium">Stop Camera</button>
+                        <button id="scanAgainBtn" class="hidden bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-6 rounded-lg font-medium">Scan Again</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Result Section -->
+            <section id="resultContainer" class="hidden mb-12">
+                <div class="glass-effect rounded-xl p-6">
+                    <h3 class="text-2xl font-bold mb-4">Scan Result</h3>
+                    <div id="loadingResult" class="flex items-center justify-center py-8">
+                        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+                        <span class="ml-4 text-lg">Processing QR code...</span>
+                    </div>
+                    <div id="resultContent" class="hidden">
+                        <div class="mb-4 p-4 bg-gray-100 rounded-lg">
+                            <h4 class="font-semibold mb-2">Content:</h4>
+                            <p id="resultText" class="break-words"></p>
+                        </div>
+                        <div id="resultActions" class="flex flex-wrap gap-2">
+                            <a id="resultLink" href="#" target="_blank" class="hidden btn-primary py-2 px-4 rounded-lg font-medium text-center">Open Link</a>
+                            <button id="copyBtn" class="bg-gray-700 hover:bg-gray-800 text-white py-2 px-4 rounded-lg font-medium">Copy to Clipboard</button>
+                        </div>
+                    </div>
+                    <div id="noQrFound" class="hidden text-center py-8">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-yellow-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                        <h4 class="text-xl font-semibold mb-2">No QR Code Found</h4>
+                        <p class="text-gray-600 mb-4">Try scanning a different image or adjusting your camera.</p>
+                        <button id="tryAgainBtn" class="btn-primary py-2 px-6 rounded-lg font-medium">Try Again</button>
+                    </div>
+                </section>
+
+            <!-- Features Section -->
+            <section class="mb-12">
+                <h3 class="text-2xl font-bold mb-6 text-center">Why Use Our QR Scanner?</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-effect rounded-xl p-6 hover-scale">
+                        <div class="h-12 w-12 mb-4 rounded-full bg-blue-100 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <h4 class="text-lg font-semibold mb-2">Fast & Reliable</h4>
+                        <p class="text-gray-600">Instant QR code detection powered by advanced algorithms.</p>
+                    </div>
+                    
+                    <div class="glass-effect rounded-xl p-6 hover-scale">
+                        <div class="h-12 w-12 mb-4 rounded-full bg-green-100 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
+                        </div>
+                        <h4 class="text-lg font-semibold mb-2">Secure</h4>
+                        <p class="text-gray-600">All processing happens in your browser. No data is sent to servers.</p>
+                    </div>
+                    
+                    <div class="glass-effect rounded-xl p-6 hover-scale">
+                        <div class="h-12 w-12 mb-4 rounded-full bg-purple-100 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <h4 class="text-lg font-semibold mb-2">Multi-Device</h4>
+                        <p class="text-gray-600">Works on all devices with a camera or file upload capability.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bottom Ad Space -->
+            <div class="ad-placeholder w-full h-32 mb-8">
+                <p>AdSense Large Rectangle (336×280)</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-2xl font-bold mb-2">QR Scanner Pro</h3>
+                    <p class="text-gray-400">Fast, secure, and free QR code scanning.</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#" class="hover:text-primary transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="hover:text-primary transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+                <p>© 2023 QR Scanner Pro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dark mode detection and toggle
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+        
+        document.getElementById('themeSwitcher').addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+        });
+
+        // Custom cursor effect (desktop only)
+        if (window.innerWidth > 768) {
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-outline');
+            
+            window.addEventListener('mousemove', e => {
+                const posX = e.clientX;
+                const posY = e.clientY;
+                
+                cursorDot.style.left = `${posX}px`;
+                cursorDot.style.top = `${posY}px`;
+                
+                cursorOutline.style.left = `${posX}px`;
+                cursorOutline.style.top = `${posY}px`;
+                
+                cursorDot.style.display = 'block';
+                cursorOutline.style.display = 'block';
+            });
+            
+            window.addEventListener('mouseout', () => {
+                cursorDot.style.display = 'none';
+                cursorOutline.style.display = 'none';
+            });
+            
+            // Add cursor effect on interactive elements
+            const interactiveElements = document.querySelectorAll('button, a, input, label[for="fileInput"]');
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseover', () => {
+                    cursorOutline.style.width = '60px';
+                    cursorOutline.style.height = '60px';
+                    cursorDot.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                });
+                
+                el.addEventListener('mouseout', () => {
+                    cursorOutline.style.width = '40px';
+                    cursorOutline.style.height = '40px';
+                    cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
+                });
+            });
+        }
+
+        // GSAP animations
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.from("header", { y: -100, opacity: 0, duration: 1, ease: "power3.out" });
+            gsap.from("main > div > section", { 
+                y: 50, 
+                opacity: 0, 
+                duration: 0.8, 
+                stagger: 0.2, 
+                ease: "power2.out",
+                delay: 0.5
+            });
+        });
+
+        // QR Code Scanner Functionality
+        let video = document.getElementById('video');
+        let canvas = document.getElementById('canvas');
+        let ctx = canvas.getContext('2d');
+        let cameraStream = null;
+        
+        // UI Elements
+        const cameraBtn = document.getElementById('cameraBtn');
+        const fileInput = document.getElementById('fileInput');
+        const scannerSection = document.getElementById('scannerSection');
+        const cameraContainer = document.getElementById('cameraContainer');
+        const imagePreview = document.getElementById('imagePreview');
+        const previewImg = document.getElementById('previewImg');
+        const captureBtn = document.getElementById('captureBtn');
+        const stopCameraBtn = document.getElementById('stopCameraBtn');
+        const scanAgainBtn = document.getElementById('scanAgainBtn');
+        const resultContainer = document.getElementById('resultContainer');
+        const loadingResult = document.getElementById('loadingResult');
+        const resultContent = document.getElementById('resultContent');
+        const resultText = document.getElementById('resultText');
+        const resultLink = document.getElementById('resultLink');
+        const copyBtn = document.getElementById('copyBtn');
+        const noQrFound = document.getElementById('noQrFound');
+        const tryAgainBtn = document.getElementById('tryAgainBtn');
+        const scanAreaOverlay = document.getElementById('scanAreaOverlay');
+                
+        // Camera functionality
+        cameraBtn.addEventListener('click', () => {
+            startCamera();
+        });
+        
+        stopCameraBtn.addEventListener('click', () => {
+            stopCamera();
+            hideElement(scannerSection);
+        });
+        
+        captureBtn.addEventListener('click', () => {
+            captureImage();
+        });
+        
+        scanAgainBtn.addEventListener('click', () => {
+            resetScannerUI();
+            startCamera();
+        });
+        
+        tryAgainBtn.addEventListener('click', () => {
+            hideElement(resultContainer);
+            resetScannerUI();
+            showElement(scannerSection);
+        });
+        
+        // File upload functionality
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files && e.target.files[0]) {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                
+                reader.onload = (event) => {
+                    previewImg.src = event.target.result;
+                    showElement(scannerSection);
+                    showElement(imagePreview);
+                    hideElement(cameraContainer);
+                    
+                    // Process the image to find QR code
+                    const img = new Image();
+                    img.onload = () => processQRCode(img);
+                    img.src = event.target.result;
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Copy to clipboard functionality
+        copyBtn.addEventListener('click', () => {
+            const textToCopy = resultText.textContent;
+            
+            if (textToCopy) {
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    // Show copied notification
+                    const originalText = copyBtn.textContent;
+                    copyBtn.textContent = "Copied!";
+                    copyBtn.classList.add("bg-green-600");
+                    
+                    setTimeout(() => {
+                        copyBtn.textContent = originalText;
+                        copyBtn.classList.remove("bg-green-600");
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+            }
+        });
+        
+        // Start camera
+        function startCamera() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        facingMode: "environment",
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    } 
+                }).then(stream => {
+                    cameraStream = stream;
+                    video.srcObject = stream;
+                    video.play();
+                    
+                    showElement(scannerSection);
+                    showElement(cameraContainer);
+                    showElement(scanAreaOverlay);
+                    hideElement(imagePreview);
+                    showElement(captureBtn);
+                    showElement(stopCameraBtn);
+                    hideElement(scanAgainBtn);
+                    
+                    // Set camera container height
+                    cameraContainer.style.height = '300px';
+                    
+                    // Start scanning
+                    scanQRCode();
+                    
+                }).catch(error => {
+                    console.error("Error accessing camera:", error);
+                    alert("Couldn't access camera. Please check permissions or try uploading an image instead.");
+                });
+            } else {
+                alert("Your browser doesn't support camera access. Please try uploading an image instead.");
+            }
+        }
+        
+        // Stop camera
+        function stopCamera() {
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => {
+                    track.stop();
+                });
+                cameraStream = null;
+                video.srcObject = null;
+            }
+            
+            hideElement(captureBtn);
+            hideElement(stopCameraBtn);
+            hideElement(scanAreaOverlay);
+            cameraContainer.style.height = '0';
+        }
+        
+        // Capture image from camera
+        function captureImage() {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            processQRCodeData(imageData);
+        }
+        
+        // Real-time QR code scanning
+        function scanQRCode() {
+            if (!cameraStream) return;
+            
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const qrCode = jsQR(imageData.data, imageData.width, imageData.height, {
+                inversionAttempts: "dontInvert",
+            });
+            
+            if (qrCode) {
+                // QR code found - stop camera and show result
+                stopCamera();
+                hideElement(scanAreaOverlay);
+                showQRResult(qrCode.data);
+            } else {
+                // No QR code found - keep scanning
+                requestAnimationFrame(scanQRCode);
+            }
+        }
+        
+        // Process QR code from uploaded image
+        function processQRCode(img) {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            processQRCodeData(imageData);
+        }
+        
+        // Process image data to find QR code
+        function processQRCodeData(imageData) {
+            // Show loading state
+            showElement(resultContainer);
+            showElement(loadingResult);
+            hideElement(resultContent);
+            hideElement(noQrFound);
+            
+            // Simulate processing delay for UX
+            setTimeout(() => {
+                const qrCode = jsQR(imageData.data, imageData.width, imageData.height, {
+                    inversionAttempts: "dontInvert",
+                });
+                
+                if (qrCode) {
+                    showQRResult(qrCode.data);
+                } else {
+                    showNoQRFound();
+                }
+            }, 1500);
+        }
+        
+        // Show QR code result
+        function showQRResult(data) {
+            resultText.textContent = data;
+            hideElement(loadingResult);
+            hideElement(noQrFound);
+            showElement(resultContent);
+            
+            // Check if the result is a URL
+            if (isValidURL(data)) {
+                resultLink.href = data;
+                showElement(resultLink);
+            } else {
+                hideElement(resultLink);
+            }
+            
+            showElement(scanAgainBtn);
+        }
+        
+        // Show no QR code found
+        function showNoQRFound() {
+            hideElement(loadingResult);
+            hideElement(resultContent);
+            showElement(noQrFound);
+        }
+        
+        // Reset scanner UI
+        function resetScannerUI() {
+            hideElement(resultContainer);
+            hideElement(resultContent);
+            hideElement(loadingResult);
+            hideElement(noQrFound);
+            hideElement(scanAgainBtn);
+        }
+        
+        // Helper functions
+        function showElement(element) {
+            element.classList.remove('hidden');
+        }
+        
+        function hideElement(element) {
+            element.classList.add('hidden');
+        }
+        
+        function isValidURL(str) {
+            try {
+                new URL(str);
+                return true;
+            } catch {
+                return false;
+            }
+        }
+        
+        // Adding a floating animation to some elements
+        document.querySelectorAll('.glass-effect').forEach((el, index) => {
+            gsap.to(el, {
+                y: 10,
+                duration: 2 + (index * 0.2),
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
+        });
+    </script>
+</body>
+</html>
