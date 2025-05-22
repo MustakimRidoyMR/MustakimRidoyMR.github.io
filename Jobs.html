@@ -118,6 +118,18 @@
             border-bottom-color: transparent;
         }
 
+	.grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .grid-item {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
         @keyframes rotation {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -143,18 +155,6 @@
 
         ::-webkit-scrollbar-thumb:hover {
             background: #4a49b8;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-        .grid-item {
-            background-color: white;
-            border-radius: 5px;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
     </style>
 </head>
@@ -663,7 +663,6 @@ function openRandomLink() {
     const nextDelay = getRandomDelay();
     setTimeout(openRandomLink, nextDelay);
     
-    // লগিং (ডেভেলপমেন্টের জন্য)
     alert(`Your পরবর্তী Tab খুলবে ${(nextDelay/1000/60).toFixed(2)} মিনিট পরে`);
 }
 
