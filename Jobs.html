@@ -248,7 +248,13 @@
                 <div class="grid-item card-3d dark:bg-dark-100">
                     <h3 class="text-lg font-semibold text-primary dark:text-secondary mb-2">Photo Editing Job</h3>
                     <p class="text-gray-600 dark:text-gray-400">Make money by editing photos online. Work from home with flexible hours.</p>
-                    <button class="mt-4 w-full bg-primary dark:bg-secondary text-white py-2 rounded-lg font-medium hover:opacity-90 transition-opacity">Apply Now</button>
+                    <button id="contact-btn" class="gradient-bg text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    </svg>
+                    <span>যোগাযোগ করুন</span>
+                    </button>
+
                 </div>
                 <div class="grid-item card-3d dark:bg-dark-100">
                     <h3 class="text-lg font-semibold text-primary dark:text-secondary mb-2">Content Writing</h3>
@@ -424,9 +430,11 @@
                 </button>
             </div>
         </div>
-
+	    
+        <div>
 	 <a href="" rel="nofollow"><img alt="banner" src="https://landings-cdn.adsterratech.com/referralBanners/gif/600x250_adsterra_reff.gif" /></a>
-        
+        </div>
+	    
         <!-- Empty state -->
         <div id="empty-state" class="hidden text-center py-16">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-400 dark:text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -787,6 +795,32 @@
             // Restore default cursor
             document.body.style.cursor = 'auto';
         }
+
+	 // message 
+document.getElementById('contact-btn').addEventListener('click', async () => {
+    const phoneNumber = '01776554217';
+    const message = 'হ্যালো, আমি আপনার সাথে যোগাযোগ করতে চাই।';
+    
+    // WhatsApp ইনস্টল আছে কিনা চেক করা
+    const whatsappUrl = `whatsapp://send?phone=+88${phoneNumber}&text=${encodeURIComponent(message)}`;
+    const facebookUrl = `https://m.me/md.mustakim.billah.ridoy`; // আপনার Facebook ইউজারনেম বসান
+    
+    try {
+        // প্রথমে WhatsApp এ যাওয়ার চেষ্টা করা
+        const whatsappWindow = window.open(whatsappUrl, '_blank');
+        
+        // WhatsApp না থাকলে বা এরর হলে Facebook Messenger এ যাওয়া
+        setTimeout(() => {
+            if (!whatsappWindow || whatsappWindow.closed) {
+                window.open(facebookUrl, '_blank');
+            }
+        }, 2000);
+        
+    } catch (error) {
+        // কোন সমস্যা হলে সরাসরি Facebook Messenger এ নিয়ে যাওয়া
+        window.open(facebookUrl, '_blank');
+    }
+});
     </script>
 </body>
 </html>
