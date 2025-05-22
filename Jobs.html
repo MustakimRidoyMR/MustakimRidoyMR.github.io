@@ -314,7 +314,7 @@
     </div>
 
     <script>
-const ZIPRECRUITER_API_KEY = 'YOUR_API_KEY_HERE'; // আপনার API কী এখানে দিন
+const ZIPRECRUITER_API_KEY = process.env.ZIPRECRUITER_API_KEY; // আপনার API কী এখানে দিন
 const ZIPRECRUITER_API_URL = 'https://api.ziprecruiter.com/jobs/v1/';
         // Dark mode detection and toggle
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
