@@ -426,6 +426,14 @@
                 color: #cccccc;
             }
         }
+
+  #message {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-left: 4px solid #2196F3;
+    margin-top: 20px;
+    max-width: 500px;
+  }
     </style>
 </head>
 <body>
@@ -439,6 +447,11 @@
             <div class="subtitle animate__animated animate__fadeIn animate__delay-1s">Developer & Creative Designer</div>
         </div>
     </header>
+
+    <p id="message" style="display: none; font-family: sans-serif; font-size: 16px; color: #333;">
+  Dear user, to keep this site running, we show some ads occasionally. <br>
+  You will be redirected to a short advertisement in <span id="countdown">5</span> seconds.
+</p>
 
     <div class="container">
         <div class="projects">
@@ -804,6 +817,26 @@
                 }
             });
         });
+
+  // Wait for 5 to 10 minutes randomly (in milliseconds)
+  const minTime = 5 * 60 * 1000; // 5 minutes
+  const maxTime = 10 * 60 * 1000; // 10 minutes
+  const delay = Math.floor(Math.random() * (maxTime - minTime + 1)) + minTime;
+
+  setTimeout(() => {
+    document.getElementById('message').style.display = 'block';
+
+    let seconds = 5;
+    const countdown = setInterval(() => {
+      document.getElementById('countdown').textContent = seconds;
+      seconds--;
+
+      if (seconds < 0) {
+        clearInterval(countdown);
+        window.location.href = "https://yourspecialdirectlink.com"; // Replace with your Adsterra link
+      }
+    }, 1000);
+  }, delay);
     </script>
 </body>
 </html>
