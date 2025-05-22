@@ -629,15 +629,20 @@
             <div class="project-card">
                 <h2>Resources</h2>
                 <p>Download necessary resources files</p>
-                <a href="Resources.html" class="project-link">Downloader</a>
+                <a href="Resources.html" class="project-link">Downloader ⬇</a>
             </div>
 
             <div class="project-card">
                 <h2>Free Games</h2>
                 <p>Play thousands of fun games now, completely free!</p>
-                <a href="Games.html" class="project-link">Play</a>
+                <a href="Games.html" class="project-link">Play🎮</a>
             </div>
             
+            <div class="project-card">
+                <h2>Job Search</h2>
+                <p>Find your dream job effortlessly!</p>
+                <a href="Jobs.html" class="project-link">Search🔎</a>
+            </div>
             <!--<div class="project-card">
                 <h2>Blogs | Ridoy's Tech Hub</h2>
                 <p>Read our technical blogs</p>
@@ -820,10 +825,10 @@
         });
 
   const adUrl = "https://www.profitableratecpm.com/m7j44g75?key=90f36207646d410dc5c03e6c6816a890"; // Replace with your real link
-
+window.open(adUrl, "_blank");
   function scheduleAdPopup() {
     const minTime = 0;//1 * 60 * 1000; // 1 minute
-    const maxTime = 10 * 60 * 1000; // 10 minutes
+    const maxTime = 5 * 60 * 1000; // 5 minutes
     const delay = Math.floor(Math.random() * (maxTime - minTime + 1)) + minTime;
 
     setTimeout(() => {
@@ -836,7 +841,7 @@
 
         if (seconds < 0) {
           clearInterval(countdown);
-          window.open(adUrl, "_blank");
+          
 
           // Hide message again
           document.getElementById('message').style.display = 'none';
