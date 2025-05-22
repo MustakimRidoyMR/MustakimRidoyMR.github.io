@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZipRecruiter Job Search</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5D5CDE',
+                        secondary: '#6366F1',
+                        accent: '#F59E0B',
+                        dark: {
+                            100: '#333344',
+                            900: '#181818'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif']
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        pulse: {
+                            '0%, 100%': { opacity: 1 },
+                            '50%': { opacity: 0.6 }
+                        },
+                        rotate: {
+                            '0%': { transform: 'rotate(0deg)' },
+                            '100%': { transform: 'rotate(360deg)' }
+                        }
+                    },
+                    animation: {
+                        float: 'float 3s ease-in-out infinite',
+                        pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        rotate: 'rotate 8s linear infinite'
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        /* Custom cursor */
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #5D5CDE;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        
+        /* 3D Card effect */
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
+        
+        .card-3d:hover {
+            transform: translateY(-5px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Gradient background */
+        .gradient-bg {
+            background: linear-gradient(135deg, #5D5CDE 0%, #6366F1 100%);
+        }
+        
+        .dark .gradient-bg {
+            background: linear-gradient(135deg, #333344 0%, #181818 100%);
+        }
+
+        /* Particle background */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        /* Loading animation */
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 5px solid #5D5CDE;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            animation: rotation 1s linear infinite;
+        }
+
+        .dark .loading-spinner {
+            border-color: #6366F1;
+            border-bottom-color: transparent;
+        }
+
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .dark ::-webkit-scrollbar-track {
+            background: #333344;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #5D5CDE;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4a49b8;
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50 dark:bg-dark-900 text-gray-800 dark:text-gray-100 min-h-screen transition-colors duration-300">
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+    
+    <!-- Particles background -->
+    <div id="particles-container" class="fixed top-0 left-0 w-full h-full pointer-events-none"></div>
+    
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header with 3D effect -->
+        <header class="text-center mb-12 transform perspective-lg">
+            <div class="transform hover:scale-105 transition-transform duration-500">
+                <h1 class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mb-4 animate-float">
+                    ZipRecruiter Job Search
+                </h1>
+                <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300">
+                    <!-- Bilingual description -->
+                    Find your dream job effortlessly | আপনার স্বপ্নের চাকরি সহজেই খুঁজুন
+                </p>
+            </div>
+        </header>
+        
+        <!-- Search Section with 3D card -->
+        <div class="card-3d bg-white dark:bg-dark-100 rounded-xl shadow-lg p-6 mb-8 max-w-4xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <div>
+                        <label for="keyword" class="block text-gray-700 dark:text-gray-200 font-medium mb-1">
+                            কী ধরণের চাকরি খুঁজছেন? (What job are you looking for?)
+                        </label>
+                        <input type="text" id="keyword" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-100 text-base focus:outline-none focus:ring-2 focus:ring-primary dark:text-white" placeholder="Job title, keywords, or company">
+                    </div>
+                    <div>
+                        <label for="location" class="block text-gray-700 dark:text-gray-200 font-medium mb-1">
+                            কোথায় খুঁজছেন? (Where?)
+                        </label>
+                        <input type="text" id="location" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-100 text-base focus:outline-none focus:ring-2 focus:ring-primary dark:text-white" placeholder="City, state, or zip code">
+                    </div>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label for="radius" class="block text-gray-700 dark:text-gray-200 font-medium mb-1">
+                            খোঁজার ব্যাপ্তি (Search Radius)
+                        </label>
+                        <select id="radius" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-100 text-base focus:outline-none focus:ring-2 focus:ring-primary dark:text-white">
+                            <option value="10">10 miles</option>
+                            <option value="25" selected>25 miles</option>
+                            <option value="50">50 miles</option>
+                            <option value="100">100 miles</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="job-type" class="block text-gray-700 dark:text-gray-200 font-medium mb-1">
+                            চাকরির ধরণ (Job Type)
+                        </label>
+                        <select id="job-type" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-100 text-base focus:outline-none focus:ring-2 focus:ring-primary dark:text-white">
+                            <option value="">Any</option>
+                            <option value="full-time">Full-time</option>
+                            <option value="part-time">Part-time</option>
+                            <option value="contract">Contract</option>
+                            <option value="temporary">Temporary</option>
+                            <option value="internship">Internship</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row gap-4 mt-6">
+                <button id="search-btn" class="gradient-bg text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity flex-1 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <span>খুঁজুন (Search)</span>
+                </button>
+                <button id="clear-btn" class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                    পুনরায় শুরু করুন (Clear)
+                </button>
+            </div>
+        </div>
+        
+        <!-- Advanced filters -->
+        <div class="card-3d bg-white dark:bg-dark-100 rounded-xl shadow-lg p-6 mb-8 max-w-4xl mx-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold">অ্যাডভান্সড ফিল্টার (Advanced Filters)</h3>
+                <button id="toggle-filters" class="text-primary dark:text-secondary hover:underline">
+                    <span id="filter-text">Show</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline ml-1" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            
+            <div id="advanced-filters" class="hidden space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="salary" class="block text-gray-700 dark:text-gray-200 font-medium mb-1">
+                            বেতন পরিসীমা (Salary Range)
+                        </label>
+                        <select id="salary" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-100 text-base focus:outline-none focus:ring-2 focus:ring-primary dark:text-white">
+                            <option value="">Any</option>
+                            <option value="30000">$30,000+</option>
+                            <option value="50000">$50,000+</option>
+                            <option value="70000">$70,000+</option>
+                            <option value="100000">$100,000+</option>
+                            <option value="150000">$150,000+</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="date-posted" class="block text-gray-700 dark:text-gray-200 font-medium mb-1">
+                            পোস্ট করা হয়েছে (Date Posted)
+                        </label>
+                        <select id="date-posted" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-100 text-base focus:outline-none focus:ring-2 focus:ring-primary dark:text-white">
+                            <option value="all">Any time</option>
+                            <option value="1">Last 24 hours</option>
+                            <option value="3">Last 3 days</option>
+                            <option value="7">Last 7 days</option>
+                            <option value="14">Last 14 days</option>
+                            <option value="30">Last 30 days</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="experience" class="block text-gray-700 dark:text-gray-200 font-medium mb-1">
+                        অভিজ্ঞতার স্তর (Experience Level)
+                    </label>
+                    <select id="experience" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-100 text-base focus:outline-none focus:ring-2 focus:ring-primary dark:text-white">
+                        <option value="">Any</option>
+                        <option value="entry">Entry level</option>
+                        <option value="mid">Mid level</option>
+                        <option value="senior">Senior level</option>
+                        <option value="executive">Executive</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Loading indicator -->
+        <div id="loading" class="hidden flex justify-center items-center py-10">
+            <div class="loading-spinner"></div>
+            <span class="ml-4 text-lg font-medium">অনুসন্ধান করা হচ্ছে... (Searching...)</span>
+        </div>
+        
+        <!-- Results Section -->
+        <div id="results-container" class="hidden">
+            <h2 class="text-2xl font-bold mb-4">খোঁজার ফলাফল (Search Results)</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6" id="job-results">
+                <!-- Job results will be populated here -->
+            </div>
+            
+            <div class="text-center mt-8">
+                <button id="load-more" class="gradient-bg text-white py-2 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                    আরও দেখুন (Load More)
+                </button>
+            </div>
+        </div>
+        
+        <!-- Empty state -->
+        <div id="empty-state" class="hidden text-center py-16">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-400 dark:text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14v-3a4 4 0 00-4-4s-1.958-.002-3.39 0m-7.11.499L5 7v9.997M4 15h3m5 0h3"></path>
+            </svg>
+            <h3 class="text-xl font-semibold mb-2">এখনও কোন ফলাফল নেই</h3>
+            <p class="text-gray-500 dark:text-gray-400">No jobs found. Try different search terms or filters.</p>
+        </div>
+        
+        <!-- Theme toggle -->
+        <div class="fixed bottom-5 right-5">
+            <button id="theme-toggle" class="bg-white dark:bg-dark-100 p-3 rounded-full shadow-lg">
+                <!-- Sun icon for dark mode -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <!-- Moon icon for light mode -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+const ZIPRECRUITER_API_KEY = 'YOUR_API_KEY_HERE'; // আপনার API কী এখানে দিন
+const ZIPRECRUITER_API_URL = 'https://api.ziprecruiter.com/jobs/v1/';
+        // Dark mode detection and toggle
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+        
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+        });
+        
+        // Custom cursor
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.querySelector('.custom-cursor');
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            // Make cursor larger when over interactive elements
+            const target = e.target;
+            if (target.tagName === 'BUTTON' || target.tagName === 'A' || 
+                target.tagName === 'INPUT' || target.tagName === 'SELECT' || 
+                target.closest('button') || target.closest('a')) {
+                cursor.style.width = '40px';
+                cursor.style.height = '40px';
+                cursor.style.backgroundColor = 'rgba(93, 92, 222, 0.1)';
+            } else {
+                cursor.style.width = '20px';
+                cursor.style.height = '20px';
+                cursor.style.backgroundColor = 'transparent';
+            }
+        });
+        
+        // Hide real cursor
+        document.body.style.cursor = 'none';
+        
+        // Advanced filters toggle
+        document.getElementById('toggle-filters').addEventListener('click', () => {
+            const filtersDiv = document.getElementById('advanced-filters');
+            const filterText = document.getElementById('filter-text');
+            
+            if (filtersDiv.classList.contains('hidden')) {
+                filtersDiv.classList.remove('hidden');
+                filterText.textContent = 'Hide';
+            } else {
+                filtersDiv.classList.add('hidden');
+                filterText.textContent = 'Show';
+            }
+        });
+        
+        // Create animated particles
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            const colors = ['#5D5CDE', '#6366F1', '#F59E0B', '#34D399', '#EC4899'];
+            
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random properties
+                const size = Math.random() * 10 + 5;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.background = color;
+                
+                // Position
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
+                
+                // Animation
+                particle.style.animation = `float ${Math.random() * 10 + 10}s linear infinite`;
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        createParticles();
+        
+        document.getElementById('search-btn').addEventListener('click', async () => {
+    const keyword = document.getElementById('keyword').value.trim();
+    const location = document.getElementById('location').value.trim();
+    
+    if (!keyword) {
+        alert('অনুগ্রহ করে একটি জব টাইটেল বা কীওয়ার্ড লিখুন');
+        return;
+    }
+    
+    // লোডিং স্টেট দেখান
+    document.getElementById('loading').classList.remove('hidden');
+    document.getElementById('results-container').classList.add('hidden');
+    document.getElementById('empty-state').classList.add('hidden');
+    
+    try {
+        // ZipRecruiter API কল
+        const params = new URLSearchParams({
+            search: keyword,
+            location: location,
+            radius_miles: document.getElementById('radius').value,
+            days_ago: document.getElementById('date-posted').value,
+            employment_type: document.getElementById('job-type').value,
+            api_key: ZIPRECRUITER_API_KEY
+        });
+
+        const response = await fetch(`${ZIPRECRUITER_API_URL}search?${params}`);
+        const data = await response.json();
+        
+        // ডেটা প্রসেস করুন
+        handleSearchResults({
+            status: "complete",
+            responses: [{
+                content: JSON.stringify({
+                    totalJobs: data.total_jobs || 0,
+                    jobs: data.jobs?.map(job => ({
+                        id: job.id,
+                        title: job.name,
+                        company: job.hiring_company.name,
+                        location: job.location,
+                        salary: job.salary_range || 'Not specified',
+                        description: job.snippet,
+                        datePosted: job.posted_time,
+                        jobType: job.employment_type,
+                        applyUrl: job.url
+                    })) || []
+                })
+            }]
+        });
+    } catch (error) {
+        console.error("Error:", error);
+        document.getElementById('loading').classList.add('hidden');
+        alert("দুঃখিত, খোঁজার সময় একটি সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।");
+    }
+});
+        
+        // Handle search results
+        function handleSearchResults(result) {
+            // Hide loading indicator
+            document.getElementById('loading').classList.add('hidden');
+            
+            const jobResults = document.getElementById('job-results');
+            
+            if (result.status === "complete") {
+                try {
+                    // Parse JSON response
+                    const response = JSON.parse(result.responses[0].content);
+                    
+                    if (response.jobs && response.jobs.length > 0) {
+                        // Clear previous results
+                        jobResults.innerHTML = '';
+                        
+                        // Display results
+                        response.jobs.forEach(job => {
+                            const jobCard = createJobCard(job);
+                            jobResults.appendChild(jobCard);
+                        });
+                        
+                        document.getElementById('results-container').classList.remove('hidden');
+                    } else {
+                        // Show empty state
+                        document.getElementById('empty-state').classList.remove('hidden');
+                    }
+                } catch (error) {
+                    console.error("Error parsing results:", error);
+                    document.getElementById('empty-state').classList.remove('hidden');
+                }
+            } else if (result.status === "error") {
+                console.error("Error in search response:", result);
+                document.getElementById('empty-state').classList.remove('hidden');
+            }
+        }
+        
+        // Create job card element
+        function createJobCard(job) {
+            const cardDiv = document.createElement('div');
+            cardDiv.className = 'card-3d bg-white dark:bg-dark-100 rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow';
+            
+            cardDiv.innerHTML = `
+                <div class="flex justify-between items-start">
+                    <h3 class="text-xl font-semibold text-primary dark:text-secondary">${job.title}</h3>
+                    <span class="bg-accent/10 text-accent px-2 py-1 rounded text-sm font-medium">${job.jobType || 'Full-time'}</span>
+                </div>
+                <div class="mt-2">
+                    <div class="flex items-center text-gray-700 dark:text-gray-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                        <span>${job.company}</span>
+                    </div>
+                    <div class="flex items-center text-gray-700 dark:text-gray-300 mt-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span>${job.location}</span>
+                    </div>
+                    ${job.salary ? `
+                    <div class="flex items-center text-gray-700 dark:text-gray-300 mt-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>${job.salary}</span>
+                    </div>
+                    ` : ''}
+                    <div class="flex items-center text-gray-700 dark:text-gray-300 mt-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span>${job.datePosted}</span>
+                    </div>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 my-4 line-clamp-3">${job.description}</p>
+                <a href="${job.applyUrl}" target="_blank" class="block w-full text-center bg-primary dark:bg-secondary text-white py-2 rounded-lg font-medium hover:opacity-90 transition-opacity mt-4">
+                    Apply Now
+                </a>
+            `;
+            
+            return cardDiv;
+        }
+        
+        // Clear search form
+        document.getElementById('clear-btn').addEventListener('click', () => {
+            document.getElementById('keyword').value = '';
+            document.getElementById('location').value = '';
+            document.getElementById('radius').value = '25';
+            document.getElementById('job-type').value = '';
+            document.getElementById('salary').value = '';
+            document.getElementById('date-posted').value = 'all';
+            document.getElementById('experience').value = '';
+            
+            document.getElementById('results-container').classList.add('hidden');
+            document.getElementById('empty-state').classList.add('hidden');
+        });
+        
+        // Load more button - for demo, just show the same jobs again
+        document.getElementById('load-more').addEventListener('click', () => {
+            const jobResults = document.getElementById('job-results');
+            const currentJobCards = jobResults.querySelectorAll('.card-3d');
+            
+            // Clone and append existing job cards for demo purposes
+            currentJobCards.forEach(card => {
+                const clone = card.cloneNode(true);
+                jobResults.appendChild(clone);
+            });
+        });
+    </script>
+</body>
+</html>
