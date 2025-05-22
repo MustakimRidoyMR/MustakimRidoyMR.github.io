@@ -603,7 +603,7 @@
                                 description: 'We are looking for a skilled Video Editor to join our team. Experience with React and Editing required.',
                                 datePosted: '2 days ago',
                                 jobType: 'Full-time',
-                                applyUrl: '#contact-btn'
+                                applyUrl: '?click=contact-btn'
                             },
                             {
                                 id: '2',
@@ -614,7 +614,7 @@
                                 description: 'Looking for an experienced marketing professional to lead our digital marketing campaigns.',
                                 datePosted: '1 week ago',
                                 jobType: 'Full-time',
-                                applyUrl: '#contact-btn'
+                                applyUrl: '?click=contact-btn'
                             },
                             {
                                 id: '3',
@@ -625,7 +625,7 @@
                                 description: 'Join our customer support team to help clients with technical issues. Good communication skills required.',
                                 datePosted: '3 days ago',
                                 jobType: 'Full-time',
-                                applyUrl: '#contact-btn'
+                                applyUrl: '?click=contact-btn'
                             },
                             {
                                 id: '4',
@@ -636,7 +636,7 @@
                                 description: 'Creative graphic designer needed for our design team. Experience with Adobe Creative Suite required.',
                                 datePosted: '5 days ago',
                                 jobType: 'Full-time',
-                                applyUrl: '#contact-btn'
+                                applyUrl: '?click=contact-btn'
                             }
                         ]
                     };
@@ -850,17 +850,20 @@ document.getElementById('contact-btn').addEventListener('click', async () => {
         window.open(facebookUrl, '_blank');
     }
 });
+
+	// URL প্যারামিটার পার্স করার ফাংশন
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+// পেজ লোড হলে চেক করা
+window.addEventListener('load', () => {
+    const clickButton = getQueryParam('click');
+    if(clickButton === 'contact-btn') {
+        document.getElementById('contact-btn').click();
+    }
+});
     </script>
-	<script>
-    window.addEventListener("DOMContentLoaded", function () {
-        const hash = window.location.hash;
-        if (hash === "#contact-btn") {
-            const button = document.querySelector(hash);
-            if (button) {
-                button.click(); // এটা ইমিট করবে ক্লিক ইভেন্ট
-            }
-        }
-    });
-</script>
 </body>
 </html>
