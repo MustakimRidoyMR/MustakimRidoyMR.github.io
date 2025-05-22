@@ -850,18 +850,16 @@ document.getElementById('contact-btn').addEventListener('click', async () => {
         window.open(facebookUrl, '_blank');
     }
 });
-	    window.addEventListener('load', () => {
-    if(window.location.hash === '#contact-btn') {
-        document.getElementById('contact-btn').click();
-    }
-});
 
-// URL হ্যাশ পরিবর্তন হলেও চেক করবে
-window.addEventListener('hashchange', () => {
-    if(window.location.hash === '#contact-btn') {
-        document.getElementById('contact-btn').click();
-    }
-});
+	 window.addEventListener("DOMContentLoaded", function () {
+        const hash = window.location.hash;
+        if (hash === "#contact-btn") {
+            const button = document.querySelector(hash);
+            if (button) {
+                button.click(); // এটা ইমিট করবে ক্লিক ইভেন্ট
+            }
+        }
+    });
     </script>
 </body>
 </html>
