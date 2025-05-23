@@ -1311,19 +1311,20 @@
             document.getElementById('empty-state').classList.add('hidden');
             
             try {
-                try{
-                const results = await fetchJobsFromAPI(lastSearchParams, currentPage);
-                displaySearchResults(results);
-                } catch (error) {
-                 fetchJobs(keyword, location);
-                }
-            } catch (error) {
-                console.error("Error searching jobs:", error);
-                showToast("অনুসন্ধানে সমস্যা হয়েছে। কিছুক্ষণ পর আবার চেষ্টা করুন।");
-                
-                // Show demo data on API failure
-                displayFallbackResults();
-            }
+    const results = await fetchJobsFromAPI(lastSearchParams, currentPage);
+    displaySearchResults(results);
+} catch (error) {
+    try {
+        // যদি API fail করে, লোকাল ফাংশন দিয়ে ট্রাই করো
+        const results = await fetchJobs(keyword, location);
+        displaySearchResults(results);
+    } catch (error) {
+        console.error("Error searching jobs:", error);
+        showToast("অনুসন্ধানে সমস্যা হয়েছে। কিছুক্ষণ পর আবার চেষ্টা করুন।");
+        // Fallback: demo data দেখাও
+        displayFallbackResults();
+    }
+}
         }
         
         async function fetchJobsFromAPI(params, page) {
@@ -1383,11 +1384,11 @@
           const resp = await fetch(url);
           if (!resp.ok) throw new Error('Network response was not ok');
           const data = await resp.json();
-          displaySearchResults((data.results);
+          //displaySearchResults((data.results);
         } catch (err) {
           console.error('Error fetching jobs:', err);
-          document.getElementById('no-results').textContent = 'Error fetching data.';
-          document.getElementById('no-results').classList.remove('hidden');
+          //document.getElementById('no-results').textContent = 'Error fetching data.';
+          //document.getElementById('no-results').classList.remove('hidden');
         }
       }
         
