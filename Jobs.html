@@ -1273,86 +1273,116 @@
             }, duration);
         }
         
-        // Search button functionality
-        document.getElementById('search-btn').addEventListener('click', async () => {
-            const keyword = document.getElementById('keyword').value.trim();
-            const location = document.getElementById('location').value.trim();
+       // Search button functionality
+document.getElementById('search-btn').addEventListener('click', async () => {
+    const keyword = document.getElementById('keyword').value.trim();
+    const location = document.getElementById('location').value.trim();
+    
+    if (!keyword) {
+        showToast('অনুগ্রহ করে একটি জব টাইটেল বা কীওয়ার্ড লিখুন');
+        return;
+    }
+    
+    // লোডিং স্টেট দেখান
+    document.getElementById('loading').classList.remove('hidden');
+    document.getElementById('results-container').classList.add('hidden');
+    document.getElementById('empty-state').classList.add('hidden');
+    
+    try {
+        // প্রথমে Adzuna API কল করা হবে
+        const result = await searchJobs(keyword, location);
+        
+        // যদি API থেকে ভ্যালিড রেজাল্ট আসে
+        if (result && result.results && result.results.length > 0) {
+            handleSearchResults(result);
+        } else {
+            // API থেকে ডেটা না এলে ডেমো ডেটা দেখানো হবে
+            const demoData = {
+                totalJobs: 25,
+                jobs: [
+                    {
+                        id: '1',
+                        title: 'Video Editing',
+                        company: 'Unity Earning E-learning Platform',
+                        location: 'Online',
+                        salary: '30,000BDT - 50,000BDT per year',
+                        description: 'We are looking for a skilled Video Editor to join our team. Experience with React and Editing required.',
+                        datePosted: '2 days ago',
+                        jobType: 'Full-time',
+                        applyUrl: '?click=contact-btn'
+                    },
+                    {
+                        id: '2',
+                        title: 'Marketing Manager',
+                        company: 'Unity Earning E-learning Platform',
+                        location: 'Online',
+                        salary: '25,000BDT - 40,000BDT per year',
+                        description: 'Looking for an experienced marketing professional to lead our digital marketing campaigns.',
+                        datePosted: '1 week ago',
+                        jobType: 'Full-time',
+                        applyUrl: '?click=contact-btn'
+                    },
+                    {
+                        id: '3',
+                        title: 'Customer Support Specialist',
+                        company: 'Unity Earning E-learning Platform',
+                        location: 'Online',
+                        salary: '20,000BDT - 30,000BDT per year',
+                        description: 'Join our customer support team to help clients with technical issues. Good communication skills required.',
+                        datePosted: '3 days ago',
+                        jobType: 'Full-time',
+                        applyUrl: '?click=contact-btn'
+                    },
+                    {
+                        id: '4',
+                        title: 'Graphic Designer',
+                        company: 'Unity Earning E-learning Platform',
+                        location: 'Online',
+                        salary: '25,000BDT - 35,000BDT per year',
+                        description: 'Creative graphic designer needed for our design team. Experience with Adobe Creative Suite required.',
+                        datePosted: '5 days ago',
+                        jobType: 'Full-time',
+                        applyUrl: '?click=contact-btn'
+                    }
+                ]
+            };
             
-            if (!keyword) {
-                showToast('অনুগ্রহ করে একটি জব টাইটেল বা কীওয়ার্ড লিখুন');
-                return;
-            }
-            
-            // লোডিং স্টেট দেখান
-            document.getElementById('loading').classList.remove('hidden');
-            document.getElementById('results-container').classList.add('hidden');
-            document.getElementById('empty-state').classList.add('hidden');
-            
-            try {
-                // এখানে API কল সিমুলেট করা হয়েছে
-                // আসল API কল আপনি সার্ভারে করতে পারেন
-                setTimeout(() => {
-                    // ডেমো ডেটা
-                    const demoData = {
-                        totalJobs: 25,
-                        jobs: [
-                            {
-                                id: '1',
-                                title: 'Video Editing',
-                                company: 'Unity Earning E-learning Platform',
-                                location: 'Online',
-                                salary: '30,000BDT - 50,000BDT per year',
-                                description: 'We are looking for a skilled Video Editor to join our team. Experience with React and Editing required.',
-                                datePosted: '2 days ago',
-                                jobType: 'Full-time',
-                                applyUrl: '?click=contact-btn'
-                            },
-                            {
-                                id: '2',
-                                title: 'Marketing Manager',
-                                company: 'Unity Earning E-learning Platform',
-                                location: 'Online',
-                                salary: '25,000BDT - 40,000BDT per year',
-                                description: 'Looking for an experienced marketing professional to lead our digital marketing campaigns.',
-                                datePosted: '1 week ago',
-                                jobType: 'Full-time',
-                                applyUrl: '?click=contact-btn'
-                            },
-                            {
-                                id: '3',
-                                title: 'Customer Support Specialist',
-                                company: 'Unity Earning E-learning Platform',
-                                location: 'Online',
-                                salary: '20,000BDT - 30,000BDT per year',
-                                description: 'Join our customer support team to help clients with technical issues. Good communication skills required.',
-                                datePosted: '3 days ago',
-                                jobType: 'Full-time',
-                                applyUrl: '?click=contact-btn'
-                            },
-                            {
-                                id: '4',
-                                title: 'Graphic Designer',
-                                company: 'Unity Earning E-learning Platform',
-                                location: 'Online',
-                                salary: '25,000BDT - 35,000BDT per year',
-                                description: 'Creative graphic designer needed for our design team. Experience with Adobe Creative Suite required.',
-                                datePosted: '5 days ago',
-                                jobType: 'Full-time',
-                                applyUrl: '?click=contact-btn'
-                            }
-                        ]
-                    };
-                    
-                    // Pass the demo data to the handler
-                    handleSearchResults(demoData);
-                }, 1500); // 1.5 seconds delay to simulate API call
-                
-            } catch (error) {
-                console.error("Error:", error);
-                document.getElementById('loading').classList.add('hidden');
-                showToast("দুঃখিত, খোঁজার সময় একটি সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।");
-            }
-        });
+            // ডেমো ডেটা প্রদর্শন
+            setTimeout(() => {
+                handleSearchResults(demoData);
+            }, 1500); // 1.5 সেকেন্ড ডিলে
+        }
+        
+    } catch (error) {
+        console.error("Error:", error);
+        document.getElementById('loading').classList.add('hidden');
+        
+        // এরর হলেও ডেমো ডেটা দেখাবে
+        const demoData = {
+            // উপরের ডেমো ডেটা একই থাকবে
+            totalJobs: 25,
+            jobs: [
+                {
+                        id: '4',
+                        title: 'Graphic Designer',
+                        company: 'Unity Earning E-learning Platform',
+                        location: 'Online',
+                        salary: '25,000BDT - 35,000BDT per year',
+                        description: 'Creative graphic designer needed for our design team. Experience with Adobe Creative Suite required.',
+                        datePosted: '5 days ago',
+                        jobType: 'Full-time',
+                        applyUrl: '?click=contact-btn'
+                    }
+            ]
+        };
+        
+        setTimeout(() => {
+            handleSearchResults(demoData);
+        }, 1500);
+        
+        showToast("API কল ব্যর্থ হয়েছে, ডেমো ডেটা দেখানো হচ্ছে।");
+    }
+});
 
         async function searchJobs(keyword, location) {
             const country = 'gb'; // or other country code
