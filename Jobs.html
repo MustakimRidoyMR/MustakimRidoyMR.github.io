@@ -1144,14 +1144,15 @@
     </div>
 
     <script>
-
-          const config = {
-           APP_IDs: process.env.APP_ID || '9c2fc374',
-           APP_KEYs: process.env.APP_KEY || 'bd17fc711b279bb5c80faaf11a77c20e'
-           };
-        const ADZUNA_APP_ID = config.APP_IDs;
-        const ADZUNA_APP_KEY = config.env.APP_KEYs;
+        // Adzuna API configuration
+        const ADZUNA_APP_ID = '9c2fc374';
+        const ADZUNA_APP_KEY = 'bd17fc711b279bb5c80faaf11a77c20e';
         const ADZUNA_API_URL = 'https://api.adzuna.com/v1/api/jobs/';
+        
+        // Track current page for pagination
+        let currentPage = 1;
+        let totalPages = 0;
+        let lastSearchParams = {};
         
         // Dark mode detection and toggle
         function setDarkMode() {
@@ -1272,39 +1273,166 @@
             }, duration);
         }
         
-       // Search button functionality
-document.getElementById('search-btn').addEventListener('click', async () => {
-    const keyword = document.getElementById('keyword').value.trim();
-    const location = document.getElementById('location').value.trim();
-    
-    if (!keyword) {
-        showToast('অনুগ্রহ করে একটি জব টাইটেল বা কীওয়ার্ড লিখুন');
-        return;
-    }
-    
-    // লোডিং স্টেট দেখান
-    document.getElementById('loading').classList.remove('hidden');
-    document.getElementById('results-container').classList.add('hidden');
-    document.getElementById('empty-state').classList.add('hidden');
-    
-    try {
-        // প্রথমে Adzuna API কল করা হবে
-        const result = await searchJobs(keyword, location);
+        // Search button functionality with proper API integration and pagination
+        document.getElementById('search-btn').addEventListener('click', () => {
+            // Reset pagination on new search
+            currentPage = 1;
+            searchJobs();
+        });
         
-        // যদি API থেকে ভ্যালিড রেজাল্ট আসে
-        if (result && result.results && result.results.length > 0) {
-            handleSearchResults(result);
-        } else {
-            // API থেকে ডেটা না এলে ডেমো ডেটা দেখানো হবে
+        async function searchJobs() {
+            const keyword = document.getElementById('keyword').value.trim();
+            const location = document.getElementById('location').value.trim();
+            const jobType = document.getElementById('job-type').value;
+            const salary = document.getElementById('salary').value;
+            const datePosted = document.getElementById('date-posted').value;
+            const experience = document.getElementById('experience').value;
+            const education = document.getElementById('education').value;
+            
+            if (!keyword) {
+                showToast('অনুগ্রহ করে একটি জব টাইটেল বা কীওয়ার্ড লিখুন');
+                return;
+            }
+            
+            // Store search parameters for pagination
+            lastSearchParams = {
+                keyword,
+                location,
+                jobType,
+                salary,
+                datePosted,
+                experience,
+                education
+            };
+            
+            // Show loading state
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('results-container').classList.add('hidden');
+            document.getElementById('empty-state').classList.add('hidden');
+            
+            try {
+                const results = await fetchJobsFromAPI(lastSearchParams, currentPage);
+                displaySearchResults(results);
+            } catch (error) {
+                console.error("Error searching jobs:", error);
+                showToast("অনুসন্ধানে সমস্যা হয়েছে। কিছুক্ষণ পর আবার চেষ্টা করুন।");
+                
+                // Show demo data on API failure
+                displayFallbackResults();
+            }
+        }
+        
+        async function fetchJobsFromAPI(params, page) {
+            // Default to GB if no country specified
+            const country = 'gb';
+            
+            let queryParams = new URLSearchParams({
+                app_id: ADZUNA_APP_ID,
+                app_key: ADZUNA_APP_KEY,
+                results_per_page: 10,
+                page: page,
+                what: params.keyword
+            });
+            
+            if (params.location) {
+                queryParams.append('where', params.location);
+            }
+            
+            if (params.jobType) {
+                queryParams.append('contract_type', params.jobType);
+            }
+            
+            if (params.salary) {
+                queryParams.append('salary_min', params.salary);
+            }
+            
+            if (params.datePosted && params.datePosted !== 'all') {
+                // Convert days to timestamp
+                const daysAgo = parseInt(params.datePosted);
+                const date = new Date();
+                date.setDate(date.getDate() - daysAgo);
+                queryParams.append('created_since', date.toISOString().split('T')[0]);
+            }
+            
+            const url = `${ADZUNA_API_URL}${country}/search/${page}?${queryParams.toString()}`;
+            
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`API request failed with status ${response.status}`);
+                }
+                const data = await response.json();
+                
+                // Set total pages for pagination
+                totalPages = Math.ceil(data.count / 10);
+                
+                return data;
+            } catch (error) {
+                console.error("Error fetching jobs from API:", error);
+                throw error;
+            }
+        }
+        
+        function displaySearchResults(results) {
+            document.getElementById('loading').classList.add('hidden');
+            
+            if (results && results.results && results.results.length > 0) {
+                const jobResults = document.getElementById('job-results');
+                
+                // Clear previous results on first page, append for pagination
+                if (currentPage === 1) {
+                    jobResults.innerHTML = '';
+                }
+                
+                results.results.forEach(job => {
+                    // Process job data
+                    const jobData = {
+                        id: job.id || Math.random().toString(36).substring(7),
+                        title: job.title || 'Untitled Position',
+                        company: job.company?.display_name || 'Company Name Not Available',
+                        location: job.location?.display_name || 'Location Not Specified',
+                        salary: job.salary_min && job.salary_max ? 
+                            `৳${job.salary_min.toLocaleString()} - ৳${job.salary_max.toLocaleString()}` : 
+                            'Salary not specified',
+                        description: job.description || 'No description available',
+                        datePosted: job.created ? new Date(job.created).toLocaleDateString() : 'Date not specified',
+                        jobType: job.contract_type || 'Not specified',
+                        applyUrl: job.redirect_url || '?click=contact-btn'
+                    };
+                    
+                    const jobCard = createJobCard(jobData);
+                    jobResults.appendChild(jobCard);
+                });
+                
+                document.getElementById('results-container').classList.remove('hidden');
+                
+                // Update load more button visibility
+                const loadMoreBtn = document.getElementById('load-more');
+                if (currentPage >= totalPages) {
+                    loadMoreBtn.classList.add('hidden');
+                } else {
+                    loadMoreBtn.classList.remove('hidden');
+                }
+                
+            } else {
+                // No results found
+                document.getElementById('empty-state').classList.remove('hidden');
+            }
+        }
+        
+        function displayFallbackResults() {
+            document.getElementById('loading').classList.add('hidden');
+            
+            // Demo data to show when API fails
             const demoData = {
                 totalJobs: 25,
                 jobs: [
                     {
                         id: '1',
-                        title: 'Video Editing',
+                        title: 'Video Editing Job',
                         company: 'Unity Earning E-learning Platform',
                         location: 'Online',
-                        salary: '30,000BDT - 50,000BDT per year',
+                        salary: '৳30,000 - ৳50,000 per month',
                         description: 'We are looking for a skilled Video Editor to join our team. Experience with React and Editing required.',
                         datePosted: '2 days ago',
                         jobType: 'Full-time',
@@ -1315,7 +1443,7 @@ document.getElementById('search-btn').addEventListener('click', async () => {
                         title: 'Marketing Manager',
                         company: 'Unity Earning E-learning Platform',
                         location: 'Online',
-                        salary: '25,000BDT - 40,000BDT per year',
+                        salary: '৳25,000 - ৳40,000 per month',
                         description: 'Looking for an experienced marketing professional to lead our digital marketing campaigns.',
                         datePosted: '1 week ago',
                         jobType: 'Full-time',
@@ -1326,7 +1454,7 @@ document.getElementById('search-btn').addEventListener('click', async () => {
                         title: 'Customer Support Specialist',
                         company: 'Unity Earning E-learning Platform',
                         location: 'Online',
-                        salary: '20,000BDT - 30,000BDT per year',
+                        salary: '৳20,000 - ৳30,000 per month',
                         description: 'Join our customer support team to help clients with technical issues. Good communication skills required.',
                         datePosted: '3 days ago',
                         jobType: 'Full-time',
@@ -1337,7 +1465,7 @@ document.getElementById('search-btn').addEventListener('click', async () => {
                         title: 'Graphic Designer',
                         company: 'Unity Earning E-learning Platform',
                         location: 'Online',
-                        salary: '25,000BDT - 35,000BDT per year',
+                        salary: '৳25,000 - ৳35,000 per month',
                         description: 'Creative graphic designer needed for our design team. Experience with Adobe Creative Suite required.',
                         datePosted: '5 days ago',
                         jobType: 'Full-time',
@@ -1346,86 +1474,16 @@ document.getElementById('search-btn').addEventListener('click', async () => {
                 ]
             };
             
-            // ডেমো ডেটা প্রদর্শন
-            setTimeout(() => {
-                handleSearchResults(demoData);
-            }, 1500); // 1.5 সেকেন্ড ডিলে
-        }
-        
-    } catch (error) {
-        console.error("Error:", error);
-        document.getElementById('loading').classList.add('hidden');
-        
-        // এরর হলেও ডেমো ডেটা দেখাবে
-        const demoData = {
-            // উপরের ডেমো ডেটা একই থাকবে
-            totalJobs: 25,
-            jobs: [
-                {
-                        id: '4',
-                        title: 'Graphic Designer',
-                        company: 'Unity Earning E-learning Platform',
-                        location: 'Online',
-                        salary: '25,000BDT - 35,000BDT per year',
-                        description: 'Creative graphic designer needed for our design team. Experience with Adobe Creative Suite required.',
-                        datePosted: '5 days ago',
-                        jobType: 'Full-time',
-                        applyUrl: '?click=contact-btn'
-                    }
-            ]
-        };
-        
-        setTimeout(() => {
-            handleSearchResults(demoData);
-        }, 1500);
-        
-        showToast("API কল ব্যর্থ হয়েছে, ডেমো ডেটা দেখানো হচ্ছে।");
-    }
-});
-
-        async function searchJobs(keyword, location) {
-            const country = 'gb'; // or other country code
-            const page = 1;
+            const jobResults = document.getElementById('job-results');
+            jobResults.innerHTML = '';
             
-            const url = `${ADZUNA_API_URL}${country}/search/${page}?app_id=${ADZUNA_APP_ID}&app_key=${ADZUNA_APP_KEY}&results_per_page=10&what=${encodeURIComponent(keyword)}&where=${encodeURIComponent(location)}&content-type=application/json`;
-            
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                return data;
-            } catch (error) {
-                console.error("Error fetching jobs:", error);
-                throw error;
-            }
-        }
-        
-        function handleSearchResults(result) {
-    document.getElementById('loading').classList.add('hidden');
-    const jobResults = document.getElementById('job-results');
-    
-    if (result && result.results && result.results.length > 0) {
-        jobResults.innerHTML = '';
-        
-        result.results.forEach(job => {
-            const jobCard = createJobCard({
-                title: job.title,
-                company: job.company.display_name,
-                location: job.location.display_name,
-                salary: job.salary_min && job.salary_max ? 
-                    `${job.salary_min} - ${job.salary_max}` : 'Salary not specified',
-                description: job.description,
-                datePosted: new Date(job.created).toLocaleDateString(),
-                jobType: job.contract_type || 'Not specified',
-                applyUrl: job.redirect_url
+            demoData.jobs.forEach(job => {
+                const jobCard = createJobCard(job);
+                jobResults.appendChild(jobCard);
             });
-            jobResults.appendChild(jobCard);
-        });
-        
-        document.getElementById('results-container').classList.remove('hidden');
-    } else {
-        document.getElementById('empty-state').classList.remove('hidden');
-    }
-}
+            
+            document.getElementById('results-container').classList.remove('hidden');
+        }
         
         // Create job card element with enhanced design
         function createJobCard(job) {
@@ -1546,11 +1604,9 @@ document.getElementById('search-btn').addEventListener('click', async () => {
             showToast('সার্চ ফর্ম রিসেট করা হয়েছে');
         });
         
-        // Load more button - Enhanced with loading state
-        document.getElementById('load-more').addEventListener('click', (e) => {
+        // Load more button - Enhanced with proper API pagination
+        document.getElementById('load-more').addEventListener('click', async (e) => {
             const button = e.currentTarget;
-            const jobResults = document.getElementById('job-results');
-            const currentJobCards = jobResults.querySelectorAll('.card-3d');
             
             // Show loading state on button
             button.innerHTML = `
@@ -1561,44 +1617,13 @@ document.getElementById('search-btn').addEventListener('click', async () => {
                 লোড হচ্ছে...
             `;
             
-            // Simulate loading delay
-            setTimeout(() => {
-                // Clone and append existing job cards for demo purposes
-                currentJobCards.forEach(card => {
-                    const clone = card.cloneNode(true);
-                    
-                    // Reset event listeners for the cloned elements
-                    const applyButton = clone.querySelector('a[href*="click=contact-btn"]');
-                    if (applyButton) {
-                        applyButton.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            handleContactClick();
-                        });
-                    }
-                    
-                    const saveButton = clone.querySelector('.save-job-btn');
-                    if (saveButton) {
-                        saveButton.addEventListener('click', () => {
-                            saveButton.classList.toggle('bg-yellow-100');
-                            saveButton.classList.toggle('dark:bg-yellow-900');
-                            
-                            const icon = saveButton.querySelector('svg');
-                            icon.classList.toggle('text-yellow-600');
-                            icon.classList.toggle('dark:text-yellow-400');
-                            
-                            showToast('জবটি সেভ করা হয়েছে!');
-                        });
-                    }
-                    
-                    const shareButton = clone.querySelector('.share-job-btn');
-                    if (shareButton) {
-                        shareButton.addEventListener('click', () => {
-                            showToast('শেয়ার লিংক কপি করা হয়েছে!');
-                        });
-                    }
-                    
-                    jobResults.appendChild(clone);
-                });
+            // Increment page number
+            currentPage++;
+            
+            try {
+                // Fetch next page of results
+                const results = await fetchJobsFromAPI(lastSearchParams, currentPage);
+                displaySearchResults(results);
                 
                 // Reset button text
                 button.innerHTML = `
@@ -1609,37 +1634,43 @@ document.getElementById('search-btn').addEventListener('click', async () => {
                 `;
                 
                 showToast('আরও জব লোড করা হয়েছে');
-            }, 1500);
+            } catch (error) {
+                console.error("Error loading more jobs:", error);
+                
+                // Reset button text
+                button.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                    আরও দেখুন (Load More)
+                `;
+                
+                showToast('আরও জব লোড করতে সমস্যা হয়েছে, আবার চেষ্টা করুন');
+            }
         });
 
-        // র‍্যান্ডম সময় জেনারেট করার ফাংশন (5-30 মিনিট)
-        function getRandomDelay() {
-            // 5 থেকে 30 মিনিটের মধ্যে র‍্যান্ডম সময় (মিলিসেকেন্ডে)
-            return Math.floor(Math.random() * (25 * 60 * 1000)) + (5 * 60 * 1000);
-        }
-
-        // Ad-related functionality - modified to be less intrusive
+        // Ad-related functionality - optimized to be less intrusive
         let adShown = false;
         
         function showAdWithConsent() {
-            if (!adShown && confirm("আপনি কি একটি বিজ্ঞাপন দেখতে চান? (Would you like to view an ad?)")) {
+            if (!adShown && Math.random() < 0.3) {  // 30% chance to show ad
                 const adUrl = "https://www.profitableratecpm.com/m7j44g75?key=90f36207646d410dc5c03e6c6816a890";
                 try {
                     window.open(adUrl, "_blank");
                     adShown = true;
-                    showToast('আপনাকে ধন্যবাদ বিজ্ঞাপন দেখার জন্য!');
+                    setTimeout(() => { adShown = false; }, 1800000); // Reset after 30 minutes
                 } catch (error) {
                     console.error("Error opening ad:", error);
                 }
             }
             
-            // Schedule next ad prompt with longer delay
-            const nextDelay = getRandomDelay();
+            // Schedule next ad prompt with longer delay (10-20 minutes)
+            const nextDelay = Math.floor(Math.random() * 600000) + 600000;
             setTimeout(showAdWithConsent, nextDelay);
         }
 
-        // Start the ad consent flow after 12 minutes (increased delay for better UX)
-        setTimeout(showAdWithConsent, 12 * 60 * 1000);
+        // Start the ad consent flow after 5 minutes (increased delay for better UX)
+        setTimeout(showAdWithConsent, 300000);
         
         // Enable mobile device compatibility for cursor
         function isTouchDevice() {
@@ -1660,7 +1691,7 @@ document.getElementById('search-btn').addEventListener('click', async () => {
 
         // Set up event listeners for all buttons with contact-btn ID
         document.addEventListener('DOMContentLoaded', () => {
-            // সব contact-btn এ ক্লিক হ্যান্ডলার যোগ করা
+            // Add click handlers to all contact buttons
             const contactButtons = document.querySelectorAll('[id^="contact-btn"], [id="contact-fab"]');
             contactButtons.forEach(button => {
                 button.addEventListener('click', handleContactClick);
@@ -1720,7 +1751,7 @@ document.getElementById('search-btn').addEventListener('click', async () => {
             const clickParam = urlParams.get('click');
             
             if (clickParam === 'contact-btn') {
-                // URL থেকে প্যারামিটার রিমুভ করা
+                // Remove parameter from URL
                 const newUrl = window.location.pathname;
                 window.history.replaceState({}, '', newUrl);
                 
