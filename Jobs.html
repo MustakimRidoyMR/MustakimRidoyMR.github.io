@@ -1144,9 +1144,13 @@
     </div>
 
     <script>
-        
-        const ADZUNA_APP_ID = process.env.APP_ID;
-        const ADZUNA_APP_KEY = process.env.APP_KEY;
+
+          const config = {
+           APP_IDs: process.env.APP_ID || '9c2fc374',
+           APP_KEYs: process.env.APP_KEY || 'bd17fc711b279bb5c80faaf11a77c20e'
+           };
+        const ADZUNA_APP_ID = config.APP_IDs;
+        const ADZUNA_APP_KEY = config.env.APP_KEYs;
         const ADZUNA_API_URL = 'https://api.adzuna.com/v1/api/jobs/';
         
         // Dark mode detection and toggle
