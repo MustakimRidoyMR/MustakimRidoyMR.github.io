@@ -1311,8 +1311,12 @@
             document.getElementById('empty-state').classList.add('hidden');
             
             try {
+                try{
                 const results = await fetchJobsFromAPI(lastSearchParams, currentPage);
                 displaySearchResults(results);
+                } catch (error) {
+                 fetchJobs(keyword, location);
+                }
             } catch (error) {
                 console.error("Error searching jobs:", error);
                 showToast("অনুসন্ধানে সমস্যা হয়েছে। কিছুক্ষণ পর আবার চেষ্টা করুন।");
@@ -1372,6 +1376,20 @@
                 throw error;
             }
         }
+
+        async function fetchJobs(what, where) {
+        const url = `https://api.adzuna.com/v1/api/jobs/${where}/search/1?app_id=${ADZUNA_APP_ID}&app_key=${ADZUNA_APP_KEY}&results_per_page=10&what=${what}`;
+        try {
+          const resp = await fetch(url);
+          if (!resp.ok) throw new Error('Network response was not ok');
+          const data = await resp.json();
+          displaySearchResults((data.results);
+        } catch (err) {
+          console.error('Error fetching jobs:', err);
+          document.getElementById('no-results').textContent = 'Error fetching data.';
+          document.getElementById('no-results').classList.remove('hidden');
+        }
+      }
         
         function displaySearchResults(results) {
             document.getElementById('loading').classList.add('hidden');
