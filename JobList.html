@@ -216,6 +216,20 @@
                 container.appendChild(card);
             });
         }
+
+        // আপনার বর্তমান script ট্যাগের ভিতরে এই কোড যোগ করুন
+document.addEventListener('DOMContentLoaded', function() {
+    // সার্চ বাটন খুঁজে বের করা
+    const searchButton = document.getElementById('search-btn');
+    
+    // যদি বাটন পাওয়া যায়, তবে ক্লিক করা
+    if (searchButton) {
+        searchButton.click();
+        console.log('সার্চ বাটনে অটোমেটিক ক্লিক করা হয়েছে');
+    } else {
+        console.error('সার্চ বাটন পাওয়া যায়নি');
+    }
+});
     </script>
 </body>
 </html>
