@@ -885,7 +885,7 @@
         </div>
         
         <!-- Loading indicator - Improved -->
-        <div id="loading" class="hidden flex flex-col justify-center items-center py-10">
+        <div id="" class="hidden flex flex-col justify-center items-center py-10">
             <div class="loading-spinner mb-4"></div>
             <span class="text-lg font-medium">অনুসন্ধান করা হচ্ছে... (Searching...)</span>
             <p class="text-gray-500 dark:text-gray-400 mt-2 text-center">
@@ -1046,7 +1046,7 @@
         </div>
         
         <!-- Empty state - Improved -->
-        <div id="" class="hidden text-center py-16 bg-white dark:bg-dark-100 rounded-xl shadow-lg">
+        <div id=empty-state"" class="hidden text-center py-16 bg-white dark:bg-dark-100 rounded-xl shadow-lg">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mx-auto text-gray-400 dark:text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14v-3a4 4 0 00-4-4s-1.958-.002-3.39 0m-7.11.499L5 7v9.997M4 15h3m5 0h3"></path>
             </svg>
@@ -1389,6 +1389,7 @@
           console.error('Error fetching jobs:', err);
           //document.getElementById('no-results').textContent = 'Error fetching data.';
           //document.getElementById('no-results').classList.remove('hidden');
+           window.location.href = 'JobList.html';
         }
       }
         
