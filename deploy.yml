@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: production  # আপনার Environment নাম
+    environment: github-pages  # আপনার Environment নাম
 
     steps:
     - uses: actions/checkout@v2
