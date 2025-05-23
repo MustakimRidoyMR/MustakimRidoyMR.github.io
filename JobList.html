@@ -117,6 +117,12 @@
             কোনো চাকরি পাওয়া যায়নি।
         </div>
     </div>
+    
+    <div id="pagination-controls" class="max-w-4xl mx-auto flex justify-between mt-8 px-4">
+    <button id="prev-page" class="px-4 py-2 bg-primary text-white rounded-lg disabled:opacity-50">← আগের পেজ</button>
+    <button id="next-page" class="px-4 py-2 bg-primary text-white rounded-lg disabled:opacity-50">পরের পেজ →</button>
+    </div>
+
 
     <!-- Additional Ad Container -->
     <div class="ad-container max-w-4xl mx-auto mt-8 bg-white dark:bg-gray-800 p-4 rounded-xl">
@@ -230,6 +236,57 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('সার্চ বাটন পাওয়া যায়নি');
     }
 });
+
+        let currentPage = 1;
+let lastSearch = { what: '', where: 'gb' };
+
+document.getElementById('prev-page').addEventListener('click', () => {
+    if (currentPage > 1) {
+        currentPage--;
+        fetchJobs(lastSearch.what, lastSearch.where);
+    }
+});
+
+document.getElementById('next-page').addEventListener('click', () => {
+    currentPage++;
+    fetchJobs(lastSearch.what, lastSearch.where);
+});
+
+document.getElementById('search-btn').addEventListener('click', () => {
+    const what = encodeURIComponent(document.getElementById('keyword').value.trim());
+    const where = encodeURIComponent(document.getElementById('location').value.trim() || 'gb');
+    
+    currentPage = 1;
+    lastSearch = { what, where };
+
+    document.getElementById('loading').classList.remove('hidden');
+    document.getElementById('results-container').classList.add('hidden');
+    fetchJobs(what, where);
+});
+
+async function fetchJobs(what, where) {
+    const url = `https://api.adzuna.com/v1/api/jobs/${where}/search/${currentPage}?app_id=${APP_ID}&app_key=${APP_KEY}&results_per_page=10&what=${what}`;
+    try {
+        const resp = await fetch(url);
+        if (!resp.ok) throw new Error('Network response was not ok');
+        const data = await resp.json();
+
+        document.getElementById('loading').classList.add('hidden');
+        document.getElementById('results-container').classList.remove('hidden');
+
+        renderJobs(data.results);
+
+        // Disable previous if page 1, disable next if no results
+        document.getElementById('prev-page').disabled = currentPage === 1;
+        document.getElementById('next-page').disabled = !data.results || data.results.length < 10;
+    } catch (err) {
+        console.error('Error fetching jobs:', err);
+        document.getElementById('loading').classList.add('hidden');
+        document.getElementById('no-results').textContent = 'দুঃখিত, ডেটা লোড করতে সমস্যা হয়েছে।';
+        document.getElementById('no-results').classList.remove('hidden');
+    }
+}
+
     </script>
 </body>
 </html>
