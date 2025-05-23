@@ -349,12 +349,15 @@
             </div>
             
             <div class="flex flex-col sm:flex-row gap-4 mt-6">
-                <button id="search-btn" class="gradient-bg text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity flex-1 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                    <span>খুঁজুন (Search)</span>
-                </button>
+             
+<button id="search-btn" class="search-button gradient-bg text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity flex-1 flex items-center justify-center">
+    <div class="flex items-center justify-center w-full">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <span>খুঁজুন (Search)</span>
+    </div>
+</button>
                 <button id="clear-btn" class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity">
                     পুনরায় শুরু করুন (Clear)
                 </button>
@@ -759,7 +762,15 @@
                     Apply Now
                 </a>
             `;
-            
+
+		 const applyButton = cardDiv.querySelector('a[href*="click=contact-btn"]');
+    if (applyButton) {
+        applyButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            handleContactClick();
+        });
+    }
+    
             return cardDiv;
         }
         
@@ -885,84 +896,6 @@ function checkUrlAndClickContact() {
 // পেজ লোড হলে চেক করা
 window.addEventListener('load', checkUrlAndClickContact);
 
-// Apply Now লিংকে ক্লিক হ্যান্ডলার যোগ করা
-function createJobCard(job) {
-    // ... অন্যান্য কোড ...
-    
-    const applyButton = cardDiv.querySelector('a[href*="click=contact-btn"]');
-    if (applyButton) {
-        applyButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            handleContactClick();
-        });
-    }
-    
-    return cardDiv;
-}
-
-	    // JavaScript এ যোগ করুন
-class ContactButtonManager {
-    constructor() {
-        this.isProcessing = false;
-    }
-
-    init() {
-        this.addClickListeners();
-        this.handleUrlParameter();
-    }
-
-    addClickListeners() {
-        const buttons = document.querySelectorAll('[id^="contact-btn"]');
-        buttons.forEach(button => {
-            button.addEventListener('click', () => this.handleContactClick());
-        });
-    }
-
-    handleUrlParameter() {
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('click') === 'contact-btn') {
-            // URL থেকে প্যারামিটার রিমুভ করা
-            window.history.replaceState({}, '', window.location.pathname);
-            
-            if (!this.isProcessing) {
-                this.handleContactClick();
-            }
-        }
-    }
-
-    async handleContactClick() {
-        if (this.isProcessing) return;
-        
-        this.isProcessing = true;
-        
-        const phoneNumber = '01776554217';
-        const message = 'হ্যালো, আমি আপনার Job টি করতে চাই।';
-        
-        try {
-            const whatsappUrl = `whatsapp://send?phone=+88${phoneNumber}&text=${encodeURIComponent(message)}`;
-            const facebookUrl = `https://m.me/md.mustakim.billah.ridoy`;
-            
-            const whatsappWindow = window.open(whatsappUrl, '_blank');
-            
-            setTimeout(() => {
-                if (!whatsappWindow || whatsappWindow.closed) {
-                    window.open(facebookUrl, '_blank');
-                }
-                this.isProcessing = false;
-            }, 2000);
-            
-        } catch (error) {
-            window.open(facebookUrl, '_blank');
-            this.isProcessing = false;
-        }
-    }
-}
-
-// ম্যানেজার ইনিশিয়ালাইজ করা
-document.addEventListener('DOMContentLoaded', () => {
-    const contactManager = new ContactButtonManager();
-    contactManager.init();
-});
     </script>
 </body>
 </html>
