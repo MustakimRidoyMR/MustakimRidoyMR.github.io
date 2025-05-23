@@ -766,7 +766,7 @@
                     <span>খুঁজুন (Search)</span>
                 </button>
                 <button id="clear-btn" class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white py-3 px-6 rounded-lg font-medium hover:opacity-90 transition-opacity">
-                    পুনরায় শুরু করুন (Clear)
+                    সব খুজুন (Search All)
                 </button>
             </div>
         </div>
@@ -1610,7 +1610,7 @@
         
         // Clear search form
         document.getElementById('clear-btn').addEventListener('click', () => {
-            document.getElementById('keyword').value = '';
+           /* document.getElementById('keyword').value = '';
             document.getElementById('location').value = '';
             document.getElementById('radius').value = '25';
             document.getElementById('job-type').value = '';
@@ -1622,7 +1622,8 @@
             document.getElementById('results-container').classList.add('hidden');
             document.getElementById('empty-state').classList.add('hidden');
             
-            showToast('সার্চ ফর্ম রিসেট করা হয়েছে');
+            showToast('সার্চ ফর্ম রিসেট করা হয়েছে');*/
+            window.location.href = 'JobList.html';
         });
         
         // Load more button - Enhanced with proper API pagination
