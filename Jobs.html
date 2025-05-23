@@ -793,6 +793,15 @@
             currentJobCards.forEach(card => {
                 const clone = card.cloneNode(true);
                 jobResults.appendChild(clone);
+		    /////
+		     const applyButton = cardDiv.querySelector('a[href*="click=contact-btn"]');
+    if (applyButton) {
+        applyButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            handleContactClick();
+        });
+    }
+		    /////
             });
         });
 
