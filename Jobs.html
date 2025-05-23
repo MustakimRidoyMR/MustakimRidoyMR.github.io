@@ -497,9 +497,10 @@
     </div>
 
     <script>
-        // আপনার API কী এখানে যোগ করুন (এটি ক্লাইয়েন্ট সাইডে রাখা নিরাপদ নয়, সার্ভার সাইডে রাখা উচিত)
-        const ZIPRECRUITER_API_KEY = 'YOUR_API_KEY_HERE'; 
-        const ZIPRECRUITER_API_URL = 'https://api.ziprecruiter.com/jobs/v1/';
+        // ZipRecruiter API কী রিমুভ করে Adzuna API কী যোগ করুন
+const ADZUNA_APP_ID = APP_ID;
+const ADZUNA_APP_KEY = APP_KEY;
+const ADZUNA_API_URL = 'https://api.adzuna.com/v1/api/jobs/';
         
         // Dark mode detection and toggle
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
