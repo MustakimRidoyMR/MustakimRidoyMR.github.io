@@ -1400,23 +1400,33 @@ document.getElementById('search-btn').addEventListener('click', async () => {
             }
         }
         
-        function handleSearchResults(data) {
-            document.getElementById('loading').classList.add('hidden');
-            const jobResults = document.getElementById('job-results');
-            
-            if (data && data.jobs && data.jobs.length > 0) {
-                jobResults.innerHTML = '';
-                
-                data.jobs.forEach(job => {
-                    const jobCard = createJobCard(job);
-                    jobResults.appendChild(jobCard);
-                });
-                
-                document.getElementById('results-container').classList.remove('hidden');
-            } else {
-                document.getElementById('empty-state').classList.remove('hidden');
-            }
-        }
+        function handleSearchResults(result) {
+    document.getElementById('loading').classList.add('hidden');
+    const jobResults = document.getElementById('job-results');
+    
+    if (result && result.results && result.results.length > 0) {
+        jobResults.innerHTML = '';
+        
+        result.results.forEach(job => {
+            const jobCard = createJobCard({
+                title: job.title,
+                company: job.company.display_name,
+                location: job.location.display_name,
+                salary: job.salary_min && job.salary_max ? 
+                    `${job.salary_min} - ${job.salary_max}` : 'Salary not specified',
+                description: job.description,
+                datePosted: new Date(job.created).toLocaleDateString(),
+                jobType: job.contract_type || 'Not specified',
+                applyUrl: job.redirect_url
+            });
+            jobResults.appendChild(jobCard);
+        });
+        
+        document.getElementById('results-container').classList.remove('hidden');
+    } else {
+        document.getElementById('empty-state').classList.remove('hidden');
+    }
+}
         
         // Create job card element with enhanced design
         function createJobCard(job) {
