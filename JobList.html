@@ -3,12 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Job Search - Adzuna Integration</title>
+    <title>চাকরি খুঁজুন - Best Job Search | Find Your Dream Job Today</title>
+    <meta name="description" content="Find your dream job using our advanced job search engine. Search thousands of job listings from top employers. Best job search tool in Bangladesh and worldwide.">
+    <meta name="keywords" content="job search, চাকরি খোঁজা, job listings, employment, career opportunities, Bangladesh jobs, international jobs">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="চাকরি খুঁজুন - Best Job Search | Find Your Dream Job Today">
+    <meta property="og:description" content="Find your dream job using our advanced job search engine. Search thousands of job listings from top employers.">
+    <meta property="og:type" content="website">
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Ads Scripts -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5D5CDE',
+                        secondary: '#6366F1',
+                        accent: '#F59E0B',
+                    }
+                }
+            },
+            darkMode: 'class'
+        }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://yourwebsite.com/",
+      "name": "চাকরি খুঁজুন - Job Search Tool",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://yourwebsite.com/search?what={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <!-- Ads Scripts - Preserved from original -->
     <script type='text/javascript' src='//pl26717244.profitableratecpm.com/bf/51/a4/bf51a42d984554beaaed4a58dcdb733d.js'></script>
     <script type='text/javascript' src='//pl26713337.profitableratecpm.com/64/66/f1/6466f1b7fea6c93f404f4ab49960b99c.js'></script>
     <script async="async" data-cfasync="false" src="//pl26713372.profitableratecpm.com/1a6d5fbc149d94ff8c697b1327966995/invoke.js"></script>
+    <!-- Font Awesome for better icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         /* Dark mode transitions */
@@ -16,24 +51,48 @@
             transition: all 0.3s ease-in-out;
         }
 
-        /* 3D Card Effect */
+        /* Enhanced 3D Card Effect */
         .card-3d {
             transform-style: preserve-3d;
-            transition: transform 0.3s ease-in-out;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.1);
         }
         
         .card-3d:hover {
-            transform: translateY(-5px) rotateX(5deg);
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 15px 30px rgba(93,92,222,0.2), 0 10px 10px rgba(93,92,222,0.1);
         }
 
         /* Animations */
         @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10% { transform: translateX(-4px); }
+            20% { transform: translateX(4px); }
+            30% { transform: translateX(-4px); }
+            40% { transform: translateX(4px); }
+            50% { transform: translateX(0); }
         }
 
         .animate-float {
-            animation: float 3s ease-in-out infinite;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .animate-pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .animate-shake {
+            animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
         }
 
         /* Loading animation */
@@ -44,7 +103,8 @@
             border-bottom-color: transparent;
             border-radius: 50%;
             display: inline-block;
-            animation: rotation 1s linear infinite;
+            animation: rotation 1.2s linear infinite;
+            filter: drop-shadow(0 0 8px rgba(93,92,222,0.3));
         }
 
         @keyframes rotation {
@@ -52,138 +112,428 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Custom theme colors */
-        :root {
-            --primary: #5D5CDE;
-            --secondary: #6366F1;
-            --accent: #F59E0B;
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
         }
 
-        .dark {
-            --primary: #6366F1;
-            --secondary: #818CF8;
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .dark ::-webkit-scrollbar-track {
+            background: #2d3748;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #5D5CDE;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6366F1;
+        }
+
+        /* Custom cursor */
+        body {
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%235D5CDE' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-9'/%3E%3C/svg%3E"), auto;
+        }
+
+        a, button, input, select, .clickable {
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23F59E0B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 15l6 6'/%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3C/svg%3E"), pointer;
+        }
+
+        /* Glassmorphism effects */
+        .glass {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .dark .glass {
+            background: rgba(17, 24, 39, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Background patterns */
+        .bg-pattern-light {
+            background-color: #f9fafb;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%235d5cde' fill-opacity='0.05'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 20.83l2.83-2.83 1.41 1.41L1.41 22.24H0v-1.41zM0 3.06l2.83-2.83 1.41 1.41L1.41 4.47H0V3.06zm20.83 17.77l2.83-2.83 1.41 1.41-2.83 2.83h-1.41v-1.41zM3.06 0l2.83 2.83-1.41 1.41L1.65 1.41 3.06 0zm17.77 0l2.83 2.83-1.41 1.41-2.83-2.83 1.41-1.41zm0 20.83l2.83 2.83-1.41 1.41-2.83-2.83 1.41-1.41zM20.83 38.59l2.83 2.83-1.41 1.41-2.83-2.83 1.41-1.41zM38.59 20.83l2.83 2.83-1.41 1.41-2.83-2.83 1.41-1.41zM38.59 38.59l2.83 2.83-1.41 1.41-2.83-2.83 1.41-1.41zM40 15.65l-2.83 2.83-1.41-1.41 2.83-2.83H40v1.41zm0 18.77l-2.83 2.83-1.41-1.41 2.83-2.83H40v1.41zM22.24 40l2.83-2.83 1.41 1.41L23.65 40h-1.41zm18.77-18.77l-2.83 2.83-1.41-1.41 2.83-2.83h1.41v1.41zM38.59 0l-2.83 2.83 1.41 1.41 2.83-2.83L38.59 0zm-18.77 0l-2.83 2.83 1.41 1.41 2.83-2.83L19.82 0zm18.77 18.77l-2.83 2.83 1.41 1.41 2.83-2.83-1.41-1.41z'%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .dark .bg-pattern-dark {
+            background-color: #111827;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='0.1'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 20.83l2.83-2.83 1.41 1.41L1.41 22.24H0v-1.41zM0 3.06l2.83-2.83 1.41 1.41L1.41 4.47H0V3.06zm20.83 17.77l2.83-2.83 1.41 1.41-2.83 2.83h-1.41v-1.41zM3.06 0l2.83 2.83-1.41 1.41L1.65 1.41 3.06 0zm17.77 0l2.83 2.83-1.41 1.41-2.83-2.83 1.41-1.41zm0 20.83l2.83 2.83-1.41 1.41-2.83-2.83 1.41-1.41zM20.83 38.59l2.83 2.83-1.41 1.41-2.83-2.83 1.41-1.41zM38.59 20.83l2.83 2.83-1.41 1.41-2.83-2.83 1.41-1.41zM38.59 38.59l2.83 2.83-1.41 1.41-2.83-2.83 1.41-1.41zM40 15.65l-2.83 2.83-1.41-1.41 2.83-2.83H40v1.41zm0 18.77l-2.83 2.83-1.41-1.41 2.83-2.83H40v1.41zM22.24 40l2.83-2.83 1.41 1.41L23.65 40h-1.41zm18.77-18.77l-2.83 2.83-1.41-1.41 2.83-2.83h1.41v1.41zM38.59 0l-2.83 2.83 1.41 1.41 2.83-2.83L38.59 0zm-18.77 0l-2.83 2.83 1.41 1.41 2.83-2.83L19.82 0zm18.77 18.77l-2.83 2.83 1.41 1.41 2.83-2.83-1.41-1.41z'%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* Hover effects for buttons */
+        .btn-hover-effect {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn-hover-effect:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .btn-hover-effect:hover:before {
+            left: 100%;
+        }
+
+        /* Job Card Tag styling */
+        .job-tag {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            background-color: rgba(93, 92, 222, 0.1);
+            color: #5D5CDE;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dark .job-tag {
+            background-color: rgba(99, 102, 241, 0.2);
+            color: #818CF8;
+        }
+
+        /* Ad container styling */
+        .ad-container {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .ad-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 3D button effect */
+        .btn-3d {
+            transform-style: preserve-3d;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 0 #4b4ab0;
+        }
+
+        .btn-3d:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 #4b4ab0;
+        }
+
+        /* Add a subtle shimmer effect */
+        @keyframes shimmer {
+            0% {
+                background-position: -1000px 0;
+            }
+            100% {
+                background-position: 1000px 0;
+            }
+        }
+
+        .shimmer {
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 25%, rgba(255,255,255,0) 50%);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite linear;
         }
     </style>
 </head>
-<body class="font-sans bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 min-h-screen transition-colors duration-300">
+<body class="font-sans bg-pattern-light dark:bg-pattern-dark text-gray-800 dark:text-gray-100 min-h-screen transition-colors duration-300">
     <!-- Theme Toggle -->
-    <div class="fixed top-4 right-4">
-        <button id="theme-toggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path class="sun hidden" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-                <path class="moon" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+    <div class="fixed top-4 right-4 z-50">
+        <button id="theme-toggle" class="p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300">
+            <svg class="w-6 h-6 text-gray-800 dark:text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path class="sun hidden dark:block" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                <path class="moon block dark:hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
             </svg>
         </button>
     </div>
 
     <!-- Header with 3D effect -->
-    <div class="max-w-4xl mx-auto mb-12 text-center">
-        <h1 class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mb-4 animate-float">
-            Job Search <span class="hidden sm:inline">|</span> <span class="block sm:inline">চাকরি খুঁজুন</span>
-        </h1>
-    </div>
+    <header class="w-full py-8 mb-8">
+        <div class="max-w-4xl mx-auto mb-8 text-center">
+            <div class="animate-float mb-4">
+                <h1 class="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mb-2">
+                    Job Search <i class="fa-solid fa-briefcase text-accent"></i>
+                </h1>
+                <h2 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-purple-600 to-blue-500">
+                    চাকরি খুঁজুন
+                </h2>
+            </div>
+            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                আপনার স্বপ্নের চাকরি খুঁজুন। সেরা কোম্পানি, সেরা সুযোগ, সেরা ভবিষ্যৎ।
+            </p>
+        </div>
+    </header>
 
     <!-- Enhanced Search Form -->
-    <div class="max-w-4xl mx-auto mb-8">
-        <div class="card-3d bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+    <div class="max-w-4xl mx-auto mb-12 px-4">
+        <div class="card-3d glass rounded-2xl shadow-2xl p-6 md:p-8 relative overflow-hidden">
+            <div class="shimmer absolute inset-0 opacity-50 pointer-events-none"></div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <input id="keyword" type="text" placeholder="Job title, keywords..." 
-                       class="px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary" />
-                <input id="location" type="text" placeholder="Location (e.g., gb, us)" 
-                       class="px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary" />
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fa-solid fa-search text-gray-400"></i>
+                    </div>
+                    <input id="keyword" type="text" placeholder="পদবী, কীওয়ার্ড..." 
+                        class="w-full pl-10 pr-4 py-4 rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-4 focus:ring-primary/50 focus:border-primary dark:focus:border-secondary transition-all duration-300 text-base" />
+                </div>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fa-solid fa-location-dot text-gray-400"></i>
+                    </div>
+                    <input id="location" type="text" placeholder="অবস্থান (gb, us, bd...)" 
+                        class="w-full pl-10 pr-4 py-4 rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-4 focus:ring-primary/50 focus:border-primary dark:focus:border-secondary transition-all duration-300 text-base" />
+                </div>
                 <button id="search-btn" 
-                        class="px-4 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-lg hover:opacity-90 transition-all duration-300">
-                    খুঁজুন
+                        class="btn-3d btn-hover-effect w-full px-4 py-4 bg-gradient-to-r from-primary to-secondary text-white rounded-xl hover:opacity-95 transition-all duration-300 font-bold text-lg">
+                    <i class="fa-solid fa-magnifying-glass-arrow-right mr-2"></i> খুঁজুন
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Ad Container -->
-    <div class="ad-container max-w-4xl mx-auto mb-8 bg-white dark:bg-gray-800 p-4 rounded-xl">
-        <div id="container-1a6d5fbc149d94ff8c697b1327966995"></div>
+    <!-- Main Ad Banner Container -->
+    <div class="ad-container max-w-4xl mx-auto mb-8 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg transition-all duration-300">
+        <div id="container-1a6d5fbc149d94ff8c697b1327966995" class="flex justify-center"></div>
     </div>
 
-    <!-- Loading Indicator -->
-    <div id="loading" class="hidden max-w-4xl mx-auto text-center my-8">
-        <div class="loading-spinner"></div>
-        <p class="mt-4 text-gray-600 dark:text-gray-400">অনুসন্ধান করা হচ্ছে...</p>
+    <!-- Loading Indicator with enhanced animation -->
+    <div id="loading" class="hidden max-w-4xl mx-auto text-center my-12">
+        <div class="loading-spinner mb-4"></div>
+        <p class="text-lg text-gray-600 dark:text-gray-400 font-medium animate-pulse">অনুসন্ধান করা হচ্ছে...</p>
     </div>
 
-    <!-- Results Container -->
-    <div id="results-container" class="max-w-4xl mx-auto">
+    <!-- Results Container with improved styling -->
+    <div id="results-container" class="max-w-4xl mx-auto px-4 mb-12">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-2xl font-bold text-primary dark:text-secondary">চাকরি সমূহ</h2>
+            <div class="text-sm text-gray-500 dark:text-gray-400" id="results-count"></div>
+        </div>
         <div id="job-results" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
-        <div id="no-results" class="hidden text-center text-gray-500 mt-4 p-8 bg-white dark:bg-gray-800 rounded-xl">
-            কোনো চাকরি পাওয়া যায়নি।
+        <div id="no-results" class="hidden text-center p-10 bg-white dark:bg-gray-800 rounded-xl shadow-md">
+            <i class="fas fa-search text-4xl text-gray-400 mb-4"></i>
+            <p class="text-xl text-gray-500 dark:text-gray-400">কোনো চাকরি পাওয়া যায়নি।</p>
+            <p class="text-gray-400 dark:text-gray-500 mt-2">অন্য কীওয়ার্ড দিয়ে আবার চেষ্টা করুন।</p>
         </div>
     </div>
     
-    <div id="pagination-controls" class="max-w-4xl mx-auto flex justify-between mt-8 px-4">
-    <button id="prev-page" class="px-4 py-2 bg-primary text-white rounded-lg disabled:opacity-50">← আগের পেজ</button>
-    <button id="next-page" class="px-4 py-2 bg-primary text-white rounded-lg disabled:opacity-50">পরের পেজ →</button>
+    <!-- Improved pagination controls -->
+    <div id="pagination-controls" class="max-w-4xl mx-auto flex justify-between items-center mb-12 px-4">
+        <button id="prev-page" class="btn-3d px-5 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 font-medium">
+            <i class="fas fa-arrow-left"></i> আগের পেজ
+        </button>
+        <div id="page-indicator" class="text-center font-medium text-gray-600 dark:text-gray-300">
+            <span id="current-page-num">1</span> পৃষ্ঠা
+        </div>
+        <button id="next-page" class="btn-3d px-5 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 font-medium">
+            পরের পেজ <i class="fas fa-arrow-right"></i>
+        </button>
     </div>
 
-
-    <!-- Additional Ad Container -->
-    <div class="ad-container max-w-4xl mx-auto mt-8 bg-white dark:bg-gray-800 p-4 rounded-xl">
-        <script type="text/javascript">
-            atOptions = {
-                'key' : '9d28964d0cf3efa6afb4b9626542fa30',
-                'format' : 'iframe',
-                'height' : 60,
-                'width' : 468,
-                'params' : {}
-            };
-            document.write('<scr' + 'ipt type="text/javascript" src="//www.highperformanceformat.com/9d28964d0cf3efa6afb4b9626542fa30/invoke.js"></scr' + 'ipt>');
-        </script>
+    <!-- Bottom Ad Container -->
+    <div class="ad-container max-w-4xl mx-auto mt-8 mb-12 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg">
+        <div class="flex justify-center">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '9d28964d0cf3efa6afb4b9626542fa30',
+                    'format' : 'iframe',
+                    'height' : 60,
+                    'width' : 468,
+                    'params' : {}
+                };
+                document.write('<scr' + 'ipt type="text/javascript" src="//www.highperformanceformat.com/9d28964d0cf3efa6afb4b9626542fa30/invoke.js"></scr' + 'ipt>');
+            </script>
+        </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 shadow-lg py-8 mt-12">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <p class="text-gray-600 dark:text-gray-300">© 2023 চাকরি খুঁজুন - সমস্ত অধিকার সংরক্ষিত</p>
+            <div class="flex justify-center space-x-4 mt-4">
+                <a href="#" class="text-primary dark:text-secondary hover:text-opacity-80 transition-colors">
+                    <i class="fab fa-facebook fa-lg"></i>
+                </a>
+                <a href="#" class="text-primary dark:text-secondary hover:text-opacity-80 transition-colors">
+                    <i class="fab fa-twitter fa-lg"></i>
+                </a>
+                <a href="#" class="text-primary dark:text-secondary hover:text-opacity-80 transition-colors">
+                    <i class="fab fa-linkedin fa-lg"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
 
     <script>
         const APP_ID = '9c2fc374';
         const APP_KEY = 'bd17fc711b279bb5c80faaf11a77c20e';
 
-        // Theme Toggle
+        // Theme Toggle Enhancement
         const themeToggle = document.getElementById('theme-toggle');
-        themeToggle.addEventListener('click', () => {
-            document.documentElement.classList.toggle('dark');
-            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-        });
+        const sunPath = document.querySelector('.sun');
+        const moonPath = document.querySelector('.moon');
 
-        // Set initial theme
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        // Check system preference for dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             document.documentElement.classList.add('dark');
         }
 
-        // Enhanced Job Search
-        document.getElementById('search-btn').addEventListener('click', () => {
-            const what = encodeURIComponent(document.getElementById('keyword').value.trim());
-            const where = encodeURIComponent(document.getElementById('location').value.trim() || 'gb');
+        // Listen for changes in system preference
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+            updateThemeUI();
+        });
+
+        function updateThemeUI() {
+            const isDark = document.documentElement.classList.contains('dark');
+            if (isDark) {
+                sunPath.classList.remove('hidden');
+                moonPath.classList.add('hidden');
+            } else {
+                sunPath.classList.add('hidden');
+                moonPath.classList.remove('hidden');
+            }
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            updateThemeUI();
+        });
+
+        // Set initial theme based on localStorage or system preference
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        // Initialize UI based on theme
+        updateThemeUI();
+
+        // Enhanced Job Search with better UX
+        let currentPage = 1;
+        let lastSearch = { what: '', where: 'gb' };
+        let isSearching = false;
+
+        document.getElementById('search-btn').addEventListener('click', startSearch);
+        
+        // Allow pressing Enter to search
+        document.getElementById('keyword').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                startSearch();
+            }
+        });
+        
+        document.getElementById('location').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                startSearch();
+            }
+        });
+
+        function startSearch() {
+            if (isSearching) return;
             
-            // Show loading
+            const keywordInput = document.getElementById('keyword');
+            const locationInput = document.getElementById('location');
+            
+            // Animate search if empty
+            if (!keywordInput.value.trim()) {
+                keywordInput.classList.add('animate-shake');
+                setTimeout(() => keywordInput.classList.remove('animate-shake'), 820);
+                keywordInput.focus();
+                return;
+            }
+            
+            const what = encodeURIComponent(keywordInput.value.trim());
+            const where = encodeURIComponent(locationInput.value.trim() || 'gb');
+            
+            currentPage = 1;
+            lastSearch = { what, where };
+            
+            // Update UI for searching state
+            isSearching = true;
+            document.getElementById('search-btn').disabled = true;
+            document.getElementById('search-btn').innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> খোঁজা হচ্ছে...';
             document.getElementById('loading').classList.remove('hidden');
-            document.getElementById('results-container').classList.add('hidden');
+            document.getElementById('results-container').classList.add('opacity-50');
+            document.getElementById('results-count').textContent = '';
+            document.getElementById('current-page-num').textContent = currentPage;
             
             fetchJobs(what, where);
+        }
+
+        document.getElementById('prev-page').addEventListener('click', () => {
+            if (currentPage > 1 && !isSearching) {
+                currentPage--;
+                document.getElementById('current-page-num').textContent = currentPage;
+                fetchJobs(lastSearch.what, lastSearch.where);
+            }
+        });
+
+        document.getElementById('next-page').addEventListener('click', () => {
+            if (!isSearching) {
+                currentPage++;
+                document.getElementById('current-page-num').textContent = currentPage;
+                fetchJobs(lastSearch.what, lastSearch.where);
+            }
         });
 
         async function fetchJobs(what, where) {
-            const url = `https://api.adzuna.com/v1/api/jobs/${where}/search/1?app_id=${APP_ID}&app_key=${APP_KEY}&results_per_page=10&what=${what}`;
+            isSearching = true;
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('results-container').classList.add('opacity-50');
+            
+            const url = `https://api.adzuna.com/v1/api/jobs/${where}/search/${currentPage}?app_id=${APP_ID}&app_key=${APP_KEY}&results_per_page=10&what=${what}`;
+            
             try {
                 const resp = await fetch(url);
                 if (!resp.ok) throw new Error('Network response was not ok');
                 const data = await resp.json();
-                
-                // Hide loading, show results
+
                 document.getElementById('loading').classList.add('hidden');
-                document.getElementById('results-container').classList.remove('hidden');
+                document.getElementById('results-container').classList.remove('opacity-50');
+                document.getElementById('search-btn').disabled = false;
+                document.getElementById('search-btn').innerHTML = '<i class="fa-solid fa-magnifying-glass-arrow-right mr-2"></i> খুঁজুন';
                 
-                renderJobs(data.results);
+                // Add results count
+                if (data.count) {
+                    document.getElementById('results-count').textContent = `${data.count} টি চাকরি পাওয়া গেছে`;
+                }
+
+                renderJobs(data.results || []);
+
+                // Update pagination buttons
+                document.getElementById('prev-page').disabled = currentPage === 1;
+                document.getElementById('next-page').disabled = !data.results || data.results.length < 10;
+                
             } catch (err) {
                 console.error('Error fetching jobs:', err);
                 document.getElementById('loading').classList.add('hidden');
+                document.getElementById('results-container').classList.remove('opacity-50');
                 document.getElementById('no-results').textContent = 'দুঃখিত, ডেটা লোড করতে সমস্যা হয়েছে।';
                 document.getElementById('no-results').classList.remove('hidden');
+                document.getElementById('job-results').innerHTML = '';
+                document.getElementById('search-btn').disabled = false;
+                document.getElementById('search-btn').innerHTML = '<i class="fa-solid fa-magnifying-glass-arrow-right mr-2"></i> খুঁজুন';
             }
+            
+            isSearching = false;
         }
 
         function renderJobs(jobs) {
@@ -192,101 +542,127 @@
             
             if (!jobs || jobs.length === 0) {
                 document.getElementById('no-results').classList.remove('hidden');
+                document.getElementById('job-results').classList.add('hidden');
                 return;
             }
             
             document.getElementById('no-results').classList.add('hidden');
+            document.getElementById('job-results').classList.remove('hidden');
 
+            // Create job cards with enhanced styling
             jobs.forEach(job => {
+                const salary = job.salary_min && job.salary_max 
+                    ? `${formatCurrency(job.salary_min)} - ${formatCurrency(job.salary_max)}` 
+                    : job.salary_min 
+                        ? `${formatCurrency(job.salary_min)}+` 
+                        : 'বেতন উল্লেখ নেই';
+                
+                // Extract job categories/tags
+                const categories = job.category ? job.category.tag || [] : [];
+                const tagsHtml = categories.slice(0, 3).map(tag => 
+                    `<span class="job-tag">${tag}</span>`
+                ).join('');
+                
+                // Calculate days ago
+                const created = new Date(job.created);
+                const now = new Date();
+                const diffTime = Math.abs(now - created);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                const daysAgo = diffDays === 0 ? 'আজ' : `${diffDays} দিন আগে`;
+                
                 const card = document.createElement('div');
                 card.className = 'card-3d p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary transition-all duration-300';
                 card.innerHTML = `
-                    <h3 class="text-xl font-semibold text-primary dark:text-secondary mb-2">${job.title}</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                        </svg>
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-xl font-semibold text-primary dark:text-secondary">${job.title}</h3>
+                        <span class="text-xs text-gray-500 dark:text-gray-400">${daysAgo}</span>
+                    </div>
+                    
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-2 flex items-center">
+                        <i class="fa-solid fa-location-dot w-4 mr-2 text-gray-400"></i>
                         ${job.location.display_name}
                     </p>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5"/>
-                        </svg>
+                    
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-3 flex items-center">
+                        <i class="fa-solid fa-building w-4 mr-2 text-gray-400"></i>
                         ${job.company.display_name}
                     </p>
+                    
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex items-center">
+                        <i class="fa-solid fa-money-bill-wave w-4 mr-2 text-gray-400"></i>
+                        ${salary}
+                    </p>
+                    
+                    <div class="mb-4">
+                        ${tagsHtml}
+                    </div>
+                    
                     <a href="${job.redirect_url}" target="_blank" 
-                       class="inline-block px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded-lg hover:opacity-90 transition-all duration-300">
-                        বিস্তারিত দেখুন
+                       class="btn-hover-effect inline-block px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded-lg transition-all duration-300 text-center w-full">
+                        <i class="fa-solid fa-external-link mr-1"></i> বিস্তারিত দেখুন
                     </a>
                 `;
                 container.appendChild(card);
             });
         }
 
-        // আপনার বর্তমান script ট্যাগের ভিতরে এই কোড যোগ করুন
-document.addEventListener('DOMContentLoaded', function() {
-    // সার্চ বাটন খুঁজে বের করা
-    const searchButton = document.getElementById('search-btn');
-    
-    // যদি বাটন পাওয়া যায়, তবে ক্লিক করা
-    if (searchButton) {
-        searchButton.click();
-        console.log('সার্চ বাটনে অটোমেটিক ক্লিক করা হয়েছে');
-    } else {
-        console.error('সার্চ বাটন পাওয়া যায়নি');
-    }
-});
+        // Helper function to format currency
+        function formatCurrency(amount) {
+            if (!amount) return '';
+            
+            // Format as thousands
+            if (amount >= 1000) {
+                return (amount / 1000).toFixed(1) + 'K';
+            }
+            
+            return amount.toFixed(0);
+        }
 
-        let currentPage = 1;
-let lastSearch = { what: '', where: 'gb' };
+        // Auto-run search on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Start with a default search
+            document.getElementById('keyword').value = '';//developer';
+            startSearch();
+        });
 
-document.getElementById('prev-page').addEventListener('click', () => {
-    if (currentPage > 1) {
-        currentPage--;
-        fetchJobs(lastSearch.what, lastSearch.where);
-    }
-});
+        // Add smooth scrolling for better UX
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
 
-document.getElementById('next-page').addEventListener('click', () => {
-    currentPage++;
-    fetchJobs(lastSearch.what, lastSearch.where);
-});
+        // Add animation to cards on scroll
+        function animateOnScroll() {
+            const cards = document.querySelectorAll('.card-3d');
+            cards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                if (cardTop < windowHeight * 0.85) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        }
 
-document.getElementById('search-btn').addEventListener('click', () => {
-    const what = encodeURIComponent(document.getElementById('keyword').value.trim());
-    const where = encodeURIComponent(document.getElementById('location').value.trim() || 'gb');
-    
-    currentPage = 1;
-    lastSearch = { what, where };
+        // Initialize cards with opacity 0 and transformed down
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card-3d');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transitionDelay = `${index * 0.1}s`;
+            });
+            
+            // Trigger animation on initial load
+            setTimeout(animateOnScroll, 300);
+        });
 
-    document.getElementById('loading').classList.remove('hidden');
-    document.getElementById('results-container').classList.add('hidden');
-    fetchJobs(what, where);
-});
-
-async function fetchJobs(what, where) {
-    const url = `https://api.adzuna.com/v1/api/jobs/${where}/search/${currentPage}?app_id=${APP_ID}&app_key=${APP_KEY}&results_per_page=10&what=${what}`;
-    try {
-        const resp = await fetch(url);
-        if (!resp.ok) throw new Error('Network response was not ok');
-        const data = await resp.json();
-
-        document.getElementById('loading').classList.add('hidden');
-        document.getElementById('results-container').classList.remove('hidden');
-
-        renderJobs(data.results);
-
-        // Disable previous if page 1, disable next if no results
-        document.getElementById('prev-page').disabled = currentPage === 1;
-        document.getElementById('next-page').disabled = !data.results || data.results.length < 10;
-    } catch (err) {
-        console.error('Error fetching jobs:', err);
-        document.getElementById('loading').classList.add('hidden');
-        document.getElementById('no-results').textContent = 'দুঃখিত, ডেটা লোড করতে সমস্যা হয়েছে।';
-        document.getElementById('no-results').classList.remove('hidden');
-    }
-}
-
+        // Listen for scroll events
+        window.addEventListener('scroll', animateOnScroll);
     </script>
 </body>
 </html>
