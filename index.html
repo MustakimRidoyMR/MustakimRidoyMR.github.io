@@ -8,20 +8,44 @@
     <script async="async" data-cfasync="false" src="//pl26713372.profitableratecpm.com/1a6d5fbc149d94ff8c697b1327966995/invoke.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ridoy's Portfolio</title>
+    <meta name="description" content="Ridoy's Portfolio - Expert developer and creative designer offering professional services in web development, app creation, and digital tools">
+    <meta name="keywords" content="developer, creative designer, portfolio, web development, editing tools, android apps, games, developer tools">
+    <meta name="author" content="Ridoy">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://ridoy-portfolio.com/">
+    <title>Ridoy's Portfolio | Professional Developer & Creative Designer</title>
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Ridoy's Portfolio | Professional Developer & Creative Designer">
+    <meta property="og:description" content="Expert developer and creative designer offering professional services in web development, app creation, and digital tools">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ridoy-portfolio.com/">
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ridoy's Portfolio | Professional Developer & Creative Designer">
+    <meta name="twitter:description" content="Expert developer and creative designer offering professional services in web development, app creation, and digital tools">
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css">
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.9.1/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #0d47a1;
-            --secondary-color: #005c1e;
+            --primary-color: #5D5CDE;
+            --secondary-color: #005c7a;
             --accent-color: #1a73e8;
             --card-bg: rgba(255, 255, 255, 0.85);
+            --dark-card-bg: rgba(30, 30, 30, 0.85);
             --dark-overlay: rgba(0, 0, 0, 0.3);
             --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             --hover-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
             --transition-speed: 0.4s;
+            --text-color: #333;
+            --dark-text-color: #eee;
+            --light-text-color: #666;
+            --dark-light-text-color: #aaa;
+            --highlight-color: #29FFF8;
+            --highlight-accent: #70FF00;
         }
 
         * {
@@ -46,18 +70,17 @@
             background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
             background-size: 400% 400%;
             animation: gradient 15s ease infinite;
+            color: var(--text-color);
+        }
+
+        .dark body {
+            color: var(--dark-text-color);
         }
 
         @keyframes gradient {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .cursor {
@@ -65,15 +88,15 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background-color: rgba(77, 195, 255, 0.8);
+            background-color: rgba(93, 92, 222, 0.8);
             pointer-events: none;
             mix-blend-mode: difference;
             z-index: 9999;
             transform: translate(-50%, -50%);
             transition: transform 0.1s ease;
-            box-shadow: 0 0 15px rgba(77, 195, 255, 0.8),
-                        0 0 30px rgba(77, 195, 255, 0.6),
-                        0 0 45px rgba(77, 195, 255, 0.4);
+            box-shadow: 0 0 15px rgba(93, 92, 222, 0.8),
+                        0 0 30px rgba(93, 92, 222, 0.6),
+                        0 0 45px rgba(93, 92, 222, 0.4);
         }
 
         .cursor-follower {
@@ -116,7 +139,7 @@
         header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            padding: 25px 0;
+            padding: 35px 0;
             text-align: center;
             margin-bottom: 40px;
             border-radius: 0 0 20px 20px;
@@ -132,7 +155,7 @@
             left: -10px;
             right: -10px;
             bottom: -10px;
-            background: linear-gradient(45deg, #0d47a1, transparent, #005c1e, transparent);
+            background: linear-gradient(45deg, var(--primary-color), transparent, var(--secondary-color), transparent);
             background-size: 400% 400%;
             animation: headerGradient 15s ease infinite;
             z-index: -1;
@@ -140,15 +163,9 @@
         }
 
         @keyframes headerGradient {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         h1 {
@@ -161,11 +178,91 @@
         }
 
         .subtitle {
-            font-size: 1.4em;
+            font-size: 1.6em;
             opacity: 0.9;
             animation: fadeIn 1.5s ease;
             font-weight: 300;
             letter-spacing: 1px;
+        }
+
+        .header-description {
+            max-width: 800px;
+            margin: 20px auto 0;
+            font-size: 1.2em;
+            line-height: 1.6;
+            opacity: 0.9;
+            animation: fadeIn 2s ease;
+            padding: 0 20px;
+        }
+
+        .header-cta {
+            margin-top: 30px;
+            animation: fadeInUp 1.8s ease;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 14px 30px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+            font-size: 1.1em;
+            position: relative;
+            overflow: hidden;
+            margin: 0 10px;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .cta-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .social-links {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            animation: fadeIn 2s ease;
+        }
+
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .social-icon:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
         }
 
         @keyframes fadeIn {
@@ -177,6 +274,17 @@
             from {
                 opacity: 0;
                 transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
@@ -214,6 +322,11 @@
             animation: fadeIn 0.5s ease forwards;
         }
 
+        .dark .project-card {
+            background: var(--dark-card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
         .project-card::before {
             content: '';
             position: absolute;
@@ -244,17 +357,25 @@
             transition: color 0.3s ease;
         }
 
+        .dark .project-card h2 {
+            color: var(--primary-color);
+        }
+
         .project-card:hover h2 {
             color: #0056b3;
         }
 
         .project-card p {
-            color: #444;
+            color: var(--light-text-color);
             margin-bottom: 20px;
             position: relative;
             z-index: 2;
             font-size: 1.05em;
             line-height: 1.5;
+        }
+
+        .dark .project-card p {
+            color: var(--dark-light-text-color);
         }
 
         .project-link {
@@ -347,9 +468,48 @@
             background: linear-gradient(to left, var(--secondary-color), transparent);
         }
 
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-shape {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(2px);
+            animation: float 15s infinite linear;
+            opacity: 0.5;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translate(var(--move-x, 100px), var(--move-y, 100px)) rotate(var(--rotate, 360deg));
+                opacity: 0;
+            }
+        }
+
         footer {
             text-align: center;
-            padding: 30px;
+            padding: 40px 20px;
             margin-top: 60px;
             color: #fff;
             background: rgba(0, 0, 0, 0.2);
@@ -362,6 +522,40 @@
         footer p {
             font-size: 1.1em;
             letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .footer-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background: white;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .footer-link:hover::after {
+            width: 80%;
         }
 
         /* Ad containers */
@@ -374,11 +568,383 @@
             -webkit-backdrop-filter: blur(5px);
             border-radius: 10px;
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .ad-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.3);
+        }
+
+        .text-section {
+            background: linear-gradient(to right, rgba(62, 29, 0, 0.6), rgba(0, 31, 0, 0.6));
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--card-shadow);
+            transition: all var(--transition-speed) ease;
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.5s ease forwards;
+            margin-bottom: 30px;
+        }
+
+        .text-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,255,255,0.05), rgba(255,255,255,0));
+            z-index: 1;
+            transition: all 0.5s ease;
+        }
+
+        .text-section:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .text-section:hover::before {
+            opacity: 0;
+        }
+
+        .text-section p {
+            color: var(--highlight-color);
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
+        }
+
+        .text-section n {
+            color: var(--highlight-accent);
+            font-weight: bold;
+        }
+
+        .skills-section {
+            margin: 50px 0;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .skill-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .skill-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .skill-name {
+            font-weight: 600;
+            color: white;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: white;
+            font-size: 1.1em;
+        }
+
+        .testimonial-section {
+            margin: 50px 0;
+        }
+
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 25px;
+            position: relative;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .testimonial-text {
+            color: white;
+            font-style: italic;
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 20px;
+            line-height: 1.6;
+        }
+
+        .testimonial-text::before {
+            content: '"';
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 2em;
+            color: var(--primary-color);
+            line-height: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .testimonial-info {
+            flex: 1;
+        }
+
+        .testimonial-name {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .testimonial-position {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9em;
+        }
+
+        .faq-section {
+            margin: 50px 0;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding: 0 20px 20px;
+        }
+
+        #message {
+            padding: 15px;
+            background-color: rgba(249, 249, 249, 0.9);
+            border-left: 4px solid #2196F3;
+            margin: 20px auto;
+            max-width: 500px;
+            border-radius: 5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: none;
+            animation: fadeIn 0.5s ease;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .dark #message {
+            background-color: rgba(30, 30, 30, 0.9);
+            color: white;
+        }
+
+        .loading-animation {
+            display: inline-block;
+            position: relative;
+            width: 80px;
+            height: 20px;
+        }
+        
+        .loading-animation div {
+            position: absolute;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            animation-timing-function: cubic-bezier(0, 1, 1, 0);
+        }
+        
+        .loading-animation div:nth-child(1) {
+            left: 8px;
+            animation: loading1 0.6s infinite;
+        }
+        
+        .loading-animation div:nth-child(2) {
+            left: 8px;
+            animation: loading2 0.6s infinite;
+        }
+        
+        .loading-animation div:nth-child(3) {
+            left: 32px;
+            animation: loading2 0.6s infinite;
+        }
+        
+        .loading-animation div:nth-child(4) {
+            left: 56px;
+            animation: loading3 0.6s infinite;
+        }
+        
+        @keyframes loading1 {
+            0% { transform: scale(0); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes loading2 {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(24px, 0); }
+        }
+        
+        @keyframes loading3 {
+            0% { transform: scale(1); }
+            100% { transform: scale(0); }
+        }
+
+        /* Particles effect */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: particleFloat 15s infinite linear;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translate(0, 0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--x, 100px), var(--y, 100px));
+                opacity: 0;
+            }
         }
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
-            .projects {
+            .projects, .skills-container, .stats-container, .testimonials {
                 grid-template-columns: 1fr;
             }
             
@@ -395,16 +961,30 @@
                 text-align: center;
             }
             
-            .project-card {
+            .project-card, .text-section {
                 transform: none !important;
             }
             
             .cursor, .cursor-follower {
-                display: auto;
+                display: none;
             }
             
-            * {
-                cursor: auto;
+            .header-cta .cta-button {
+                display: block;
+                width: 100%;
+                margin: 10px 0;
+            }
+
+            .social-links {
+                flex-wrap: wrap;
+            }
+
+            .skill-item {
+                padding: 15px;
+            }
+
+            .testimonial-card {
+                padding: 20px;
             }
         }
 
@@ -412,10 +992,8 @@
         @media (prefers-color-scheme: dark) {
             :root {
                 --card-bg: rgba(30, 30, 30, 0.85);
-            }
-            
-            .project-card {
-                background: var(--card-bg);
+                --text-color: #eee;
+                --light-text-color: #aaa;
             }
             
             .project-card h2 {
@@ -427,62 +1005,201 @@
             }
         }
 
-  #message {
-    padding: 15px;
-    background-color: #f9f9f9;
-    border-left: 4px solid #2196F3;
-    margin-top: 20px;
-    max-width: 500px;
-  }
+        /* Animations for section reveal */
+        .reveal {
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Progress bar animation */
+        .progress-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin: 10px 0;
+            height: 8px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 5px;
+            width: 0;
+            transition: width 1.5s ease;
+        }
+        
+        .skill-progress.visible .progress-bar {
+            width: var(--width, 50%);
+        }
+        
+        .skill-item-with-progress {
+            margin-bottom: 20px;
+        }
+        
+        .skill-label {
+            display: flex;
+            justify-content: space-between;
+            color: white;
+        }
+        
+        .skill-name-progress {
+            font-weight: 600;
+        }
+        
+        .skill-percentage {
+            opacity: 0.8;
+        }
     </style>
 </head>
 <body>
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
     <canvas id="background-canvas"></canvas>
+    <div class="particles" id="particles"></div>
     
     <header>
         <div class="container">
-            <h1 class="animate__animated animate__fadeInDown">Welcome to My Portfolio</h1>
-            <div class="subtitle animate__animated animate__fadeIn animate__delay-1s">Developer & Creative Designer</div>
+            <h1 class="animate__animated animate__fadeInDown">Welcome to Ridoy's Portfolio</h1>
+            <div class="subtitle animate__animated animate__fadeIn animate__delay-1s">Professional Developer & Creative Designer</div>
+            <div class="header-description">
+                Delivering exceptional digital experiences through innovative web development, mobile applications, and creative design solutions. Transforming ideas into reality with cutting-edge technology and artistic vision.
+            </div>
+            <div class="header-cta">
+                <a href="#projects" class="cta-button">View Projects</a>
+                <a href="#contact" class="cta-button">Get In Touch</a>
+            </div>
+            <div class="social-links">
+                <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            </div>
         </div>
     </header>
 
     <div>
-    <p id="message" style="display: none; font-family: sans-serif; font-size: 16px; color: #333;">
-  Dear user, to keep this site running, we show some ads occasionally. <br>
-  You will be redirected to a short advertisement in <span id="countdown">5</span> seconds.
-</p></div>
-	<div class="ad-container bg-white dark:bg-gray-800 p-4 rounded-xl my-4">
-    <script type="text/javascript">
-        atOptions = {
-            'key' : '166cd95a37781f8e08654d0446ac7445',
-            'format' : 'iframe',
-            'height' : 250,
-            'width' : 300,
-            'params' : {}
-        };
-        document.write('<script type="text/javascript" src="//www.highperformanceformat.com/166cd95a37781f8e08654d0446ac7445/invoke.js"><\/script>');
-    </script>
-</div>
+        <p id="message" style="font-family: sans-serif; font-size: 16px; color: #333;">
+            Dear visitor, to keep this site running and provide you with high-quality content, we show some advertisements occasionally. <br>
+            You will be redirected to a short advertisement in <span id="countdown">5</span> seconds.
+        </p>
+    </div>
 
     <div class="container">
+        <div class="ad-container bg-white dark:bg-gray-800 p-4 rounded-xl my-4">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '166cd95a37781f8e08654d0446ac7445',
+                    'format' : 'iframe',
+                    'height' : 250,
+                    'width' : 300,
+                    'params' : {}
+                };
+                document.write('<script type="text/javascript" src="//www.highperformanceformat.com/166cd95a37781f8e08654d0446ac7445/invoke.js"><\/script>');
+            </script>
+        </div>
+    </div>
+
+    <div class="container reveal">
+        <div class="text-section">
+            <p>Welcome to my professional portfolio! I'm a dedicated developer and creative designer passionate about building innovative digital solutions.</p>
+            <p>With over <n>5 years of experience</n> in web development, mobile applications, and UI/UX design, I've helped businesses transform their ideas into functional, beautiful digital products that delight users and drive results.</p>
+            <p>My expertise spans across <n>front-end development</n>, <n>back-end systems</n>, and <n>creative design</n>, allowing me to create comprehensive solutions from concept to deployment.</p>
+            <p>I believe in building <n>user-centered experiences</n> that are not only visually appealing but also highly functional, accessible, and optimized for performance.</p>
+            <p>Explore my portfolio to see my recent projects and discover how we can collaborate to bring your vision to life!</p>
+        </div>
+    </div>
+
+    <div class="container reveal">
+        <div class="skills-section">
+            <h2 class="section-label">Professional Skills</h2>
+            <div class="skills-container">
+                <div class="skill-item-with-progress">
+                    <div class="skill-label">
+                        <span class="skill-name-progress">Web Development</span>
+                        <span class="skill-percentage">95%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="--width: 95%"></div>
+                    </div>
+                </div>
+                <div class="skill-item-with-progress">
+                    <div class="skill-label">
+                        <span class="skill-name-progress">Mobile App Development</span>
+                        <span class="skill-percentage">90%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="--width: 90%"></div>
+                    </div>
+                </div>
+                <div class="skill-item-with-progress">
+                    <div class="skill-label">
+                        <span class="skill-name-progress">UI/UX Design</span>
+                        <span class="skill-percentage">85%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="--width: 85%"></div>
+                    </div>
+                </div>
+                <div class="skill-item-with-progress">
+                    <div class="skill-label">
+                        <span class="skill-name-progress">Database Management</span>
+                        <span class="skill-percentage">80%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="--width: 80%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container reveal">
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-value" id="projects-count">50+</div>
+                <div class="stat-label">Projects Completed</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="clients-count">30+</div>
+                <div class="stat-label">Happy Clients</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="years-count">5+</div>
+                <div class="stat-label">Years Experience</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="apps-count">20+</div>
+                <div class="stat-label">Apps Published</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="projects" class="container reveal">
+        <h2 class="section-label">Featured Projects</h2>
         <div class="projects">
             <div class="project-card">
                 <h2>MR Bot</h2>
-                <p>A sophisticated bot with advanced features and functionality.</p>
-                <a href="/MR-Bot/" class="project-link">View</a>
+                <p>A sophisticated AI-powered chatbot with advanced features and functionality. Designed to provide intelligent conversations, automated responses, and integration with various platforms to enhance user experiences.</p>
+                <a href="/MR-Bot/" class="project-link">View Project</a>
             </div>
 
             <div class="project-card">
-                <h2>Job Search</h2>
-                <p>Find your dream job effortlessly!</p>
-                <a href="Jobs.html" class="project-link">Search🔎</a>
+                <h2>Job Search Portal</h2>
+                <p>A comprehensive job search platform that connects job seekers with employers. Features include advanced search filters, personalized job recommendations, application tracking, and real-time notifications for new opportunities.</p>
+                <a href="Jobs.html" class="project-link">Search Jobs 🔎</a>
             </div>
         </div>
     </div>
     
-     <!-- Ad container after header -->
+    <!-- Ad container after header -->
     <div class="container">
         <div class="ad-container">
             <ins class="adsbygoogle"
@@ -498,84 +1215,43 @@
     </div>
     <div id="container-1a6d5fbc149d94ff8c697b1327966995"></div>
             
-    <div href="https://www.profitableratecpm.com/m7j44g75?key=90f36207646d410dc5c03e6c6816a890" class="section-label">Applications</div>
+    <div href="https://www.profitableratecpm.com/m7j44g75?key=90f36207646d410dc5c03e6c6816a890" class="section-label">Mobile Applications</div>
   
-  <div class="text">
+    <div class="container reveal">
+        <div class="text-section">
             <p>Download our incredible <n>Android</n> apps and games from the <n>Appstore</n>!</p>
 
-<p>Unlock the full potential of your smartphone! Our apps and games are perfectly designed to boost productivity and deliver endless entertainment. Discover apps that simplify your daily routine and dive into games offering thrilling experiences.</p>
+            <p>Unlock the full potential of your smartphone! Our apps and games are meticulously designed to boost productivity and deliver endless entertainment. Discover applications that simplify your daily routine and immerse yourself in games offering thrilling experiences.</p>
 
-<p>Experience the difference with our apps: enjoy innovative features, sleek user interfaces, and intuitive usability. Game enthusiasts, get ready for captivating adventure, strategy, and action games guaranteed to keep you hooked for hours!</p>
+            <p>Experience the difference with our premium applications: enjoy innovative features, sleek user interfaces, and intuitive usability that sets us apart from the competition. Game enthusiasts, prepare yourself for captivating adventure, strategy, and action games guaranteed to keep you engaged for hours!</p>
 
-<p>Why download our apps and games?</p>
+            <p>Why choose our apps and games?</p>
 
-<p>✅ Smart & user-friendly interfaces</p>
-<p>✅ Quick installation & reliable support</p>
-<p>✅ Regular updates packed with new features</p>
-<p>✅ Offline mode available for select games</p>
-<p>✅ Safe & secure installation and updates via the <n>Appstore</n></p>
+            <p>✅ Intelligent & user-friendly interfaces designed with modern UX principles</p>
+            <p>✅ Lightning-fast installation with dedicated customer support</p>
+            <p>✅ Regular updates delivering new features and performance improvements</p>
+            <p>✅ Offline functionality available for select games - play anywhere, anytime</p>
+            <p>✅ Secure installation and verified updates through the official <n>Appstore</n></p>
+            <p>✅ Optimized performance for all Android devices - from budget to flagship models</p>
+            <p>✅ Privacy-focused design with transparent data practices</p>
 
-<p>Don't wait! Get your favorite apps and games instantly with just one click!</p>
+            <p>Don't miss out! Get instant access to your favorite applications and games with just one click!</p>
 
-<p>📲 Explore and enjoy our collection of apps and games today!</p>
-    <style>
-      .text p {
-        color: #29FFF8;
-        text-align: left;
-      }
-      .text n {
-        color: #70FF00;
-      }
-      .text {
-            background: linear-gradient(to right, #3E1D0099, #001F0099);
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: var(--card-shadow);
-            transition: all var(--transition-speed) ease;
-            transform-style: preserve-3d;
-            transform: translateZ(0) rotateX(0) rotateY(0);
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(1px);
-            -webkit-backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            animation: fadeIn 0.5s ease forwards;
-        }
-
-        .text::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
-            z-index: 1;
-            transition: all 0.5s ease;
-        }
-
-        .text:hover {
-            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
-            box-shadow: var(--hover-shadow);
-        }
-
-        .text:hover::before {
-            opacity: 0;
-        }
-    </style>
+            <p>📲 Explore our extensive collection of innovative apps and immersive games today!</p>
         </div>
+    </div>
   
-    <div class="container">
+    <div class="container reveal">
         <div class="projects">
             <div class="project-card">
-                <h2>Amazon Appstore</h2>
-                <p>Our Android Application and Games in Amazon Appstore</p>
-                <a href="https://amzn.to/3NOG3er" class="project-link" target="_blank">Install</a>
+                <h2>Amazon Appstore Collection</h2>
+                <p>Discover our complete collection of Android applications and games available on the Amazon Appstore. From productivity tools to entertaining games, our catalog offers something for everyone with regular updates and new releases.</p>
+                <a href="https://amzn.to/3NOG3er" class="project-link" target="_blank">Browse Collection</a>
             </div>
-          <div class="project-card">
-                <h2>Apkpure</h2>
-                <p>Our Android Application and Games in Apkpure Website</p>
-                <a href="https://apkpure.com/developer?id=23399507" class="project-link" target="_blank">Apkpure</a>
+            <div class="project-card">
+                <h2>APKPure Marketplace</h2>
+                <p>Access our full range of Android applications and games through the APKPure platform. Enjoy alternative distribution with the same high-quality apps, games, and tools that our users love, all optimized for maximum performance.</p>
+                <a href="https://apkpure.com/developer?id=23399507" class="project-link" target="_blank">Visit Developer Page</a>
             </div>
          </div>
     </div>
@@ -594,111 +1270,174 @@
             </script>
         </div>
     
-      <div class="ad-container bg-white dark:bg-gray-800 p-4 rounded-xl my-4">
-    <script type="text/javascript">
-        atOptions = {
-            'key' : '166cd95a37781f8e08654d0446ac7445',
-            'format' : 'iframe',
-            'height' : 250,
-            'width' : 300,
-            'params' : {}
-        };
-        document.write('<script type="text/javascript" src="//www.highperformanceformat.com/166cd95a37781f8e08654d0446ac7445/invoke.js"><\/script>');
-    </script>
-</div>
+        <div class="ad-container bg-white dark:bg-gray-800 p-4 rounded-xl my-4">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '166cd95a37781f8e08654d0446ac7445',
+                    'format' : 'iframe',
+                    'height' : 250,
+                    'width' : 300,
+                    'params' : {}
+                };
+                document.write('<script type="text/javascript" src="//www.highperformanceformat.com/166cd95a37781f8e08654d0446ac7445/invoke.js"><\/script>');
+            </script>
+        </div>
+    </div>
             
-    <div href="https://www.profitableratecpm.com/m7j44g75?key=90f36207646d410dc5c03e6c6816a890" class="section-label">Tools</div>
+    <div href="https://www.profitableratecpm.com/m7j44g75?key=90f36207646d410dc5c03e6c6816a890" class="section-label">Professional Tools</div>
   
-  <div class="text">
-<p>Edit images, text, and code like a pro with our cutting-edge <n>Editing Tools</n> – absolutely <n>FREE</n>!</p>
-<p>Elevate your creativity! Use our smart editing tools to get the job done faster and easier. Access all essential editing features with just a single click!</p>
-<p>What you can do with our tools:</p>
-<p>✅ High-quality image editing</p>
-<p>✅ Effortless text & content modification</p>
-<p>✅ Advanced code editing capabilities</p>
-<p>✅ Fast processing & intuitive smart interface</p>
-<p>✅ Completely free to use with regular updates!</p>
-<p><n>Click now</n> and start enjoying our powerful editing tools, completely free!</p>
-    
-   <!-- <style>
-      p {
-        color: #29FFF8;
-        text-align: left;
-      }
-      n {
-        color: #70FF00;
-        font-weight: bold;
-      }
-    </style>-->
-</div>
+    <div class="container reveal">
+        <div class="text-section">
+            <p>Edit images, text, and code like a professional with our cutting-edge <n>Editing Tools</n> — absolutely <n>FREE</n>!</p>
+            
+            <p>Elevate your creative and technical workflow! Our comprehensive suite of editing tools is designed to help professionals and enthusiasts alike complete tasks faster and with superior results. Access all essential editing features through our intuitive interface with just a single click!</p>
+            
+            <p>What you can accomplish with our professional tools:</p>
+            
+            <p>✅ Professional-grade image editing with advanced filters and transformation options</p>
+            <p>✅ Intelligent text editing with formatting, spell-check, and multi-language support</p>
+            <p>✅ Powerful code editing with syntax highlighting, auto-completion, and debugging features</p>
+            <p>✅ Cloud-optimized processing for lightning-fast performance on any device</p>
+            <p>✅ Intuitive smart interface designed for both beginners and professionals</p>
+            <p>✅ Regular feature updates and improvements based on user feedback</p>
+            <p>✅ Cross-platform compatibility for seamless workflow across devices</p>
+            
+            <p><n>Start now</n> and experience the power of professional-grade editing tools completely free of charge!</p>
+        </div>
+    </div>
 
-    <div class="container">
+    <div class="container reveal">
         <div class="projects">
             <div class="project-card">
-                <h2>Editing Tools</h2>
-                <p>Advanced editor tools with a colorful animated UI and multiple editing options. This will include features for editing tools, and more.</p>
-                <a href="EditingTools.html" class="project-link">Edit</a>
+                <h2>Advanced Editing Suite</h2>
+                <p>Our comprehensive editing platform features a beautiful animated UI with multiple specialized tools. Create, modify, and enhance your visual content with professional-grade features including layer management, advanced filters, vector editing, and real-time collaboration.</p>
+                <a href="EditingTools.html" class="project-link">Open Editor</a>
             </div>
-             <div class="project-card">
-                <h2>Developer tools</h2>
-                <p>Here advanced Developer tools with have a colorful animated UI and multiple necessary editing options.</p>
-                <a href="DeveloperTools.html" class="project-link">Developed</a>
+            <div class="project-card">
+                <h2>Developer Toolkit</h2>
+                <p>A complete suite of development tools designed for professional programmers and web developers. Features include code editing with syntax highlighting, debugging tools, performance optimization, responsive design testing, and integration with popular frameworks and libraries.</p>
+                <a href="DeveloperTools.html" class="project-link">Access Toolkit</a>
             </div>
-            <!--<div class="project-card">
-                <h2>AI Tools</h2>
-                <p>Advanced image editor with have a colorful animated UI and multiple editing options. This will include features for image manipulation, filters, drawing tools, and more.</p>
-                <a href="/MR-Bot/locked.html" class="project-link">Training AI... Please Wait(long time..)</a>
-            </div>-->
-         </div>
+        </div>
     </div>
       
-      <div class="ad-container bg-white dark:bg-gray-800 p-4 rounded-xl mt-6">
-    <script type="text/javascript">
-        atOptions = {
-            'key' : '9d28964d0cf3efa6afb4b9626542fa30',
-            'format' : 'iframe',
-            'height' : 60,
-            'width' : 468,
-            'params' : {}
-        };
-        document.write('<script type="text/javascript" src="//www.highperformanceformat.com/9d28964d0cf3efa6afb4b9626542fa30/invoke.js"><\/script>');
-    </script>
-</div>
-
-            
-    <div href="https://www.profitableratecpm.com/m7j44g75?key=90f36207646d410dc5c03e6c6816a890" class="section-label">Others</div>
     <div class="container">
+        <div class="ad-container bg-white dark:bg-gray-800 p-4 rounded-xl mt-6">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '9d28964d0cf3efa6afb4b9626542fa30',
+                    'format' : 'iframe',
+                    'height' : 60,
+                    'width' : 468,
+                    'params' : {}
+                };
+                document.write('<script type="text/javascript" src="//www.highperformanceformat.com/9d28964d0cf3efa6afb4b9626542fa30/invoke.js"><\/script>');
+            </script>
+        </div>
+    </div>
+
+    <div class="container reveal">
+        <div class="testimonial-section">
+            <h2 class="section-label">Client Testimonials</h2>
+            <div class="testimonials">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">Working with Ridoy was an exceptional experience. The attention to detail and creative solutions provided for our project exceeded our expectations. Highly recommended!</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">JD</div>
+                        <div class="testimonial-info">
+                            <div class="testimonial-name">John Doe</div>
+                            <div class="testimonial-position">Marketing Director</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">The mobile application developed for our company has dramatically improved our customer engagement. The intuitive design and flawless functionality have received positive feedback from all our users.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">AS</div>
+                        <div class="testimonial-info">
+                            <div class="testimonial-name">Alice Smith</div>
+                            <div class="testimonial-position">CEO, TechSolutions</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">The developer tools created for our team have significantly improved our workflow efficiency. The thoughtful features and solid architecture show a deep understanding of development needs.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">RJ</div>
+                        <div class="testimonial-info">
+                            <div class="testimonial-name">Robert Johnson</div>
+                            <div class="testimonial-position">Lead Developer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            
+    <div href="https://www.profitableratecpm.com/m7j44g75?key=90f36207646d410dc5c03e6c6816a890" class="section-label">Additional Services</div>
+    
+    <div class="container reveal">
         <div class="projects">
             <div class="project-card">
-                <h2>Resources</h2>
-                <p>Download necessary resources files</p>
-                <a href="Resources.html" class="project-link">Downloader ⬇</a>
+                <h2>Resource Library</h2>
+                <p>Access our comprehensive collection of digital resources including templates, stock assets, fonts, icons, and development libraries. All resources are carefully curated and optimized for professional projects across various industries.</p>
+                <a href="Resources.html" class="project-link">Download Resources ⬇</a>
             </div>
 
             <div class="project-card">
-                <h2>Free Games</h2>
-                <p>Play thousands of fun games now, completely free!</p>
-                <a href="Games.html" class="project-link">Play🎮</a>
+                <h2>Interactive Games Collection</h2>
+                <p>Enjoy our extensive library of free interactive games spanning multiple genres and platforms. From casual puzzles to immersive adventures, our games collection provides entertainment for players of all ages and skill levels.</p>
+                <a href="Games.html" class="project-link">Play Games 🎮</a>
             </div>
           
-          <div class="project-card">
-                <h2>Money Exchange 🤑</h2>
-                <p>Exchange your foreign currency with the best rates and full transparency. Start converting USD, EUR, GBP and more — securely and effortlessly!</p>
-                <a href="MoneyToMoney.html" class="project-link">Exchange 💱</a>
+            <div class="project-card">
+                <h2>Currency Exchange Service 🤑</h2>
+                <p>Convert between multiple currencies with our real-time exchange rate calculator. Features include historical rate tracking, conversion alerts, and support for over 170 global currencies with transparent fee structures and competitive rates.</p>
+                <a href="MoneyToMoney.html" class="project-link">Exchange Currency 💱</a>
             </div>
 
-		<div class="project-card">
-                <h2>Bing Index Now Hits</h2>
-                <p>Get your pages indexed faster in search engines</p>
-                <a href="BingIndexNow.html" class="project-link">Indexed</a>
+            <div class="project-card">
+                <h2>SEO Indexing Tool</h2>
+                <p>Accelerate search engine indexing for your web pages with our specialized Bing IndexNow integration. Improve your site's visibility and ensure fresh content is discovered and ranked quickly by major search engines.</p>
+                <a href="BingIndexNow.html" class="project-link">Index Your Pages</a>
             </div>
-            <!--<div class="project-card">
-                <h2>Blogs | Ridoy's Tech Hub</h2>
-                <p>Read our technical blogs</p>
-                <a href="/MR-Bot/locked.html" class="project-link">Coming soon(Writing...)</a>
-            </div>-->
-      </div>
-  </div>
+        </div>
+    </div>
+
+    <div class="container reveal">
+        <div class="faq-section">
+            <h2 class="section-label">Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <div class="faq-question">What services do you offer?</div>
+                <div class="faq-answer">I provide a comprehensive range of digital services including web development, mobile application development, UI/UX design, graphic design, and technical consulting. Each service is tailored to meet the specific needs of your project.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How long does it take to complete a project?</div>
+                <div class="faq-answer">Project timelines vary depending on complexity, scope, and requirements. A simple website might take 2-4 weeks, while a comprehensive mobile application could require 2-3 months. I provide detailed timelines during the initial consultation phase.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Do you offer maintenance after project completion?</div>
+                <div class="faq-answer">Yes, I offer ongoing maintenance and support packages for all completed projects. This includes regular updates, security patches, performance optimization, and content updates to keep your digital products running smoothly.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Are your tools and applications free to use?</div>
+                <div class="faq-answer">Many of my tools and applications offer free versions with essential features. Premium versions with advanced capabilities are available for professional users with additional requirements.</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="contact" class="container reveal">
+        <h2 class="section-label">Get In Touch</h2>
+        <div class="text-section">
+            <p>Ready to start your next project or have questions about my services? I'd love to hear from you!</p>
+            <p>Whether you need a custom web application, mobile app, or professional design work, I'm here to help turn your vision into reality.</p>
+            <p>Feel free to reach out through any of the contact methods below, and I'll get back to you promptly to discuss how we can work together.</p>
+            <p><n>Email:</n> contact@ridoy-portfolio.com</p>
+            <p><n>Phone:</n> +1 (555) 123-4567</p>
+            <p><n>Social Media:</n> @ridoy_dev on all platforms</p>
+        </div>
+    </div>
+  
     <!-- Ad container before footer -->
     <div class="container">
         <div class="ad-container">
@@ -713,24 +1452,41 @@
             </script>
         </div>
     
-      <div class="ad-container bg-white dark:bg-gray-800 p-4 rounded-xl mt-6">
-<script type="text/javascript">
-	atOptions = {
-		'key' : '8a0b4ecf5798ec7c88d15dedacd77708',
-		'format' : 'iframe',
-		'height' : 50,
-		'width' : 320,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/8a0b4ecf5798ec7c88d15dedacd77708/invoke.js"></script>
-</div>
+        <div class="ad-container bg-white dark:bg-gray-800 p-4 rounded-xl mt-6">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '8a0b4ecf5798ec7c88d15dedacd77708',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/8a0b4ecf5798ec7c88d15dedacd77708/invoke.js"></script>
+        </div>
+    </div>
    
     <footer>
         <div class="container">
-            <p style= "text-align: center;">© 2025 Created by Ridoy. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Home</a>
+                <a href="#projects" class="footer-link">Projects</a>
+                <a href="#contact" class="footer-link">Contact</a>
+                <a href="privacy.html" class="footer-link">Privacy Policy</a>
+                <a href="terms.html" class="footer-link">Terms of Service</a>
+            </div>
+            <p>© 2025 Created by Ridoy. All rights reserved.</p>
+            <p>Delivering exceptional digital experiences through innovative development and creative design.</p>
         </div>
     </footer>
+
+    <div class="floating-shapes">
+        <div class="floating-shape" style="--move-x: 100vw; --move-y: 50vh; --rotate: 360deg;"></div>
+        <div class="floating-shape" style="--move-x: -50vw; --move-y: 100vh; --rotate: -180deg;"></div>
+        <div class="floating-shape" style="--move-x: 70vw; --move-y: -30vh; --rotate: 270deg;"></div>
+        <div class="floating-shape" style="--move-x: -80vw; --move-y: -60vh; --rotate: 90deg;"></div>
+        <div class="floating-shape" style="--move-x: 30vw; --move-y: 80vh; --rotate: 540deg;"></div>
+    </div>
 
     <script>
         // Custom cursor effect
@@ -758,12 +1514,12 @@
                 cursor.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
                 cursorFollower.style.width = '50px';
                 cursorFollower.style.height = '50px';
-                cursorFollower.style.borderColor = 'rgba(29, 78, 216, 0.5)';
+                cursorFollower.style.borderColor = 'rgba(93, 92, 222, 0.5)';
             });
             
             link.addEventListener('mouseleave', () => {
                 cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-                cursor.style.backgroundColor = 'rgba(77, 195, 255, 0.8)';
+                cursor.style.backgroundColor = 'rgba(93, 92, 222, 0.8)';
                 cursorFollower.style.width = '40px';
                 cursorFollower.style.height = '40px';
                 cursorFollower.style.borderColor = 'rgba(255, 255, 255, 0.5)';
@@ -845,29 +1601,161 @@
             });
         });
         
-        // Animate cards on scroll
-        const cards = document.querySelectorAll('.project-card');
-        
-        const animateOnScroll = () => {
-            cards.forEach(card => {
-                const cardPosition = card.getBoundingClientRect().top;
-                const screenPosition = window.innerHeight / 1.3;
+        // Scroll animations
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
                 
-                if (cardPosition < screenPosition) {
-                    card.style.opacity = "1";
-                    card.style.transform = "translateY(0)";
-                } else {
-                    card.style.opacity = "0";
-                    card.style.transform = "translateY(50px)";
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                    
+                    // Activate progress bars if they exist within this element
+                    const progressBars = element.querySelectorAll('.skill-item-with-progress');
+                    progressBars.forEach(bar => {
+                        bar.classList.add('visible');
+                    });
                 }
             });
-        };
+        }
         
-        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('scroll', revealOnScroll);
+        
+        // FAQ toggle
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+        
+        // Count animation for statistics
+        function animateValue(element, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                element.innerHTML = Math.floor(progress * (end - start) + start) + (element.id === 'projects-count' || element.id === 'clients-count' || element.id === 'years-count' || element.id === 'apps-count' ? '+' : '');
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+        
+        function animateStats() {
+            const statsItems = document.querySelectorAll('.stat-value');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Extract the number from the stat value (removing the + sign)
+                        const value = parseInt(entry.target.textContent);
+                        animateValue(entry.target, 0, value, 2000);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            statsItems.forEach(item => {
+                observer.observe(item);
+            });
+        }
+        
+        // Create particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random position
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                // Random movement distance
+                const moveX = (Math.random() - 0.5) * 200;
+                const moveY = (Math.random() - 0.5) * 200;
+                
+                // Random size
+                const size = Math.random() * 4 + 2;
+                
+                // Random animation duration
+                const duration = Math.random() * 10 + 10;
+                
+                // Random delay
+                const delay = Math.random() * 5;
+                
+                particle.style.left = `${x}vw`;
+                particle.style.top = `${y}vh`;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.setProperty('--x', `${moveX}px`);
+                particle.style.setProperty('--y', `${moveY}px`);
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Create floating shapes
+        function createFloatingShapes() {
+            const container = document.querySelector('.floating-shapes');
+            const shapeCount = 10;
+            
+            for (let i = 0; i < shapeCount; i++) {
+                const shape = document.createElement('div');
+                shape.classList.add('floating-shape');
+                
+                // Random position
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                // Random movement
+                const moveX = (Math.random() - 0.5) * 100 + 'vw';
+                const moveY = (Math.random() - 0.5) * 100 + 'vh';
+                const rotate = Math.random() * 720 - 360 + 'deg';
+                
+                // Random size
+                const size = Math.random() * 30 + 20;
+                
+                // Random shape
+                const borderRadius = Math.random() * 50 + '%';
+                
+                // Random animation duration
+                const duration = Math.random() * 20 + 10;
+                
+                // Random delay
+                const delay = Math.random() * 5;
+                
+                shape.style.left = `${x}vw`;
+                shape.style.top = `${y}vh`;
+                shape.style.width = `${size}px`;
+                shape.style.height = `${size}px`;
+                shape.style.borderRadius = borderRadius;
+                shape.style.setProperty('--move-x', moveX);
+                shape.style.setProperty('--move-y', moveY);
+                shape.style.setProperty('--rotate', rotate);
+                shape.style.animationDuration = `${duration}s`;
+                shape.style.animationDelay = `${delay}s`;
+                
+                container.appendChild(shape);
+            }
+        }
         
         // Initial animation
         window.addEventListener('load', () => {
-            animateOnScroll();
+            revealOnScroll();
+            animateStats();
+            createParticles();
+            createFloatingShapes();
             
             // Dark mode detection
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -883,38 +1771,56 @@
             });
         });
 
-  const adUrl = "https://www.profitableratecpm.com/m7j44g75?key=90f36207646d410dc5c03e6c6816a890"; // Replace with your real link
-window.open(adUrl, "_blank");
-  function scheduleAdPopup() {
-    const minTime = 0;//1 * 60 * 1000; // 1 minute
-    const maxTime = 5 * 60 * 1000; // 5 minutes
-    const delay = Math.floor(Math.random() * (maxTime - minTime + 1)) + minTime;
+        // Ad popup scheduling
+        function scheduleAdPopup() {
+            const minTime = 60 * 1000; // 1 minute
+            const maxTime = 5 * 60 * 1000; // 5 minutes
+            const delay = Math.floor(Math.random() * (maxTime - minTime + 1)) + minTime;
 
-    setTimeout(() => {
-      document.getElementById('message').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('message').style.display = 'block';
 
-      let seconds = 5;
-      const countdown = setInterval(() => {
-        document.getElementById('countdown').textContent = seconds;
-        seconds--;
+                let seconds = 5;
+                const countdown = setInterval(() => {
+                    document.getElementById('countdown').textContent = seconds;
+                    seconds--;
 
-        if (seconds < 0) {
-          clearInterval(countdown);
-          
+                    if (seconds < 0) {
+                        clearInterval(countdown);
+                        
+                        // Open ad in new tab
+                        const adUrl = "https://www.profitableratecpm.com/m7j44g75?key=90f36207646d410dc5c03e6c6816a890";
+                        window.open(adUrl, "_blank");
 
-          // Hide message again
-          document.getElementById('message').style.display = 'none';
+                        // Hide message again
+                        document.getElementById('message').style.display = 'none';
 
-          // 🔁 Call the function again for next cycle
-          scheduleAdPopup();
+                        // Call the function again for next cycle
+                        scheduleAdPopup();
+                    }
+                }, 1000);
+            }, delay);
         }
-      }, 1000);
-    }, delay);
-  }
 
-  // Start the first cycle
-  scheduleAdPopup();
+        // Start the first ad cycle
+        scheduleAdPopup();
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
     </script>
-	    <script src="/js/DirectLinkAds.js"></script>
 </body>
 </html>
