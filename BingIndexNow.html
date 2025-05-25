@@ -1344,7 +1344,7 @@
       const url = urlInput.value.trim();
       const key = keyInput.value.trim();
       if (url && key) {
-        fullUrlInput.value = `https://www.bing.com/IndexNow?url=${encodeURIComponent(url)}&key=${encodeURIComponent(key)}`;
+        fullUrlInput.value = `https://www.bing.com/IndexNow?url=${url}&key=${key}`;
       } else {
         fullUrlInput.value = '';
       }
@@ -1390,7 +1390,7 @@
       pingButton.classList.remove('pulse-animation');
       
       try {
-        const pingUrl = `https://www.bing.com/IndexNow?url=${encodeURIComponent(url)}&key=${encodeURIComponent(key)}`;
+        const pingUrl = `https://www.bing.com/IndexNow?url=${url}&key=${key}`;
         const response = await fetch(pingUrl);
         
         pingResult.style.display = 'block';
