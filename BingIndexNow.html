@@ -1432,7 +1432,11 @@
             <div class="text-left">
               <h3 class="font-bold text-xl">End!</h3>
               
-              <p class="text-sm mt-2">Go Bing Webmaster Tools. Check your IndexNow</p>
+              <p class="text-sm mt-2">Go Bing Webmaster Tools. Check your IndexNow
+              <a href="https://www.bing.com/webmasters/indexnow?siteUrl=${getDomain(url)}">
+              https://www.bing.com/webmasters
+              </a>
+              </p> 
             </div>
           </div>
         `;
@@ -1462,6 +1466,17 @@
         }
       });
     });
+
+    function getDomain(url) {
+    try {
+        const urlObj = new URL(url);
+        // পুরো URL থেকে protocol এবং hostname (domain) নেওয়া হচ্ছে
+        return urlObj.protocol + "//" + urlObj.hostname + "/";
+    } catch(e) {
+        console.error("Invalid URL:", e);
+        return url; // যদি URL invalid হয় তবে আগের URL টাই রিটার্ন করবে
+    }
+    }
     
     // 3D animation
     function initThreeJS() {
