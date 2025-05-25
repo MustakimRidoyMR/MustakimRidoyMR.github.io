@@ -1389,7 +1389,7 @@
       pingButton.disabled = true;
       pingButton.classList.remove('pulse-animation');
       
-      try {
+ //     try {
         const pingUrl = `https://www.bing.com/IndexNow?url=${url}&key=${key}`;
         const response = await fetch(pingUrl);
         
@@ -1410,7 +1410,7 @@
           
           // Trigger confetti animation
           createConfetti();
-        } else {
+  /*      } else {
           pingResult.className = 'result-card result-error';
           pingResult.innerHTML = `
             <div class="flex items-center justify-center">
@@ -1441,7 +1441,7 @@
         pingButton.innerHTML = '<i class="fas fa-sync-alt mr-2"></i> Update in Bing';
         pingButton.disabled = false;
         pingButton.classList.add('pulse-animation');
-      }
+      }*/
     });
     
     // Accordion functionality
