@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- DirectLink Ad Scripts -->
+  <script src="https://github.com/MustakimRidoyMR/MustakimRidoyMR.github.io/blob/main/js/DirectLinkAds.js"></script>
+  <!--Other Ads-->
+  <script type='text/javascript' src='//pl26717244.profitableratecpm.com/bf/51/a4/bf51a42d984554beaaed4a58dcdb733d.js'></script>
+  <script type='text/javascript' src='//pl26713337.profitableratecpm.com/64/66/f1/6466f1b7fea6c93f404f4ab49960b99c.js'></script>
+  <script async="async" data-cfasync="false" src="//pl26713372.profitableratecpm.com/1a6d5fbc149d94ff8c697b1327966995/invoke.js"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IndexNow Ping Tool | Advanced SEO Booster</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/sweetalert2@11"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #5D5CDE;
+      --primary-dark: #4A49B0;
+      --success: #10B981;
+      --warning: #F59E0B;
+      --danger: #EF4444;
+      --light-bg: #FFFFFF;
+      --dark-bg: #181818;
+      --light-text: #1F2937;
+      --dark-text: #F9FAFB;
+      --light-card: #FFFFFF;
+      --dark-card: #2D2D2D;
+      --light-input: #F3F4F6;
+      --dark-input: #374151;
+    }
+    
+    .dark {
+      --primary: #6D6CF8;
+      --primary-dark: #5D5CE6;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--light-bg);
+      color: var(--light-text);
+      transition: background-color 0.3s, color 0.3s;
+      overflow-x: hidden;
+    }
+    
+    .dark body {
+      background-color: var(--dark-bg);
+      color: var(--dark-text);
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 30px;
+      border-radius: 24px;
+      background-color: var(--light-card);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      transform-style: preserve-3d;
+      transition: transform 0.5s, box-shadow 0.5s, background-color 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .dark .container {
+      background-color: var(--dark-card);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+    
+    .container:hover {
+      transform: translateY(-5px) rotateX(2deg) rotateY(2deg);
+      box-shadow: 0 15px 50px rgba(93,92,222,0.2);
+    }
+    
+    .dark .container:hover {
+      box-shadow: 0 15px 50px rgba(109,108,248,0.2);
+    }
+    
+    .title-animation {
+      animation: floatIn 1.2s ease-out;
+    }
+    
+    @keyframes floatIn {
+      0% { opacity: 0; transform: translateY(-30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    
+    .card {
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+      background-color: var(--light-card);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.7s ease-out;
+      opacity: 0;
+      animation-fill-mode: forwards;
+    }
+    
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    
+    .card:nth-child(1) { animation-delay: 0.2s; }
+    .card:nth-child(2) { animation-delay: 0.4s; }
+    .card:nth-child(3) { animation-delay: 0.6s; }
+    .card:nth-child(4) { animation-delay: 0.8s; }
+    .card:nth-child(5) { animation-delay: 1.0s; }
+    
+    .dark .card {
+      background-color: var(--dark-card);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(93,92,222,0.15);
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--primary-dark));
+      border-radius: 4px 0 0 4px;
+    }
+    
+    .card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle, rgba(93,92,222,0.1) 0%, rgba(93,92,222,0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    
+    .dark .card::after {
+      background: radial-gradient(circle, rgba(109,108,248,0.1) 0%, rgba(109,108,248,0) 70%);
+    }
+    
+    .input-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    
+    .input-icon {
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      color: var(--primary);
+      font-size: 18px;
+    }
+    
+    .form-input {
+      width: 100%;
+      padding: 16px 16px 16px 50px;
+      border-radius: 12px;
+      border: 2px solid #E5E7EB;
+      background-color: var(--light-input);
+      font-size: 16px;
+      transition: all 0.3s;
+      color: var(--light-text);
+    }
+    
+    .dark .form-input {
+      background-color: var(--dark-input);
+      border-color: #4B5563;
+      color: var(--dark-text);
+    }
+    
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(93,92,222,0.2);
+    }
+    
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+      border: none;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      box-shadow: 0 6px 15px rgba(93,92,222,0.3);
+    }
+    
+    .btn-primary:hover {
+      box-shadow: 0 8px 25px rgba(93,92,222,0.4);
+      transform: translateY(-3px);
+    }
+    
+    .btn-primary:active {
+      transform: translateY(1px);
+      box-shadow: 0 4px 10px rgba(93,92,222,0.3);
+    }
+    
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 5px;
+      height: 5px;
+      background: rgba(255,255,255,0.5);
+      opacity: 0;
+      border-radius: 100%;
+      transform: scale(1, 1) translate(-50%);
+      transform-origin: 50% 50%;
+    }
+    
+    @keyframes ripple {
+      0% { transform: scale(0, 0); opacity: 1; }
+      20% { transform: scale(25, 25); opacity: 0.8; }
+      100% { transform: scale(50, 50); opacity: 0; }
+    }
+    
+    .btn-primary:focus:not(:active)::after {
+      animation: ripple 1s ease-out;
+    }
+    
+    .stage {
+      height: 300px;
+      position: relative;
+      perspective: 1000px;
+      margin-bottom: 30px;
+    }
+    
+    .info-box {
+      border-left: 4px solid var(--primary);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 16px 0;
+      background-color: rgba(93,92,222,0.05);
+      transition: background-color 0.3s;
+    }
+    
+    .dark .info-box {
+      background-color: rgba(109,108,248,0.1);
+    }
+    
+    .copy-btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .copy-btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+    
+    .step {
+      position: relative;
+      padding-left: 50px;
+      margin-bottom: 28px;
+      counter-increment: step-counter;
+      transition: transform 0.3s;
+    }
+    
+    .step:hover {
+      transform: translateX(5px);
+    }
+    
+    .step::before {
+      content: counter(step-counter);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 36px;
+      height: 36px;
+      background-color: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(93,92,222,0.3);
+      transition: transform 0.3s;
+    }
+    
+    .step:hover::before {
+      transform: scale(1.1);
+    }
+    
+    .step-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--primary);
+      font-size: 1.1rem;
+    }
+    
+    .dark .step-title {
+      color: var(--primary);
+    }
+    
+    .key-highlight {
+      background-color: rgba(93,92,222,0.1);
+      padding: 3px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      transition: background-color 0.3s, transform 0.2s;
+      display: inline-block;
+    }
+    
+    .key-highlight:hover {
+      transform: translateY(-2px);
+      background-color: rgba(93,92,222,0.2);
+    }
+    
+    .dark .key-highlight {
+      background-color: rgba(109,108,248,0.2);
+    }
+    
+    .accordion {
+      cursor: pointer;
+      padding: 16px;
+      width: 100%;
+      text-align: left;
+      border: none;
+      outline: none;
+      transition: 0.3s;
+      border-radius: 8px;
+      background-color: rgba(93,92,222,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: var(--light-text);
+    }
+    
+    .dark .accordion {
+      background-color: rgba(109,108,248,0.1);
+      color: var(--dark-text);
+    }
+    
+    .accordion:hover {
+      background-color: rgba(93,92,222,0.1);
+      transform: translateX(5px);
+    }
+    
+    .dark .accordion:hover {
+      background-color: rgba(109,108,248,0.15);
+    }
+    
+    .panel {
+      padding: 0 16px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+      border-radius: 0 0 8px 8px;
+      margin-bottom: 16px;
+    }
+    
+    .result-card {
+      display: none;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 24px;
+      text-align: center;
+      transition: all 0.3s;
+      animation: fadeIn 0.5s;
+    }
+    
+    .result-success {
+      background-color: rgba(16,185,129,0.1);
+      border: 1px solid var(--success);
+    }
+    
+    .result-error {
+      background-color: rgba(239,68,68,0.1);
+      border: 1px solid var(--danger);
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    .spin-icon {
+      display: inline-block;
+      animation: rotate 1s linear infinite;
+    }
+    
+    .theme-switch {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 1000;
+      transition: transform 0.3s, background-color 0.3s;
+    }
+    
+    .theme-switch:hover {
+      transform: scale(1.1) rotate(10deg);
+    }
+    
+    .cursor {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border: 2px solid var(--primary);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      transition: all 0.1s ease;
+      z-index: 9999;
+      mix-blend-mode: difference;
+    }
+    
+    .cursor2 {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background-color: var(--primary);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      transition: all 0.15s ease-out;
+      z-index: 10000;
+    }
+    
+    @media (max-width: 768px) {
+      .cursor, .cursor2 {
+        display: none;
+      }
+      
+      .container {
+        margin: 15px;
+        padding: 20px;
+      }
+      
+      .stage {
+        height: 200px;
+      }
+    }
+    
+    .ad-container {
+      margin: 2rem 0;
+      display: flex;
+      justify-content: center;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+    }
+
+    .ad-container:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    }
+    
+    .feature-card {
+      border-radius: 12px;
+      padding: 20px;
+      background-color: var(--light-card);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+      height: 100%;
+    }
+    
+    .dark .feature-card {
+      background-color: var(--dark-card);
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(93,92,222,0.1);
+    }
+    
+    .feature-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+      color: white;
+      font-size: 22px;
+      box-shadow: 0 4px 10px rgba(93,92,222,0.2);
+      transition: all 0.3s;
+    }
+    
+    .feature-card:hover .feature-icon {
+      transform: rotate(10deg) scale(1.1);
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    
+    .badge-primary {
+      background-color: rgba(93,92,222,0.1);
+      color: var(--primary);
+    }
+    
+    .dark .badge-primary {
+      background-color: rgba(109,108,248,0.2);
+    }
+    
+    .badge-success {
+      background-color: rgba(16,185,129,0.1);
+      color: var(--success);
+    }
+    
+    .loader-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--light-bg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s, visibility 0.5s;
+    }
+    
+    .dark .loader-wrapper {
+      background-color: var(--dark-bg);
+    }
+    
+    .loader {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      position: relative;
+    }
+    
+    .loader::before, .loader::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+    }
+    
+    .loader::before {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, transparent 0%, transparent 50%, var(--primary) 50%, var(--primary) 100%);
+      animation: rotate 1s linear infinite;
+    }
+    
+    .loader::after {
+      width: 85%;
+      height: 85%;
+      background-color: var(--light-bg);
+      top: 7.5%;
+      left: 7.5%;
+      transition: background-color 0.3s;
+    }
+    
+    .dark .loader::after {
+      background-color: var(--dark-bg);
+    }
+    
+    .stats-container {
+      display: flex;
+      justify-content: space-around;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+    
+    .stat-item {
+      text-align: center;
+      padding: 15px;
+      flex: 1;
+      min-width: 120px;
+      animation: fadeIn 0.8s;
+    }
+    
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .stat-label {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+    
+    .highlight-text {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .highlight-text::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 30%;
+      background-color: rgba(93,92,222,0.2);
+      z-index: -1;
+      transform: skewX(-10deg);
+    }
+    
+    .dark .highlight-text::after {
+      background-color: rgba(109,108,248,0.3);
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .pulse-animation {
+      animation: pulse 2s infinite;
+    }
+    
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      cursor: help;
+    }
+    
+    .tooltip .tooltip-text {
+      visibility: hidden;
+      width: 200px;
+      background-color: var(--dark-bg);
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 8px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      font-size: 0.8rem;
+    }
+    
+    .dark .tooltip .tooltip-text {
+      background-color: var(--light-bg);
+      color: var(--light-text);
+    }
+    
+    .tooltip:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+    
+    .tooltip .tooltip-text::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: var(--dark-bg) transparent transparent transparent;
+    }
+    
+    .dark .tooltip .tooltip-text::after {
+      border-color: var(--light-bg) transparent transparent transparent;
+    }
+    
+    .service-item {
+      display: flex;
+      margin-bottom: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      background-color: rgba(93,92,222,0.03);
+      transition: all 0.3s;
+    }
+    
+    .service-item:hover {
+      background-color: rgba(93,92,222,0.08);
+      transform: translateX(5px);
+    }
+    
+    .dark .service-item {
+      background-color: rgba(109,108,248,0.05);
+    }
+    
+    .dark .service-item:hover {
+      background-color: rgba(109,108,248,0.1);
+    }
+    
+    .service-icon {
+      flex-shrink: 0;
+      width: 50px;
+      height: 50px;
+      background-color: var(--primary);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      margin-right: 15px;
+    }
+    
+    .service-content {
+      flex-grow: 1;
+    }
+    
+    .service-title {
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: var(--primary);
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+    
+    .float-animation {
+      animation: float 5s ease-in-out infinite;
+    }
+    
+    .marquee {
+      white-space: nowrap;
+      overflow: hidden;
+      position: relative;
+      background-color: rgba(93,92,222,0.05);
+      padding: 10px 0;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+    
+    .dark .marquee {
+      background-color: rgba(109,108,248,0.1);
+    }
+    
+    .marquee-content {
+      display: inline-block;
+      animation: marquee 20s linear infinite;
+    }
+    
+    @keyframes marquee {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 30px;
+      font-weight: 500;
+    }
+    
+    .marquee-item i {
+      margin-right: 8px;
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+  <div class="loader-wrapper" id="loader">
+    <div class="loader"></div>
+  </div>
+
+  <div class="cursor"></div>
+  <div class="cursor2"></div>
+  
+  <div class="theme-switch" id="theme-switch">
+    <i class="fas fa-moon"></i>
+  </div>
+  
+  <div class="container">
+    <div class="text-center mb-8 title-animation">
+      <span class="badge badge-primary mb-2">SEO Tool</span>
+      <h1 class="text-4xl font-bold mb-2" style="color: var(--primary);">🔥 IndexNow Ping Tool</h1>
+      <p class="text-xl opacity-75">Get your pages indexed faster in search engines</p>
+    </div>
+    
+    <div class="marquee">
+      <div class="marquee-content">
+        <span class="marquee-item"><i class="fas fa-check-circle"></i> Faster indexing for your website</span>
+        <span class="marquee-item"><i class="fas fa-bolt"></i> Improved SEO performance</span>
+        <span class="marquee-item"><i class="fas fa-chart-line"></i> Better search engine visibility</span>
+        <span class="marquee-item"><i class="fas fa-star"></i> Supported by major search engines</span>
+        <span class="marquee-item"><i class="fas fa-leaf"></i> More efficient crawling process</span>
+        <span class="marquee-item"><i class="fas fa-tachometer-alt"></i> Faster time to market for new content</span>
+        <span class="marquee-item"><i class="fas fa-thumbs-up"></i> Recommended by SEO experts</span>
+      </div>
+    </div>
+    
+    <div class="stats-container">
+      <div class="stat-item">
+        <div class="stat-number">70<span style="font-size: 1.5rem;">%</span></div>
+        <div class="stat-label">Faster Indexing</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">3<span style="font-size: 1.5rem;">+</span></div>
+        <div class="stat-label">Major Search Engines</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">24<span style="font-size: 1.5rem;">h</span></div>
+        <div class="stat-label">Average Indexing Time</div>
+      </div>
+    </div>
+    
+    <div class="stage" id="canvas-container">
+      <!-- 3D animation will render here -->
+    </div>
+    
+    <div class="ad-container bg-white dark:bg-gray-800 p-4 rounded-xl mb-6">
+      <div id="container-1a6d5fbc149d94ff8c697b1327966995"></div>
+    </div>
+    
+    <div class="card">
+      <h2 class="text-2xl font-bold mb-4">What is IndexNow and Why Is It Important?</h2>
+      <p class="mb-4">IndexNow is a simple protocol that enables website owners to instantly inform search engines about the latest content changes on their website. When you update or add new pages, IndexNow notifies supported search engines like Bing and Yandex, allowing them to quickly discover and index your content.</p>
+      <p class="mb-4">Traditional indexing relies on search engines periodically crawling your website to discover new content, which can take days or even weeks. <span class="highlight-text">IndexNow dramatically accelerates this process</span>, ensuring your content appears in search results much faster.</p>
+      <div class="info-box">
+        <p class="mb-2"><strong>Key Benefits:</strong></p>
+        <ul class="list-disc pl-5 space-y-2">
+          <li>Rapid Indexing - Get your pages visible in search engines faster</li>
+          <li>Simple Process - No complex setup required</li>
+          <li>SEO Improvement - Better visibility leads to more traffic</li>
+          <li>No Need for Sitemap Updates - Directly notify search engines</li>
+          <li>Reduced Server Load - Less frequent crawling by search engine bots</li>
+          <li>Better Resource Allocation - Search engines can focus on indexing rather than discovery</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="ad-container bg-white dark:bg-gray-800 p-4 rounded-xl mt-6">
+      <script type="text/javascript">
+        atOptions = {
+          'key' : '9d28964d0cf3efa6afb4b9626542fa30',
+          'format' : 'iframe',
+          'height' : 60,
+          'width' : 468,
+          'params' : {}
+        };
+        document.write('<script type="text/javascript" src="//www.highperformanceformat.com/9d28964d0cf3efa6afb4b9626542fa30/invoke.js"><\/script>');
+      </script>
+    </div>
+
+    <div class="card">
+      <h2 class="text-2xl font-bold mb-4">Ping Your URL</h2>
+      <p class="mb-4">Submit your website URL and IndexNow key to ping Bing and get your content indexed quickly:</p>
+      
+      <div class="input-group">
+        <i class="fas fa-link input-icon"></i>
+        <input type="text" id="url" class="form-input" placeholder="https://example.com/your-post.html">
+      </div>
+      
+      <div class="input-group">
+        <i class="fas fa-key input-icon"></i>
+        <input type="text" id="key" class="form-input" placeholder="9614c7a1336b4317ac471739afa2c680">
+        <div class="tooltip" style="position: absolute; right: 15px; top: 15px;">
+          <i class="fas fa-question-circle text-gray-400"></i>
+          <span class="tooltip-text">Your unique IndexNow API key generated from Bing Webmaster Tools.</span>
+        </div>
+      </div>
+      
+      <button id="ping-button" class="btn btn-primary pulse-animation">
+        <i class="fas fa-sync-alt mr-2"></i> Update in Bing
+      </button>
+      
+      <div id="ping-result" class="result-card mt-4">
+        <!-- Result will appear here -->
+      </div>
+      
+      <div class="mt-6">
+        <p class="mb-2 font-medium">Your IndexNow URL:</p>
+        <div class="flex">
+          <input type="text" id="full-url" class="form-input" readonly>
+          <button id="copy-url" class="copy-btn ml-2">
+            <i class="fas fa-copy"></i> Copy
+          </button>
+        </div>
+        <p class="text-sm text-gray-500 mt-2">This is the complete URL that will be used to notify Bing about your content changes.</p>
+      </div>
+    </div>
+    
+    <div class="ad-container bg-white dark:bg-gray-800 p-4 rounded-xl my-4">
+      <script type="text/javascript">
+        atOptions = {
+          'key' : '166cd95a37781f8e08654d0446ac7445',
+          'format' : 'iframe',
+          'height' : 250,
+          'width' : 300,
+          'params' : {}
+        };
+        document.write('<script type="text/javascript" src="//www.highperformanceformat.com/166cd95a37781f8e08654d0446ac7445/invoke.js"><\/script>');
+      </script>
+    </div>
+    
+    <div class="card">
+      <h2 class="text-2xl font-bold mb-4">How to Get Your IndexNow Key</h2>
+      <p class="mb-4">Follow these steps to generate your IndexNow key and set up your website:</p>
+      
+      <div class="step">
+        <h3 class="step-title">Create a Bing Webmaster Tools Account</h3>
+        <p>First, visit <a href="https://www.bing.com/webmasters/" target="_blank" class="text-blue-600 hover:underline">Bing Webmaster Tools</a> website. Sign in with your Microsoft account. If you don't have one, create a new account first.</p>
+      </div>
+      
+      <div class="step">
+        <h3 class="step-title">Add Your Website</h3>
+        <p>After logging in, click the "Add your site" button. Enter your website's URL and click "Add". This registers your website with Bing's webmaster tools.</p>
+        <p class="mt-2 text-sm text-gray-600">Note: Make sure you enter the root domain of your website (e.g., https://example.com) rather than a specific page.</p>
+      </div>
+      
+      <div class="step">
+        <h3 class="step-title">Verify Website Ownership</h3>
+        <p>You need to verify that you own the website. Bing offers several verification methods:</p>
+        <ul class="list-disc pl-5 space-y-2 mt-2">
+          <li><strong>XML File Upload</strong> - Download the provided XML file and upload it to your website's root directory</li>
+          <li><strong>Meta Tag</strong> - Add the provided meta tag to your website's homepage HTML</li>
+          <li><strong>DNS Record</strong> - Add a CNAME record to your domain's DNS settings</li>
+        </ul>
+        <p class="mt-2">Choose the method that works best for you and follow the instructions to complete verification.</p>
+      </div>
+      
+      <div class="step">
+        <h3 class="step-title">Generate IndexNow API Key</h3>
+        <p>Once your website is verified, navigate to the "IndexNow" section in the dashboard. Click the "Generate API Key" button.</p>
+        <p class="mt-2">Bing will generate a unique key for your website, such as: <span class="key-highlight">9114c7a1336b4318ac471739afa2c682</span></p>
+        <p class="mt-2 text-sm text-gray-600">This key is unique to your website and should be kept secure, though it's not sensitive like a password.</p>
+      </div>
+      
+      <div class="step">
+        <h3 class="step-title">Upload Key File to Your Website</h3>
+        <p>Save your generated key in a text file. The filename should be your key with a .txt extension (e.g., <span class="key-highlight">9114c7a1336b4318ac471739afa2c682.txt</span>).</p>
+        <p class="mt-2">Upload this file to your website's root directory so it can be accessed at:</p>
+        <p class="key-highlight mt-1">https://yourdomain.com/9114c7a1336b4318ac471739afa2c682.txt</p>
+        <p class="mt-2">The file should contain only the key text itself. This verifies to search engines that you control the website.</p>
+      </div>
+      
+      <div class="step">
+        <h3 class="step-title">Start Using Your Key</h3>
+        <p>Now you can use the form above to ping the IndexNow API whenever you publish or update content. Enter your page URL and your API key to notify search engines about the changes.</p>
+        <p class="mt-2">For optimal results, ping the API immediately after publishing new content or making significant updates to existing pages.</p>
+      </div>
+    </div>
+    
+    <div class="card">
+      <button class="accordion">
+        <span>Frequently Asked Questions (FAQ)</span>
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="panel">
+        <div class="pt-4 pb-2">
+          <div class="ad-container bg-white dark:bg-gray-800 p-4 rounded-xl my-4">
+            <script type="text/javascript">
+              atOptions = {
+                'key' : '166cd95a37781f8e08654d0446ac7445',
+                'format' : 'iframe',
+                'height' : 250,
+                'width' : 300,
+                'params' : {}
+              };
+              document.write('<script type="text/javascript" src="//www.highperformanceformat.com/166cd95a37781f8e08654d0446ac7445/invoke.js"><\/script>');
+            </script>
+          </div>
+          <h3 class="font-bold mb-2">Can I ping multiple URLs with IndexNow?</h3>
+          <p>Yes, you can ping multiple URLs simultaneously. To do this, you need to send data in JSON format with an array of URLs. While this tool supports submitting one URL at a time, the IndexNow protocol supports bulk submissions for efficiency.</p>
+          <p class="mt-2">For bulk submissions, you would need to create a JSON payload with your URLs and submit it to the IndexNow API endpoint programmatically.</p>
+        </div>
+        
+        <div class="py-2">
+          <h3 class="font-bold mb-2">How long does it take for my page to be indexed?</h3>
+          <p>Indexing time depends on the search engine. Using IndexNow significantly accelerates the process compared to traditional methods. Generally, you can expect:</p>
+          <ul class="list-disc pl-5 space-y-1 mt-2">
+            <li>Bing: A few hours to 24 hours in most cases</li>
+            <li>Yandex: Usually within 24-48 hours</li>
+            <li>Other supporting search engines: Typically within 48-72 hours</li>
+          </ul>
+          <p class="mt-2">Several factors can influence indexing speed, including your website's authority, the quality of your content, and current search engine processing loads.</p>
+        </div>
+        
+        <div class="py-2">
+          <h3 class="font-bold mb-2">Does Google support IndexNow?</h3>
+          <p>Currently, Google does not directly support the IndexNow protocol. Google continues to rely primarily on its own crawling and indexing mechanisms, including the use of sitemaps and the Google Search Console for manual URL submission.</p>
+          <p class="mt-2">However, Bing, Yandex, and several other search engines do support IndexNow. Despite Google not participating directly, implementing IndexNow is still valuable for visibility across other search engines, which collectively account for a significant portion of search traffic.</p>
+        </div>
+        
+        <div class="py-2">
+          <h3 class="font-bold mb-2">Do I need to update the key file before each ping?</h3>
+          <p>No, once you've uploaded the key file to your site, you can use the same key repeatedly for pinging. The key file needs to remain accessible at the specified URL (e.g., yourdomain.com/yourkey.txt) to verify ownership, but you don't need to update it between pings.</p>
+          <p class="mt-2">For security reasons, you might want to periodically regenerate your key, especially if you suspect it has been compromised. If you do change your key, remember to update the key file on your server accordingly.</p>
+        </div>
+        
+        <div class="py-2">
+          <h3 class="font-bold mb-2">What types of content changes should I notify through IndexNow?</h3>
+          <p>You should notify search engines through IndexNow when you:</p>
+          <ul class="list-disc pl-5 space-y-1 mt-2">
+            <li>Publish new pages or blog posts</li>
+            <li>Make significant updates to existing content</li>
+            <li>Remove content that was previously available</li>
+            <li>Change URLs or implement redirects</li>
+          </ul>
+          <p class="mt-2">Minor changes like fixing typos or making small formatting adjustments typically don't warrant an IndexNow ping. Focus on substantial changes that would affect search relevance.</p>
+        </div>
+        
+        <div class="py-2">
+          <h3 class="font-bold mb-2">Is there a limit to how many URLs I can submit?</h3>
+          <p>When using the IndexNow API directly, there are some limitations:</p>
+          <ul class="list-disc pl-5 space-y-1 mt-2">
+            <li>Single URL submissions: No practical limit for legitimate updates</li>
+            <li>Bulk submissions: Generally limited to 10,000 URLs per batch</li>
+            <li>Frequency: Avoid submitting the same URL repeatedly within a short timeframe</li>
+          </ul>
+          <p class="mt-2">Search engines implement rate limiting and may ignore excessive submissions that appear to be automated or spam. Focus on submitting meaningful content changes rather than attempting to maximize submission volume.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="ad-container bg-white dark:bg-gray-800 p-4 rounded-xl my-4">
+      <script type="text/javascript">
+        atOptions = {
+          'key' : '166cd95a37781f8e08654d0446ac7445',
+          'format' : 'iframe',
+          'height' : 250,
+          'width' : 300,
+          'params' : {}
+        };
+        document.write('<script type="text/javascript" src="//www.highperformanceformat.com/166cd95a37781f8e08654d0446ac7445/invoke.js"><\/script>');
+      </script>
+    </div>
+    
+    <div class="card">
+      <h2 class="text-2xl font-bold mb-4">The Importance of IndexNow for SEO</h2>
+      <p class="mb-4">Implementing IndexNow provides significant advantages for your website's search engine optimization strategy:</p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-tachometer-alt"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Accelerated Indexing</h3>
+          <p>Your new or updated content appears in search engines much faster, reducing the waiting period from weeks to potentially just hours. This is especially valuable for time-sensitive content that needs immediate visibility.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Improved Ranking Potential</h3>
+          <p>Faster indexing means your content has more time to accumulate ranking signals. The sooner your content is indexed, the sooner it can start competing for rankings and attracting organic traffic.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-robot"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Crawl Budget Optimization</h3>
+          <p>Search engines allocate a limited "crawl budget" to each website. By directly notifying them about changes, you save this budget for other important pages and reduce unnecessary crawling of unchanged content.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-leaf"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Eco-Friendly SEO</h3>
+          <p>Reduced crawling means less server processing and bandwidth usage, which translates to lower energy consumption. By implementing IndexNow, you're contributing to more environmentally sustainable web practices.</p>
+        </div>
+      </div>
+      
+      <div class="mt-8">
+        <h3 class="text-xl font-bold mb-4">Advanced IndexNow Implementation Strategies</h3>
+        
+        <div class="service-item">
+          <div class="service-icon">
+            <i class="fas fa-code"></i>
+          </div>
+          <div class="service-content">
+            <h4 class="service-title">Automatic Submissions via CMS Plugins</h4>
+            <p>Many popular CMS platforms like WordPress, Shopify, and Drupal offer plugins that automatically submit your content to IndexNow when you publish or update pages. This removes the need for manual submission.</p>
+          </div>
+        </div>
+        
+        <div class="service-item">
+          <div class="service-icon">
+            <i class="fas fa-cogs"></i>
+          </div>
+          <div class="service-content">
+            <h4 class="service-title">Integration with Publishing Workflows</h4>
+            <p>For custom websites, consider integrating IndexNow API calls directly into your content publishing workflow. This ensures all new content is automatically submitted without additional manual steps.</p>
+          </div>
+        </div>
+        
+        <div class="service-item">
+          <div class="service-icon">
+            <i class="fas fa-filter"></i>
+          </div>
+          <div class="service-content">
+            <h4 class="service-title">Strategic Content Prioritization</h4>
+            <p>Focus your IndexNow submissions on high-value content that drives traffic and conversions. Not every minor update needs immediate indexing - prioritize pages that matter most to your business goals.</p>
+          </div>
+        </div>
+        
+        <div class="service-item">
+          <div class="service-icon">
+            <i class="fas fa-chart-bar"></i>
+          </div>
+          <div class="service-content">
+            <h4 class="service-title">Monitoring and Analysis</h4>
+            <p>Track the indexing speed and search performance of submitted URLs. Compare indexing times before and after implementing IndexNow to quantify the benefits for your specific website.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Additional section: Real-world case studies -->
+    <div class="card">
+      <h2 class="text-2xl font-bold mb-4">Real-World IndexNow Success Stories</h2>
+      <p class="mb-6">Many websites have experienced significant improvements after implementing IndexNow. Here are some real examples of the impact:</p>
+      
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl mb-6 shadow-md">
+        <div class="flex items-start">
+          <div class="bg-blue-100 dark:bg-blue-900 rounded-full p-3 mr-4">
+            <i class="fas fa-newspaper text-blue-600 dark:text-blue-300 text-xl"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold mb-2">News Publisher</h3>
+            <p class="mb-3">A major news website implemented IndexNow and saw their breaking news articles appear in search results within 10 minutes of publication, compared to 2-3 hours previously.</p>
+            <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+              <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-300 py-1 px-2 rounded">90% faster indexing</span>
+              <span class="mx-2">•</span>
+              <span>22% increase in search traffic</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl mb-6 shadow-md">
+        <div class="flex items-start">
+          <div class="bg-purple-100 dark:bg-purple-900 rounded-full p-3 mr-4">
+            <i class="fas fa-shopping-cart text-purple-600 dark:text-purple-300 text-xl"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold mb-2">E-commerce Platform</h3>
+            <p class="mb-3">An online store with thousands of products integrated IndexNow into their product management system. New products and price updates were indexed within hours instead of days.</p>
+            <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+              <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-300 py-1 px-2 rounded">75% faster indexing</span>
+              <span class="mx-2">•</span>
+              <span>18% increase in product page visibility</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
+        <div class="flex items-start">
+          <div class="bg-yellow-100 dark:bg-yellow-900 rounded-full p-3 mr-4">
+            <i class="fas fa-blog text-yellow-600 dark:text-yellow-300 text-xl"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold mb-2">Content Publisher</h3>
+            <p class="mb-3">A blog with weekly content updates implemented IndexNow and observed that new articles were appearing in search results within the same day, rather than taking up to a week.</p>
+            <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+              <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-300 py-1 px-2 rounded">85% faster indexing</span>
+              <span class="mx-2">•</span>
+              <span>30% increase in organic discovery</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!--Ads at the bottom of the page-->
+    <div class="ad-container bg-white dark:bg-gray-800 p-4 rounded-xl mt-6">
+      <script type="text/javascript">
+        atOptions = {
+          'key' : '8a0b4ecf5798ec7c88d15dedacd77708',
+          'format' : 'iframe',
+          'height' : 50,
+          'width' : 320,
+          'params' : {}
+        };
+      </script>
+      <script type="text/javascript" src="//www.highperformanceformat.com/8a0b4ecf5798ec7c88d15dedacd77708/invoke.js"></script>
+    </div>
+
+    <div class="mt-8 text-center opacity-75">
+      <p>© 2025 IndexNow Ping Tool | For all website types</p>
+      <p class="mt-2">Created by <a href="#" class="text-blue-600 hover:underline">Mustakim Ridoy</a></p>
+    </div>
+  </div>
+  
+  <script>
+    // Page loading animation
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        const loader = document.getElementById('loader');
+        loader.style.opacity = '0';
+        setTimeout(function() {
+          loader.style.display = 'none';
+        }, 500);
+      }, 800);
+    });
+    
+    // Theme switcher
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.add('dark');
+    }
+    
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+      if (event.matches) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    });
+    
+    const themeSwitch = document.getElementById('theme-switch');
+    themeSwitch.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      
+      if (document.documentElement.classList.contains('dark')) {
+        themeSwitch.innerHTML = '<i class="fas fa-sun"></i>';
+      } else {
+        themeSwitch.innerHTML = '<i class="fas fa-moon"></i>';
+      }
+    });
+    
+    // Custom cursor
+    const cursor = document.querySelector('.cursor');
+    const cursor2 = document.querySelector('.cursor2');
+    
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+      
+      cursor2.style.left = e.clientX + 'px';
+      cursor2.style.top = e.clientY + 'px';
+    });
+    
+    document.addEventListener('mousedown', () => {
+      cursor.style.transform = 'translate(-50%, -50%) scale(0.7)';
+      cursor2.style.transform = 'translate(-50%, -50%) scale(0.5)';
+    });
+    
+    document.addEventListener('mouseup', () => {
+      cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+      cursor2.style.transform = 'translate(-50%, -50%) scale(1)';
+    });
+    
+    // Add hover effect for links and buttons
+    document.querySelectorAll('a, button, .accordion, .tooltip').forEach(item => {
+      item.addEventListener('mouseover', () => {
+        cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
+        cursor.style.borderColor = 'var(--primary-dark)';
+        cursor2.style.backgroundColor = 'var(--primary-dark)';
+      });
+      
+      item.addEventListener('mouseleave', () => {
+        cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+        cursor.style.borderColor = 'var(--primary)';
+        cursor2.style.backgroundColor = 'var(--primary)';
+      });
+    });
+    
+    // Animate elements when they come into view
+    const observeElements = () => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      document.querySelectorAll('.feature-card, .service-item, .step').forEach(item => {
+        observer.observe(item);
+      });
+    };
+    
+    if ('IntersectionObserver' in window) {
+      observeElements();
+    }
+    
+    // IndexNow ping functionality
+    const urlInput = document.getElementById('url');
+    const keyInput = document.getElementById('key');
+    const pingButton = document.getElementById('ping-button');
+    const pingResult = document.getElementById('ping-result');
+    const fullUrlInput = document.getElementById('full-url');
+    const copyUrlButton = document.getElementById('copy-url');
+    
+    // Update full URL when inputs change
+    function updateFullUrl() {
+      const url = urlInput.value.trim();
+      const key = keyInput.value.trim();
+      if (url && key) {
+        fullUrlInput.value = `https://www.bing.com/IndexNow?url=${encodeURIComponent(url)}&key=${encodeURIComponent(key)}`;
+      } else {
+        fullUrlInput.value = '';
+      }
+    }
+    
+    urlInput.addEventListener('input', updateFullUrl);
+    keyInput.addEventListener('input', updateFullUrl);
+    
+    // Copy URL button
+    copyUrlButton.addEventListener('click', () => {
+      if (fullUrlInput.value) {
+        fullUrlInput.select();
+        document.execCommand('copy');
+        
+        // Show copied message
+        const originalText = copyUrlButton.innerHTML;
+        copyUrlButton.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        setTimeout(() => {
+          copyUrlButton.innerHTML = originalText;
+        }, 2000);
+      }
+    });
+    
+    // Send ping to Bing
+    pingButton.addEventListener('click', async () => {
+      const url = urlInput.value.trim();
+      const key = keyInput.value.trim();
+      
+      if (!url || !key) {
+        Swal.fire({
+          title: 'Incomplete Information!',
+          text: 'Please provide both URL and API key.',
+          icon: 'warning',
+          confirmButtonText: 'OK',
+          confirmButtonColor: 'var(--primary)'
+        });
+        return;
+      }
+      
+      // Show loading state
+      pingButton.innerHTML = '<i class="fas fa-circle-notch spin-icon"></i> Please wait...';
+      pingButton.disabled = true;
+      pingButton.classList.remove('pulse-animation');
+      
+      try {
+        const pingUrl = `https://www.bing.com/IndexNow?url=${encodeURIComponent(url)}&key=${encodeURIComponent(key)}`;
+        const response = await fetch(pingUrl);
+        
+        pingResult.style.display = 'block';
+        
+        if (response.ok) {
+          pingResult.className = 'result-card result-success';
+          pingResult.innerHTML = `
+            <div class="flex items-center justify-center">
+              <i class="fas fa-check-circle text-green-500 text-3xl mr-3"></i>
+              <div class="text-left">
+                <h3 class="font-bold text-xl">Success!</h3>
+                <p>Your URL has been successfully pinged to Bing. The page will be indexed soon.</p>
+                <p class="text-sm mt-2">Track the indexing status in your Bing Webmaster Tools dashboard.</p>
+              </div>
+            </div>
+          `;
+          
+          // Trigger confetti animation
+          createConfetti();
+        } else {
+          pingResult.className = 'result-card result-error';
+          pingResult.innerHTML = `
+            <div class="flex items-center justify-center">
+              <i class="fas fa-exclamation-circle text-red-500 text-3xl mr-3"></i>
+              <div class="text-left">
+                <h3 class="font-bold text-xl">Error!</h3>
+                <p>Status code: ${response.status}. Please verify your URL and key.</p>
+                <p class="text-sm mt-2">Check that your key file is properly uploaded to your website's root directory.</p>
+              </div>
+            </div>
+          `;
+        }
+      } catch (error) {
+        pingResult.style.display = 'block';
+        pingResult.className = 'result-card result-error';
+        pingResult.innerHTML = `
+          <div class="flex items-center justify-center">
+            <i class="fas fa-exclamation-triangle text-red-500 text-3xl mr-3"></i>
+            <div class="text-left">
+              <h3 class="font-bold text-xl">Error!</h3>
+              <p>Problem pinging: ${error.message}</p>
+              <p class="text-sm mt-2">This might be due to network issues or API limitations. Please try again later.</p>
+            </div>
+          </div>
+        `;
+      } finally {
+        // Restore button
+        pingButton.innerHTML = '<i class="fas fa-sync-alt mr-2"></i> Update in Bing';
+        pingButton.disabled = false;
+        pingButton.classList.add('pulse-animation');
+      }
+    });
+    
+    // Accordion functionality
+    const accordions = document.querySelectorAll('.accordion');
+    
+    accordions.forEach(accordion => {
+      accordion.addEventListener('click', function() {
+        this.classList.toggle('active');
+        const panel = this.nextElementSibling;
+        const icon = this.querySelector('i');
+        
+        if (panel.style.maxHeight) {
+          panel.style.maxHeight = null;
+          icon.className = 'fas fa-chevron-down';
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+          icon.className = 'fas fa-chevron-up';
+        }
+      });
+    });
+    
+    // 3D animation
+    function initThreeJS() {
+      const container = document.getElementById('canvas-container');
+      
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+      
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setClearColor(0x000000, 0);
+      container.appendChild(renderer.domElement);
+      
+      // Create a globe
+      const sphereGeometry = new THREE.SphereGeometry(3, 32, 32);
+      const sphereMaterial = new THREE.MeshBasicMaterial({ 
+        color: 0x5D5CDE,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.7
+      });
+      const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+      scene.add(sphere);
+      
+      // Create smaller spheres to represent nodes
+      const nodes = [];
+      for (let i = 0; i < 15; i++) {
+        const nodeGeometry = new THREE.SphereGeometry(0.2, 16, 16);
+        const nodeMaterial = new THREE.MeshBasicMaterial({ 
+          color: i % 3 === 0 ? 0xFFFFFF : (i % 3 === 1 ? 0x64DFDF : 0x80FFDB)
+        });
+        const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+        
+        // Random position on the sphere
+        const phi = Math.acos(-1 + (2 * Math.random()));
+        const theta = 2 * Math.PI * Math.random();
+        
+        node.position.x = 3 * Math.sin(phi) * Math.cos(theta);
+        node.position.y = 3 * Math.sin(phi) * Math.sin(theta);
+        node.position.z = 3 * Math.cos(phi);
+        
+        // Random animation data
+        node.userData = {
+          speed: 0.01 + Math.random() * 0.02,
+          direction: Math.random() > 0.5 ? 1 : -1,
+          amplitude: 0.2 + Math.random() * 0.3
+        };
+        
+        scene.add(node);
+        nodes.push(node);
+      }
+      
+      // Create lines connecting the center to nodes
+      const lines = [];
+      const lineMaterial = new THREE.LineBasicMaterial({ 
+        color: 0x5D5CDE, 
+        transparent: true, 
+        opacity: 0.4 
+      });
+      
+      for (let i = 0; i < nodes.length; i++) {
+        const lineGeometry = new THREE.BufferGeometry().setFromPoints([
+          new THREE.Vector3(0, 0, 0),
+          nodes[i].position
+        ]);
+        const line = new THREE.Line(lineGeometry, lineMaterial);
+        scene.add(line);
+        lines.push({line, node: nodes[i]});
+      }
+      
+      // Add pulsing packets moving along the lines
+      const packets = [];
+      for (let i = 0; i < nodes.length; i++) {
+        const packetGeometry = new THREE.SphereGeometry(0.1, 8, 8);
+        const packetMaterial = new THREE.MeshBasicMaterial({ 
+          color: i % 3 === 0 ? 0xFFFFFF : (i % 3 === 1 ? 0x64DFDF : 0x80FFDB),
+          transparent: true,
+          opacity: 0.8
+        });
+        const packet = new THREE.Mesh(packetGeometry, packetMaterial);
+        
+        packet.userData = {
+          node: nodes[i],
+          progress: 0,
+          speed: 0.01 + Math.random() * 0.01,
+          direction: 1, // 1: outgoing, -1: incoming
+          active: Math.random() > 0.5 // Only some packets active at start
+        };
+        
+        if (packet.userData.active) {
+          packet.position.copy(new THREE.Vector3(0, 0, 0));
+        } else {
+          packet.visible = false;
+        }
+        
+        scene.add(packet);
+        packets.push(packet);
+      }
+      
+      // Add some floating text elements
+      const createTextSprite = (text, position) => {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        canvas.width = 256;
+        canvas.height = 128;
+        
+        context.font = "Bold 24px Arial";
+        context.fillStyle = "rgba(93,92,222,0.95)";
+        context.fillText(text, 10, 50);
+        
+        const texture = new THREE.Texture(canvas);
+        texture.needsUpdate = true;
+        
+        const spriteMaterial = new THREE.SpriteMaterial({ 
+          map: texture,
+          transparent: true
+        });
+        const sprite = new THREE.Sprite(spriteMaterial);
+        sprite.position.copy(position);
+        sprite.scale.set(2, 1, 1);
+        sprite.userData = {
+          floatSpeed: Math.random() * 0.002 + 0.001,
+          floatAmount: Math.random() * 0.1 + 0.05,
+          originalY: position.y
+        };
+        
+        scene.add(sprite);
+        return sprite;
+      };
+      
+      const textSprites = [
+        createTextSprite("IndexNow", new THREE.Vector3(4, 2, 0)),
+        createTextSprite("SEO", new THREE.Vector3(-4, -1, 2)),
+        createTextSprite("Bing", new THREE.Vector3(0, 3, 3)),
+        createTextSprite("Fast", new THREE.Vector3(-3, -3, -1))
+      ];
+      
+      camera.position.z = 10;
+      
+      // Add mouse interaction
+      let mouseX = 0;
+      let mouseY = 0;
+      const windowHalfX = window.innerWidth / 2;
+      const windowHalfY = window.innerHeight / 2;
+      
+      document.addEventListener('mousemove', (event) => {
+        mouseX = (event.clientX - windowHalfX) / 100;
+        mouseY = (event.clientY - windowHalfY) / 100;
+      });
+      
+      // Handle window resize
+      window.addEventListener('resize', () => {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+      });
+      
+      // Animation loop
+      function animate() {
+        requestAnimationFrame(animate);
+        
+        // Rotate sphere based on mouse position
+        sphere.rotation.x += 0.002;
+        sphere.rotation.y += 0.003;
+        
+        if (mouseX && mouseY) {
+          sphere.rotation.y += (mouseX - sphere.rotation.y) * 0.01;
+          sphere.rotation.x += (mouseY - sphere.rotation.x) * 0.01;
+        }
+        
+        // Animate text sprites
+        textSprites.forEach(sprite => {
+          const data = sprite.userData;
+          sprite.position.y = data.originalY + Math.sin(Date.now() * data.floatSpeed) * data.floatAmount;
+        });
+        
+        // Animate nodes
+        for (let i = 0; i < nodes.length; i++) {
+          const node = nodes[i];
+          const data = node.userData;
+          
+          // Make nodes float slightly
+          node.position.x += Math.sin(Date.now() * data.speed) * data.amplitude * 0.01 * data.direction;
+          node.position.y += Math.cos(Date.now() * data.speed) * data.amplitude * 0.01 * data.direction;
+          
+          // Keep nodes on the sphere surface
+          const distance = Math.sqrt(
+            node.position.x * node.position.x + 
+            node.position.y * node.position.y + 
+            node.position.z * node.position.z
+          );
+          
+          node.position.x = node.position.x / distance * 3;
+          node.position.y = node.position.y / distance * 3;
+          node.position.z = node.position.z / distance * 3;
+        }
+        
+        // Update lines
+        for (let i = 0; i < lines.length; i++) {
+          const line = lines[i].line;
+          const node = lines[i].node;
+          
+          const points = [
+            new THREE.Vector3(0, 0, 0),
+            node.position
+          ];
+          
+          line.geometry.setFromPoints(points);
+        }
+        
+        // Animate packets
+        for (let i = 0; i < packets.length; i++) {
+          const packet = packets[i];
+          const data = packet.userData;
+          
+          if (data.active) {
+            data.progress += data.speed * data.direction;
+            
+            if (data.progress >= 1) {
+              // Reset packet to start moving back
+              data.progress = 1;
+              data.direction = -1;
+            } else if (data.progress <= 0) {
+              // Either become inactive or start over
+              if (Math.random() > 0.7) {
+                data.active = false;
+                packet.visible = false;
+              } else {
+                data.direction = 1;
+                data.progress = 0;
+              }
+            }
+            
+            // Update position along the path
+            const nodePos = data.node.position;
+            packet.position.x = nodePos.x * data.progress;
+            packet.position.y = nodePos.y * data.progress;
+            packet.position.z = nodePos.z * data.progress;
+            
+            // Pulse size
+            const pulse = Math.sin(Date.now() * 0.01) * 0.05 + 0.1;
+            packet.scale.set(pulse, pulse, pulse);
+          } else {
+            // Randomly activate inactive packets
+            if (Math.random() > 0.99) {
+              data.active = true;
+              data.progress = 0;
+              data.direction = 1;
+              packet.visible = true;
+            }
+          }
+        }
+        
+        renderer.render(scene, camera);
+      }
+      
+      animate();
+    }
+    
+    // Initialize 3D animation after the page loads
+    window.addEventListener('load', initThreeJS);
+    
+    // Enhanced confetti effect
+    function createConfetti() {
+      const confettiCount = 150;
+      const container = document.querySelector('.container');
+      const colors = ['#5D5CDE', '#64DFDF', '#80FFDB', '#FFEF78', '#FF5C8D'];
+      
+      for (let i = 0; i < confettiCount; i++) {
+        const confetti = document.createElement('div');
+        confetti.style.position = 'absolute';
+        confetti.style.width = Math.random() * 12 + 5 + 'px';
+        confetti.style.height = Math.random() * 6 + 3 + 'px';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.top = '-20px';
+        confetti.style.left = Math.random() * container.offsetWidth + 'px';
+        confetti.style.borderRadius = Math.random() > 0.5 ? '2px' : '50%';
+        confetti.style.zIndex = '1000';
+        confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+        confetti.style.opacity = Math.random() * 0.7 + 0.3;
+        
+        container.appendChild(confetti);
+        
+        const animationDuration = Math.random() * 3 + 2;
+        const xMove = Math.random() * 150 - 75;
+        const rotation = Math.random() * 1080; // Multiple rotations
+        
+        confetti.animate([
+          { transform: `translateY(0) translateX(0) rotate(0deg)`, opacity: 1 },
+          { transform: `translateY(${container.offsetHeight}px) translateX(${xMove}px) rotate(${rotation}deg)`, opacity: 0 }
+        ], {
+          duration: animationDuration * 1000,
+          easing: 'cubic-bezier(0,1,0.5,1)'
+        });
+        
+        setTimeout(() => {
+          confetti.remove();
+        }, animationDuration * 1000);
+      }
+    }
+    
+    // Set default URL and key if available in the example
+    urlInput.value = "https://mustakimridoymr.github.io/BingIndexNow.html";
+    keyInput.value = "";
+    updateFullUrl();
+    
+    // Count-up animation for statistics
+    function animateNumbers() {
+      const stats = document.querySelectorAll('.stat-number');
+      
+      stats.forEach(stat => {
+        const target = parseInt(stat.textContent);
+        let count = 0;
+        const duration = 2000; // 2 seconds
+        const increment = target / (duration / 16); // 60fps
+        
+        stat.textContent = '0';
+        
+        const updateCount = () => {
+          count += increment;
+          if (count < target) {
+            stat.textContent = Math.floor(count);
+            requestAnimationFrame(updateCount);
+          } else {
+            stat.textContent = target;
+          }
+        };
+        
+        // Start the animation when the element is in view
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              requestAnimationFrame(updateCount);
+              observer.unobserve(entry.target);
+            }
+          });
+        });
+        
+        observer.observe(stat);
+      });
+    }
+    
+    if ('IntersectionObserver' in window) {
+      animateNumbers();
+    }
+  </script>
+</body>
+</html>
