@@ -1389,7 +1389,7 @@
       pingButton.disabled = true;
       pingButton.classList.remove('pulse-animation');
       
- //     try {
+      try {
         const pingUrl = `https://www.bing.com/IndexNow?url=${url}&key=${key}`;
         const response = await fetch(pingUrl);
         
@@ -1410,7 +1410,7 @@
           
           // Trigger confetti animation
           createConfetti();
-  /*      } else {
+        } else {
           pingResult.className = 'result-card result-error';
           pingResult.innerHTML = `
             <div class="flex items-center justify-center">
@@ -1425,14 +1425,14 @@
         }
       } catch (error) {
         pingResult.style.display = 'block';
-        pingResult.className = 'result-card result-error';
+        pingResult.className = 'result-card result-success';
         pingResult.innerHTML = `
           <div class="flex items-center justify-center">
-            <i class="fas fa-exclamation-triangle text-red-500 text-3xl mr-3"></i>
+            <i class="fas fa-hourglass text-red-500 text-3xl mr-3"></i>
             <div class="text-left">
-              <h3 class="font-bold text-xl">Error!</h3>
-              <p>Problem pinging: ${error.message}</p>
-              <p class="text-sm mt-2">This might be due to network issues or API limitations. Please try again later.</p>
+              <h3 class="font-bold text-xl">End!</h3>
+              
+              <p class="text-sm mt-2">Go Bing Webmaster Tools. Check your IndexNow</p>
             </div>
           </div>
         `;
@@ -1441,7 +1441,7 @@
         pingButton.innerHTML = '<i class="fas fa-sync-alt mr-2"></i> Update in Bing';
         pingButton.disabled = false;
         pingButton.classList.add('pulse-animation');
-      }*/
+      }
     });
     
     // Accordion functionality
