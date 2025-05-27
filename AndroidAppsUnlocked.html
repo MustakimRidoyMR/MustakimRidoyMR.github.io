@@ -1020,7 +1020,7 @@
             transform: translateY(0);
         }
 
-        /* Progress bar animation */
+        /* Progress bar animation *//*
         .progress-container {
             width: 100%;
             background: rgba(255, 255, 255, 0.1);
@@ -1058,7 +1058,39 @@
         
         .skill-percentage {
             opacity: 0.8;
-        }
+        }*/
+      .skills-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+}
+
+.skill-item {
+    margin-bottom: 15px;
+}
+
+.skill-title {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.skill-bar {
+    background: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 20px;
+}
+
+.skill-progress {
+    background: #4CAF50;
+    color: white;
+    text-align: right;
+    padding-right: 10px;
+    line-height: 20px;
+    border-radius: 10px;
+}
+
     </style>
 </head>
 <body>
@@ -1075,13 +1107,13 @@
                 Download the latest MOD APKs and Unlocked Android Apps for free. Enjoy premium features without limits – no ads, fully unlocked, and safe to use.
             </div>
             <div class="header-cta">
-                <a href="#projects" class="cta-button">View Projects</a>
+                <a href="#projects" class="cta-button">View Popular Apps</a>
                 <a href="#contact" class="cta-button">Get In Touch</a>
             </div>
             <div class="social-links">
-                <a href="https://github.com/MustakimRidoyMR" class="social-icon"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/md-mustakim-billah-ridoy" class="social-icon"><i class="fab fa-linkedin"></i></a>
-                <a href="https://x.com/MRMustakimRidoy" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#Tools" class="social-icon"><i class="fas fa-tools"></i></a>
+                <a href="#Entertainment" class="social-icon"><i class="fas fa-film"></i></a>
+                <a href="#Productivity" class="social-icon"><i class="fas fa-tasks"></i></a>
                 <a href="https://www.instagram.com/h.m.mustakim.billah.ridoy" class="social-icon"><i class="fab fa-instagram"></i></a>
               <a href="https://www.facebook.com/md.mustakim.billah.ridoy" class="social-icon"><i class="fab fa-facebook-square"></i></a>
               <a href="https://www.youtube.com/@H.M.MustakimBillahRIDOY" class="social-icon"><i class="fab fa-youtube"></i></a>
@@ -1126,71 +1158,78 @@
 
     <div class="container reveal">
         <div class="skills-section">
-            <h2 class="section-label">Professional Skills</h2>
-            <div class="skills-container">
-                <div class="skill-item-with-progress">
-                    <div class="skill-label">
-                        <span class="skill-name-progress">Web Development</span>
-                        <span class="skill-percentage">95%</span>
-                    </div>
-                    <div class="progress-container">
-                        <div class="progress-bar" style="--width: 95%"></div>
-                    </div>
-                </div>
-                <div class="skill-item-with-progress">
-                    <div class="skill-label">
-                        <span class="skill-name-progress">Mobile App Development</span>
-                        <span class="skill-percentage">90%</span>
-                    </div>
-                    <div class="progress-container">
-                        <div class="progress-bar" style="--width: 90%"></div>
-                    </div>
-                </div>
-                <div class="skill-item-with-progress">
-                    <div class="skill-label">
-                        <span class="skill-name-progress">UI/UX Design</span>
-                        <span class="skill-percentage">85%</span>
-                    </div>
-                    <div class="progress-container">
-                        <div class="progress-bar" style="--width: 85%"></div>
-                    </div>
-                </div>
-                <div class="skill-item-with-progress">
-                    <div class="skill-label">
-                        <span class="skill-name-progress">Database Management</span>
-                        <span class="skill-percentage">80%</span>
-                    </div>
-                    <div class="progress-container">
-                        <div class="progress-bar" style="--width: 80%"></div>
-                    </div>
-                </div>
-            </div>
+        
+          <div class="section-label">📊 App Performance Highlights</div>
+
+<div class="skills-container">
+
+    <div class="skill-item">
+        <span class="skill-title">User Friendly</span>
+        <div class="skill-bar">
+            <div class="skill-progress" style="width: 100%;">100%</div>
         </div>
     </div>
+
+    <div class="skill-item">
+        <span class="skill-title">Unlocked Features</span>
+        <div class="skill-bar">
+            <div class="skill-progress" style="width: 90%;">90%</div>
+        </div>
+    </div>
+
+    <div class="skill-item">
+        <span class="skill-title">UI/UX Design Quality</span>
+        <div class="skill-bar">
+            <div class="skill-progress" style="width: 50%;">50%</div>
+        </div>
+    </div>
+
+    <div class="skill-item">
+        <span class="skill-title">RAM Management</span>
+        <div class="skill-bar">
+            <div class="skill-progress" style="width: 80%;">80%</div>
+        </div>
+    </div>
+
+    <div class="skill-item">
+        <span class="skill-title">Speed & Responsiveness</span>
+        <div class="skill-bar">
+            <div class="skill-progress" style="width: 80%;">80%</div>
+        </div>
+    </div>
+
+    <div class="skill-item">
+        <span class="skill-title">Offline Support</span>
+        <div class="skill-bar">
+            <div class="skill-progress" style="width: 70%;">70%</div>
+        </div>
+    </div>
+
+</div>
 
     <div class="container reveal">
         <div class="stats-container">
             <div class="stat-item">
                 <div class="stat-value" id="projects-count">50+</div>
-                <div class="stat-label">Projects Completed</div>
+                <div class="stat-label">Complete Version</div>
             </div>
             <div class="stat-item">
-                <div class="stat-value" id="clients-count">30+</div>
-                <div class="stat-label">Happy Clients</div>
+                <div class="stat-value" id="clients-count">35+</div>
+                <div class="stat-label">Unlock version</div>
             </div>
             <div class="stat-item">
                 <div class="stat-value" id="years-count">5+</div>
-                <div class="stat-label">Years Experience</div>
+                <div class="stat-label">Preview Version</div>
             </div>
             <div class="stat-item">
                 <div class="stat-value" id="apps-count">50+</div>
-                <div class="stat-label">Apps Published</div>
+                <div class="stat-label">Appstore Published</div>
             </div>
         </div>
     </div>
 
     <div id="projects" class="container reveal">
-        <h2 class="section-label">Featured Projects</h2>
+        <h2 class="section-label">Popular Apps</h2>
         <div class="projects">
             <div class="project-card">
                 <h2>MR Bot</h2>
@@ -1222,31 +1261,30 @@
     </div>
     <div id="container-1a6d5fbc149d94ff8c697b1327966995"></div>
             
-    <div href="https://www.profitableratecpm.com/m7j44g75?key=90f36207646d410dc5c03e6c6816a890" class="section-label">Mobile Applications</div>
-  
-    <div class="container reveal">
-        <div class="text-section">
-            <p>Download our incredible <n>Android</n> apps and games from the <n>Appstore</n>!</p>
+    <div id="Tools" class="section-label">🔧 Tools & Utilities</div>
 
-            <p>Unlock the full potential of your smartphone! Our apps and games are meticulously designed to boost productivity and deliver endless entertainment. Discover applications that simplify your daily routine and immerse yourself in games offering thrilling experiences.</p>
+<div class="container reveal">
+<div class="text-section">
+<p>Make your Android device more powerful and smarter with our Unlocked Tools & Utilities apps! 🚀</p>
 
-            <p>Experience the difference with our premium applications: enjoy innovative features, sleek user interfaces, and intuitive usability that sets us apart from the competition. Game enthusiasts, prepare yourself for captivating adventure, strategy, and action games guaranteed to keep you engaged for hours!</p>
+<p>Here you will find VPN, file manager, cleaner, battery saver, note app, scanner and many more premium tools — absolutely free, ad-free and unlocked! 🛠️</p>
 
-            <p>Why choose our apps and games?</p>
+<p>Our apps are specially designed to make your daily tasks easier and more efficient. Super fast performance, secure setup and beautiful interface - all in one place.</p>
 
-            <p>✅ Intelligent & user-friendly interfaces designed with modern UX principles</p>
-            <p>✅ Lightning-fast installation with dedicated customer support</p>
-            <p>✅ Regular updates delivering new features and performance improvements</p>
-            <p>✅ Offline functionality available for select games - play anywhere, anytime</p>
-            <p>✅ Secure installation and verified updates through the official <n>Appstore</n></p>
-            <p>✅ Optimized performance for all Android devices - from budget to flagship models</p>
-            <p>✅ Privacy-focused design with transparent data practices</p>
+<p>🌟 Why use our Tools & Utilities?</p>
 
-            <p>Don't miss out! Get instant access to your favorite applications and games with just one click!</p>
+<p>✅ Premium features fully unlocked - no subscriptions or restrictions</p>
+<p>✅ Clean and user-friendly design - easy on the eyes, convenient in the hand</p>
+<p>✅ Lightweight and fast - your mobile will not slow down</p>
+<p>✅ Many tools that work offline - usable without internet</p>
+<p>✅ Regular updates - with new features and bug fixes</p>
+<p>✅ Safe download - scanned and trusted files</p>
+<p>✅ Optimized for all Android devices - can also be run on old phones</p>
 
-            <p>📲 Explore our extensive collection of innovative apps and immersive games today!</p>
-        </div>
-    </div>
+<p>📦 Download the tools you need now, with one click!</p>
+<p>🔍 Looking for something new? Explore our wonderful collection! 😍</p>
+</div>
+</div>
   
     <div class="container reveal">
         <div class="projects">
@@ -1303,27 +1341,29 @@ Check out our collection now for regular updates, new app additions, and quick l
         </div>
     </div>
             
-    <div href="https://www.profitableratecpm.com/m7j44g75?key=90f36207646d410dc5c03e6c6816a890" class="section-label">Professional Tools</div>
-  
-    <div class="container reveal">
-        <div class="text-section">
-            <p>Edit images, text, and code like a professional with our cutting-edge <n>Editing Tools</n> — absolutely <n>FREE</n>!</p>
-            
-            <p>Elevate your creative and technical workflow! Our comprehensive suite of editing tools is designed to help professionals and enthusiasts alike complete tasks faster and with superior results. Access all essential editing features through our intuitive interface with just a single click!</p>
-            
-            <p>What you can accomplish with our professional tools:</p>
-            
-            <p>✅ Professional-grade image editing with advanced filters and transformation options</p>
-            <p>✅ Intelligent text editing with formatting, spell-check, and multi-language support</p>
-            <p>✅ Powerful code editing with syntax highlighting, auto-completion, and debugging features</p>
-            <p>✅ Cloud-optimized processing for lightning-fast performance on any device</p>
-            <p>✅ Intuitive smart interface designed for both beginners and professionals</p>
-            <p>✅ Regular feature updates and improvements based on user feedback</p>
-            <p>✅ Cross-platform compatibility for seamless workflow across devices</p>
-            
-            <p><n>Start now</n> and experience the power of professional-grade editing tools completely free of charge!</p>
-        </div>
+    <div id="Entertainment" class="section-label">🎬 Entertainment & Media</div>
+
+<div class="container reveal">
+    <div class="text-section">
+        <p>Transform the way you experience entertainment with our collection of premium unlocked Android apps! 🎧📺</p>
+
+        <p>From high-definition video players and music streaming platforms to exclusive MODs of popular OTT apps – everything is fully unlocked, ad-free, and optimized for the smoothest experience.</p>
+
+        <p>Whether you're watching your favorite series, listening to premium music, or streaming content seamlessly, our apps give you the freedom you deserve – without restrictions or annoying pop-ups!</p>
+
+        <p>🔥 Why choose our Entertainment & Media apps?</p>
+
+        <p>✅ Premium features fully unlocked – no subscriptions required</p>
+        <p>✅ High-quality audio and video output support</p>
+        <p>✅ Ad-free and smooth playback for uninterrupted fun</p>
+        <p>✅ Offline playback available for selected apps</p>
+        <p>✅ Regular updates to match official releases</p>
+        <p>✅ Compatible with all Android versions and screen sizes</p>
+        <p>✅ Lightweight and optimized for speed & stability</p>
+
+        <p>📲 Dive into a world of unlimited entertainment today – download your favorite apps now and enjoy the show! 🎉</p>
     </div>
+</div>
 
     <div class="container reveal">
         <div class="projects">
@@ -1355,100 +1395,35 @@ Check out our collection now for regular updates, new app additions, and quick l
         </div>
     </div>
 
-    <div class="container reveal">
-        <div class="testimonial-section">
-            <h2 class="section-label">Client Testimonials</h2>
-            <div class="testimonials">
-                <div class="testimonial-card">
-                    <p class="testimonial-text">Working with Ridoy was an exceptional experience. The attention to detail and creative solutions provided for our project exceeded our expectations. Highly recommended!</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">JD</div>
-                        <div class="testimonial-info">
-                            <div class="testimonial-name">John Doe</div>
-                            <div class="testimonial-position">Marketing Director</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <p class="testimonial-text">The mobile application developed for our company has dramatically improved our customer engagement. The intuitive design and flawless functionality have received positive feedback from all our users.</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">AS</div>
-                        <div class="testimonial-info">
-                            <div class="testimonial-name">Alice Smith</div>
-                            <div class="testimonial-position">CEO, TechSolutions</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <p class="testimonial-text">The developer tools created for our team have significantly improved our workflow efficiency. The thoughtful features and solid architecture show a deep understanding of development needs.</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">RJ</div>
-                        <div class="testimonial-info">
-                            <div class="testimonial-name">Robert Johnson</div>
-                            <div class="testimonial-position">Lead Developer</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div id="Productivity" class="section-label">📈 Productivity</div>
+
+<div class="container reveal">
+    <div class="text-section">
+        <p>Take control of your day and boost your efficiency with our collection of unlocked productivity apps for Android! 🗂️🧠</p>
+
+        <p>Whether you're managing tasks, writing notes, scanning documents, or editing spreadsheets – our apps are fully unlocked, ad-free, and designed for speed, clarity, and functionality.</p>
+
+        <p>Maximize your potential with powerful tools that help you organize, plan, and get things done – without limitations or subscription barriers. 💪</p>
+
+        <p>🚀 Why our Productivity apps stand out:</p>
+
+        <p>✅ All premium features unlocked – no sign-in or payment required</p>
+        <p>✅ Seamless document editing, cloud sync, and export options</p>
+        <p>✅ Task managers with reminders, calendar integrations & more</p>
+        <p>✅ Easy-to-use interfaces focused on productivity</p>
+        <p>✅ Offline access for notes and files – work anywhere, anytime</p>
+        <p>✅ Frequent updates to ensure performance and compatibility</p>
+        <p>✅ Designed to work perfectly on all Android devices</p>
+
+        <p>📋 Ready to upgrade your workflow? Download the best productivity tools now and make every second count!</p>
     </div>
-            
-    <div href="https://www.profitableratecpm.com/m7j44g75?key=90f36207646d410dc5c03e6c6816a890" class="section-label">Additional Services</div>
-    
-    <div class="container reveal">
-        <div class="projects">
-            <div class="project-card">
-                <h2>Resource Library</h2>
-                <p>Access our comprehensive collection of digital resources including templates, stock assets, fonts, icons, and development libraries. All resources are carefully curated and optimized for professional projects across various industries.</p>
-                <a href="Resources.html" class="project-link">Download Resources ⬇</a>
-            </div>
+</div>
 
-            <div class="project-card">
-                <h2>Interactive Games Collection</h2>
-                <p>Enjoy our extensive library of free interactive games spanning multiple genres and platforms. From casual puzzles to immersive adventures, our games collection provides entertainment for players of all ages and skill levels.</p>
-                <a href="Games.html" class="project-link">Play Games 🎮</a>
-            </div>
-          
-            <div class="project-card">
-                <h2>Currency Exchange Service 🤑</h2>
-                <p>Convert between multiple currencies with our real-time exchange rate calculator. Features include historical rate tracking, conversion alerts, and support for global currencies with transparent fee structures and competitive rates.</p>
-                <a href="MoneyToMoney.html" class="project-link">Exchange Currency 💱</a>
-            </div>
-
-            <div class="project-card">
-                <h2>SEO Indexing Tool</h2>
-                <p>Accelerate search engine indexing for your web pages with our specialized Bing IndexNow integration. Improve your site's visibility and ensure fresh content is discovered and ranked quickly by major search engines.</p>
-                <a href="BingIndexNow.html" class="project-link">Index Your Pages</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="container reveal">
-        <div class="faq-section">
-            <h2 class="section-label">Frequently Asked Questions</h2>
-            <div class="faq-item">
-                <div class="faq-question">What services are provided here?</div>
-                <div class="faq-answer">We offer a wide range of digital services including web development, mobile application development, UI/UX design, graphic design, and technical consulting. Each service is tailored to meet the specific needs of your project.</div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">How long does it take to complete a project?</div>
-                <div class="faq-answer">Project timelines vary depending on complexity, scope, and requirements. A simple website might take 2-4 weeks, while a comprehensive mobile application could require 2-3 months. I provide detailed timelines during the initial consultation phase.</div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">Is there maintenance provided after the project is completed?</div>
-                <div class="faq-answer">Yes, there is an ongoing maintenance and support package offered for all completed projects. This includes regular updates, security patches, performance optimizations, and content updates to keep your digital products running smoothly.</div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">Are all the tools and applications here free to use?</div>
-                <div class="faq-answer">Many of the tools and applications here offer free versions with essential features. Premium versions with advanced capabilities are available for professional users with additional requirements.</div>
-            </div>
-        </div>
-    </div>
-
+  
     <div id="contact" class="container reveal">
         <h2 class="section-label">Get In Touch</h2>
         <div class="text-section">
-            <p>Ready to start your next project or have questions about our services? We'd love to hear from you!</p>
+            <p>Have questions about our services? We'd love to hear from you!</p>
             <p>Whether you need a custom web application, mobile app, or professional design work, we're here to help turn your dreams into reality.</p>
             <p>Feel free to reach out via any of the contact methods below, and we'll get back to you promptly to discuss how we can work together.</p>
             
@@ -1457,19 +1432,6 @@ Check out our collection now for regular updates, new app additions, and quick l
     </div>
   
     <!-- Ad container before footer -->
-    <div class="container">
-        <div class="ad-container">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-1158797123946133"
-                 data-ad-slot="your-ad-slot"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-    
         <div class="ad-container bg-white dark:bg-gray-800 p-4 rounded-xl mt-6">
             <script type="text/javascript">
                 atOptions = {
@@ -1488,7 +1450,7 @@ Check out our collection now for regular updates, new app additions, and quick l
         <div class="container">
             <div class="footer-links">
                 <a href="/MR-Bot/index.html" class="footer-link">MRBot</a>
-                <a href="#projects" class="footer-link">Projects</a>
+                <a href="https://mustakimridoymr.github.io/" class="footer-link">Home</a>
                 <a href="#contact" class="footer-link">Contact</a>
                 <a href="/MR-Bot/PrivacyPolicy.html" class="footer-link">Privacy Policy</a>
                 <a href="/MR-Bot/TermsOfService.html" class="footer-link">Terms of Service</a>
