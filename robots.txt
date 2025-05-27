@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /search
+Disallow: /popads/
+Disallow: /ads/
+Disallow: /redirect/
+Allow: /
+Sitemap: https://mustakimridoymr.github.io/sitemap.xml
