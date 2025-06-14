@@ -6,8 +6,7 @@
             const repo = 'MustakimRidoyMR.github.io';
             const validImageExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
 
-           // const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`);
-            const folder = `https://github.com/MustakimRidoyMR/MustakimRidoyMR.github.io/tree/main/Images/${path}`;
+            const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`);
             const response = await fetch(folder);
             const contents = await response.json();
 
