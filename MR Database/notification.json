@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Update 1",
+    "message": "Version 1.1 is now live.",
+    "url": "https://example.com/v1"
+  },
+  {
+    "title": "Bug Fix",
+    "message": "We fixed the crashing issue.",
+    "url": "https://example.com/fix"
+  },
+  {
+    "title": "New Feature",
+    "message": "Dark mode is now supported!",
+    "url": "https://example.com/dark"
+  }
+]
