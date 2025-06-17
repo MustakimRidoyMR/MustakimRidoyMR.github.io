@@ -1,17 +1,24 @@
 [
   {
-    "title": "Update 1",
-    "message": "Version 1.1 is now live.",
-    "url": "https://example.com/v1"
-  },
-  {
     "title": "Bug Fix",
     "message": "We fixed the crashing issue.",
-    "url": "https://example.com/fix"
+    "url": "https://mustakimridoymr.github.io/"
   },
   {
     "title": "New Feature",
     "message": "Dark mode is now supported!",
-    "url": "https://example.com/dark"
+    "url": "https://mustakimridoymr.github.io/MR-Bot/"
+  },
+  {
+    "title": "Update version 1",
+    "message": "Version 1.1 is now live.",
+    "url": "https://amzn.to/3NOG3er"
+  },
+  {
+    "title": "Add Image",
+    "message": "Download this image to click here",
+    "url": "https://amzn.to/3NOG3er",
+    "image": "https://raw.githubusercontent.com/MustakimRidoyMR/MustakimRidoyMR.github.io/main/Images/Apk%20Cover%20Photo.jpeg",
+    "layout": "VERTICAL"
   }
 ]
