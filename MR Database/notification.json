@@ -13,5 +13,19 @@
     "title": "Update version 1",
     "message": "Version 1.1 is now live.",
     "url": "https://amzn.to/3NOG3er"
+  },
+  {
+    "title": "Add Image",
+    "message": "Download this image to click here",
+    "url": "https://amzn.to/3NOG3er",
+    "image": "https://raw.githubusercontent.com/MustakimRidoyMR/MustakimRidoyMR.github.io/main/Images/Apk%20Cover%20Photo.jpeg",
+    "layout": "VERTICAL"
+  },
+  {
+    "title": "New Game created",
+    "message": "Download this game to click here",
+    "url": "https://amzn.to/3NOG3er",
+    "image": "https://raw.githubusercontent.com/MustakimRidoyMR/MustakimRidoyMR.github.io/main/Images/Apk%20Cover%20Photo.jpeg",
+    "layout": "VERTICAL"
   }
 ]
