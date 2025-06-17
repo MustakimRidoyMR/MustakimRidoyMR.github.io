@@ -1,30 +1,30 @@
 [
   {
-    "title": "Daraz",
-    "text": "I found this great deal on Daraz! Check it out! \nProduct Name:  Hand Grip 5-60Kg Adjustable Hand Strengthener Grip Trainer - Hand Grip - Lifestyle\nProduct Price:  ৳550\nDiscount Price:  ৳145",
+    "title": "Product:  Hand Grip 5-60Kg Adjustable Hand Strengthener Grip Trainer - Hand Grip - Lifestyle",
+    "text": "I found this great deal on Daraz! Check it out! \nProduct Price:  ৳550\nDiscount Price:  ৳145",
     "button": "By now",
     "url": "https://s.daraz.com.bd/s.ZSqA5?cc",
     "image": "https://static-01.daraz.com.bd/p/7b621f977a71e0423fce9296b1987fb4.jpg"
   },
   {
     "title": "New Feature",
-    "text": "Download this image to click here",
+    "text": "Check to click here",
     "button": "By now",
     "url": "https://amzn.to/3NOG3er",
     "image": "https://raw.githubusercontent.com/MustakimRidoyMR/MustakimRidoyMR.github.io/main/Images/Apk%20Cover%20Photo.jpeg"
   },
   {
     "title": "Update version 1",
-    "text": "Download this image to click here",
+    "text": "Check it now",
     "button": "By now",
     "url": "https://amzn.to/3NOG3er",
-    "image": "https://raw.githubusercontent.com/MustakimRidoyMR/MustakimRidoyMR.github.io/main/Images/Apk%20Cover%20Photo.jpeg"
+    "image": "https://t3.ftcdn.net/jpg/02/93/37/28/360_F_293372811_2gpgNsJ3TQSPsfAbmBPIYfuKfAw70bpt.jpg"
   },
   {
-    "title": "Add Image",
-    "text": "Download this image to click here",
-    "button": "By now",
-    "url": "https://amzn.to/3NOG3er",
-    "image": "https://raw.githubusercontent.com/MustakimRidoyMR/MustakimRidoyMR.github.io/main/Images/Apk%20Cover%20Photo.jpeg"
+    "title": "Use AI",
+    "text": "Use AI for your work",
+    "button": "Try now",
+    "url": "https://mustakimridoymr.github.io",
+    "image": "https://incubator.ucf.edu/wp-content/uploads/2023/07/artificial-intelligence-new-technology-science-futuristic-abstract-human-brain-ai-technology-cpu-central-processor-unit-chipset-big-data-machine-learning-cyber-mind-domination-generative-ai-scaled-1-1500x1000.jpg"
   }
 ]
