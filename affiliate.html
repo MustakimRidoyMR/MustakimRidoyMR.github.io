@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Products & Tools Hub - Best Deals & AI Solutions</title>
+    <meta name="description" content="Discover amazing deals on fitness equipment, latest features, and AI tools. Premium products with exclusive discounts and cutting-edge technology.">
+    <meta name="keywords" content="hand grip, fitness equipment, AI tools, deals, discount, technology, products">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5D5CDE',
+                        secondary: '#FF6B6B',
+                        accent: '#4ECDC4',
+                        success: '#45B7D1'
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'bounce-slow': 'bounce 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s ease-in-out infinite'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotateY(0deg); }
+            50% { transform: translateY(-20px) rotateY(5deg); }
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 20px rgba(93, 92, 222, 0.5); }
+            to { box-shadow: 0 0 30px rgba(93, 92, 222, 0.8), 0 0 40px rgba(93, 92, 222, 0.3); }
+        }
+        
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+        }
+        
+        .card-3d:hover {
+            transform: rotateY(10deg) rotateX(10deg) scale(1.05);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #5D5CDE, #FF6B6B, #4ECDC4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .mouse-trail {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(93, 92, 222, 0.8), transparent);
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+        }
+        
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .cursor-custom {
+            cursor: none;
+        }
+        
+        .custom-cursor {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid #5D5CDE;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            backdrop-filter: blur(2px);
+        }
+        
+        .custom-cursor::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 8px;
+            height: 8px;
+            background: #5D5CDE;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .hover-scale:hover {
+            transform: scale(1.1);
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.6;
+            animation: particle-float 8s infinite linear;
+        }
+        
+        @keyframes particle-float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+    
+    <!-- DirectLink Ad Scripts -->
+    <script type='text/javascript' src='//pl26717244.profitableratecpm.com/bf/51/a4/bf51a42d984554beaaed4a58dcdb733d.js'></script>
+    <script type='text/javascript' src='//pl26713337.profitableratecpm.com/64/66/f1/6466f1b7fea6c93f404f4ab49960b99c.js'></script>
+    <script async="async" data-cfasync="false" src="//pl26713372.profitableratecpm.com/1a6d5fbc149d94ff8c697b1327966995/invoke.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1158797123946133" crossorigin="anonymous"></script>
+</head>
+<body class="cursor-custom bg-white dark:bg-gray-900 transition-all duration-500">
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+    
+    <!-- Particle Background -->
+    <div id="particles-container" class="fixed inset-0 overflow-hidden pointer-events-none z-0"></div>
+    
+    <!-- Header -->
+    <header class="relative z-10 glass-effect">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-lg flex items-center justify-center animate-pulse-slow">
+                        <i class="fas fa-star text-white text-xl"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold gradient-text">Premium Hub</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="text-sm text-gray-600 dark:text-gray-300">Best Deals & AI Tools</span>
+                    <div class="w-6 h-6 bg-green-500 rounded-full animate-pulse"></div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative z-10 py-20 gradient-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-5xl md:text-7xl font-bold text-white mb-6 animate-float">
+                Discover Amazing
+                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">
+                    Deals & Tools
+                </span>
+            </h2>
+            <p class="text-xl text-gray-200 mb-8 max-w-3xl mx-auto">
+                Premium products, exclusive discounts, and cutting-edge AI technology all in one place
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <div class="px-6 py-3 bg-white bg-opacity-20 rounded-full text-white font-medium animate-bounce-slow">
+                    <i class="fas fa-fire mr-2"></i>Hot Deals
+                </div>
+                <div class="px-6 py-3 bg-white bg-opacity-20 rounded-full text-white font-medium animate-bounce-slow" style="animation-delay: 0.5s;">
+                    <i class="fas fa-robot mr-2"></i>AI Powered
+                </div>
+                <div class="px-6 py-3 bg-white bg-opacity-20 rounded-full text-white font-medium animate-bounce-slow" style="animation-delay: 1s;">
+                    <i class="fas fa-shield-alt mr-2"></i>Trusted
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ad Container -->
+    <div class="relative z-10 max-w-4xl mx-auto mb-8 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg">
+        <div id="container-1a6d5fbc149d94ff8c697b1327966995"></div>
+    </div>
+
+    <!-- Products Section -->
+    <section class="relative z-10 py-20 bg-gray-50 dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h3 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                    Featured Products & Tools
+                </h3>
+                <p class="text-lg text-gray-600 dark:text-gray-300">
+                    Handpicked selection of premium products and innovative solutions
+                </p>
+            </div>
+            
+            <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-8">
+                <!-- Products will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="relative z-10 py-16 bg-primary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="text-white">
+                    <div class="text-4xl font-bold mb-2 animate-glow" id="counter1">0</div>
+                    <div class="text-sm opacity-80">Happy Customers</div>
+                </div>
+                <div class="text-white">
+                    <div class="text-4xl font-bold mb-2 animate-glow" id="counter2">0</div>
+                    <div class="text-sm opacity-80">Products Sold</div>
+                </div>
+                <div class="text-white">
+                    <div class="text-4xl font-bold mb-2 animate-glow" id="counter3">0</div>
+                    <div class="text-sm opacity-80">AI Tools Used</div>
+                </div>
+                <div class="text-white">
+                    <div class="text-4xl font-bold mb-2 animate-glow" id="counter4">0</div>
+                    <div class="text-sm opacity-80">Satisfied Reviews</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional Ad Container -->
+    <div class="relative z-10 max-w-4xl mx-auto mt-8 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg">
+        <script type="text/javascript">
+            atOptions = {
+                'key' : '9d28964d0cf3efa6afb4b9626542fa30',
+                'format' : 'iframe',
+                'height' : 60,
+                'width' : 468,
+                'params' : {}
+            };
+            document.write('<scr' + 'ipt type="text/javascript" src="//www.highperformanceformat.com/9d28964d0cf3efa6afb4b9626542fa30/invoke.js"></scr' + 'ipt>');
+        </script>
+    </div>
+
+    <!-- Footer -->
+    <footer class="relative z-10 bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Premium Hub</h4>
+                    <p class="text-gray-400">Your one-stop destination for premium products and AI-powered solutions.</p>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Products</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">AI Tools</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Deals</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Support</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-2xl text-gray-400 hover:text-white transition-colors"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-2xl text-gray-400 hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-2xl text-gray-400 hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-2xl text-gray-400 hover:text-white transition-colors"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Premium Hub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dark mode detection
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        // Products data
+        const productsData = [
+            {
+                "title": "Product: Hand Grip 5-60Kg Adjustable Hand Strengthener Grip Trainer - Hand Grip - Lifestyle",
+                "text": "I found this great deal on Daraz! Check it out! \nProduct Price: ৳550\nDiscount Price: ৳145",
+                "button": "Buy Now",
+                "url": "https://s.daraz.com.bd/s.ZSqA5?cc",
+                "image": "https://static-01.daraz.com.bd/p/7b621f977a71e0423fce9296b1987fb4.jpg"
+            },
+            {
+                "title": "New Feature",
+                "text": "Check to click here",
+                "button": "Buy Now",
+                "url": "https://amzn.to/3NOG3er",
+                "image": "https://raw.githubusercontent.com/MustakimRidoyMR/MustakimRidoyMR.github.io/main/Images/Apk%20Cover%20Photo.jpeg"
+            },
+            {
+                "title": "Update version 1",
+                "text": "Check it now",
+                "button": "Buy Now",
+                "url": "https://amzn.to/3NOG3er",
+                "image": "https://t3.ftcdn.net/jpg/02/93/37/28/360_F_293372811_2gpgNsJ3TQSPsfAbmBPIYfuKfAw70bpt.jpg"
+            },
+            {
+                "title": "Use AI",
+                "text": "Use AI for your work",
+                "button": "Try Now",
+                "url": "https://mustakimridoymr.github.io",
+                "image": "https://incubator.ucf.edu/wp-content/uploads/2023/07/artificial-intelligence-new-technology-science-futuristic-abstract-human-brain-ai-technology-cpu-central-processor-unit-chipset-big-data-machine-learning-cyber-mind-domination-generative-ai-scaled-1-1500x1000.jpg"
+            }
+        ];
+
+        // Custom cursor
+        const cursor = document.querySelector('.custom-cursor');
+        let mouseX = 0, mouseY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.left = mouseX - 20 + 'px';
+            cursor.style.top = mouseY - 20 + 'px';
+        });
+
+        // Hover effects for cursor
+        document.addEventListener('mouseenter', (e) => {
+            if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.classList.contains('hover-scale')) {
+                cursor.style.transform = 'scale(1.5)';
+                cursor.style.background = 'rgba(93, 92, 222, 0.2)';
+            }
+        });
+
+        document.addEventListener('mouseleave', (e) => {
+            if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.classList.contains('hover-scale')) {
+                cursor.style.transform = 'scale(1)';
+                cursor.style.background = 'transparent';
+            }
+        });
+
+        // Particle system
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.width = Math.random() * 10 + 5 + 'px';
+            particle.style.height = particle.style.width;
+            
+            const colors = ['#5D5CDE', '#FF6B6B', '#4ECDC4', '#45B7D1'];
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            
+            document.getElementById('particles-container').appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 8000);
+        }
+
+        setInterval(createParticle, 300);
+
+        // Counter animation
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            
+            function updateCounter() {
+                start += increment;
+                if (start < target) {
+                    element.textContent = Math.floor(start);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = target;
+                }
+            }
+            updateCounter();
+        }
+
+        // Start counters when visible
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(document.getElementById('counter1'), 1250);
+                    animateCounter(document.getElementById('counter2'), 5670);
+                    animateCounter(document.getElementById('counter3'), 892);
+                    animateCounter(document.getElementById('counter4'), 1456);
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+
+        observer.observe(document.getElementById('counter1'));
+
+        // Load products
+        function loadProducts() {
+            const grid = document.getElementById('products-grid');
+            
+            productsData.forEach((product, index) => {
+                const productCard = document.createElement('div');
+                productCard.className = 'card-3d bg-white dark:bg-gray-700 rounded-2xl shadow-xl overflow-hidden hover-scale group';
+                productCard.style.animationDelay = `${index * 0.2}s`;
+                
+                const isSpecialOffer = product.text.includes('৳');
+                const buttonColor = product.button.includes('Try') ? 'bg-accent' : 'bg-secondary';
+                
+                productCard.innerHTML = `
+                    <div class="relative overflow-hidden">
+                        <img src="${product.image}" alt="${product.title}" 
+                             class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1NiIgdmlld0JveD0iMCAwIDQwMCAyNTYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjU2IiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0yMDAgMTI4TDE2MCA4OEwyNDAgODhMMjAwIDEyOFoiIGZpbGw9IiM5Q0EzQUYiLz4KPC9zdmc+'">
+                        ${isSpecialOffer ? '<div class="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold animate-pulse">Special Offer!</div>' : ''}
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-2">${product.title}</h4>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4 whitespace-pre-line">${product.text}</p>
+                        <a href="${product.url}" target="_blank" rel="noopener noreferrer"
+                           class="inline-flex items-center justify-center w-full ${buttonColor} text-white px-6 py-3 rounded-xl font-semibold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                            <i class="fas fa-${product.button.includes('Try') ? 'rocket' : 'shopping-cart'} mr-2"></i>
+                            ${product.button}
+                        </a>
+                    </div>
+                `;
+                
+                grid.appendChild(productCard);
+            });
+        }
+
+        // Load products when page loads
+        document.addEventListener('DOMContentLoaded', loadProducts);
+
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Performance optimization: Lazy load images
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.classList.add('loaded');
+        });
+    </script>
+</body>
+</html>
