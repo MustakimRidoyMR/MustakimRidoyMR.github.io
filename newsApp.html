@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <!-- DirectLink Ad Scripts -->
     <script type='text/javascript' src='//pl26717244.profitableratecpm.com/bf/51/a4/bf51a42d984554beaaed4a58dcdb733d.js'></script>
     <script type='text/javascript' src='//pl26713337.profitableratecpm.com/64/66/f1/6466f1b7fea6c93f404f4ab49960b99c.js'></script>
@@ -9,11 +8,10 @@
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1158797123946133"
      crossorigin="anonymous"></script>
-    <script src="background-changer.js"></script>
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global News Hub</title>
+    <title>Global News Hub Pro</title>
     
     <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -25,6 +23,9 @@
     
     <!-- Three.js for 3D animation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <script>
         tailwind.config = {
@@ -39,11 +40,16 @@
                         'primary-dark': '#4F46E5',
                         'bg-light': '#FFFFFF',
                         'bg-dark': '#181818',
+                        'accent': '#FF6B6B',
+                        'success': '#4ECDC4',
                     },
                     animation: {
                         'float': 'float 3s ease-in-out infinite',
                         'glow': 'glow 2s ease-in-out infinite alternate',
                         'slide-up': 'slideUp 0.5s ease-out',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                        'gradient': 'gradient 3s ease infinite',
                     },
                     keyframes: {
                         float: {
@@ -57,6 +63,10 @@
                         slideUp: {
                             '0%': { opacity: '0', transform: 'translateY(20px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        gradient: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
                         }
                     }
                 }
@@ -85,24 +95,24 @@
 
         /* Custom scrollbar for better aesthetics */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 10px;
         }
         ::-webkit-scrollbar-track {
-            background: #1a202c;
+            background: linear-gradient(to bottom, #1a202c, #2d3748);
         }
         ::-webkit-scrollbar-thumb {
-            background: #4a5568;
+            background: linear-gradient(to bottom, #5D5CDE, #4F46E5);
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #718096;
+            background: linear-gradient(to bottom, #4F46E5, #6366F1);
         }
         
         /* Enhanced glassmorphism effect for cards */
         .news-card {
             background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.15);
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             position: relative;
@@ -126,14 +136,14 @@
 
         .news-card:hover {
             transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            border-color: rgba(93, 92, 222, 0.5);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            border-color: rgba(93, 92, 222, 0.6);
         }
         
         /* Enhanced feed button styles */
         .feed-btn {
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             transition: all 0.3s ease;
             position: relative;
@@ -159,14 +169,27 @@
             background: rgba(93, 92, 222, 0.3);
             border-color: rgba(93, 92, 222, 0.6);
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(93, 92, 222, 0.3);
+            box-shadow: 0 10px 30px rgba(93, 92, 222, 0.4);
         }
         
         .feed-btn.active {
             background: linear-gradient(135deg, #5D5CDE, #4F46E5);
             color: white;
             border-color: #5D5CDE;
-            box-shadow: 0 0 25px rgba(93, 92, 222, 0.6);
+            box-shadow: 0 0 30px rgba(93, 92, 222, 0.7);
+        }
+
+        .feed-btn.locked {
+            background: rgba(255, 0, 0, 0.2);
+            border-color: rgba(255, 0, 0, 0.4);
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .feed-btn.locked:hover {
+            background: rgba(255, 0, 0, 0.3);
+            transform: none;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
         }
 
         /* Enhanced loading animation */
@@ -176,10 +199,54 @@
             animation: gradient 2s ease infinite;
         }
 
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* Ad container styles */
+        .ad-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            margin: 20px 0;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+        }
+
+        .ad-container::before {
+            content: 'Advertisement';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            background: #5D5CDE;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: rgba(24, 24, 24, 0.95);
+            backdrop-filter: blur(20px);
+            margin: 15% auto;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
         }
 
         /* Dark mode support */
@@ -193,6 +260,18 @@
             border-color: rgba(255, 255, 255, 0.15);
         }
 
+        /* Premium glow effects */
+        .premium-glow {
+            box-shadow: 0 0 20px rgba(93, 92, 222, 0.5), 0 0 40px rgba(93, 92, 222, 0.3), 0 0 80px rgba(93, 92, 222, 0.1);
+        }
+
+        /* Animated gradient background */
+        .gradient-bg {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
     </style>
 </head>
 <body class="bg-gray-900 text-white dark">
@@ -200,30 +279,66 @@
     <!-- Canvas for 3D background -->
     <canvas id="bg-canvas"></canvas>
 
+    <!-- Lock Modal -->
+    <div id="lockModal" class="modal">
+        <div class="modal-content">
+            <div class="text-6xl mb-4">🔒</div>
+            <h2 class="text-2xl font-bold text-red-400 mb-4">Source Locked</h2>
+            <p class="text-gray-300 mb-6">This news source is locked. Click unlock to access premium content!</p>
+            <div class="flex justify-center space-x-4">
+                <button id="unlockBtn" class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105">
+                    <i class="fas fa-unlock mr-2"></i>Unlock Now
+                </button>
+                <button id="cancelBtn" class="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-full font-semibold transition-all duration-300">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div class="container mx-auto px-4 py-8 relative z-10 max-w-7xl">
         
         <!-- Enhanced Header Section -->
         <header class="text-center mb-16">
             <div class="animate-slide-up">
-                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black font-poppins text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 animate-glow">
-                    Global News Hub
-                </h1>
+                <div class="relative inline-block">
+                    <h1 class="text-5xl md:text-7xl lg:text-8xl font-black font-poppins text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 animate-glow premium-glow">
+                        Global News Hub Pro
+                    </h1>
+                    <div class="absolute -top-2 -right-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-3 py-1 rounded-full text-xs font-bold animate-bounce-slow">
+                        PREMIUM
+                    </div>
+                </div>
                 <div class="w-32 h-1 bg-gradient-to-r from-purple-400 to-pink-500 mx-auto mt-4 rounded-full"></div>
                 <p class="text-gray-300 mt-6 text-xl md:text-2xl font-light">Stay informed with the latest news from around the world</p>
-                <div class="flex justify-center items-center mt-4 space-x-2">
-                    <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                    <span class="text-green-400 text-sm font-medium">Live Updates</span>
+                <div class="flex justify-center items-center mt-4 space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                        <span class="text-green-400 text-sm font-medium">Live Updates</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                        <span class="text-blue-400 text-sm font-medium">25+ Sources</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+                        <span class="text-yellow-400 text-sm font-medium">AI Enhanced</span>
+                    </div>
                 </div>
             </div>
         </header>
       
-      <div class="ad-container bg-white dark:bg-gray-800 p-4 rounded-xl mb-6">
-    <div id="container-1a6d5fbc149d94ff8c697b1327966995"></div>
-</div>
+        <!-- Top Ad Container -->
+        <div class="ad-container gradient-bg">
+            <div id="container-1a6d5fbc149d94ff8c697b1327966995"></div>
+        </div>
 
         <!-- Enhanced Feed Selector Buttons -->
         <div class="mb-12">
-            <h2 class="text-2xl font-bold text-center mb-8 text-gray-200">Choose Your News Source</h2>
+            <h2 class="text-3xl font-bold text-center mb-8 text-gray-200 animate-slide-up">
+                <i class="fas fa-globe mr-3 text-primary"></i>
+                Choose Your News Source
+            </h2>
             <div id="feed-buttons" class="flex flex-wrap justify-center gap-3 max-w-6xl mx-auto">
                 <!-- Feed buttons will be dynamically inserted here -->
             </div>
@@ -232,14 +347,19 @@
         <!-- Enhanced Loading Spinner -->
         <div id="loader" class="text-center my-20 hidden">
             <div class="relative inline-block">
-                <svg class="animate-spin h-16 w-16 text-purple-400 mx-auto loading-pulse rounded-full" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <svg class="animate-spin h-20 w-20 text-purple-400 mx-auto loading-pulse rounded-full" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
                 <div class="absolute inset-0 border-4 border-purple-400 rounded-full animate-ping opacity-20"></div>
             </div>
-            <p class="mt-6 text-gray-300 text-lg font-medium">Loading latest news...</p>
+            <p class="mt-6 text-gray-300 text-xl font-medium">Loading latest news...</p>
             <p class="text-gray-500 text-sm mt-2">Please wait while we fetch the freshest updates</p>
+            <div class="mt-4 flex justify-center space-x-2">
+                <div class="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style="animation-delay: 0s"></div>
+                <div class="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                <div class="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+            </div>
         </div>
 
         <!-- Enhanced News Content Grid -->
@@ -247,24 +367,32 @@
             <!-- News articles will be dynamically inserted here -->
         </div>
 
-      <!-- Bottom Ad Container -->
-        <div class="ad-container bg-white dark:bg-gray-800 p-4 rounded-xl mt-6">
-    <script type="text/javascript">
-        atOptions = {
-            'key' : '9d28964d0cf3efa6afb4b9626542fa30',
-            'format' : 'iframe',
-            'height' : 60,
-            'width' : 468,
-            'params' : {}
-        };
-        document.write('<script type="text/javascript" src="//www.highperformanceformat.com/9d28964d0cf3efa6afb4b9626542fa30/invoke.js"><\/script>');
-    </script>
-</div>
+        <!-- Bottom Ad Container -->
+        <div class="ad-container gradient-bg mt-12">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '9d28964d0cf3efa6afb4b9626542fa30',
+                    'format' : 'iframe',
+                    'height' : 60,
+                    'width' : 468,
+                    'params' : {}
+                };
+                document.write('<script type="text/javascript" src="//www.highperformanceformat.com/9d28964d0cf3efa6afb4b9626542fa30/invoke.js"><\/script>');
+            </script>
+        </div>
       
         <!-- Footer -->
         <footer class="text-center mt-20 py-8 border-t border-gray-700">
-            <p class="text-gray-400">Global News Hub - Bringing you news from trusted sources worldwide</p>
-            <p class="text-gray-500 text-sm mt-2">Updates every few minutes • Real-time global coverage</p>
+            <div class="mb-4">
+                <h3 class="text-2xl font-bold text-primary mb-2">Global News Hub Pro</h3>
+                <p class="text-gray-400">Bringing you news from trusted sources worldwide</p>
+                <p class="text-gray-500 text-sm mt-2">Updates every few minutes • Real-time global coverage • 25+ Premium Sources</p>
+            </div>
+            <div class="flex justify-center space-x-6 text-gray-400">
+                <span class="flex items-center"><i class="fas fa-shield-alt mr-2 text-green-400"></i>Secure</span>
+                <span class="flex items-center"><i class="fas fa-bolt mr-2 text-yellow-400"></i>Fast</span>
+                <span class="flex items-center"><i class="fas fa-star mr-2 text-purple-400"></i>Premium</span>
+            </div>
         </footer>
         
     </div>
@@ -282,41 +410,144 @@
             }
         });
 
-        // --- DATA: RSS Feed Sources ---
+        // --- DATA: Enhanced RSS Feed Sources (25+ feeds) ---
         const feeds = [
-            { name: "BBC Bengali", url: "https://feeds.bbci.co.uk/bengali/rss.xml" },
-            { name: "BBC News", url: "https://feeds.bbci.co.uk/news/rss.xml" },
-            { name: "CNN", url: "http://rss.cnn.com/rss/edition.rss" },
-            { name: "Al Jazeera English", url: "https://www.aljazeera.com/xml/rss/all.xml" },
-            { name: "New York Times", url: "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml" },
-            { name: "Reuters", url: "https://www.reutersagency.com/feed/?best-topics=top-news" },
-            { name: "Prothom Alo", url: "https://www.prothomalo.com/feed" },
-            { name: "Jugantor", url: "https://www.jugantor.com/rss/feed" },
-            { name: "Bangla Tribune", url: "https://banglatribune.com/feed" },
-            { name: "BDNews24", url: "https://bangla.bdnews24.com/rss/bangla.xml" },
-            { name: "Samakal", url: "https://samakal.com/rss.xml" },
-            { name: "Daily Inqilab", url: "https://www.dailyinqilab.com/rss" },
-            { name: "Naya Diganta", url: "https://www.dailynayadiganta.com/rss.xml" },
-            { name: "Channel i Online", url: "https://www.channelionline.com/feed" },
-            { name: "The Daily Star", url: "https://www.thedailystar.net/frontpage/rss.xml" }
+            { name: "BBC Bengali", url: "https://feeds.bbci.co.uk/bengali/rss.xml", locked: false },
+            { name: "BBC News", url: "https://feeds.bbci.co.uk/news/rss.xml", locked: false },
+            { name: "CNN", url: "http://rss.cnn.com/rss/edition.rss", locked: false },
+            { name: "Al Jazeera English", url: "https://www.aljazeera.com/xml/rss/all.xml", locked: true },
+            { name: "New York Times", url: "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml", locked: true },
+            { name: "Reuters", url: "https://www.reutersagency.com/feed/?best-topics=top-news", locked: false },
+            { name: "Prothom Alo", url: "https://www.prothomalo.com/feed", locked: false },
+            { name: "Jugantor", url: "https://www.jugantor.com/rss/feed", locked: true },
+            { name: "Bangla Tribune", url: "https://banglatribune.com/feed", locked: true },
+            { name: "BDNews24", url: "https://bangla.bdnews24.com/rss/bangla.xml", locked: false },
+            { name: "Samakal", url: "https://samakal.com/rss.xml", locked: true },
+            { name: "Daily Inqilab", url: "https://www.dailyinqilab.com/rss", locked: true },
+            { name: "Naya Diganta", url: "https://www.dailynayadiganta.com/rss.xml", locked: true },
+            { name: "Channel i Online", url: "https://www.channelionline.com/feed", locked: true },
+            { name: "The Daily Star", url: "https://www.thedailystar.net/frontpage/rss.xml", locked: false },
+            { name: "Guardian", url: "https://www.theguardian.com/rss", locked: true },
+            { name: "Washington Post", url: "https://feeds.washingtonpost.com/rss/world", locked: true },
+            { name: "Fox News", url: "http://feeds.foxnews.com/foxnews/latest", locked: true },
+            { name: "TechCrunch", url: "https://techcrunch.com/feed/", locked: true },
+            { name: "ESPN", url: "https://www.espn.com/espn/rss/news", locked: true },
+            { name: "National Geographic", url: "https://www.nationalgeographic.com/news/rss/", locked: true },
+            { name: "Wired", url: "https://www.wired.com/feed/rss", locked: true },
+            { name: "TIME", url: "https://feeds2.feedburner.com/time/topstories", locked: true },
+            { name: "ABC News", url: "https://abcnews.go.com/abcnews/topstories", locked: true },
+            { name: "Sky News", url: "http://feeds.skynews.com/feeds/rss/world.xml", locked: true },
+            { name: "NPR", url: "https://feeds.npr.org/1001/rss.xml", locked: true }
         ];
+
+        // --- Cookie Management ---
+        function setCookie(name, value, days) {
+            const expires = new Date();
+            expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+            document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+        }
+
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        function isSourceUnlocked(feedName) {
+            return getCookie(`unlocked_${feedName.replace(/\s+/g, '_')}`) === 'true';
+        }
+
+        function unlockSource(feedName) {
+            setCookie(`unlocked_${feedName.replace(/\s+/g, '_')}`, 'true', 30); // 30 days
+        }
 
         // --- DOM Elements ---
         const feedButtonsContainer = document.getElementById('feed-buttons');
         const newsContentContainer = document.getElementById('news-content');
         const loader = document.getElementById('loader');
+        const lockModal = document.getElementById('lockModal');
+        const unlockBtn = document.getElementById('unlockBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+
+        let currentLockedFeed = null;
+
+        // --- Modal Management ---
+        function showLockModal(feedName) {
+            currentLockedFeed = feedName;
+            lockModal.style.display = 'block';
+        }
+
+        function hideLockModal() {
+            lockModal.style.display = 'none';
+            currentLockedFeed = null;
+        }
+
+        unlockBtn.addEventListener('click', () => {
+            if (currentLockedFeed) {
+                unlockSource(currentLockedFeed);
+                hideLockModal();
+                renderFeedButtons(); // Re-render buttons to update lock status
+                // Auto-load the unlocked feed
+                const feed = feeds.find(f => f.name === currentLockedFeed);
+                if (feed) loadFeed(feed.url);
+            }
+        });
+
+        cancelBtn.addEventListener('click', hideLockModal);
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (event) => {
+            if (event.target === lockModal) {
+                hideLockModal();
+            }
+        });
+
+        // --- Ad Components ---
+        function createRandomAd(index) {
+            const adTypes = [
+                {
+                    html: `<div class="ad-container gradient-bg">
+                        <div class="text-lg font-bold text-white mb-2">🚀 Boost Your Business</div>
+                        <p class="text-sm text-gray-200">Get premium advertising space here!</p>
+                        <button class="mt-2 bg-white text-gray-800 px-4 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors">Learn More</button>
+                    </div>`
+                },
+                {
+                    html: `<div class="ad-container bg-gradient-to-r from-blue-600 to-purple-600">
+                        <div class="text-lg font-bold text-white mb-2">💎 Premium Features</div>
+                        <p class="text-sm text-gray-200">Unlock exclusive content and features!</p>
+                        <button class="mt-2 bg-white text-gray-800 px-4 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors">Upgrade Now</button>
+                    </div>`
+                },
+                {
+                    html: `<div class="ad-container bg-gradient-to-r from-green-500 to-teal-500">
+                        <div class="text-lg font-bold text-white mb-2">📈 Market Updates</div>
+                        <p class="text-sm text-gray-200">Get real-time financial news and analysis</p>
+                        <button class="mt-2 bg-white text-gray-800 px-4 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors">Subscribe</button>
+                    </div>`
+                }
+            ];
+            
+            return adTypes[index % adTypes.length].html;
+        }
 
         // --- Core Application Logic ---
 
         /**
          * Initialize the application.
-         * Renders feed buttons and loads the first feed by default.
+         * Renders feed buttons and loads the first free feed by default.
          */
         function initialize() {
             renderFeedButtons();
-            // Load the first feed from the list on startup
-            if (feeds.length > 0) {
-                loadFeed(feeds[0].url);
+            // Load the first unlocked feed from the list on startup
+            const firstUnlockedFeed = feeds.find(feed => !feed.locked || isSourceUnlocked(feed.name));
+            if (firstUnlockedFeed) {
+                loadFeed(firstUnlockedFeed.url);
             }
         }
 
@@ -324,14 +555,36 @@
          * Renders the feed selection buttons dynamically.
          */
         function renderFeedButtons() {
+            feedButtonsContainer.innerHTML = '';
             feeds.forEach((feed, index) => {
                 const button = document.createElement('button');
-                button.textContent = feed.name;
+                const isUnlocked = !feed.locked || isSourceUnlocked(feed.name);
+                
+                button.innerHTML = `
+                    ${isUnlocked ? '<i class="fas fa-unlock mr-2"></i>' : '<i class="fas fa-lock mr-2"></i>'}
+                    ${feed.name}
+                    ${!isUnlocked ? '<span class="ml-2 text-xs bg-red-500 px-2 py-1 rounded">LOCKED</span>' : ''}
+                `;
+                
                 button.classList.add('feed-btn', 'px-6', 'py-3', 'rounded-full', 'font-semibold', 'transition', 'duration-300', 'text-sm', 'md:text-base', 'hover:scale-105');
+                
+                if (!isUnlocked) {
+                    button.classList.add('locked');
+                }
+                
                 button.dataset.url = feed.url;
+                button.dataset.name = feed.name;
                 button.style.animationDelay = `${index * 0.1}s`;
                 button.classList.add('animate-slide-up');
-                button.addEventListener('click', () => loadFeed(feed.url));
+                
+                button.addEventListener('click', () => {
+                    if (!isUnlocked) {
+                        showLockModal(feed.name);
+                    } else {
+                        loadFeed(feed.url);
+                    }
+                });
+                
                 feedButtonsContainer.appendChild(button);
             });
         }
@@ -383,6 +636,14 @@
                     items.forEach((item, index) => {
                         const card = createNewsCard(item, index);
                         newsContentContainer.appendChild(card);
+                        
+                        // Insert random ads every 4 news items
+                        if ((index + 1) % 4 === 0 && index < items.length - 1) {
+                            const adElement = document.createElement('div');
+                            adElement.className = 'col-span-full';
+                            adElement.innerHTML = createRandomAd(Math.floor(index / 4));
+                            newsContentContainer.appendChild(adElement);
+                        }
                     });
                 }
 
@@ -394,7 +655,7 @@
                         <p class="text-xl text-red-400 mb-2">Failed to load news feed</p>
                         <p class="text-gray-500 mb-4">There was an issue connecting to the news source</p>
                         <button onclick="location.reload()" class="bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-full transition-colors">
-                            Try Again
+                            <i class="fas fa-redo mr-2"></i>Try Again
                         </button>
                     </div>`;
             } finally {
@@ -411,7 +672,8 @@
          */
         function createNewsCard(item, index) {
             const title = item.querySelector("title")?.textContent || "No Title Available";
-            const link = "#exit-page-" + item.querySelector("link")?.textContent || item.querySelector("link")?.getAttribute('href') || "#";
+            const originalLink = item.querySelector("link")?.textContent || item.querySelector("link")?.getAttribute('href') || "#";
+            const link = "#exit-page-" + originalLink; // Add prefix to prevent navigation
             let description = item.querySelector("description, summary, content")?.textContent || "No description available";
             
             // Get publication date
@@ -449,8 +711,11 @@
                          src="${imageUrl}" 
                          alt="${title}" 
                          onerror="this.onerror=null;this.src='https://picsum.photos/600/400/?random=${index}&blur=1';">
-                    <div class="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm">
-                        ${formattedDate}
+                    <div class="absolute top-4 right-4 bg-black bg-opacity-60 text-white px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm">
+                        <i class="fas fa-clock mr-1"></i>${formattedDate}
+                    </div>
+                    <div class="absolute top-4 left-4 bg-primary bg-opacity-80 text-white px-3 py-1 rounded-full text-xs font-bold backdrop-blur-sm">
+                        <i class="fas fa-star mr-1"></i>TRENDING
                     </div>
                 </div>
                 <div class="p-6 flex flex-col flex-grow">
@@ -460,19 +725,37 @@
                     <p class="text-gray-400 text-sm mb-6 flex-grow leading-relaxed">${description}</p>
                     <div class="flex items-center justify-between">
                         <a href="${link}" 
+                           onclick="handleExitPageClick(event, '${originalLink}')"
                            target="_blank" 
                            rel="noopener noreferrer" 
                            class="inline-flex items-center bg-gradient-to-r from-primary to-primary-dark text-white font-semibold py-3 px-6 rounded-full hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105">
                             <span>Read Full Article</span>
-                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                            </svg>
+                            <i class="fas fa-external-link-alt ml-2"></i>
                         </a>
+                        <div class="flex space-x-2">
+                            <button class="p-2 bg-gray-700 hover:bg-gray-600 rounded-full transition-colors" title="Share">
+                                <i class="fas fa-share text-gray-300"></i>
+                            </button>
+                            <button class="p-2 bg-gray-700 hover:bg-gray-600 rounded-full transition-colors" title="Save">
+                                <i class="fas fa-bookmark text-gray-300"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
              
             `;
             return card;
+        }
+
+        /**
+         * Handle external link clicks with warning
+         */
+        function handleExitPageClick(event, originalUrl) {
+            event.preventDefault();
+            const confirmed = confirm("You are about to leave this page. Do you want to continue?");
+            if (confirmed) {
+                window.open(originalUrl, '_blank');
+            }
         }
 
         /**
@@ -510,7 +793,7 @@
         }
         
         // --- Three.js Enhanced Background Animation ---
-        let scene, camera, renderer, stars, nebula;
+        let scene, camera, renderer, stars, nebula, particles;
 
         function initThree() {
             // Scene
@@ -534,14 +817,14 @@
             const starGeometry = new THREE.BufferGeometry();
             const starMaterial = new THREE.PointsMaterial({
                 color: 0xffffff,
-                size: 1.5,
+                size: 2,
                 transparent: true,
                 opacity: 0.8
             });
 
             const starVertices = [];
             const colors = [];
-            for (let i = 0; i < 15000; i++) {
+            for (let i = 0; i < 20000; i++) {
                 const x = (Math.random() - 0.5) * 2000;
                 const y = (Math.random() - 0.5) * 2000;
                 const z = (Math.random() - 0.5) * 2000;
@@ -549,7 +832,7 @@
                 
                 // Add some color variation
                 const color = new THREE.Color();
-                color.setHSL(Math.random() * 0.1 + 0.7, 0.5, Math.random() * 0.5 + 0.5);
+                color.setHSL(Math.random() * 0.2 + 0.6, 0.6, Math.random() * 0.5 + 0.5);
                 colors.push(color.r, color.g, color.b);
             }
 
@@ -560,16 +843,20 @@
             stars = new THREE.Points(starGeometry, starMaterial);
             scene.add(stars);
 
-            // Add nebula effect
-            const nebulaGeometry = new THREE.PlaneGeometry(100, 100);
-            const nebulaMaterial = new THREE.MeshBasicMaterial({
-                color: 0x5d5cde,
-                transparent: true,
-                opacity: 0.1
-            });
-            nebula = new THREE.Mesh(nebulaGeometry, nebulaMaterial);
-            nebula.position.z = -50;
-            scene.add(nebula);
+            // Add multiple nebula effects
+            for (let i = 0; i < 3; i++) {
+                const nebulaGeometry = new THREE.PlaneGeometry(150, 150);
+                const nebulaMaterial = new THREE.MeshBasicMaterial({
+                    color: i === 0 ? 0x5d5cde : i === 1 ? 0xe73c7e : 0x23a6d5,
+                    transparent: true,
+                    opacity: 0.05
+                });
+                const nebulaPlane = new THREE.Mesh(nebulaGeometry, nebulaMaterial);
+                nebulaPlane.position.z = -100 - (i * 20);
+                nebulaPlane.position.x = (Math.random() - 0.5) * 200;
+                nebulaPlane.position.y = (Math.random() - 0.5) * 200;
+                scene.add(nebulaPlane);
+            }
 
             // Animation loop
             animate();
@@ -577,14 +864,16 @@
 
         function animate() {
             // Animate stars with different speeds
-            stars.rotation.z += 0.0003;
-            stars.rotation.x += 0.0001;
+            stars.rotation.z += 0.0005;
+            stars.rotation.x += 0.0002;
             
-            // Animate nebula
-            if (nebula) {
-                nebula.rotation.z += 0.001;
-                nebula.material.opacity = 0.05 + Math.sin(Date.now() * 0.001) * 0.03;
-            }
+            // Animate nebula effects
+            scene.children.forEach((child, index) => {
+                if (child instanceof THREE.Mesh && child.material.transparent) {
+                    child.rotation.z += 0.001 * (index + 1);
+                    child.material.opacity = 0.03 + Math.sin(Date.now() * 0.001 + index) * 0.02;
+                }
+            });
             
             renderer.render(scene, camera);
             requestAnimationFrame(animate);
@@ -597,6 +886,9 @@
         }
 
         window.addEventListener('resize', onWindowResize, false);
+
+        // Expose handleExitPageClick to global scope for onclick handlers
+        window.handleExitPageClick = handleExitPageClick;
 
         // --- Start the App ---
         document.addEventListener('DOMContentLoaded', () => {
