@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global News Hub</title>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter & Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Three.js for 3D animation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#5D5CDE',
+                        'primary-dark': '#4F46E5',
+                        'bg-light': '#FFFFFF',
+                        'bg-dark': '#181818',
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 20px rgba(93, 92, 222, 0.5)' },
+                            '100%': { boxShadow: '0 0 30px rgba(93, 92, 222, 0.8)' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            },
+            darkMode: 'class',
+        }
+    </script>
+
+    <style>
+        /* Custom styles for the application */
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* 3D Canvas styles */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a202c;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4a5568;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #718096;
+        }
+        
+        /* Enhanced glassmorphism effect for cards */
+        .news-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .news-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .news-card:hover::before {
+            left: 100%;
+        }
+
+        .news-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-color: rgba(93, 92, 222, 0.5);
+        }
+        
+        /* Enhanced feed button styles */
+        .feed-btn {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feed-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.4s;
+        }
+
+        .feed-btn:hover::before {
+            left: 100%;
+        }
+
+        .feed-btn:hover {
+            background: rgba(93, 92, 222, 0.3);
+            border-color: rgba(93, 92, 222, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(93, 92, 222, 0.3);
+        }
+        
+        .feed-btn.active {
+            background: linear-gradient(135deg, #5D5CDE, #4F46E5);
+            color: white;
+            border-color: #5D5CDE;
+            box-shadow: 0 0 25px rgba(93, 92, 222, 0.6);
+        }
+
+        /* Enhanced loading animation */
+        .loading-pulse {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 2s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Dark mode support */
+        .dark .news-card {
+            background: rgba(24, 24, 24, 0.8);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .dark .feed-btn {
+            background: rgba(24, 24, 24, 0.6);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+    </style>
+</head>
+<body class="bg-gray-900 text-white dark">
+
+    <!-- Canvas for 3D background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="container mx-auto px-4 py-8 relative z-10 max-w-7xl">
+        
+        <!-- Enhanced Header Section -->
+        <header class="text-center mb-16">
+            <div class="animate-slide-up">
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black font-poppins text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 animate-glow">
+                    Global News Hub
+                </h1>
+                <div class="w-32 h-1 bg-gradient-to-r from-purple-400 to-pink-500 mx-auto mt-4 rounded-full"></div>
+                <p class="text-gray-300 mt-6 text-xl md:text-2xl font-light">Stay informed with the latest news from around the world</p>
+                <div class="flex justify-center items-center mt-4 space-x-2">
+                    <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span class="text-green-400 text-sm font-medium">Live Updates</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Enhanced Feed Selector Buttons -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold text-center mb-8 text-gray-200">Choose Your News Source</h2>
+            <div id="feed-buttons" class="flex flex-wrap justify-center gap-3 max-w-6xl mx-auto">
+                <!-- Feed buttons will be dynamically inserted here -->
+            </div>
+        </div>
+
+        <!-- Enhanced Loading Spinner -->
+        <div id="loader" class="text-center my-20 hidden">
+            <div class="relative inline-block">
+                <svg class="animate-spin h-16 w-16 text-purple-400 mx-auto loading-pulse rounded-full" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <div class="absolute inset-0 border-4 border-purple-400 rounded-full animate-ping opacity-20"></div>
+            </div>
+            <p class="mt-6 text-gray-300 text-lg font-medium">Loading latest news...</p>
+            <p class="text-gray-500 text-sm mt-2">Please wait while we fetch the freshest updates</p>
+        </div>
+
+        <!-- Enhanced News Content Grid -->
+        <div id="news-content" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <!-- News articles will be dynamically inserted here -->
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center mt-20 py-8 border-t border-gray-700">
+            <p class="text-gray-400">Global News Hub - Bringing you news from trusted sources worldwide</p>
+            <p class="text-gray-500 text-sm mt-2">Updates every few minutes • Real-time global coverage</p>
+        </footer>
+        
+    </div>
+
+    <script>
+        // Dark mode detection and handling
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        // --- DATA: RSS Feed Sources ---
+        const feeds = [
+            { name: "BBC Bengali", url: "https://feeds.bbci.co.uk/bengali/rss.xml" },
+            { name: "BBC News", url: "https://feeds.bbci.co.uk/news/rss.xml" },
+            { name: "CNN", url: "http://rss.cnn.com/rss/edition.rss" },
+            { name: "Al Jazeera English", url: "https://www.aljazeera.com/xml/rss/all.xml" },
+            { name: "New York Times", url: "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml" },
+            { name: "Reuters", url: "https://www.reutersagency.com/feed/?best-topics=top-news" },
+            { name: "Prothom Alo", url: "https://www.prothomalo.com/feed" },
+            { name: "Jugantor", url: "https://www.jugantor.com/rss/feed" },
+            { name: "Bangla Tribune", url: "https://banglatribune.com/feed" },
+            { name: "BDNews24", url: "https://bangla.bdnews24.com/rss/bangla.xml" },
+            { name: "Samakal", url: "https://samakal.com/rss.xml" },
+            { name: "Daily Inqilab", url: "https://www.dailyinqilab.com/rss" },
+            { name: "Naya Diganta", url: "https://www.dailynayadiganta.com/rss.xml" },
+            { name: "Channel i Online", url: "https://www.channelionline.com/feed" },
+            { name: "The Daily Star", url: "https://www.thedailystar.net/frontpage/rss.xml" }
+        ];
+
+        // --- DOM Elements ---
+        const feedButtonsContainer = document.getElementById('feed-buttons');
+        const newsContentContainer = document.getElementById('news-content');
+        const loader = document.getElementById('loader');
+
+        // --- Core Application Logic ---
+
+        /**
+         * Initialize the application.
+         * Renders feed buttons and loads the first feed by default.
+         */
+        function initialize() {
+            renderFeedButtons();
+            // Load the first feed from the list on startup
+            if (feeds.length > 0) {
+                loadFeed(feeds[0].url);
+            }
+        }
+
+        /**
+         * Renders the feed selection buttons dynamically.
+         */
+        function renderFeedButtons() {
+            feeds.forEach((feed, index) => {
+                const button = document.createElement('button');
+                button.textContent = feed.name;
+                button.classList.add('feed-btn', 'px-6', 'py-3', 'rounded-full', 'font-semibold', 'transition', 'duration-300', 'text-sm', 'md:text-base', 'hover:scale-105');
+                button.dataset.url = feed.url;
+                button.style.animationDelay = `${index * 0.1}s`;
+                button.classList.add('animate-slide-up');
+                button.addEventListener('click', () => loadFeed(feed.url));
+                feedButtonsContainer.appendChild(button);
+            });
+        }
+        
+        /**
+         * Fetches and displays news from a given RSS feed URL.
+         * @param {string} feedUrl - The URL of the RSS feed.
+         */
+        async function loadFeed(feedUrl) {
+            // Show loader and clear previous content
+            loader.classList.remove('hidden');
+            newsContentContainer.innerHTML = '';
+            
+            // Update active button style
+            document.querySelectorAll('.feed-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.url === feedUrl);
+            });
+
+            // Using CORS proxy to fetch feeds from different origins
+            const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(feedUrl)}`;
+            
+            try {
+                const response = await fetch(proxyUrl);
+                if (!response.ok) throw new Error(`Network response was not ok: ${response.statusText}`);
+                
+                const xmlString = await response.text();
+                
+                // Parse the XML string
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(xmlString, "application/xml");
+
+                // Check for parsing errors
+                const parseError = xmlDoc.querySelector("parsererror");
+                if (parseError) {
+                    console.error("XML Parsing Error:", parseError.textContent);
+                    throw new Error("Failed to parse RSS feed. It might be invalid XML.");
+                }
+                
+                const items = xmlDoc.querySelectorAll("item, entry");
+                
+                if (items.length === 0) {
+                   newsContentContainer.innerHTML = `
+                       <div class="col-span-full text-center py-20">
+                           <div class="text-6xl mb-4">📰</div>
+                           <p class="text-xl text-red-400 mb-2">No news found from this feed</p>
+                           <p class="text-gray-500">Please try selecting a different news source</p>
+                       </div>`;
+                } else {
+                    items.forEach((item, index) => {
+                        const card = createNewsCard(item, index);
+                        newsContentContainer.appendChild(card);
+                    });
+                }
+
+            } catch (error) {
+                console.error("Error fetching or parsing RSS feed:", error);
+                newsContentContainer.innerHTML = `
+                    <div class="col-span-full text-center py-20">
+                        <div class="text-6xl mb-4">⚠️</div>
+                        <p class="text-xl text-red-400 mb-2">Failed to load news feed</p>
+                        <p class="text-gray-500 mb-4">There was an issue connecting to the news source</p>
+                        <button onclick="location.reload()" class="bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-full transition-colors">
+                            Try Again
+                        </button>
+                    </div>`;
+            } finally {
+                // Hide loader
+                loader.classList.add('hidden');
+            }
+        }
+
+        /**
+         * Creates an HTML element for a single news article.
+         * @param {Element} item - The XML element for a single news item.
+         * @param {number} index - The index for animation delay.
+         * @returns {HTMLElement} - The created card element.
+         */
+        function createNewsCard(item, index) {
+            const title = item.querySelector("title")?.textContent || "No Title Available";
+            const link = "exit-page-" + item.querySelector("link")?.textContent || item.querySelector("link")?.getAttribute('href') || "#";
+            let description = item.querySelector("description, summary, content")?.textContent || "No description available";
+            
+            // Get publication date
+            const pubDate = item.querySelector("pubDate, published, updated")?.textContent;
+            const formattedDate = pubDate ? new Date(pubDate).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            }) : 'Recently';
+            
+            // Sanitize and shorten description
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = description;
+            description = tempDiv.textContent || tempDiv.innerText || "";
+            description = description.trim().substring(0, 200) + (description.length > 200 ? "..." : "");
+
+            // Extract image URL
+            let imageUrl = extractImageUrl(item);
+            if (!imageUrl) {
+                // Generate a beautiful gradient placeholder
+                const colors = ['purple', 'blue', 'green', 'yellow', 'red', 'pink'];
+                const color = colors[index % colors.length];
+                imageUrl = `https://picsum.photos/600/400/?random=${index}&blur=1`;
+            }
+            
+            const card = document.createElement('div');
+            card.className = 'news-card rounded-xl overflow-hidden shadow-xl flex flex-col animate-slide-up';
+            card.style.animationDelay = `${index * 0.1}s`;
+            
+            card.innerHTML = `
+                <div class="relative overflow-hidden">
+                    <img class="w-full h-48 object-cover transition-transform duration-500 hover:scale-110" 
+                         src="${imageUrl}" 
+                         alt="${title}" 
+                         onerror="this.onerror=null;this.src='https://picsum.photos/600/400/?random=${index}&blur=1';">
+                    <div class="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm">
+                        ${formattedDate}
+                    </div>
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <h3 class="font-bold text-lg text-gray-100 mb-3 line-clamp-2 leading-tight hover:text-purple-300 transition-colors">
+                        ${title}
+                    </h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow leading-relaxed">${description}</p>
+                    <div class="flex items-center justify-between">
+                        <a href="${link}" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="inline-flex items-center bg-gradient-to-r from-primary to-primary-dark text-white font-semibold py-3 px-6 rounded-full hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105">
+                            <span>Read Full Article</span>
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            `;
+            return card;
+        }
+
+        /**
+         * Extracts an image URL from an RSS item, looking at various possible tags.
+         * @param {Element} item - The XML element for a single news item.
+         * @returns {string|null} - The image URL or null if not found.
+         */
+        function extractImageUrl(item) {
+            // Look for media:content
+            const mediaContent = item.querySelector('media\\:content, content');
+            if (mediaContent && mediaContent.getAttribute('url')) {
+                return mediaContent.getAttribute('url');
+            }
+            
+            // Look for media:thumbnail
+            const mediaThumbnail = item.querySelector('media\\:thumbnail, thumbnail');
+            if (mediaThumbnail && mediaThumbnail.getAttribute('url')) {
+                return mediaThumbnail.getAttribute('url');
+            }
+            
+            // Look for enclosure
+            const enclosure = item.querySelector('enclosure');
+            if (enclosure && enclosure.getAttribute('type')?.startsWith('image')) {
+                return enclosure.getAttribute('url');
+            }
+            
+            // Look for an img tag within the description
+            const descriptionHtml = item.querySelector('description, summary, content')?.textContent || "";
+            const imgMatch = descriptionHtml.match(/<img[^>]+src="([^">]+)"/);
+            if (imgMatch) {
+                return imgMatch[1];
+            }
+            
+            return null;
+        }
+        
+        // --- Three.js Enhanced Background Animation ---
+        let scene, camera, renderer, stars, nebula;
+
+        function initThree() {
+            // Scene
+            scene = new THREE.Scene();
+            
+            // Camera
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
+            camera.position.z = 1;
+            camera.rotation.x = Math.PI / 2;
+
+            // Renderer
+            renderer = new THREE.WebGLRenderer({
+                canvas: document.getElementById('bg-canvas'),
+                antialias: true,
+                alpha: true
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            
+            // Enhanced Starfield
+            const starGeometry = new THREE.BufferGeometry();
+            const starMaterial = new THREE.PointsMaterial({
+                color: 0xffffff,
+                size: 1.5,
+                transparent: true,
+                opacity: 0.8
+            });
+
+            const starVertices = [];
+            const colors = [];
+            for (let i = 0; i < 15000; i++) {
+                const x = (Math.random() - 0.5) * 2000;
+                const y = (Math.random() - 0.5) * 2000;
+                const z = (Math.random() - 0.5) * 2000;
+                starVertices.push(x, y, z);
+                
+                // Add some color variation
+                const color = new THREE.Color();
+                color.setHSL(Math.random() * 0.1 + 0.7, 0.5, Math.random() * 0.5 + 0.5);
+                colors.push(color.r, color.g, color.b);
+            }
+
+            starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+            starGeometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+            starMaterial.vertexColors = true;
+            
+            stars = new THREE.Points(starGeometry, starMaterial);
+            scene.add(stars);
+
+            // Add nebula effect
+            const nebulaGeometry = new THREE.PlaneGeometry(100, 100);
+            const nebulaMaterial = new THREE.MeshBasicMaterial({
+                color: 0x5d5cde,
+                transparent: true,
+                opacity: 0.1
+            });
+            nebula = new THREE.Mesh(nebulaGeometry, nebulaMaterial);
+            nebula.position.z = -50;
+            scene.add(nebula);
+
+            // Animation loop
+            animate();
+        }
+
+        function animate() {
+            // Animate stars with different speeds
+            stars.rotation.z += 0.0003;
+            stars.rotation.x += 0.0001;
+            
+            // Animate nebula
+            if (nebula) {
+                nebula.rotation.z += 0.001;
+                nebula.material.opacity = 0.05 + Math.sin(Date.now() * 0.001) * 0.03;
+            }
+            
+            renderer.render(scene, camera);
+            requestAnimationFrame(animate);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        window.addEventListener('resize', onWindowResize, false);
+
+        // --- Start the App ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initialize();
+            initThree();
+        });
+
+    </script>
+</body>
+</html>
