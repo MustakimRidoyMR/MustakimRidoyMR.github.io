@@ -751,12 +751,91 @@
          * Handle external link clicks with warning
          */
         function handleExitPageClick(event, originalUrl) {
-            event.preventDefault();
-            const confirmed = confirm("You are about to leave this page. Do you want to continue?");
-            if (confirmed) {
-                window.open(originalUrl, '_blank');
-            }
-        }
+    event.preventDefault();
+    
+    // Create and style the modal
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.95);
+        padding: 2rem;
+        border-radius: 1rem;
+        z-index: 1000;
+        max-width: 90%;
+        width: 400px;
+        text-align: center;
+        box-shadow: 0 0 20px rgba(93, 92, 222, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    `;
+
+    // Modal content
+    modal.innerHTML = `
+        <div style="font-size: 4rem; margin-bottom: 1rem;">📱</div>
+        <h2 style="color: white; font-size: 1.5rem; margin-bottom: 1rem;">Download News App</h2>
+        <p style="color: #ccc; margin-bottom: 1.5rem;">Use our mobile app for a better experience</p>
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+            <button id="downloadApp" style="
+                background: linear-gradient(to right, #5D5CDE, #4F46E5);
+                color: white;
+                padding: 0.75rem 1.5rem;
+                border-radius: 9999px;
+                border: none;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s;
+            ">Install App</button>
+            <button id="cancelModal" style="
+                background: rgba(255, 255, 255, 0.1);
+                color: white;
+                padding: 0.75rem 1.5rem;
+                border-radius: 9999px;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s;
+            ">Not now</button>
+        </div>
+    `;
+
+    // Create overlay
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(5px);
+        z-index: 999;
+    `;
+
+    // Add to document
+    document.body.appendChild(overlay);
+    document.body.appendChild(modal);
+
+    // Add event listeners
+    document.getElementById('downloadApp').addEventListener('click', () => {
+        window.open('https://amzn.to/3NOG3er', '_blank');
+        overlay.remove();
+        modal.remove();
+    });
+
+    document.getElementById('cancelModal').addEventListener('click', () => {
+        window.open(originalUrl, '_blank');
+        overlay.remove();
+        modal.remove();
+    });
+
+    // Close on overlay click
+    overlay.addEventListener('click', () => {
+        overlay.remove();
+        modal.remove();
+    });
+}
 
         /**
          * Extracts an image URL from an RSS item, looking at various possible tags.
