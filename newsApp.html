@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <!-- DirectLink Ad Scripts -->
+    <script type='text/javascript' src='//pl26717244.profitableratecpm.com/bf/51/a4/bf51a42d984554beaaed4a58dcdb733d.js'></script>
+    <script type='text/javascript' src='//pl26713337.profitableratecpm.com/64/66/f1/6466f1b7fea6c93f404f4ab49960b99c.js'></script>
+    <script async="async" data-cfasync="false" src="//pl26713372.profitableratecpm.com/1a6d5fbc149d94ff8c697b1327966995/invoke.js"></script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1158797123946133"
+     crossorigin="anonymous"></script>
+    <script src="background-changer.js"></script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Global News Hub</title>
@@ -206,6 +216,10 @@
                 </div>
             </div>
         </header>
+      
+      <div class="ad-container bg-white dark:bg-gray-800 p-4 rounded-xl mb-6">
+    <div id="container-1a6d5fbc149d94ff8c697b1327966995"></div>
+</div>
 
         <!-- Enhanced Feed Selector Buttons -->
         <div class="mb-12">
@@ -233,6 +247,20 @@
             <!-- News articles will be dynamically inserted here -->
         </div>
 
+      <!-- Bottom Ad Container -->
+        <div class="ad-container bg-white dark:bg-gray-800 p-4 rounded-xl mt-6">
+    <script type="text/javascript">
+        atOptions = {
+            'key' : '9d28964d0cf3efa6afb4b9626542fa30',
+            'format' : 'iframe',
+            'height' : 60,
+            'width' : 468,
+            'params' : {}
+        };
+        document.write('<script type="text/javascript" src="//www.highperformanceformat.com/9d28964d0cf3efa6afb4b9626542fa30/invoke.js"><\/script>');
+    </script>
+</div>
+      
         <!-- Footer -->
         <footer class="text-center mt-20 py-8 border-t border-gray-700">
             <p class="text-gray-400">Global News Hub - Bringing you news from trusted sources worldwide</p>
@@ -383,7 +411,7 @@
          */
         function createNewsCard(item, index) {
             const title = item.querySelector("title")?.textContent || "No Title Available";
-            const link = "exit-page-" + item.querySelector("link")?.textContent || item.querySelector("link")?.getAttribute('href') || "#";
+            const link = "#exit-page-" + item.querySelector("link")?.textContent || item.querySelector("link")?.getAttribute('href') || "#";
             let description = item.querySelector("description, summary, content")?.textContent || "No description available";
             
             // Get publication date
@@ -442,6 +470,7 @@
                         </a>
                     </div>
                 </div>
+             
             `;
             return card;
         }
