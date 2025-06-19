@@ -825,7 +825,7 @@
     });
 
     document.getElementById('cancelModal').addEventListener('click', () => {
-        window.open(originalUrl, '_blank');
+        window.open("#exit-page-" + originalUrl, '_blank');
         overlay.remove();
         modal.remove();
     });
