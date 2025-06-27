@@ -446,7 +446,23 @@
         }
 
         // Load products when page loads
-        document.addEventListener('DOMContentLoaded', loadProducts);
+       // document.addEventListener('DOMContentLoaded', loadProducts);
+        let productsData = [];
+
+  document.addEventListener('DOMContentLoaded', () => {
+    fetch('https://raw.githubusercontent.com/MustakimRidoyMR/MustakimRidoyMR.github.io/main/MR%20Database/affiliate.json')
+      .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+      })
+      .then(data => {
+        productsData = data;        // বাইরের JSON-থেকে ডাটা নিয়ে আসছে
+        loadProducts();             // তারপর পেজে রেন্ডার করবে
+      })
+      .catch(error => {
+        console.error('JSON লোডিং এর সময় সমস্যা:', error);
+      });
+  });
 
         // Add smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
