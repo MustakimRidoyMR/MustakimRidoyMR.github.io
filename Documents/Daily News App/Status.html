@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type='text/javascript' src='//pl26717244.profitableratecpm.com/bf/51/a4/bf51a42d984554beaaed4a58dcdb733d.js'></script>
+    <script type='text/javascript' src='//pl26713337.profitableratecpm.com/64/66/f1/6466f1b7fea6c93f404f4ab49960b99c.js'></script>
+    <script async="async" data-cfasync="false" src="//pl26713372.profitableratecpm.com/1a6d5fbc149d94ff8c697b1327966995/invoke.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Daily News App - Real-time service status, privacy policy, terms of service, and app information. Stay updated with the latest news while earning rewards.">
+    <meta name="keywords" content="daily news, news app, status page, service status, privacy policy, terms of service, android app, news updates">
+    <meta name="author" content="Daily News App Team">
+    <meta property="og:title" content="Daily News App - Service Status & Information">
+    <meta property="og:description" content="Check the current status of Daily News App services, read our privacy policy, and learn about app features.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630/5D5CDE/ffffff?text=Daily+News+App">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Daily News App - Service Status">
+    <meta name="twitter:description" content="Real-time status of Daily News App services and comprehensive app information.">
+    <title>Daily News App - Service Status & Information</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5D5CDE',
+                        light: '#FFFFFF',
+                        dark: '#181818'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        .status-operational { background-color: #10B981; }
+        .status-degraded { background-color: #F59E0B; }
+        .status-major { background-color: #EF4444; }
+        .status-maintenance { background-color: #6B7280; }
+    </style>
+</head>
+<body class="bg-light dark:bg-dark text-gray-900 dark:text-gray-100 min-h-screen">
+    <script>
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+    </script>
+
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center">
+                        <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Daily News App</h1>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Service Status & Information</p>
+                    </div>
+                </div>
+                <div class="text-sm text-gray-500 dark:text-gray-400">
+                    Last updated: <span id="lastUpdated"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Overall Status -->
+        <section class="mb-8">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-semibold">Overall System Status</h2>
+                    <div class="flex items-center">
+                        <span class="status-indicator status-operational"></span>
+                        <span class="text-green-600 dark:text-green-400 font-medium">All Systems Operational</span>
+                    </div>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400">All Daily News App services are currently running smoothly. Users can access all features without any known issues.</p>
+            </div>
+        </section>
+
+        <!-- Service Components -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4">Service Components</h2>
+            <div class="space-y-3">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <span class="status-indicator status-operational"></span>
+                            <span class="font-medium">News Feed Service</span>
+                        </div>
+                        <span class="text-green-600 dark:text-green-400 text-sm">Operational</span>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <span class="status-indicator status-operational"></span>
+                            <span class="font-medium">User Authentication</span>
+                        </div>
+                        <span class="text-green-600 dark:text-green-400 text-sm">Operational</span>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <span class="status-indicator status-operational"></span>
+                            <span class="font-medium">Rewards System</span>
+                        </div>
+                        <span class="text-green-600 dark:text-green-400 text-sm">Operational</span>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <span class="status-indicator status-operational"></span>
+                            <span class="font-medium">Advertisement Services</span>
+                        </div>
+                        <span class="text-green-600 dark:text-green-400 text-sm">Operational</span>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <span class="status-indicator status-operational"></span>
+                            <span class="font-medium">Cloud Data Sync</span>
+                        </div>
+                        <span class="text-green-600 dark:text-green-400 text-sm">Operational</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- App Information -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4">About Daily News App</h2>
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-semibold mb-3">App Features</h3>
+                        <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                            <li>• Real-time news updates from reliable sources</li>
+                            <li>• Personalized news feed based on interests</li>
+                            <li>• Reward system with virtual coins</li>
+                            <li>• Premium features unlock system</li>
+                            <li>• Cross-device data synchronization</li>
+                            <li>• Offline reading capabilities</li>
+                            <li>• Social sharing features</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-3">Platform Information</h3>
+                        <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                            <li><strong>Platform:</strong> Android</li>
+                            <li><strong>Minimum Version:</strong> Android 5.0 (API 21)</li>
+                            <li><strong>Target Version:</strong> Android 14 (API 34)</li>
+                            <li><strong>App Size:</strong> Varies by device</li>
+                            <li><strong>Content Rating:</strong> Everyone</li>
+                            <li><strong>Permissions:</strong> Internet, Storage, Notifications</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Monetization & Rewards -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4">Monetization & Rewards System</h2>
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="font-semibold mb-2">Advertisement Partners</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                            Our app integrates with trusted advertising networks to provide relevant advertisements:
+                        </p>
+                        <ul class="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
+                            <li class="bg-gray-50 dark:bg-gray-700 px-3 py-2 rounded">AdMob</li>
+                            <li class="bg-gray-50 dark:bg-gray-700 px-3 py-2 rounded">Start.io SDK</li>
+                            <li class="bg-gray-50 dark:bg-gray-700 px-3 py-2 rounded">Unity Ads</li>
+                            <li class="bg-gray-50 dark:bg-gray-700 px-3 py-2 rounded">Audience Network</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">Affiliate Partnerships</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                            We may include affiliate links from trusted e-commerce platforms:
+                        </p>
+                        <ul class="flex gap-2 text-sm">
+                            <li class="bg-gray-50 dark:bg-gray-700 px-3 py-2 rounded">Amazon</li>
+                            <li class="bg-gray-50 dark:bg-gray-700 px-3 py-2 rounded">Daraz</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">Rewards System</h3>
+                        <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                            <p class="text-sm text-blue-800 dark:text-blue-200">
+                                <strong>Important:</strong> Our coin system is for in-app purchases only. Virtual coins earned through advertisements can be converted to virtual USD/BDT for calculation purposes but cannot be exchanged for real money. Coins can only be used to unlock premium features within the app.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Privacy & Data -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4">Privacy & Data Handling</h2>
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="font-semibold mb-2">Account Requirements</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            While the app can be used without an account, creating an account unlocks additional features including personalized news feeds, reward tracking, and cross-device synchronization. Account creation is optional but recommended for the best experience.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">Data Storage & Security</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            User account data is securely stored on our cloud servers with industry-standard encryption. We implement robust security measures to protect user information and ensure data integrity. Server infrastructure may be updated periodically to maintain optimal performance and security.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">Data Collection</h3>
+                        <ul class="space-y-1 text-sm text-gray-600 dark:text-gray-400">
+                            <li>• Reading preferences and browsing patterns</li>
+                            <li>• Device information for optimization</li>
+                            <li>• Usage analytics for app improvement</li>
+                            <li>• Advertisement interaction data (anonymized)</li>
+                            <li>• Account credentials (encrypted)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Terms of Service Summary -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4">Terms of Service Summary</h2>
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                <div class="space-y-4 text-sm text-gray-600 dark:text-gray-400">
+                    <p><strong>Acceptance:</strong> By using Daily News App, you agree to our terms of service and privacy policy.</p>
+                    <p><strong>Virtual Currency:</strong> Coins earned through the app have no real-world monetary value and cannot be exchanged for cash.</p>
+                    <p><strong>Content:</strong> News content is sourced from third-party providers and we strive for accuracy but cannot guarantee completeness.</p>
+                    <p><strong>User Conduct:</strong> Users must comply with community guidelines and applicable laws when using the app.</p>
+                    <p><strong>Service Availability:</strong> We aim for 99.9% uptime but cannot guarantee uninterrupted service.</p>
+                    <p><strong>Updates:</strong> Terms may be updated periodically with user notification through the app.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Maintenance Schedule -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4">Maintenance Schedule</h2>
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 pb-2">
+                        <span class="text-sm font-medium">Regular Maintenance</span>
+                        <span class="text-xs text-gray-500 dark:text-gray-400">Every Sunday 2:00-4:00 AM UTC</span>
+                    </div>
+                    <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 pb-2">
+                        <span class="text-sm font-medium">Security Updates</span>
+                        <span class="text-xs text-gray-500 dark:text-gray-400">As needed</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-medium">Feature Updates</span>
+                        <span class="text-xs text-gray-500 dark:text-gray-400">Monthly</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Information -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4">Contact & Support</h2>
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div>
+                        <h3 class="font-semibold mb-2 text-primary">Technical Support</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            For technical issues, bugs, or app-related problems.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2 text-primary">Account Issues</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            For account recovery, data sync issues, or login problems.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2 text-primary">General Inquiries</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            For partnerships, feedback, or general questions.
+                        </p>
+                    </div>
+                </div>
+                <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        <strong>Response Time:</strong> We aim to respond to all inquiries within 24-48 hours during business days.
+                    </p>
+                </div>
+            </div>
+        </section>
+      
+      <!-- Optimized ad container with better styling -->
+        <div class="ad-container bg-white dark:bg-dark-100 p-4 rounded-xl">
+            <div id="container-1a6d5fbc149d94ff8c697b1327966995"></div>
+        </div>
+
+        <!-- Legal Compliance -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4">Legal Compliance</h2>
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                <div class="grid md:grid-cols-2 gap-6 text-sm text-gray-600 dark:text-gray-400">
+                    <div>
+                        <h3 class="font-semibold mb-2 text-gray-900 dark:text-white">Privacy Compliance</h3>
+                        <ul class="space-y-1">
+                            <li>• GDPR compliant data handling</li>
+                            <li>• CCPA privacy rights respected</li>
+                            <li>• COPPA compliant (13+ age requirement)</li>
+                            <li>• Right to data deletion</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2 text-gray-900 dark:text-white">App Store Compliance</h3>
+                        <ul class="space-y-1">
+                            <li>• Google Play Developer Policy compliant</li>
+                            <li>• Family-friendly content rating</li>
+                            <li>• Transparent monetization practices</li>
+                            <li>• Regular security audits</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                    © 2025 Daily News App. All rights reserved. | 
+                    <a href="https://mustakimridoymr.github.io" class="text-primary hover:underline"> Home</a>
+                </p>
+                <p class="text-xs text-gray-500 dark:text-gray-500 mt-2">
+                    This status page is updated in real-time to reflect the current state of our services.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Update last updated time
+        function updateLastUpdated() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit',
+                timeZoneName: 'short'
+            };
+            document.getElementById('lastUpdated').textContent = now.toLocaleDateString('en-US', options);
+        }
+        
+        // Update every minute
+        updateLastUpdated();
+        setInterval(updateLastUpdated, 60000);
+    </script>
+</body>
+</html>
