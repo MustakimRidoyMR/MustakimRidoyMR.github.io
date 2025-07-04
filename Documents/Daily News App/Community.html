@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Daily News App Community - Stay informed with the latest news, earn coins, and join our growing community of news enthusiasts.">
+    <meta name="keywords" content="daily news, news app, community, android app, breaking news, world news, local news">
+    <meta name="author" content="Daily News App Team">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Daily News App Community">
+    <meta property="og:description" content="Join our community of news enthusiasts. Stay updated with breaking news and earn rewards.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Daily News App">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Daily News App Community">
+    <meta name="twitter:description" content="Join our community of news enthusiasts. Stay updated with breaking news and earn rewards.">
+    
+    <title>Daily News App - Community</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5D5CDE',
+                        secondary: '#4F46E5',
+                        accent: '#EC4899'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #5D5CDE 0%, #4F46E5 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .dark-bg { background-color: #181818; }
+            .dark-card { background-color: #2d2d2d; }
+            .dark-text { color: #e5e5e5; }
+        }
+    </style>
+</head>
+<body class="bg-white dark:bg-gray-900 transition-colors duration-300">
+    
+    <!-- Dark mode detection script -->
+    <script>
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+    </script>
+
+    <!-- Header -->
+    <header class="gradient-bg text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <div class="mb-6">
+                <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <span class="text-2xl font-bold text-primary">📰</span>
+                </div>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">Daily News App</h1>
+            <p class="text-xl md:text-2xl opacity-90 mb-8">Your Gateway to World News & Community</p>
+            <div class="inline-flex items-center bg-white/20 backdrop-blur-sm rounded-full px-6 py-3">
+                <span class="w-3 h-3 bg-green-400 rounded-full mr-3 animate-pulse"></span>
+                <span class="text-sm font-medium">Active Community • 50K+ Users</span>
+            </div>
+        </div>
+      <br></br>
+      <div class="container mx-auto px-1 text-center">
+      <div class="inline-flex items-center bg-white/20 backdrop-blur-sm rounded-full px-6 py-3">
+                <span class="w-2 h-2 bg-orange-400 rounded-full mr-3 animate-pulse">🏡</span>
+                <a href="https://mustakimridoymr.github.io"  class="text-sm font-medium">Home</a>
+            </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        
+        <!-- About Section -->
+        <section class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">About Our Community</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    Welcome to the Daily News App community! We're a vibrant ecosystem of news enthusiasts, readers, and engaged citizens who believe in staying informed and connected.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg card-hover">
+                    <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mb-6">
+                        <span class="text-white text-xl">🌍</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Global News Coverage</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Stay updated with breaking news from around the world. Our curated content ensures you never miss important developments in politics, technology, sports, and entertainment.
+                    </p>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg card-hover">
+                    <div class="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center mb-6">
+                        <span class="text-white text-xl">🪙</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Reward System</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Earn coins by engaging with content and watching advertisements. Convert your coins to virtual USD and BDT to unlock premium features within the app.
+                    </p>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg card-hover">
+                    <div class="w-12 h-12 bg-accent rounded-lg flex items-center justify-center mb-6">
+                        <span class="text-white text-xl">👥</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Community Driven</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Join discussions, share perspectives, and connect with like-minded individuals who value staying informed and engaged with current events.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">App Features</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300">
+                    Discover what makes Daily News App the preferred choice for news consumption
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <span class="text-white text-sm">✓</span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">User Accounts & Personalization</h3>
+                                <p class="text-gray-600 dark:text-gray-300">Create an account to unlock enhanced features, personalized news feeds, and access to our reward system. While account creation is optional, registered users enjoy a richer experience.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <span class="text-white text-sm">✓</span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Secure Cloud Storage</h3>
+                                <p class="text-gray-600 dark:text-gray-300">Your account data is securely stored on our cloud servers, ensuring your preferences and progress are always accessible across devices.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <span class="text-white text-sm">✓</span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Coin Reward System</h3>
+                                <p class="text-gray-600 dark:text-gray-300">Earn virtual coins through app engagement and convert them to virtual currency (USD/BDT equivalent) to purchase premium features and content.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl p-8">
+                    <div class="text-center">
+                        <div class="w-24 h-24 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                            <span class="text-3xl">📱</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Android Platform</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">
+                            Optimized for Android devices with a clean, intuitive interface that adapts to your reading preferences.
+                        </p>
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm">
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Available on Google Play Store</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Guidelines Section -->
+        <section class="mb-16">
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 md:p-12">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">Community Guidelines</h2>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">✅ We Encourage</h3>
+                        <ul class="space-y-3 text-gray-600 dark:text-gray-300">
+                            <li class="flex items-start space-x-3">
+                                <span class="text-green-500 mt-1">•</span>
+                                <span>Respectful discussion of news and current events</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <span class="text-green-500 mt-1">•</span>
+                                <span>Sharing reliable sources and fact-based information</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <span class="text-green-500 mt-1">•</span>
+                                <span>Constructive feedback and suggestions</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <span class="text-green-500 mt-1">•</span>
+                                <span>Helping fellow community members</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">❌ Not Allowed</h3>
+                        <ul class="space-y-3 text-gray-600 dark:text-gray-300">
+                            <li class="flex items-start space-x-3">
+                                <span class="text-red-500 mt-1">•</span>
+                                <span>Spam, harassment, or abusive behavior</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <span class="text-red-500 mt-1">•</span>
+                                <span>Spreading misinformation or fake news</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <span class="text-red-500 mt-1">•</span>
+                                <span>Hate speech or discriminatory content</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <span class="text-red-500 mt-1">•</span>
+                                <span>Attempts to manipulate the reward system</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Monetization & Transparency Section -->
+        <section class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Transparency & Monetization</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300">
+                    We believe in complete transparency about how our app operates and generates revenue
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                        <span class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
+                            <span class="text-white text-sm">📺</span>
+                        </span>
+                        Advertisement Partners
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        Our app displays advertisements from trusted partners to support free access to news content:
+                    </p>
+                    <ul class="space-y-2 text-gray-600 dark:text-gray-300">
+                        <li class="flex items-center space-x-2">
+                            <span class="w-2 h-2 bg-primary rounded-full"></span>
+                            <span>Google AdMob</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <span class="w-2 h-2 bg-primary rounded-full"></span>
+                            <span>Start.io (StartApp SDK)</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <span class="w-2 h-2 bg-primary rounded-full"></span>
+                            <span>Unity Ads</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <span class="w-2 h-2 bg-primary rounded-full"></span>
+                            <span>Facebook Audience Network</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                        <span class="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center mr-3">
+                            <span class="text-white text-sm">🔗</span>
+                        </span>
+                        Affiliate Partnerships
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        We may include affiliate links to products and services we recommend:
+                    </p>
+                    <ul class="space-y-2 text-gray-600 dark:text-gray-300 mb-4">
+                        <li class="flex items-center space-x-2">
+                            <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                            <span>Amazon</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                            <span>Daraz</span>
+                        </li>
+                    </ul>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                        These partnerships help support our mission to provide free, quality news content to our users.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Support Section -->
+        <section class="mb-16">
+            <div class="bg-gradient-to-r from-primary to-secondary rounded-2xl p-8 md:p-12 text-white text-center">
+                <h2 class="text-3xl font-bold mb-4">Need Help or Have Questions?</h2>
+                <p class="text-xl opacity-90 mb-8">
+                    Our community support team is here to assist you with any questions or concerns.
+                </p>
+                
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                        <span class="text-3xl mb-4 block">📧</span>
+                        <h3 class="font-semibold mb-2">Email Support</h3>
+                        <p class="text-sm opacity-80">Get help via email for technical issues and account questions</p>
+                    </div>
+                    
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                        <span class="text-3xl mb-4 block">❓</span>
+                        <h3 class="font-semibold mb-2">FAQ Section</h3>
+                        <p class="text-sm opacity-80">Find answers to commonly asked questions about the app</p>
+                    </div>
+                    
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                        <span class="text-3xl mb-4 block">💬</span>
+                        <h3 class="font-semibold mb-2">Community Forum</h3>
+                        <p class="text-sm opacity-80">Connect with other users and share experiences</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Privacy & Data Section -->
+        <section class="mb-16">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Privacy & Data Protection</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300">
+                    Your privacy and data security are our top priorities
+                </p>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">🔒 Data Security</h3>
+                        <ul class="space-y-3 text-gray-600 dark:text-gray-300">
+                            <li class="flex items-start space-x-2">
+                                <span class="text-primary mt-1">•</span>
+                                <span>All user data is encrypted and securely stored</span>
+                            </li>
+                            <li class="flex items-start space-x-2">
+                                <span class="text-primary mt-1">•</span>
+                                <span>Regular security audits and updates</span>
+                            </li>
+                            <li class="flex items-start space-x-2">
+                                <span class="text-primary mt-1">•</span>
+                                <span>No sharing of personal data with third parties without consent</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">⚙️ Data Usage</h3>
+                        <ul class="space-y-3 text-gray-600 dark:text-gray-300">
+                            <li class="flex items-start space-x-2">
+                                <span class="text-primary mt-1">•</span>
+                                <span>Account data stored securely on cloud servers</span>
+                            </li>
+                            <li class="flex items-start space-x-2">
+                                <span class="text-primary mt-1">•</span>
+                                <span>Usage analytics to improve user experience</span>
+                            </li>
+                            <li class="flex items-start space-x-2">
+                                <span class="text-primary mt-1">•</span>
+                                <span>Minimal data collection for essential features only</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Daily News App</h3>
+                    <p class="text-gray-400">
+                        Your trusted source for global news and community engagement.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Community</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Guidelines</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="/Documents/Daily News App/Legal Information.html" class="hover:text-white transition-colors">Legal Information</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Download</h4>
+                    <p class="text-gray-400 mb-4">Available on Android Platform</p>
+                    <div class="bg-gray-800 rounded-lg p-3 inline-block">
+                        <span class="text-sm">📱 Google Play Store</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Daily News App Community. All rights reserved.</p>
+                <p class="mt-2 text-sm">Building a more informed world, one news story at a time.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
