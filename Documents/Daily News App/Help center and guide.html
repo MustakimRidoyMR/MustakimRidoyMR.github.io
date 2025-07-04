@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Complete Help Center and User Guide for Daily News App - Learn how to use all features, earn coins, troubleshoot issues, and get the most from your news reading experience">
+  <meta name="keywords" content="Daily News App Help, User Guide, Tutorial, FAQ, Troubleshooting, Android News App, How to Use, Support">
+  <meta name="author" content="Daily News App Support Team">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Help Center & User Guide - Daily News App">
+  <meta property="og:description" content="Complete user guide and help center for Daily News App. Learn features, troubleshoot issues, and maximize your news experience">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Daily News App">
+  <meta property="og:image" content="https://example.com/daily-news-app-help-banner.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Help Center & User Guide - Daily News App">
+  <meta name="twitter:description" content="Complete user guide and help center for Daily News App">
+  <meta name="twitter:image" content="https://example.com/daily-news-app-help-banner.jpg">
+  <link rel="canonical" href="https://dailynewsapp.com/help">
+  <title>Help Center & User Guide - Daily News App</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      line-height: 1.6; 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333; 
+      min-height: 100vh;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+    .header { 
+      background: white; 
+      border-radius: 15px; 
+      padding: 2rem; 
+      text-align: center; 
+      margin-bottom: 2rem; 
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    .header h1 { 
+      color: #1a73e8; 
+      font-size: 2.5rem; 
+      margin-bottom: 0.5rem;
+      background: linear-gradient(45deg, #1a73e8, #4285f4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .header p { color: #666; font-size: 1.1rem; }
+    
+    .search-box { 
+      background: white; 
+      border-radius: 15px; 
+      padding: 1.5rem; 
+      margin-bottom: 2rem; 
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+    .search-input { 
+      width: 100%; 
+      padding: 1rem; 
+      border: 2px solid #e0e0e0; 
+      border-radius: 10px; 
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    .search-input:focus { 
+      outline: none; 
+      border-color: #1a73e8; 
+      box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+    }
+    
+    .nav-tabs { 
+      display: flex; 
+      background: white; 
+      border-radius: 15px; 
+      padding: 0.5rem; 
+      margin-bottom: 2rem; 
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .nav-tab { 
+      flex: 1; 
+      padding: 1rem; 
+      text-align: center; 
+      background: transparent; 
+      border: none; 
+      border-radius: 10px; 
+      cursor: pointer; 
+      font-weight: 600;
+      transition: all 0.3s;
+      min-width: 120px;
+    }
+    .nav-tab.active { 
+      background: linear-gradient(45deg, #1a73e8, #4285f4); 
+      color: white; 
+    }
+    .nav-tab:hover:not(.active) { background: #f0f8ff; }
+    
+    .content-section { 
+      background: white; 
+      border-radius: 15px; 
+      padding: 2rem; 
+      margin-bottom: 2rem; 
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      display: none;
+    }
+    .content-section.active { display: block; }
+    .content-section h2 { 
+      color: #1a73e8; 
+      margin-bottom: 1.5rem; 
+      padding-bottom: 0.5rem; 
+      border-bottom: 3px solid #e3f2fd;
+      font-size: 1.8rem;
+    }
+    .content-section h3 { 
+      color: #333; 
+      margin: 1.5rem 0 1rem 0; 
+      font-size: 1.3rem;
+    }
+    .content-section h4 { 
+      color: #555; 
+      margin: 1rem 0 0.5rem 0; 
+      font-size: 1.1rem;
+    }
+    
+    .feature-grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+      gap: 1.5rem; 
+      margin: 1.5rem 0; 
+    }
+    .feature-card { 
+      background: #f8f9fa; 
+      padding: 1.5rem; 
+      border-radius: 10px; 
+      border-left: 4px solid #1a73e8;
+      transition: transform 0.3s;
+    }
+    .feature-card:hover { transform: translateY(-2px); }
+    .feature-card h4 { 
+      color: #1a73e8; 
+      margin-bottom: 0.5rem; 
+    }
+    
+    .step-list { 
+      counter-reset: step-counter; 
+      list-style: none; 
+      padding: 0; 
+    }
+    .step-list li { 
+      counter-increment: step-counter; 
+      margin-bottom: 1rem; 
+      padding: 1rem; 
+      background: #f8f9fa; 
+      border-radius: 8px; 
+      position: relative; 
+      padding-left: 3rem;
+    }
+    .step-list li::before { 
+      content: counter(step-counter); 
+      position: absolute; 
+      left: 1rem; 
+      top: 1rem; 
+      background: #1a73e8; 
+      color: white; 
+      width: 1.5rem; 
+      height: 1.5rem; 
+      border-radius: 50%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-weight: bold; 
+      font-size: 0.8rem;
+    }
+    
+    .faq-item { 
+      background: #f8f9fa; 
+      margin-bottom: 1rem; 
+      border-radius: 10px; 
+      overflow: hidden;
+    }
+    .faq-question { 
+      background: #1a73e8; 
+      color: white; 
+      padding: 1rem; 
+      cursor: pointer; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center;
+      font-weight: 600;
+    }
+    .faq-question:hover { background: #1557b0; }
+    .faq-answer { 
+      padding: 1rem; 
+      display: none; 
+      background: white;
+    }
+    .faq-answer.active { display: block; }
+    .faq-toggle { 
+      transition: transform 0.3s; 
+    }
+    .faq-toggle.active { transform: rotate(180deg); }
+    
+    .alert { 
+      padding: 1rem; 
+      border-radius: 8px; 
+      margin: 1rem 0; 
+    }
+    .alert-info { 
+      background: #e3f2fd; 
+      border-left: 4px solid #2196f3; 
+      color: #0d47a1; 
+    }
+    .alert-warning { 
+      background: #fff3e0; 
+      border-left: 4px solid #ff9800; 
+      color: #e65100; 
+    }
+    .alert-success { 
+      background: #e8f5e8; 
+      border-left: 4px solid #4caf50; 
+      color: #2e7d32; 
+    }
+    
+    .code-block { 
+      background: #f5f5f5; 
+      padding: 1rem; 
+      border-radius: 5px; 
+      font-family: 'Courier New', monospace; 
+      margin: 0.5rem 0; 
+      border: 1px solid #ddd;
+    }
+    
+    .contact-grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+      gap: 1.5rem; 
+      margin: 1.5rem 0; 
+    }
+    .contact-card { 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+      color: white; 
+      padding: 1.5rem; 
+      border-radius: 10px; 
+      text-align: center;
+    }
+    .contact-card h4 { 
+      color: white; 
+      margin-bottom: 0.5rem; 
+    }
+    
+    .footer { 
+      background: white; 
+      border-radius: 15px; 
+      padding: 2rem; 
+      text-align: center; 
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      margin-top: 2rem;
+    }
+    
+    @media (max-width: 768px) {
+      .container { padding: 1rem; }
+      .header h1 { font-size: 2rem; }
+      .nav-tabs { flex-direction: column; }
+      .nav-tab { margin-bottom: 0.5rem; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+    
+    ul, ol { padding-left: 1.5rem; margin: 0.5rem 0; }
+    li { margin-bottom: 0.5rem; }
+    a { color: #1a73e8; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    strong { color: #1a73e8; }
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+    th, td { border: 1px solid #ddd; padding: 0.8rem; text-align: left; }
+    th { background: #f5f5f5; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>📱 Help Center & User Guide</h1>
+      <p>Get the most out of your Daily News App experience</p>
+      <p><strong>Version:</strong> Android | <strong>Updated:</strong> July 4, 2025</p>
+    </div>
+
+    <div class="search-box">
+      <input type="text" class="search-input" placeholder="🔍 Search help topics, features, or common issues..." id="searchInput">
+    </div>
+
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="showSection('getting-started')">🚀 Getting Started</button>
+      <button class="nav-tab" onclick="showSection('features')">⭐ Features</button>
+      <button class="nav-tab" onclick="showSection('account')">👤 Account</button>
+      <button class="nav-tab" onclick="showSection('coins')">🪙 Coins</button>
+      <button class="nav-tab" onclick="showSection('troubleshooting')">🔧 Troubleshooting</button>
+      <button class="nav-tab" onclick="showSection('faq')">❓ FAQ</button>
+      <button class="nav-tab" onclick="showSection('contact')">📞 Contact</button>
+    </div>
+
+    <!-- Getting Started Section -->
+    <div class="content-section active" id="getting-started">
+      <h2>🚀 Getting Started with Daily News App</h2>
+      
+      <h3>📥 Download & Installation</h3>
+      <ol class="step-list">
+        <li><strong>Download from Google Play Store:</strong> Search for "Daily News App" or use the direct link provided by our team</li>
+        <li><strong>Install the App:</strong> Tap "Install" and wait for the download to complete (approximately 15-25 MB)</li>
+        <li><strong>Grant Permissions:</strong> Allow necessary permissions for notifications, internet access, and storage</li>
+        <li><strong>Launch the App:</strong> Tap the app icon to open Daily News App for the first time</li>
+      </ol>
+
+      <div class="alert alert-info">
+        <strong>📱 System Requirements:</strong> Android 5.0 (API level 21) or higher, 50MB free storage space, stable internet connection
+      </div>
+
+      <h3>🎯 First Launch Setup</h3>
+      <ol class="step-list">
+        <li><strong>Welcome Screen:</strong> Review the app introduction and feature highlights</li>
+        <li><strong>Language Selection:</strong> Choose between English and Bengali (can be changed later)</li>
+        <li><strong>News Preferences:</strong> Select your preferred news categories (World, Tech, Sports, Local, Business, Entertainment)</li>
+        <li><strong>Notification Settings:</strong> Choose if you want to receive breaking news alerts</li>
+        <li><strong>Theme Selection:</strong> Pick Light or Dark mode (auto-detect based on system settings available)</li>
+      </ol>
+
+      <h3>📋 Quick Start Guide</h3>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h4>📰 Reading Your First Article</h4>
+          <p>Tap on any news headline to read the summary. Tap "Read Full Article" to visit the publisher's website for complete content.</p>
+        </div>
+        <div class="feature-card">
+          <h4>🔖 Bookmarking Articles</h4>
+          <p>Tap the bookmark icon (📑) next to any article to save it for later reading. Access bookmarks from the bottom navigation.</p>
+        </div>
+        <div class="feature-card">
+          <h4>🔄 Refreshing Content</h4>
+          <p>Pull down on the news feed to refresh and get the latest articles from all 50+ news sources.</p>
+        </div>
+        <div class="feature-card">
+          <h4>📱 Navigation Basics</h4>
+          <p>Use the bottom navigation bar to switch between Home, Categories, Bookmarks, Search, and Profile sections.</p>
+        </div>
+      </div>
+
+      <h3>⚙️ Initial Settings Configuration</h3>
+      <ul>
+        <li><strong>Auto-Refresh:</strong> Set how often the app should check for new articles (15 min, 30 min, 1 hour, 3 hours)</li>
+        <li><strong>Data Usage:</strong> Enable "Wi-Fi Only" mode to save mobile data</li>
+        <li><strong>Font Size:</strong> Adjust text size for comfortable reading (Small, Medium, Large, Extra Large)</li>
+        <li><strong>Image Quality:</strong> Choose between High, Medium, or Low quality for article images</li>
+        <li><strong>Offline Reading:</strong> Enable automatic download of articles for offline access</li>
+      </ul>
+    </div>
+
+    <!-- Features Section -->
+    <div class="content-section" id="features">
+      <h2>⭐ App Features & How to Use Them</h2>
+
+      <h3>📰 News Feed & Categories</h3>
+      
+      <h4>🏠 Home Feed</h4>
+      <ul>
+        <li><strong>Latest News:</strong> Most recent articles from all sources appear first</li>
+        <li><strong>Trending Topics:</strong> Popular articles based on user engagement</li>
+        <li><strong>Personalized Feed:</strong> AI-curated content based on your reading history</li>
+        <li><strong>Source Diversity:</strong> Articles from 50+ international and local news sources</li>
+      </ul>
+
+      <h4>📂 Category Browsing</h4>
+      <table>
+        <thead>
+          <tr><th>Category</th><th>Description</th><th>Example Sources</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>🌍 World News</td><td>International headlines and global events</td><td>BBC, CNN, Reuters, Al Jazeera</td></tr>
+          <tr><td>🇧🇩 Bangladesh</td><td>Local news and events from Bangladesh</td><td>Prothom Alo, Daily Star, BDNews24</td></tr>
+          <tr><td>💻 Technology</td><td>Tech news, gadgets, software updates</td><td>TechCrunch, Wired, The Verge</td></tr>
+          <tr><td>⚽ Sports</td><td>Sports news, scores, player updates</td><td>ESPN, BBC Sport</td></tr>
+          <tr><td>💼 Business</td><td>Financial news, market updates, economics</td><td>Bloomberg, Financial Express</td></tr>
+          <tr><td>🎬 Entertainment</td><td>Movies, music, celebrity news</td><td>Entertainment Weekly, Variety</td></tr>
+        </tbody>
+      </table>
+
+      <h3>🔍 Search & Discovery</h3>
+      
+      <h4>🔎 Advanced Search Features</h4>
+      <ul>
+        <li><strong>Keyword Search:</strong> Search across headlines and article summaries</li>
+        <li><strong>Date Range Filter:</strong> Find articles from specific time periods</li>
+        <li><strong>Source Filter:</strong> Search within specific news sources</li>
+        <li><strong>Category Filter:</strong> Limit search to particular news categories</li>
+        <li><strong>Language Filter:</strong> Search in English or Bengali content</li>
+      </ul>
+
+      <h4>🎯 Search Tips</h4>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h4>Exact Phrase Search</h4>
+          <p>Use quotes for exact phrases: <span class="code-block">"climate change"</span></p>
+        </div>
+        <div class="feature-card">
+          <h4>Multiple Keywords</h4>
+          <p>Use space between words: <span class="code-block">football world cup</span></p>
+        </div>
+        <div class="feature-card">
+          <h4>Exclude Terms</h4>
+          <p>Use minus sign to exclude: <span class="code-block">technology -crypto</span></p>
+        </div>
+        <div class="feature-card">
+          <h4>Recent Articles</h4>
+          <p>Add time filters: <span class="code-block">bangladesh today</span></p>
+        </div>
+      </div>
+
+      <h3>📑 Bookmarks & Saved Articles</h3>
+      
+      <h4>💾 Managing Bookmarks</h4>
+      <ul>
+        <li><strong>Add Bookmark:</strong> Tap the bookmark icon (📑) next to any article</li>
+        <li><strong>View Bookmarks:</strong> Access from bottom navigation or main menu</li>
+        <li><strong>Organize by Folders:</strong> Create custom folders for different topics</li>
+        <li><strong>Export Bookmarks:</strong> Share your saved articles with others</li>
+        <li><strong>Offline Access:</strong> Read bookmarked articles without internet connection</li>
+      </ul>
+
+      <h4>📊 Bookmark Features</h4>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h4>📁 Custom Folders</h4>
+          <p>Create folders like "Tech News", "Sports", "Work Related" to organize bookmarks</p>
+        </div>
+        <div class="feature-card">
+          <h4>🏷️ Tags System</h4>
+          <p>Add tags to bookmarks for easy filtering and discovery</p>
+        </div>
+        <div class="feature-card">
+          <h4>📤 Share Bookmarks</h4>
+          <p>Share individual articles or entire bookmark collections</p>
+        </div>
+        <div class="feature-card">
+          <h4>🔄 Sync Across Devices</h4>
+          <p>Bookmarks sync automatically when you sign in to your account</p>
+        </div>
+      </div>
+
+      <h3>🔔 Notifications & Alerts</h3>
+      
+      <h4>⚙️ Notification Settings</h4>
+      <ul>
+        <li><strong>Breaking News:</strong> Instant alerts for major news events</li>
+        <li><strong>Daily Digest:</strong> Summary of top stories sent at your preferred time</li>
+        <li><strong>Category Alerts:</strong> Notifications for specific news categories</li>
+        <li><strong>Source Notifications:</strong> Alerts from your favorite news sources</li>
+        <li><strong>Trending Topics:</strong> Notifications when stories become trending</li>
+      </ul>
+
+      <div class="alert alert-info">
+        <strong>🔕 Do Not Disturb:</strong> Set quiet hours (e.g., 10 PM - 7 AM) to avoid notifications during sleep or work hours
+      </div>
+
+      <h3>🎨 Customization Options</h3>
+      
+      <h4>🌓 Theme & Display</h4>
+      <ul>
+        <li><strong>Dark/Light Mode:</strong> Manual selection or automatic based on system settings</li>
+        <li><strong>Font Options:</strong> Choose from 5 font families and 4 size options</li>
+        <li><strong>Reading Mode:</strong> Distraction-free reading with minimal UI</li>
+        <li><strong>Image Settings:</strong> Control image quality and auto-loading preferences</li>
+        <li><strong>Language Settings:</strong> Switch between English and Bengali interface</li>
+      </ul>
+
+      <h4>📱 Interface Customization</h4>
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Options</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Layout Style</td><td>List, Card, Magazine</td><td>Choose how articles are displayed</td></tr>
+          <tr><td>Navigation</td><td>Bottom Bar, Sidebar, Tabs</td><td>Customize navigation style</td></tr>
+          <tr><td>Homepage</td><td>Latest, Trending, Categories</td><td>Set default homepage view</td></tr>
+          <tr><td>Article Preview</td><td>Summary, Full, Headline Only</td><td>Control article preview length</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Account Section -->
+    <div class="content-section" id="account">
+      <h2>👤 Account Management</h2>
+
+      <h3>📝 Creating Your Account</h3>
+      
+      <h4>🔐 Registration Process</h4>
+      <ol class="step-list">
+        <li><strong>Open Profile Section:</strong> Tap the Profile icon in bottom navigation</li>
+        <li><strong>Tap "Create Account":</strong> Choose between email registration or social login</li>
+        <li><strong>Enter Details:</strong> Provide email address, username, and secure password</li>
+        <li><strong>Verify Email:</strong> Check your email for verification link and click it</li>
+        <li><strong>Complete Profile:</strong> Add optional information like interests and location</li>
+      </ol>
+
+      <div class="alert alert-warning">
+        <strong>⚠️ Account Required for Premium Features:</strong> While you can browse news without an account, registration is required for earning coins, bookmarks sync, personalized recommendations, and premium features.
+      </div>
+
+      <h3>🔑 Account Security</h3>
+      
+      <h4>🛡️ Security Features</h4>
+      <ul>
+        <li><strong>Password Requirements:</strong> Minimum 8 characters with letters and numbers</li>
+        <li><strong>Two-Factor Authentication:</strong> Optional 2FA via SMS or authenticator app</li>
+        <li><strong>Login Sessions:</strong> View and manage active login sessions</li>
+        <li><strong>Password Reset:</strong> Secure password reset via email verification</li>
+        <li><strong>Account Recovery:</strong> Multiple recovery options for lost access</li>
+      </ul>
+
+      <h4>🔄 Password Management</h4>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h4>🔒 Strong Password Tips</h4>
+          <ul>
+            <li>Use at least 8 characters</li>
+            <li>Include uppercase and lowercase letters</li>
+            <li>Add numbers and special characters</li>
+            <li>Avoid personal information</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <h4>🔄 Regular Updates</h4>
+          <ul>
+            <li>Change password every 3-6 months</li>
+            <li>Use unique password for this app</li>
+            <li>Enable login notifications</li>
+            <li>Review account activity regularly</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>⚙️ Profile Settings</h3>
+      
+      <h4>👤 Personal Information</h4>
+      <ul>
+        <li><strong>Display Name:</strong> Choose how you appear in the app</li>
+        <li><strong>Email Preferences:</strong> Control which emails you receive</li>
+        <li><strong>Location Settings:</strong> Set your location for local news (optional)</li>
+        <li><strong>Language Preference:</strong> Primary language for interface and content</li>
+        <li><strong>Time Zone:</strong> Ensures accurate timestamps on articles</li>
+      </ul>
+
+      <h4>🎯 Personalization Settings</h4>
+      <table>
+        <thead>
+          <tr><th>Setting</th><th>Options</th><th>Purpose</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>News Interests</td><td>Technology, Sports, Politics, etc.</td><td>Improve content recommendations</td></tr>
+          <tr><td>Reading Time</td><td>Quick, Detailed, In-depth</td><td>Match article length to preference</td></tr>
+          <tr><td>Source Preferences</td><td>Favorite/Block specific sources</td><td>Customize news feed content</td></tr>
+          <tr><td>Update Frequency</td><td>Real-time, Hourly, Daily</td><td>Control how often content refreshes</td></tr>
+        </tbody>
+      </table>
+
+      <h3>📊 Account Data & Privacy</h3>
+      
+      <h4>💾 Data Management</h4>
+      <ul>
+        <li><strong>Download Your Data:</strong> Export all your account information and activity</li>
+        <li><strong>Reading History:</strong> View and manage your article reading history</li>
+        <li><strong>Search History:</strong> Access and clear your search queries</li>
+        <li><strong>Privacy Controls:</strong> Manage what data is collected and used</li>
+        <li><strong>Account Deletion:</strong> Permanently delete your account and all data</li>
+      </ul>
+
+      <h4>🔒 Privacy Options</h4>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h4>📈 Analytics</h4>
+          <p>Control whether your usage helps improve the app through anonymous analytics</p>
+        </div>
+        <div class="feature-card">
+          <h4>🎯 Personalization</h4>
+          <p>Manage how your data is used for content recommendations and ads</p>
+        </div>
+        <div class="feature-card">
+          <h4>📍 Location Data</h4>
+          <p>Control location-based features and local news suggestions</p>
+        </div>
+        <div class="feature-card">
+          <h4>🔄 Data Sync</h4>
+          <p>Manage synchronization of bookmarks, preferences, and reading history</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coins Section -->
+    <div class="content-section" id="coins">
+      <h2>🪙 Coins System Guide</h2>
+
+      <h3>💰 Understanding Coins</h3>
+      
+      <div class="alert alert-info">
+        <strong>💡 What are Coins?</strong> Coins are our virtual currency system that allows you to unlock premium features, remove ads, and access exclusive content. Coins are earned through app engagement and cannot be converted to real money.
+      </div>
+
+      <h4>💵 Current Exchange Rates</h4>
+      <table>
+        <thead>
+          <tr><th>Coins</th><th>USD Value</th><th>BDT Value</th><th>What You Can Buy</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1 Coin</td><td>$0.001</td><td>₹0.10</td><td>Basic interactions</td></tr>
+          <tr><td>100 Coins</td><td>$0.10</td><td>₹10</td><td>Small premium features</td></tr>
+          <tr><td>500 Coins</td><td>$0.50</td><td>₹50</td><td>Ad-free experience (1 month)</td></tr>
+          <tr><td>1000 Coins</td><td>$1.00</td><td>₹100</td><td>Premium subscription (1 month)</td></tr>
+          <tr><td>5000 Coins</td><td>$5.00</td><td>₹500</td><td>Premium subscription (6 months)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>🎯 How to Earn Coins</h3>
+      
+      <h4>📺 Through Advertisements</h4>
+      <ul>
+        <li><strong>Watch Video Ads:</strong> 5-10 coins per 30-second video</li>
+        <li><strong>Banner Ad Clicks:</strong> 2-5 coins per legitimate click</li>
+        <li><strong>Interstitial Ads:</strong> 3-7 coins per full-screen ad view</li>
+        <li><strong>Rewarded Ads:</strong> 10-20 coins for completing sponsored actions</li>
+        <li><strong>Native Ad Engagement:</strong> 1-3 coins per interaction</li>
+      </ul>
+
+      <h4>📱 Through App Usage</h4>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h4>📅 Daily Login Bonus</h4>
+          <ul>
+            <li>Day 1: 1 coin</li>
+            <li>Day 2: 2 coins</li>
+            <li>Day 3: 3 coins</li>
+            <li>Day 7: 10 coins</li>
+            <li>Day 30: 50 coins</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <h4>📖 Reading Articles</h4>
+          <ul>
+            <li>Read article: 1 coin</li>
+            <li>Read full article: 2 coins</li>
+            <li>Share article: 2 coins</li>
+            <li>Comment on article: 3 coins</li>
+            <li>Daily reading limit: 20 coins</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <h4>🎯 Special Activities</h4>
+          <ul>
+            <li>Complete profile: 25 coins</li>
+            <li>Refer a friend: 100 coins</li>
+            <li>Rate the app: 15 coins</li>
+            <li>Weekly challenges: 50 coins</li>
+            <li>Survey participation: 30 coins</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <h4>🏆 Achievement Rewards</h4>
+          <ul>
+            <li>First bookmark: 5 coins</li>
+            <li>100 articles read: 50 coins</li>
+            <li>7-day streak: 25 coins</li>
+            <li>Account verified: 20 coins</li>
+            <li>Profile completed: 30 coins</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>🛒 Spending Your Coins</h3>
+      
+      <h4>🎁 Premium Features</h4>
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Cost (Coins)</th><th>Duration</th><th>Benefits</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>🚫 Ad-Free Experience</td><td>500</td><td>1 Month</td><td>No banner, interstitial, or video ads</td></tr>
+          <tr><td>🔍 Advanced Search</td><td>300</td><td>1 Month</td><td>Date filters, source filters, advanced operators</td></tr>
+          <tr><td>📑 Unlimited Bookmarks</td><td>150</td><td>1 Month</td><td>Save unlimited articles, create folders</td></tr>
+          <tr><td>🔔 Priority Notifications</td><td>250</td><td>1 Month</td><td>Breaking news alerts 5 min earlier</td></tr>
+          <tr><td>🎨 Premium Themes</td><td>200</td><td>Permanent</td><td>Access to exclusive app themes</td></tr>
+          <tr><td>📊 Reading Analytics</td><td>180</td><td>1 Month</td><td>Detailed reading statistics and insights</td></tr>
+        </tbody>
+      </table>
+
+      <h4>🎯 Special Categories</h4>
+      <ul>
+        <li><strong>Premium News Sources:</strong> 200 coins/month for exclusive content</li>
+        <li><strong>Expert Analysis:</strong> 300 coins/month for in-depth expert commentary</li>
+        <li><strong>Early Access:</strong> 400 coins/month for beta features</li>
+        <li><strong>Custom Categories:</strong> 150 coins to create personalized news categories</li>
+        <li><strong>Offline Mode Plus:</strong> 250 coins/month for enhanced offline features</li>
+      </ul>
+
+      <h3>📈 Coin Management Tips</h3>
+      
+      <h4>💡 Maximizing Earnings</h4>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h4>⏰ Daily Consistency</h4>
+          <p>Log in daily to maintain your streak bonus. Even opening the app for 30 seconds counts!</p>
+        </div>
+        <div class="feature-card">
+          <h4>📺 Strategic Ad Viewing</h4>
+          <p>Watch rewarded video ads during breaks. They offer the highest coin rewards per time invested.</p>
+        </div>
+        <div class="feature-card">
+          <h4>📚 Read Regularly</h4>
+          <p>Hit your daily reading limit of 20 articles to maximize daily coin earnings from content consumption.</p>
+        </div>
+        <div class="feature-card">
+          <h4>🎯 Complete Challenges</h4>
+          <p>Participate in weekly challenges and achievements for bonus coin opportunities.</p>
+        </div>
+      </div>
+
+      <h4>💰 Smart Spending Strategies</h4>
+      <ul>
+        <li><strong>Prioritize Long-term Value:</strong> Permanent purchases like themes offer better value</li>
+        <li><strong>Bundle Purchases:</strong> Some features are cheaper when bought together</li>
+        <li><strong>Seasonal Discounts:</strong> Watch for special promotions during holidays</li>
+        <li><strong>Trial Periods:</strong> Some premium features offer 7-day trials for new users</li>
+        <li><strong>Save for Big Purchases:</strong> 6-month subscriptions offer significant savings</li>
+      </ul>
+
+      <div class="alert alert-warning">
+        <strong>⚠️ Important Limitations:</strong>
+        <ul>
+          <li>Coins cannot be converted to real money or cash</li>
+          <li>Coins cannot be transferred between accounts</li>
+          <li>Refunds are not available for coin purchases</li>
+          <li>Account deletion results in loss of all coins</li>
+          <li>Coins may expire after 12 months of account inactivity</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Troubleshooting Section -->
+    <div class="content-section" id="troubleshooting">
+      <h2>🔧 Troubleshooting & Common Issues</h2>
+
+      <h3>📱 App Performance Issues</h3>
+      
+      <h4>🐌 App Running Slowly</h4>
+      <ol class="step-list">
+        <li><strong>Close Background Apps:</strong> Clear other apps from your recent apps menu</li>
+        <li><strong>Restart the App:</strong> Force close Daily News App and reopen it</li>
+        <li><strong>Clear App Cache:</strong> Go to Settings > Apps > Daily News App > Storage > Clear Cache</li>
+        <li><strong>Free Up Storage:</strong> Ensure you have at least 500MB free space on your device</li>
+        <li><strong>Update the App:</strong> Check Google Play Store for available updates</li>
+        <li><strong>Restart Your Device:</strong> A simple restart can resolve many performance issues</li>
+      </ol>
+
+      <h4>💥 App Crashes or Freezes</h4>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h4>🔄 Immediate Solutions</h4>
+          <ul>
+            <li>Force close and restart the app</li>
+            <li>Check available device storage</li>
+            <li>Ensure stable internet connection</li>
+            <li>Restart your Android device</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <h4>🛠️ Advanced Solutions</h4>
+          <ul>
+            <li>Clear app cache and data</li>
+            <li>Update to latest app version</li>
+            <li>Check Android system updates</li>
+            <li>Uninstall and reinstall the app</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>🌐 Connectivity Issues</h3>
+      
+      <h4>📶 Internet Connection Problems</h4>
+      <table>
+        <thead>
+          <tr><th>Problem</th><th>Symptoms</th><th>Solutions</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>No Internet Access</td>
+            <td>Articles won't load, "No connection" message</td>
+            <td>Check Wi-Fi/mobile data, restart router, check data limits</td>
+          </tr>
+          <tr>
+            <td>Slow Loading</td>
+            <td>Articles load partially, images don't appear</td>
+            <td>Switch to Wi-Fi, reduce image quality, check network speed</td>
+          </tr>
+          <tr>
+            <td>Intermittent Connection</td>
+            <td>Content loads sometimes, frequent timeout errors</td>
+            <td>Reset network settings, change DNS, contact ISP</td>
+          </tr>
+          <tr>
+            <td>VPN Issues</td>
+            <td>App works without VPN, fails with VPN</td>
+            <td>Try different VPN servers, disable VPN temporarily</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4>🔧 Network Troubleshooting Steps</h4>
+      <ol class="step-list">
+        <li><strong>Test Internet Speed:</strong> Use speed test app to verify connection quality</li>
+        <li><strong>Toggle Airplane Mode:</strong> Turn on for 10 seconds, then turn off</li>
+        <li><strong>Reset Network Settings:</strong> Go to Settings > System > Reset > Reset Network Settings</li>
+        <li><strong>Check Data Usage:</strong> Ensure you haven't exceeded your data limit</li>
+        <li><strong>Try Different Network:</strong> Switch between Wi-Fi and mobile data</li>
+      </ol>
+
+      <h3>🔐 Account & Login Issues</h3>
+      
+      <h4>🚫 Cannot Login to Account</h4>
+      <ul>
+        <li><strong>Password Issues:</strong> Use "Forgot Password" to reset via email</li>
+        <li><strong>Email Not Recognized:</strong> Check spelling, try alternative email addresses</li>
+        <li><strong>Account Locked:</strong> Wait 30 minutes after multiple failed attempts</li>
+        <li><strong>Two-Factor Authentication:</strong> Ensure your phone has correct time/date</li>
+        <li><strong>Email Verification:</strong> Check spam folder for verification emails</li>
+      </ul>
+
+      <h4>📧 Email Verification Problems</h4>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h4>📬 Email Not Received</h4>
+          <ul>
+            <li>Check spam/junk folder</li>
+            <li>Add our email to contacts</li>
+            <li>Wait up to 15 minutes</li>
+            <li>Request new verification email</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <h4>🔗 Verification Link Issues</h4>
+          <ul>
+            <li>Click link within 24 hours</li>
+            <li>Open link in same device/browser</li>
+            <li>Disable ad blockers temporarily</li>
+            <li>Copy link manually to browser</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>🪙 Coins & Payment Issues</h3>
+      
+      <h4>💸 Coins Not Being Credited</h4>
+      <ol class="step-list">
+        <li><strong>Check Internet Connection:</strong> Ensure stable connection during ad viewing</li>
+        <li><strong>Complete Full Ad:</strong> Watch entire video ads without skipping or minimizing</li>
+        <li><strong>Refresh Coin Balance:</strong> Pull down on profile page to refresh balance</li>
+        <li><strong>Check Daily Limits:</strong> Some coin activities have daily caps</li>
+        <li><strong>Wait for Processing:</strong> Coin credits may take 5-10 minutes to appear</li>
+        <li><strong>Contact Support:</strong> If issue persists, report with screenshots</li>
+      </ol>
+
+      <h4>🛍️ Premium Purchase Problems</h4>
+      <table>
+        <thead>
+          <tr><th>Issue</th><th>Cause</th><th>Solution</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Insufficient Coins</td><td>Not enough coins for purchase</td><td>Earn more coins or check pricing</td></tr>
+          <tr><td>Purchase Failed</td><td>Network error during transaction</td><td>Retry with stable connection</td></tr>
+          <tr><td>Feature Not Unlocked</td><td>Purchase didn't process correctly</td><td>Restart app, check transaction history</td></tr>
+          <tr><td>Double Charging</td><td>Multiple tap on purchase button</td><td>Contact support with transaction details</td></tr>
+        </tbody>
+      </table>
+
+      <h3>📰 Content & Feed Issues</h3>
+      
+      <h4>📄 Articles Not Loading</h4>
+      <ul>
+        <li><strong>Refresh Feed:</strong> Pull down on home screen to refresh content</li>
+        <li><strong>Check Source Status:</strong> Some news sources may be temporarily down</li>
+        <li><strong>Clear App Cache:</strong> Clear cached data to resolve loading issues</li>
+        <li><strong>Update App:</strong> Ensure you're using the latest version</li>
+        <li><strong>Check Filters:</strong> Verify category and source filters aren't too restrictive</li>
+      </ul>
+
+      <h4>🔍 Search Not Working</h4>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h4>❌ No Results Found</h4>
+          <ul>
+            <li>Check spelling of search terms</li>
+            <li>Use broader search terms</li>
+            <li>Remove date/source filters</li>
+            <li>Try alternative keywords</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <h4>🐌 Search Taking Too Long</h4>
+          <ul>
+            <li>Check internet connection speed</li>
+            <li>Simplify search terms</li>
+            <li>Clear search history</li>
+            <li>Restart the app</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>🔔 Notification Issues</h3>
+      
+      <h4>📵 Not Receiving Notifications</h4>
+      <ol class="step-list">
+        <li><strong>Check App Permissions:</strong> Ensure notification permission is enabled</li>
+        <li><strong>Check System Settings:</strong> Verify notifications aren't blocked system-wide</li>
+        <li><strong>Battery Optimization:</strong> Disable battery optimization for Daily News App</li>
+        <li><strong>Do Not Disturb:</strong> Check if Do Not Disturb mode is enabled</li>
+        <li><strong>App Settings:</strong> Verify notification preferences in app settings</li>
+        <li><strong>Update App:</strong> Ensure you're using the latest version</li>
+      </ol>
+
+      <h4>📱 Android-Specific Notification Steps</h4>
+      <div class="code-block">
+        Settings > Apps > Daily News App > Notifications > Allow notifications
+        Settings > Battery > Battery optimization > Daily News App > Don't optimize
+        Settings > Sound & notification > Do not disturb > Turn off
+      </div>
+
+      <div class="alert alert-success">
+        <strong>✅ Quick Fix Checklist:</strong> Before contacting support, try these steps in order: 1) Restart the app, 2) Check internet connection, 3) Update the app, 4) Restart your device, 5) Clear app cache
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="content-section" id="faq">
+      <h2>❓ Frequently Asked Questions</h2>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>📱 Is Daily News App completely free to use?</span>
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>Yes! Daily News App is free to download and use. Basic features like reading news, browsing categories, and basic bookmarking are available without any cost. We offer premium features that can be unlocked using coins (earned through app engagement) or optional in-app purchases. You can earn coins by viewing ads, reading articles, and completing daily activities.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>🪙 Can I convert coins to real money?</span>
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>No, coins cannot be converted to real money or withdrawn as cash. Coins are a virtual currency designed exclusively for unlocking premium features within the Daily News App. They cannot be transferred to other users, exchanged outside the app, or converted to any real-world currency. Think of coins as loyalty points that enhance your app experience.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>📰 Do you create or edit the news content?</span>
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>No, we do not create, edit, or modify any news content. Daily News App is a news aggregation service that collects publicly available RSS feeds from 50+ reputable news sources including BBC, CNN, Reuters, Prothom Alo, and others. We display headlines, brief summaries, and provide direct links to the original publisher's website where you can read the complete article.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>🔐 Is my personal data safe and secure?</span>
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>Yes, we take data security very seriously. We use industry-standard encryption (SSL/TLS) for all data transmission, secure password hashing, and follow strict data protection protocols. We comply with international privacy laws including GDPR and CCPA. We never sell personal data to third parties. You can review our complete privacy policy for detailed information about data collection and usage.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>📶 Can I use the app without internet connection?</span>
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>Partially yes! While you need an internet connection to fetch new articles, the app offers offline reading capabilities for bookmarked articles and recently viewed content. Premium users can enable enhanced offline mode which automatically downloads articles for offline reading. The app will sync your reading progress and new bookmarks when you reconnect to the internet.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>🔄 How often is the news content updated?</span>
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>News content is updated continuously throughout the day! Our system automatically checks RSS feeds from all 50+ sources every 15-30 minutes for new articles. Breaking news and urgent updates appear within minutes of publication. You can manually refresh the feed by pulling down on the home screen. Premium users receive priority notifications for breaking news 5 minutes earlier than regular users.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>🌍 Which languages does the app support?</span>
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>Daily News App currently supports English and Bengali languages. You can switch between languages in the app settings. The app interface, menus, and help content are available in both languages. We aggregate news content from sources in both languages, including international English sources (BBC, CNN, Reuters) and Bengali sources (Prothom Alo, Daily Star, BDNews24). We plan to add more languages based on user demand.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>📱 What Android versions are supported?</span>
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>Daily News App requires Android 5.0 (API level 21) or higher. The app is optimized for Android devices and works best on Android 7.0 and above. We regularly test compatibility with the latest Android versions. The app requires approximately 50MB of storage space and works on both phones and tablets with various screen sizes.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>🎯 How does the personalized news feed work?</span>
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>Our AI-powered recommendation system learns from your reading behavior, including articles you read, time spent reading, categories you prefer, and topics you search for. The system gradually improves recommendations while respecting your privacy. You can enhance personalization by setting interests in your profile, bookmarking articles, and rating content. All personalization data stays within your account and is never shared with third parties.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>🚫 How can I remove or reduce advertisements?</span>
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>You can reduce ads by purchasing the ad-free experience using 500 coins per month. Alternatively, you can earn coins by engaging with ads - each ad you watch earns you coins that can be used for premium features. We use respectful advertising with options to skip most ads after 5 seconds. You can also adjust ad personalization settings in your privacy preferences to see more relevant advertisements.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>📞 How do I contact customer support?</span>
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>You can contact our support team through multiple channels: 1) Email us at support@dailynewsapp.com (response within 24-48 hours), 2) Use the in-app feedback feature in Settings > Help & Support, 3) For urgent technical issues, use the "Report Problem" button in the app. We provide support in both English and Bengali. Include your device model, Android version, and app version when reporting technical issues for faster resolution.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>🔄 Can I sync my data across multiple devices?</span>
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>Yes! When you create an account, your bookmarks, reading preferences, coin balance, and settings automatically sync across all devices where you're logged in. This includes your reading history, custom categories, notification preferences, and premium feature purchases. Sync happens automatically when you have an internet connection. You can manually trigger sync by refreshing your profile page.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="content-section" id="contact">
+      <h2>📞 Contact & Support</h2>
+
+      <h3>🆘 Getting Help</h3>
+      
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h4>📧 Email Support</h4>
+         <!-- <p><strong>support@dailynewsapp.com</strong></p> -->
+          <p>General questions, account issues, technical problems</p>
+          <p><em>Response time: 24-48 hours</em></p>
+        </div>
+        <div class="contact-card">
+          <h4>⚖️ Legal Inquiries</h4>
+      <!--    <p><strong>legal@dailynewsapp.com</strong></p> -->
+          <p>Copyright claims, DMCA requests, legal matters</p>
+          <p><em>Response time: 2-5 business days</em></p>
+        </div>
+        <div class="contact-card">
+          <h4>💼 Business Contact</h4>
+      <!--    <p><strong>business@dailynewsapp.com</strong></p> -->
+          <p>Partnerships, advertising, media inquiries</p>
+          <p><em>Response time: 3-7 business days</em></p>
+        </div>
+        <div class="contact-card">
+          <h4>🔧 Technical Issues</h4>
+          <p><strong>In-App Reporting</strong></p>
+          <p>Settings > Help & Support > Report Problem</p>
+          <p><em>Fastest response for urgent issues</em></p>
+        </div>
+      </div>
+
+      <h3>📝 Before Contacting Support</h3>
+      
+      <h4>🔍 Self-Help Checklist</h4>
+      <ol class="step-list">
+        <li><strong>Check This Help Center:</strong> Search for your issue in the sections above</li>
+        <li><strong>Try Basic Troubleshooting:</strong> Restart app, check internet, update app</li>
+        <li><strong>Check App Status:</strong> Visit our social media for any known widespread issues</li>
+        <li><strong>Gather Information:</strong> Note your device model, Android version, app version</li>
+        <li><strong>Document the Issue:</strong> Take screenshots or note exact error messages</li>
+      </ol>
+
+      <h4>📋 Information to Include in Support Requests</h4>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h4>📱 Device Information</h4>
+          <ul>
+            <li>Device model (e.g., Samsung Galaxy S21)</li>
+            <li>Android version (e.g., Android 12)</li>
+            <li>App version (check in Settings > About)</li>
+            <li>Available storage space</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <h4>🐛 Issue Details</h4>
+          <ul>
+            <li>Exact steps to reproduce the problem</li>
+            <li>Error messages (exact text)</li>
+            <li>When the issue started</li>
+            <li>Screenshots or screen recordings</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <h4>👤 Account Information</h4>
+          <ul>
+            <li>Account email (for account-related issues)</li>
+            <li>Approximate coin balance</li>
+            <li>Premium features you've purchased</li>
+            <li>Last successful login date</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <h4>🌐 Network Details</h4>
+          <ul>
+            <li>Connection type (Wi-Fi/Mobile data)</li>
+            <li>Internet service provider</li>
+            <li>VPN usage (if applicable)</li>
+            <li>Approximate connection speed</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>⏰ Support Hours & Response Times</h3>
+      
+      <table>
+        <thead>
+          <tr><th>Contact Method</th><th>Response Time</th><th>Best For</th><th>Languages</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>📧 Email Support</td><td>24-48 hours</td><td>General questions, account issues</td><td>English, Bengali</td></tr>
+          <tr><td>🔧 In-App Report</td><td>12-24 hours</td><td>Technical problems, bugs</td><td>English, Bengali</td></tr>
+          <tr><td>⚖️ Legal Email</td><td>2-5 business days</td><td>Copyright, legal matters</td><td>English</td></tr>
+          <tr><td>💼 Business Email</td><td>3-7 business days</td><td>Partnerships, media</td><td>English</td></tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-info">
+        <strong>🕐 Support Hours:</strong> Our support team operates Monday through Friday, 9 AM to 6 PM (Bangladesh Time, GMT+6). Emails received outside business hours will be responded to on the next business day. Urgent technical issues may receive faster response through in-app reporting.
+      </div>
+
+      <h3>🔗 Additional Resources</h3>
+      
+      <h4>📚 Online Resources</h4>
+      <ul>
+        <li><strong>Terms of Service:</strong> Complete legal terms and conditions</li>
+        <li><strong>Privacy Policy:</strong> Detailed data collection and usage information</li>
+        <li><strong>Release Notes:</strong> Latest app updates and new features</li>
+        <li><strong>Community Forum:</strong> User discussions and community support</li>
+        <li><strong>Video Tutorials:</strong> Step-by-step guides for common tasks</li>
+      </ul>
+
+      <h4>📱 Follow Us for Updates</h4>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h4>🐦 Social Media</h4>
+          <p>Follow us for app updates, news, and quick support responses on our social media channels.</p>
+        </div>
+        <div class="feature-card">
+          <h4>📧 Newsletter</h4>
+          <p>Subscribe to our monthly newsletter for app tips, feature announcements, and news highlights.</p>
+        </div>
+        <div class="feature-card">
+          <h4>📱 App Store</h4>
+          <p>Rate and review us on Google Play Store to help other users discover Daily News App.</p>
+        </div>
+        <div class="feature-card">
+          <h4>💬 Community</h4>
+          <p>Join our user community for tips, discussions, and peer-to-peer support.</p>
+        </div>
+      </div>
+
+      <div class="alert alert-success">
+        <strong>✅ We're Here to Help!</strong> Our goal is to provide you with the best possible news reading experience. Don't hesitate to reach out if you need assistance, have suggestions for improvement, or encounter any issues. Your feedback helps us make Daily News App better for everyone!
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <h3>📖 Daily News App Help Center</h3>
+    <p>Stay informed, stay connected with the world's news in one convenient app</p>
+    <p><strong>Last Updated:</strong> July 4, 2025 | <strong>Version:</strong> Android</p>
+    <p><em>© 2025 Daily News App Team. All rights reserved.</em></p>
+  </div>
+
+  <script>
+    function showSection(sectionId) {
+      // Hide all sections
+      const sections = document.querySelectorAll('.content-section');
+      sections.forEach(section => section.classList.remove('active'));
+      
+      // Remove active from all tabs
+      const tabs = document.querySelectorAll('.nav-tab');
+      tabs.forEach(tab => tab.classList.remove('active'));
+      
+      // Show selected section
+      document.getElementById(sectionId).classList.add('active');
+      
+      // Add active to clicked tab
+      event.target.classList.add('active');
+    }
+
+    function toggleFaq(element) {
+      const answer = element.nextElementSibling;
+      const toggle = element.querySelector('.faq-toggle');
+      
+      if (answer.classList.contains('active')) {
+        answer.classList.remove('active');
+        toggle.classList.remove('active');
+      } else {
+        // Close all other FAQs
+        document.querySelectorAll('.faq-answer').forEach(ans => ans.classList.remove('active'));
+        document.querySelectorAll('.faq-toggle').forEach(tog => tog.classList.remove('active'));
+        
+        // Open this FAQ
+        answer.classList.add('active');
+        toggle.classList.add('active');
+      }
+    }
+
+    // Search functionality
+    document.getElementById('searchInput').addEventListener('input', function(e) {
+      const searchTerm = e.target.value.toLowerCase();
+      const sections = document.querySelectorAll('.content-section');
+      
+      if (searchTerm.length > 2) {
+        sections.forEach(section => {
+          const content = section.textContent.toLowerCase();
+          if (content.includes(searchTerm)) {
+            section.style.display = 'block';
+            // Highlight search terms (basic implementation)
+            const elements = section.querySelectorAll('h2, h3, h4, p, li');
+            elements.forEach(el => {
+              if (el.textContent.toLowerCase().includes(searchTerm)) {
+                el.style.backgroundColor = '#fff3cd';
+              }
+            });
+          } else {
+            section.style.display = 'none';
+          }
+        });
+      } else {
+        // Reset view
+        sections.forEach(section => {
+          section.style.display = '';
+          const elements = section.querySelectorAll('h2, h3, h4, p, li');
+          elements.forEach(el => {
+            el.style.backgroundColor = '';
+          });
+        });
+        showSection('getting-started');
+      }
+    });
+
+    // Smooth scrolling for better UX
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
