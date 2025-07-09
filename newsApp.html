@@ -367,6 +367,51 @@
             <!-- News articles will be dynamically inserted here -->
         </div>
 
+        <!--direct link ads-->
+    <div style="text-align:center;">
+    <button id="moreServiceBtn" style="padding:12px 24px; background:#007bff; color:#fff; border:none; border-radius:12px; cursor:pointer; font-size:16px;">
+      More about this ... click here
+    </button>
+    <p id="status" style="margin-top:10px; font-size:14px; color:#555;"></p>
+  </div>
+
+  <script>
+    const btn = document.getElementById('moreServiceBtn');
+    const statusEl = document.getElementById('status');
+    const LINK = 'https://www.profitableratecpm.com/m7j44g75?key=90f36207646d410dc5c03e6c6816a890';
+    const HOUR = 60 * 60 * 1000;
+
+    function canShow() {
+      const last = localStorage.getItem('lastClickTime');
+      if (!last) return true;
+      return Date.now() - parseInt(last,10) >= HOUR;
+    }
+
+    function updateView() {
+      if (canShow()) {
+        btn.style.display = 'inline-block';
+        statusEl.textContent = '';
+      } else {
+        btn.style.display = 'none';
+        const remaining = HOUR - (Date.now() - parseInt(localStorage.getItem('lastClickTime'),10));
+        const mins = Math.ceil(remaining / 60000);
+        statusEl.textContent = `আগে ${mins} মিনিট অপেক্ষা করতে হবে।`;
+        setTimeout(updateView, remaining);
+      }
+    }
+
+    btn.addEventListener('click', () => {
+      localStorage.setItem('lastClickTime', Date.now().toString());
+      btn.style.display = 'none';
+      statusEl.textContent = 'Redirecting...';
+      window.open(LINK, '_blank');
+      setTimeout(updateView, HOUR);
+    });
+
+    window.addEventListener('load', updateView);
+  </script>
+  
+
         <!-- Bottom Ad Container -->
         <div class="ad-container gradient-bg mt-12">
             <script type="text/javascript">
