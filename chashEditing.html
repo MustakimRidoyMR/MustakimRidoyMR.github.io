@@ -63,77 +63,203 @@
     </header>
 
     <!-- Main Content Area -->
-    <div class="flex h-screen overflow-hidden">
+    <div class="flex h-screen overflow-hidden relative">
         <!-- Sidebar -->
-        <div class="w-80 bg-gray-50 dark:bg-dark-surface border-r border-gray-200 dark:border-dark-border flex flex-col">
+        <div id="sidebar" class="w-72 bg-gray-50 dark:bg-dark-surface border-r border-gray-200 dark:border-dark-border flex flex-col transition-all duration-300 relative">
+            <!-- Sidebar Toggle Button -->
+            <button id="sidebarToggle" class="absolute -right-3 top-4 z-10 bg-white dark:bg-dark-surface border border-gray-300 dark:border-dark-border rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                ◀
+            </button>
+
             <!-- Tool Panel -->
-            <div class="p-4 border-b border-gray-200 dark:border-dark-border">
-                <h3 class="text-lg font-semibold mb-4">Editor Tools</h3>
-                
-                <!-- File Operations -->
-                <div class="space-y-2 mb-4">
-                    <button id="newFileBtn" class="w-full px-3 py-2 bg-primary text-white rounded hover:bg-primary/90 transition-colors text-base">
-                        📄 New File
-                    </button>
-                    <div class="flex space-x-2">
-                        <input type="file" id="fileInput" accept=".cs,.txt" class="hidden">
-                        <button id="loadFileBtn" class="flex-1 px-3 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors text-base">
-                            📂 Load
+            <div class="p-3 border-b border-gray-200 dark:border-dark-border overflow-y-auto flex-1">
+                <!-- Stats Section -->
+                <div class="mb-4 p-2 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded">
+                    <h3 class="text-xs font-semibold mb-2 text-gray-700 dark:text-gray-300">STATS</h3>
+                    <div class="space-y-1 text-xs">
+                        <div class="flex justify-between">
+                            <span>Characters:</span>
+                            <span id="charCount">0</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Words:</span>
+                            <span id="wordCount">0</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Lines:</span>
+                            <span id="lineCount">0</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Errors:</span>
+                            <span id="errorCount" class="text-red-500">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Level Options -->
+                <div class="mb-3">
+                    <h3 class="text-xs font-semibold mb-2 text-gray-700 dark:text-gray-300">EDIT</h3>
+                    <div class="grid grid-cols-2 gap-1 text-xs">
+                        <button id="undoBtn" class="flex items-center justify-center px-1 py-1 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" title="Undo (Ctrl+Z)">
+                            ↶ Undo
                         </button>
-                        <button id="saveFileBtn" class="flex-1 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-base">
-                            💾 Save
+                        <button id="redoBtn" class="flex items-center justify-center px-1 py-1 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" title="Redo (Ctrl+Y)">
+                            ↷ Redo
+                        </button>
+                        <button id="cutBtn" class="flex items-center justify-center px-1 py-1 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" title="Cut (Ctrl+X)">
+                            ✂️ Cut
+                        </button>
+                        <button id="copyBtn" class="flex items-center justify-center px-1 py-1 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" title="Copy (Ctrl+C)">
+                            📋 Copy
+                        </button>
+                        <button id="pasteBtn" class="flex items-center justify-center px-1 py-1 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" title="Paste (Ctrl+V)">
+                            📄 Paste
+                        </button>
+                        <button id="selectAllBtn" class="flex items-center justify-center px-1 py-1 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" title="Select All (Ctrl+A)">
+                            🔲 All
+                        </button>
+                        <button id="duplicateBtn" class="flex items-center justify-center px-1 py-1 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" title="Duplicate (Ctrl+D)">
+                            📑 Dup
+                        </button>
+                        <button id="deleteBtn" class="flex items-center justify-center px-1 py-1 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" title="Delete (Del)">
+                            🗑️ Del
                         </button>
                     </div>
                 </div>
 
+                <!-- File Operations -->
+                <div class="mb-3">
+                    <h3 class="text-xs font-semibold mb-2 text-gray-700 dark:text-gray-300">FILE</h3>
+                    <div class="space-y-1">
+                        <button id="newFileBtn" class="w-full flex items-center px-2 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                            <span class="mr-1">📄</span> New File
+                        </button>
+                        <div class="flex space-x-1">
+                            <input type="file" id="fileInput" accept=".cs,.txt" class="hidden">
+                            <button id="loadFileBtn" class="flex-1 flex items-center justify-center px-1 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                📂 Open
+                            </button>
+                            <button id="saveFileBtn" class="flex-1 flex items-center justify-center px-1 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                💾 Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Format & Transform -->
+                <div class="mb-3">
+                    <h3 class="text-xs font-semibold mb-2 text-gray-700 dark:text-gray-300">FORMAT</h3>
+                    <div class="space-y-1">
+                        <button id="formatCode" class="w-full flex items-center px-2 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                            ✨ Format Document
+                        </button>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button id="makeUppercase" class="flex items-center justify-center px-1 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                AA Upper
+                            </button>
+                            <button id="makeLowercase" class="flex items-center justify-center px-1 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                aa Lower
+                            </button>
+                            <button id="tabifyLines" class="flex items-center justify-center px-1 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                → Tabify
+                            </button>
+                            <button id="untabifyLines" class="flex items-center justify-center px-1 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                ← Untab
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button id="moveLineUp" class="flex items-center justify-center px-1 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                ↑ Move Up
+                            </button>
+                            <button id="moveLineDown" class="flex items-center justify-center px-1 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                ↓ Move Down
+                            </button>
+                        </div>
+                        <button id="sortLines" class="w-full flex items-center px-2 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                            🔤 Sort Lines
+                        </button>
+                        <button id="joinLines" class="w-full flex items-center px-2 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                            🔗 Join Lines
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Advanced Edit -->
+                <div class="mb-3">
+                    <h3 class="text-xs font-semibold mb-2 text-gray-700 dark:text-gray-300">ADVANCED</h3>
+                    <div class="space-y-1">
+                        <button id="removeDuplicateLines" class="w-full flex items-center px-2 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                            🔄 Remove Duplicates
+                        </button>
+                        <button id="findReplace" class="w-full flex items-center px-2 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                            🔍 Find & Replace
+                        </button>
+                        <button id="incrementalSearch" class="w-full flex items-center px-2 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                            🔎 Incremental Search
+                        </button>
+                        <div class="grid grid-cols-2 gap-1">
+                            <button id="expandSelection" class="flex items-center justify-center px-1 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                📐 Expand
+                            </button>
+                            <button id="contractSelection" class="flex items-center justify-center px-1 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                📏 Contract
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Comment Tools -->
-                <div class="space-y-2 mb-4">
-                    <h4 class="font-medium text-gray-700 dark:text-gray-300">Comment Tools</h4>
-                    <button id="toggleLineComment" class="w-full px-3 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors text-base">
-                        // Toggle Line Comment
-                    </button>
-                    <button id="toggleBlockComment" class="w-full px-3 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors text-base">
-                        /**/ Toggle Block Comment
-                    </button>
-                    <button id="removeAllComments" class="w-full px-3 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors text-base">
-                        🗑️ Remove All Comments
-                    </button>
+                <div class="mb-3">
+                    <h3 class="text-xs font-semibold mb-2 text-gray-700 dark:text-gray-300">COMMENT</h3>
+                    <div class="space-y-1">
+                        <button id="toggleLineComment" class="w-full flex items-center px-2 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                            // Line Comment
+                        </button>
+                        <button id="toggleBlockComment" class="w-full flex items-center px-2 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                            /**/ Block Comment
+                        </button>
+                        <button id="removeAllComments" class="w-full flex items-center px-2 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                            🗑️ Remove All Comments
+                        </button>
+                    </div>
                 </div>
 
-                <!-- Code Tools -->
-                <div class="space-y-2 mb-4">
-                    <h4 class="font-medium text-gray-700 dark:text-gray-300">Code Tools</h4>
-                    <button id="formatCode" class="w-full px-3 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors text-base">
-                        ✨ Format Code
-                    </button>
-                    <button id="findReplace" class="w-full px-3 py-2 bg-orange-600 text-white rounded hover:bg-orange-700 transition-colors text-base">
-                        🔍 Find & Replace
-                    </button>
-                    <button id="duplicateLine" class="w-full px-3 py-2 bg-teal-600 text-white rounded hover:bg-teal-700 transition-colors text-base">
-                        📋 Duplicate Line
-                    </button>
-                </div>
-
-                <!-- Editor Settings -->
-                <div class="space-y-2">
-                    <h4 class="font-medium text-gray-700 dark:text-gray-300">Settings</h4>
-                    <select id="themeSelect" class="w-full px-3 py-2 border border-gray-300 dark:border-dark-border rounded bg-white dark:bg-dark-bg text-base">
-                        <option value="vs">Light Theme</option>
-                        <option value="vs-dark">Dark Theme</option>
-                        <option value="hc-black">High Contrast</option>
-                    </select>
-                    <select id="fontSizeSelect" class="w-full px-3 py-2 border border-gray-300 dark:border-dark-border rounded bg-white dark:bg-dark-bg text-base">
-                        <option value="12">12px</option>
-                        <option value="14" selected>14px</option>
-                        <option value="16">16px</option>
-                        <option value="18">18px</option>
-                        <option value="20">20px</option>
-                    </select>
+                <!-- View Settings -->
+                <div class="mb-3">
+                    <h3 class="text-xs font-semibold mb-2 text-gray-700 dark:text-gray-300">VIEW</h3>
+                    <div class="space-y-1">
+                        <div class="grid grid-cols-2 gap-1">
+                            <button id="toggleMinimap" class="flex items-center justify-center px-1 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                🗺️ Minimap
+                            </button>
+                            <button id="toggleWordWrap" class="flex items-center justify-center px-1 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                📝 Wrap
+                            </button>
+                            <button id="viewWhiteSpace" class="flex items-center justify-center px-1 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                ⋅ Space
+                            </button>
+                            <button id="toggleSpellCheck" class="flex items-center justify-center px-1 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                ✓ Spell
+                            </button>
+                        </div>
+                        <select id="themeSelect" class="w-full px-2 py-1 text-xs border border-gray-300 dark:border-dark-border rounded bg-white dark:bg-dark-bg">
+                            <option value="vs">Light Theme</option>
+                            <option value="vs-dark">Dark Theme</option>
+                            <option value="hc-black">High Contrast</option>
+                        </select>
+                        <select id="fontSizeSelect" class="w-full px-2 py-1 text-xs border border-gray-300 dark:border-dark-border rounded bg-white dark:bg-dark-bg">
+                            <option value="12">Font: 12px</option>
+                            <option value="14" selected>Font: 14px</option>
+                            <option value="16">Font: 16px</option>
+                            <option value="18">Font: 18px</option>
+                            <option value="20">Font: 20px</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
             <!-- Ad Space 300x250 -->
-            <div class="p-4 border-b border-gray-200 dark:border-dark-border">
+            <div class="p-3 border-b border-gray-200 dark:border-dark-border">
                 <div class="text-center">
                     <script type="text/javascript">
                         atOptions = {
@@ -149,12 +275,12 @@
             </div>
 
             <!-- File Tabs -->
-            <div class="flex-1 p-4">
-                <h4 class="font-medium text-gray-700 dark:text-gray-300 mb-2">Open Files</h4>
+            <div class="flex-1 p-3">
+                <h4 class="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">OPEN FILES</h4>
                 <div id="fileTabs" class="space-y-1">
-                    <div class="tab-item active px-3 py-2 bg-primary text-white rounded cursor-pointer" data-file="main.cs">
-                        📄 main.cs
-                        <button class="float-right text-white hover:text-red-200 ml-2">×</button>
+                    <div class="tab-item active px-2 py-1 text-xs bg-primary text-white rounded cursor-pointer flex items-center" data-file="main.cs">
+                        <span class="mr-1">📄</span> main.cs
+                        <button class="ml-auto text-white hover:text-red-200">×</button>
                     </div>
                 </div>
             </div>
@@ -177,28 +303,24 @@
                     <script type="text/javascript" src="//www.highperformanceformat.com/8a0b4ecf5798ec7c88d15dedacd77708/invoke.js"></script>
                 </div>
             </div>
-
+            
             <!-- Editor Toolbar -->
             <div class="bg-gray-100 dark:bg-dark-surface border-b border-gray-200 dark:border-dark-border p-2">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-4">
-                        <span class="text-sm text-gray-600 dark:text-gray-400">Line: <span id="lineNumber">1</span>, Col: <span id="columnNumber">1</span></span>
-                        <span class="text-sm text-gray-600 dark:text-gray-400">Selection: <span id="selectionInfo">None</span></span>
+                        <span class="text-sm text-gray-600 dark:text-gray-400">Ln: <span id="lineNumber">1</span>, Col: <span id="columnNumber">1</span></span>
+                        <span class="text-sm text-gray-600 dark:text-gray-400">Sel: <span id="selectionInfo">0</span></span>
                     </div>
                     <div class="flex items-center space-x-2">
-                        <button id="toggleMinimap" class="px-3 py-1 bg-gray-200 dark:bg-gray-600 rounded text-sm hover:bg-gray-300 dark:hover:bg-gray-500">
-                            🗺️ Minimap
-                        </button>
-                        <button id="toggleWordWrap" class="px-3 py-1 bg-gray-200 dark:bg-gray-600 rounded text-sm hover:bg-gray-300 dark:hover:bg-gray-500">
-                            📝 Word Wrap
-                        </button>
+                        <span class="text-sm text-gray-600 dark:text-gray-400">C#</span>
+                        <span class="text-sm text-gray-600 dark:text-gray-400">UTF-8</span>
                     </div>
                 </div>
             </div>
-
+            
             <!-- Monaco Editor -->
             <div id="editor" class="flex-1 w-full"></div>
-
+            
             <!-- Native Banner Ad -->
             <div class="p-4 bg-gray-50 dark:bg-dark-surface border-t border-gray-200 dark:border-dark-border">
                 <script async="async" data-cfasync="false" src="//pl26713372.profitableratecpm.com/1a6d5fbc149d94ff8c697b1327966995/invoke.js"></script>
@@ -234,6 +356,10 @@
 
         let editor;
         let currentTheme = 'vs-dark';
+        let sidebarHidden = false;
+        let spellCheckEnabled = false;
+        let whitespaceVisible = false;
+        
         let files = {
             'main.cs': `using System;
 using System.Collections.Generic;
@@ -262,7 +388,7 @@ namespace CSharpEditor
                that span multiple lines */
             
             // Single line comment
-            DisplayMessage("Hello World!");
+            DisplayMessage("Hello World!"); // Inline comment
         }
         
         /// <summary>
@@ -271,7 +397,7 @@ namespace CSharpEditor
         /// <param name="message">The message to display</param>
         private static void DisplayMessage(string message)
         {
-            Console.WriteLine($"Message: {message}");
+            Console.WriteLine($"Message: {message}"); // Another inline comment
         }
     }
     
@@ -335,20 +461,21 @@ namespace CSharpEditor
             editor.onDidChangeCursorSelection((e) => {
                 const selection = editor.getSelection();
                 if (selection.isEmpty()) {
-                    document.getElementById('selectionInfo').textContent = 'None';
+                    document.getElementById('selectionInfo').textContent = '0';
                 } else {
-                    const startLine = selection.startLineNumber;
-                    const endLine = selection.endLineNumber;
                     const selectedText = editor.getModel().getValueInRange(selection);
-                    document.getElementById('selectionInfo').textContent = 
-                        `${selectedText.length} chars (Lines ${startLine}-${endLine})`;
+                    document.getElementById('selectionInfo').textContent = selectedText.length;
                 }
             });
 
-            // Save content when changed
+            // Save content when changed and update stats
             editor.onDidChangeModelContent(() => {
                 files[currentFile] = editor.getValue();
+                updateStats();
             });
+
+            // Initial stats update
+            updateStats();
         });
 
         // Custom modal functions
@@ -374,123 +501,225 @@ namespace CSharpEditor
                  <button class="px-4 py-2 bg-red-500 text-white hover:bg-red-600 rounded" onclick="hideModal(); (${onConfirm})()">Confirm</button>`);
         }
 
-        // Tool functions
-        function toggleLineComment() {
-            const selection = editor.getSelection();
-            const model = editor.getModel();
+        // Stats update function
+        function updateStats() {
+            if (!editor) return;
             
-            if (selection.isEmpty()) {
-                // Toggle comment for current line
-                const lineNumber = selection.startLineNumber;
-                const lineContent = model.getLineContent(lineNumber);
-                const trimmed = lineContent.trim();
+            const content = editor.getValue();
+            const lines = content.split('\n');
+            const words = content.trim() ? content.trim().split(/\s+/) : [];
+            
+            document.getElementById('charCount').textContent = content.length;
+            document.getElementById('wordCount').textContent = words.length;
+            document.getElementById('lineCount').textContent = lines.length;
+            
+            // Simple error detection (basic syntax errors)
+            const errors = detectSimpleErrors(content);
+            document.getElementById('errorCount').textContent = errors;
+        }
+
+        // Simple error detection
+        function detectSimpleErrors(content) {
+            let errorCount = 0;
+            const lines = content.split('\n');
+            
+            lines.forEach(line => {
+                // Check for unmatched brackets
+                const openBrackets = (line.match(/\{/g) || []).length;
+                const closeBrackets = (line.match(/\}/g) || []).length;
+                const openParens = (line.match(/\(/g) || []).length;
+                const closeParens = (line.match(/\)/g) || []).length;
                 
-                if (trimmed.startsWith('//')) {
-                    // Remove comment
-                    const newContent = lineContent.replace(/^\s*\/\/\s?/, '');
-                    const range = new monaco.Range(lineNumber, 1, lineNumber, lineContent.length + 1);
-                    editor.executeEdits('toggle-comment', [{
-                        range: range,
-                        text: newContent
-                    }]);
-                } else {
-                    // Add comment
-                    const indentMatch = lineContent.match(/^(\s*)/);
-                    const indent = indentMatch ? indentMatch[1] : '';
-                    const newContent = indent + '// ' + lineContent.substring(indent.length);
-                    const range = new monaco.Range(lineNumber, 1, lineNumber, lineContent.length + 1);
-                    editor.executeEdits('toggle-comment', [{
-                        range: range,
-                        text: newContent
-                    }]);
+                if (openBrackets !== closeBrackets) errorCount++;
+                if (openParens !== closeParens) errorCount++;
+                
+                // Check for missing semicolons (basic check)
+                if (line.trim() && 
+                    !line.trim().endsWith(';') && 
+                    !line.trim().endsWith('{') && 
+                    !line.trim().endsWith('}') &&
+                    !line.trim().startsWith('//') &&
+                    !line.trim().startsWith('/*') &&
+                    !line.trim().includes('using ') &&
+                    !line.trim().includes('namespace ') &&
+                    !line.trim().includes('class ') &&
+                    !line.trim().includes('public ') &&
+                    !line.trim().includes('private ') &&
+                    !line.trim().includes('protected ') &&
+                    line.trim().length > 5) {
+                    errorCount++;
                 }
+            });
+            
+            return errorCount;
+        }
+
+        // Sidebar toggle function
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.getElementById('sidebarToggle');
+            
+            if (sidebarHidden) {
+                sidebar.style.marginLeft = '0px';
+                sidebar.style.width = '288px';
+                toggleBtn.textContent = '◀';
+                sidebarHidden = false;
             } else {
-                // Toggle comment for selected lines
-                const startLine = selection.startLineNumber;
-                const endLine = selection.endLineNumber;
-                
-                for (let lineNumber = startLine; lineNumber <= endLine; lineNumber++) {
-                    const lineContent = model.getLineContent(lineNumber);
-                    const trimmed = lineContent.trim();
-                    
-                    if (trimmed.startsWith('//')) {
-                        const newContent = lineContent.replace(/^\s*\/\/\s?/, '');
-                        const range = new monaco.Range(lineNumber, 1, lineNumber, lineContent.length + 1);
-                        editor.executeEdits('toggle-comment', [{
-                            range: range,
-                            text: newContent
-                        }]);
-                    } else {
-                        const indentMatch = lineContent.match(/^(\s*)/);
-                        const indent = indentMatch ? indentMatch[1] : '';
-                        const newContent = indent + '// ' + lineContent.substring(indent.length);
-                        const range = new monaco.Range(lineNumber, 1, lineNumber, lineContent.length + 1);
-                        editor.executeEdits('toggle-comment', [{
-                            range: range,
-                            text: newContent
-                        }]);
-                    }
-                }
+                sidebar.style.marginLeft = '-288px';
+                sidebar.style.width = '288px';
+                toggleBtn.textContent = '▶';
+                sidebarHidden = true;
             }
         }
 
-        function toggleBlockComment() {
-            const selection = editor.getSelection();
-            const selectedText = editor.getModel().getValueInRange(selection);
-            
-            if (selectedText) {
-                if (selectedText.startsWith('/*') && selectedText.endsWith('*/')) {
-                    // Remove block comment
-                    const newText = selectedText.substring(2, selectedText.length - 2);
-                    editor.executeEdits('toggle-block-comment', [{
-                        range: selection,
-                        text: newText
-                    }]);
-                } else {
-                    // Add block comment
-                    const newText = '/* ' + selectedText + ' */';
-                    editor.executeEdits('toggle-block-comment', [{
-                        range: selection,
-                        text: newText
-                    }]);
-                }
-            } else {
-                showAlert('Please select text to toggle block comment');
+        // Tool functions
+        function executeEditorAction(actionId) {
+            if (editor && editor.getAction(actionId)) {
+                editor.getAction(actionId).run();
             }
+        }
+
+        function toggleLineComment() {
+            executeEditorAction('editor.action.commentLine');
+        }
+
+        function toggleBlockComment() {
+            executeEditorAction('editor.action.blockComment');
         }
 
         function removeAllComments() {
             showConfirm('Are you sure you want to remove all comments from the code?', () => {
                 let content = editor.getValue();
-                // Remove single line comments
-                content = content.replace(/^\s*\/\/.*$/gm, '');
-                // Remove block comments
                 content = content.replace(/\/\*[\s\S]*?\*\//g, '');
-                // Remove empty lines
+                content = content.replace(/\/\/.*$/gm, '');
                 content = content.replace(/^\s*\n/gm, '');
+                content = content.replace(/\s+$/gm, '');
+                content = content.replace(/\n\s*\n\s*\n/g, '\n\n');
                 editor.setValue(content);
                 showAlert('All comments have been removed');
             });
         }
 
+        function removeDuplicateLines() {
+            showConfirm('Are you sure you want to remove duplicate lines?', () => {
+                let content = editor.getValue();
+                let lines = content.split('\n');
+                let uniqueLines = [];
+                let seenLines = new Set();
+                
+                for (let line of lines) {
+                    let trimmedLine = line.trim();
+                    if (!seenLines.has(trimmedLine) || trimmedLine === '') {
+                        uniqueLines.push(line);
+                        if (trimmedLine !== '') {
+                            seenLines.add(trimmedLine);
+                        }
+                    }
+                }
+                
+                editor.setValue(uniqueLines.join('\n'));
+                showAlert('Duplicate lines have been removed');
+            });
+        }
+
         function formatCode() {
-            editor.getAction('editor.action.formatDocument').run();
+            executeEditorAction('editor.action.formatDocument');
             showAlert('Code formatted successfully');
         }
 
         function openFindReplace() {
-            editor.getAction('editor.action.startFindReplaceAction').run();
+            executeEditorAction('editor.action.startFindReplaceAction');
         }
 
         function duplicateLine() {
-            editor.getAction('editor.action.copyLinesDownAction').run();
+            executeEditorAction('editor.action.copyLinesDownAction');
+        }
+
+        function makeUppercase() {
+            executeEditorAction('editor.action.transformToUppercase');
+        }
+
+        function makeLowercase() {
+            executeEditorAction('editor.action.transformToLowercase');
+        }
+
+        function moveLineUp() {
+            executeEditorAction('editor.action.moveLinesUpAction');
+        }
+
+        function moveLineDown() {
+            executeEditorAction('editor.action.moveLinesDownAction');
+        }
+
+        function sortLines() {
+            const selection = editor.getSelection();
+            const selectedText = editor.getModel().getValueInRange(selection);
+            
+            if (selectedText) {
+                const lines = selectedText.split('\n').sort();
+                editor.executeEdits('sort-lines', [{
+                    range: selection,
+                    text: lines.join('\n')
+                }]);
+                showAlert('Selected lines sorted');
+            } else {
+                showAlert('Please select text to sort');
+            }
+        }
+
+        function joinLines() {
+            const selection = editor.getSelection();
+            const selectedText = editor.getModel().getValueInRange(selection);
+            
+            if (selectedText) {
+                const joinedText = selectedText.replace(/\n/g, ' ');
+                editor.executeEdits('join-lines', [{
+                    range: selection,
+                    text: joinedText
+                }]);
+                showAlert('Lines joined');
+            } else {
+                showAlert('Please select lines to join');
+            }
+        }
+
+        function tabifyLines() {
+            const selection = editor.getSelection();
+            const selectedText = editor.getModel().getValueInRange(selection);
+            
+            if (selectedText) {
+                const tabifiedText = selectedText.replace(/    /g, '\t');
+                editor.executeEdits('tabify', [{
+                    range: selection,
+                    text: tabifiedText
+                }]);
+                showAlert('Lines tabified');
+            } else {
+                showAlert('Please select text to tabify');
+            }
+        }
+
+        function untabifyLines() {
+            const selection = editor.getSelection();
+            const selectedText = editor.getModel().getValueInRange(selection);
+            
+            if (selectedText) {
+                const untabifiedText = selectedText.replace(/\t/g, '    ');
+                editor.executeEdits('untabify', [{
+                    range: selection,
+                    text: untabifiedText
+                }]);
+                showAlert('Lines untabified');
+            } else {
+                showAlert('Please select text to untabify');
+            }
         }
 
         function newFile() {
-            const fileName = Math.random().toString(36).substr(2, 9) + '.cs';
+            const fileName = 'Program' + Math.random().toString(36).substr(2, 5) + '.cs';
             files[fileName] = `using System;
 
-namespace NewFile
+namespace NewNamespace
 {
     public class Program
     {
@@ -534,11 +763,11 @@ namespace NewFile
             
             Object.keys(files).forEach(fileName => {
                 const tabElement = document.createElement('div');
-                tabElement.className = `tab-item px-3 py-2 rounded cursor-pointer ${fileName === currentFile ? 'bg-primary text-white' : 'bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-500'}`;
+                tabElement.className = `tab-item px-2 py-1 text-xs rounded cursor-pointer flex items-center ${fileName === currentFile ? 'bg-primary text-white' : 'bg-white dark:bg-dark-bg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'}`;
                 tabElement.dataset.file = fileName;
                 tabElement.innerHTML = `
-                    📄 ${fileName}
-                    <button class="float-right hover:text-red-500 ml-2" onclick="closeFile('${fileName}')">×</button>
+                    <span class="mr-1">📄</span> ${fileName}
+                    <button class="ml-auto hover:text-red-500" onclick="closeFile('${fileName}')">×</button>
                 `;
                 tabElement.addEventListener('click', (e) => {
                     if (e.target.tagName !== 'BUTTON') {
@@ -564,15 +793,66 @@ namespace NewFile
         }
 
         // Event listeners
+        document.getElementById('sidebarToggle').addEventListener('click', toggleSidebar);
         document.getElementById('newFileBtn').addEventListener('click', newFile);
         document.getElementById('loadFileBtn').addEventListener('click', loadFile);
         document.getElementById('saveFileBtn').addEventListener('click', saveFile);
+        
+        // Edit buttons
+        document.getElementById('undoBtn').addEventListener('click', () => executeEditorAction('undo'));
+        document.getElementById('redoBtn').addEventListener('click', () => executeEditorAction('redo'));
+        document.getElementById('cutBtn').addEventListener('click', () => executeEditorAction('editor.action.clipboardCutAction'));
+        document.getElementById('copyBtn').addEventListener('click', () => executeEditorAction('editor.action.clipboardCopyAction'));
+        document.getElementById('pasteBtn').addEventListener('click', () => executeEditorAction('editor.action.clipboardPasteAction'));
+        document.getElementById('selectAllBtn').addEventListener('click', () => executeEditorAction('editor.action.selectAll'));
+        document.getElementById('duplicateBtn').addEventListener('click', duplicateLine);
+        document.getElementById('deleteBtn').addEventListener('click', () => executeEditorAction('deleteRight'));
+        
+        // Format buttons
+        document.getElementById('formatCode').addEventListener('click', formatCode);
+        document.getElementById('makeUppercase').addEventListener('click', makeUppercase);
+        document.getElementById('makeLowercase').addEventListener('click', makeLowercase);
+        document.getElementById('tabifyLines').addEventListener('click', tabifyLines);
+        document.getElementById('untabifyLines').addEventListener('click', untabifyLines);
+        document.getElementById('moveLineUp').addEventListener('click', moveLineUp);
+        document.getElementById('moveLineDown').addEventListener('click', moveLineDown);
+        document.getElementById('sortLines').addEventListener('click', sortLines);
+        document.getElementById('joinLines').addEventListener('click', joinLines);
+        
+        // Advanced buttons
+        document.getElementById('removeDuplicateLines').addEventListener('click', removeDuplicateLines);
+        document.getElementById('findReplace').addEventListener('click', openFindReplace);
+        document.getElementById('incrementalSearch').addEventListener('click', () => executeEditorAction('actions.find'));
+        document.getElementById('expandSelection').addEventListener('click', () => executeEditorAction('editor.action.smartSelect.expand'));
+        document.getElementById('contractSelection').addEventListener('click', () => executeEditorAction('editor.action.smartSelect.shrink'));
+        
+        // Comment buttons
         document.getElementById('toggleLineComment').addEventListener('click', toggleLineComment);
         document.getElementById('toggleBlockComment').addEventListener('click', toggleBlockComment);
         document.getElementById('removeAllComments').addEventListener('click', removeAllComments);
-        document.getElementById('formatCode').addEventListener('click', formatCode);
-        document.getElementById('findReplace').addEventListener('click', openFindReplace);
-        document.getElementById('duplicateLine').addEventListener('click', duplicateLine);
+        
+        // View buttons
+        document.getElementById('toggleMinimap').addEventListener('click', () => {
+            const currentOption = editor.getOption(monaco.editor.EditorOption.minimap);
+            editor.updateOptions({ minimap: { enabled: !currentOption.enabled } });
+        });
+        
+        document.getElementById('toggleWordWrap').addEventListener('click', () => {
+            const currentWrap = editor.getOption(monaco.editor.EditorOption.wordWrap);
+            editor.updateOptions({ wordWrap: currentWrap === 'on' ? 'off' : 'on' });
+        });
+        
+        document.getElementById('viewWhiteSpace').addEventListener('click', () => {
+            whitespaceVisible = !whitespaceVisible;
+            editor.updateOptions({ 
+                renderWhitespace: whitespaceVisible ? 'all' : 'boundary' 
+            });
+        });
+        
+        document.getElementById('toggleSpellCheck').addEventListener('click', () => {
+            spellCheckEnabled = !spellCheckEnabled;
+            showAlert(`Spell check ${spellCheckEnabled ? 'enabled' : 'disabled'}`);
+        });
 
         document.getElementById('themeSelect').addEventListener('change', (e) => {
             currentTheme = e.target.value;
@@ -581,16 +861,6 @@ namespace NewFile
 
         document.getElementById('fontSizeSelect').addEventListener('change', (e) => {
             editor.updateOptions({ fontSize: parseInt(e.target.value) });
-        });
-
-        document.getElementById('toggleMinimap').addEventListener('click', () => {
-            const currentOption = editor.getOption(monaco.editor.EditorOption.minimap);
-            editor.updateOptions({ minimap: { enabled: !currentOption.enabled } });
-        });
-
-        document.getElementById('toggleWordWrap').addEventListener('click', () => {
-            const currentWrap = editor.getOption(monaco.editor.EditorOption.wordWrap);
-            editor.updateOptions({ wordWrap: currentWrap === 'on' ? 'off' : 'on' });
         });
 
         document.getElementById('fileInput').addEventListener('change', (e) => {
@@ -621,6 +891,14 @@ namespace NewFile
                     case '/':
                         e.preventDefault();
                         toggleLineComment();
+                        break;
+                    case 'd':
+                        e.preventDefault();
+                        duplicateLine();
+                        break;
+                    case 'f':
+                        e.preventDefault();
+                        openFindReplace();
                         break;
                 }
             }
