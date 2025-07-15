@@ -61,7 +61,6 @@
             </div>
         </div>
     </header>
-
     <!-- Main Content Area -->
     <div class="flex h-screen overflow-hidden relative">
         <!-- Sidebar -->
@@ -70,7 +69,6 @@
             <button id="sidebarToggle" class="absolute -right-3 top-4 z-10 bg-white dark:bg-dark-surface border border-gray-300 dark:border-dark-border rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                 ◀
             </button>
-
             <!-- Tool Panel -->
             <div class="p-3 border-b border-gray-200 dark:border-dark-border overflow-y-auto flex-1">
                 <!-- Stats Section -->
@@ -95,38 +93,22 @@
                         </div>
                     </div>
                 </div>
-
+                
                 <!-- Top Level Options -->
                 <div class="mb-3">
                     <h3 class="text-xs font-semibold mb-2 text-gray-700 dark:text-gray-300">EDIT</h3>
                     <div class="grid grid-cols-2 gap-1 text-xs">
-                        <button id="undoBtn" class="flex items-center justify-center px-1 py-1 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" title="Undo (Ctrl+Z)">
-                            ↶ Undo
-                        </button>
-                        <button id="redoBtn" class="flex items-center justify-center px-1 py-1 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" title="Redo (Ctrl+Y)">
-                            ↷ Redo
-                        </button>
-                        <button id="cutBtn" class="flex items-center justify-center px-1 py-1 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" title="Cut (Ctrl+X)">
-                            ✂️ Cut
-                        </button>
-                        <button id="copyBtn" class="flex items-center justify-center px-1 py-1 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" title="Copy (Ctrl+C)">
-                            📋 Copy
-                        </button>
-                        <button id="pasteBtn" class="flex items-center justify-center px-1 py-1 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" title="Paste (Ctrl+V)">
-                            📄 Paste
-                        </button>
-                        <button id="selectAllBtn" class="flex items-center justify-center px-1 py-1 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" title="Select All (Ctrl+A)">
-                            🔲 All
-                        </button>
-                        <button id="duplicateBtn" class="flex items-center justify-center px-1 py-1 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" title="Duplicate (Ctrl+D)">
-                            📑 Dup
-                        </button>
-                        <button id="deleteBtn" class="flex items-center justify-center px-1 py-1 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" title="Delete (Del)">
-                            🗑️ Del
-                        </button>
+                        <button id="undoBtn" class="flex items-center justify-center px-1 py-1 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" title="Undo (Ctrl+Z)">↶ Undo</button>
+                        <button id="redoBtn" class="flex items-center justify-center px-1 py-1 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" title="Redo (Ctrl+Y)">↷ Redo</button>
+                        <button id="cutBtn" class="flex items-center justify-center px-1 py-1 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" title="Cut (Ctrl+X)">✂️ Cut</button>
+                        <button id="copyBtn" class="flex items-center justify-center px-1 py-1 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" title="Copy (Ctrl+C)">📋 Copy</button>
+                        <button id="pasteBtn" class="flex items-center justify-center px-1 py-1 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" title="Paste (Ctrl+V)">📄 Paste</button>
+                        <button id="selectAllBtn" class="flex items-center justify-center px-1 py-1 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" title="Select All (Ctrl+A)">🔲 All</button>
+                        <button id="duplicateBtn" class="flex items-center justify-center px-1 py-1 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" title="Duplicate (Ctrl+D)">📑 Dup</button>
+                        <button id="deleteBtn" class="flex items-center justify-center px-1 py-1 bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" title="Delete (Del)">🗑️ Del</button>
                     </div>
                 </div>
-
+                
                 <!-- File Operations -->
                 <div class="mb-3">
                     <h3 class="text-xs font-semibold mb-2 text-gray-700 dark:text-gray-300">FILE</h3>
@@ -145,7 +127,7 @@
                         </div>
                     </div>
                 </div>
-
+                
                 <!-- Format & Transform -->
                 <div class="mb-3">
                     <h3 class="text-xs font-semibold mb-2 text-gray-700 dark:text-gray-300">FORMAT</h3>
@@ -183,31 +165,7 @@
                         </button>
                     </div>
                 </div>
-
-                <!-- Advanced Edit -->
-                <div class="mb-3">
-                    <h3 class="text-xs font-semibold mb-2 text-gray-700 dark:text-gray-300">ADVANCED</h3>
-                    <div class="space-y-1">
-                        <button id="removeDuplicateLines" class="w-full flex items-center px-2 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                            🔄 Remove Duplicates
-                        </button>
-                        <button id="findReplace" class="w-full flex items-center px-2 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                            🔍 Find & Replace
-                        </button>
-                        <button id="incrementalSearch" class="w-full flex items-center px-2 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                            🔎 Incremental Search
-                        </button>
-                        <div class="grid grid-cols-2 gap-1">
-                            <button id="expandSelection" class="flex items-center justify-center px-1 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                📐 Expand
-                            </button>
-                            <button id="contractSelection" class="flex items-center justify-center px-1 py-1 text-xs bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                📏 Contract
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
+                
                 <!-- Comment Tools -->
                 <div class="mb-3">
                     <h3 class="text-xs font-semibold mb-2 text-gray-700 dark:text-gray-300">COMMENT</h3>
@@ -223,7 +181,7 @@
                         </button>
                     </div>
                 </div>
-
+                
                 <!-- View Settings -->
                 <div class="mb-3">
                     <h3 class="text-xs font-semibold mb-2 text-gray-700 dark:text-gray-300">VIEW</h3>
@@ -257,7 +215,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- Ad Space 300x250 -->
             <div class="p-3 border-b border-gray-200 dark:border-dark-border">
                 <div class="text-center">
@@ -273,7 +230,6 @@
                     <script type="text/javascript" src="//www.highperformanceformat.com/166cd95a37781f8e08654d0446ac7445/invoke.js"></script>
                 </div>
             </div>
-
             <!-- File Tabs -->
             <div class="flex-1 p-3">
                 <h4 class="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">OPEN FILES</h4>
@@ -285,7 +241,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Editor Area -->
         <div class="flex-1 flex flex-col">
             <!-- Mobile Banner Ad 320x50 -->
@@ -328,7 +283,6 @@
             </div>
         </div>
     </div>
-
     <!-- Custom Modal for Dialogs -->
     <div id="customModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full mx-4">
@@ -337,10 +291,8 @@
             <div id="modalActions" class="flex justify-end space-x-3"></div>
         </div>
     </div>
-
     <!-- Social Bar Ad -->
     <script type='text/javascript' src='//pl26713337.profitableratecpm.com/64/66/f1/6466f1b7fea6c93f404f4ab49960b99c.js'></script>
-
     <script>
         // Dark mode detection
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -353,7 +305,6 @@
                 document.documentElement.classList.remove('dark');
             }
         });
-
         let editor;
         let currentTheme = 'vs-dark';
         let sidebarHidden = false;
@@ -364,7 +315,6 @@
             'main.cs': `using System;
 using System.Collections.Generic;
 using System.Linq;
-
 namespace CSharpEditor
 {
     /// <summary>
@@ -421,14 +371,12 @@ namespace CSharpEditor
 }`
         };
         let currentFile = 'main.cs';
-
         // Initialize Monaco Editor
         require.config({ 
             paths: { 
                 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' 
             } 
         });
-
         require(['vs/editor/editor.main'], function () {
             editor = monaco.editor.create(document.getElementById('editor'), {
                 value: files[currentFile],
@@ -450,13 +398,11 @@ namespace CSharpEditor
                     enabled: true
                 }
             });
-
             // Update cursor position
             editor.onDidChangeCursorPosition((e) => {
                 document.getElementById('lineNumber').textContent = e.position.lineNumber;
                 document.getElementById('columnNumber').textContent = e.position.column;
             });
-
             // Update selection info
             editor.onDidChangeCursorSelection((e) => {
                 const selection = editor.getSelection();
@@ -467,17 +413,14 @@ namespace CSharpEditor
                     document.getElementById('selectionInfo').textContent = selectedText.length;
                 }
             });
-
             // Save content when changed and update stats
             editor.onDidChangeModelContent(() => {
                 files[currentFile] = editor.getValue();
                 updateStats();
             });
-
             // Initial stats update
             updateStats();
         });
-
         // Custom modal functions
         function showModal(title, content, actions) {
             document.getElementById('modalTitle').textContent = title;
@@ -485,22 +428,18 @@ namespace CSharpEditor
             document.getElementById('modalActions').innerHTML = actions;
             document.getElementById('customModal').classList.remove('hidden');
         }
-
         function hideModal() {
             document.getElementById('customModal').classList.add('hidden');
         }
-
         function showAlert(message) {
             showModal('Information', `<p class="text-gray-700 dark:text-gray-300">${message}</p>`, 
                 '<button class="px-4 py-2 bg-primary text-white rounded hover:bg-primary/90" onclick="hideModal()">OK</button>');
         }
-
         function showConfirm(message, onConfirm) {
             showModal('Confirm', `<p class="text-gray-700 dark:text-gray-300">${message}</p>`, 
                 `<button class="px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded mr-2" onclick="hideModal()">Cancel</button>
                  <button class="px-4 py-2 bg-red-500 text-white hover:bg-red-600 rounded" onclick="hideModal(); (${onConfirm})()">Confirm</button>`);
         }
-
         // Stats update function
         function updateStats() {
             if (!editor) return;
@@ -517,7 +456,6 @@ namespace CSharpEditor
             const errors = detectSimpleErrors(content);
             document.getElementById('errorCount').textContent = errors;
         }
-
         // Simple error detection
         function detectSimpleErrors(content) {
             let errorCount = 0;
@@ -553,7 +491,6 @@ namespace CSharpEditor
             
             return errorCount;
         }
-
         // Sidebar toggle function
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
@@ -571,22 +508,18 @@ namespace CSharpEditor
                 sidebarHidden = true;
             }
         }
-
         // Tool functions
         function executeEditorAction(actionId) {
             if (editor && editor.getAction(actionId)) {
                 editor.getAction(actionId).run();
             }
         }
-
         function toggleLineComment() {
             executeEditorAction('editor.action.commentLine');
         }
-
         function toggleBlockComment() {
             executeEditorAction('editor.action.blockComment');
         }
-
         function removeAllComments() {
             showConfirm('Are you sure you want to remove all comments from the code?', () => {
                 let content = editor.getValue();
@@ -599,7 +532,6 @@ namespace CSharpEditor
                 showAlert('All comments have been removed');
             });
         }
-
         function removeDuplicateLines() {
             showConfirm('Are you sure you want to remove duplicate lines?', () => {
                 let content = editor.getValue();
@@ -621,36 +553,28 @@ namespace CSharpEditor
                 showAlert('Duplicate lines have been removed');
             });
         }
-
         function formatCode() {
             executeEditorAction('editor.action.formatDocument');
             showAlert('Code formatted successfully');
         }
-
         function openFindReplace() {
             executeEditorAction('editor.action.startFindReplaceAction');
         }
-
         function duplicateLine() {
             executeEditorAction('editor.action.copyLinesDownAction');
         }
-
         function makeUppercase() {
             executeEditorAction('editor.action.transformToUppercase');
         }
-
         function makeLowercase() {
             executeEditorAction('editor.action.transformToLowercase');
         }
-
         function moveLineUp() {
             executeEditorAction('editor.action.moveLinesUpAction');
         }
-
         function moveLineDown() {
             executeEditorAction('editor.action.moveLinesDownAction');
         }
-
         function sortLines() {
             const selection = editor.getSelection();
             const selectedText = editor.getModel().getValueInRange(selection);
@@ -666,7 +590,6 @@ namespace CSharpEditor
                 showAlert('Please select text to sort');
             }
         }
-
         function joinLines() {
             const selection = editor.getSelection();
             const selectedText = editor.getModel().getValueInRange(selection);
@@ -682,7 +605,6 @@ namespace CSharpEditor
                 showAlert('Please select lines to join');
             }
         }
-
         function tabifyLines() {
             const selection = editor.getSelection();
             const selectedText = editor.getModel().getValueInRange(selection);
@@ -698,7 +620,6 @@ namespace CSharpEditor
                 showAlert('Please select text to tabify');
             }
         }
-
         function untabifyLines() {
             const selection = editor.getSelection();
             const selectedText = editor.getModel().getValueInRange(selection);
@@ -714,11 +635,9 @@ namespace CSharpEditor
                 showAlert('Please select text to untabify');
             }
         }
-
         function newFile() {
             const fileName = 'Program' + Math.random().toString(36).substr(2, 5) + '.cs';
             files[fileName] = `using System;
-
 namespace NewNamespace
 {
     public class Program
@@ -733,11 +652,9 @@ namespace NewNamespace
             switchToFile(fileName);
             updateFileTabs();
         }
-
         function loadFile() {
             document.getElementById('fileInput').click();
         }
-
         function saveFile() {
             const content = editor.getValue();
             const blob = new Blob([content], { type: 'text/plain' });
@@ -749,14 +666,12 @@ namespace NewNamespace
             URL.revokeObjectURL(url);
             showAlert(`File "${currentFile}" saved successfully`);
         }
-
         function switchToFile(fileName) {
             files[currentFile] = editor.getValue();
             currentFile = fileName;
             editor.setValue(files[currentFile]);
             updateFileTabs();
         }
-
         function updateFileTabs() {
             const tabsContainer = document.getElementById('fileTabs');
             tabsContainer.innerHTML = '';
@@ -777,7 +692,6 @@ namespace NewNamespace
                 tabsContainer.appendChild(tabElement);
             });
         }
-
         function closeFile(fileName) {
             if (Object.keys(files).length === 1) {
                 showAlert('Cannot close the last file');
@@ -791,7 +705,6 @@ namespace NewNamespace
             }
             updateFileTabs();
         }
-
         // Event listeners
         document.getElementById('sidebarToggle').addEventListener('click', toggleSidebar);
         document.getElementById('newFileBtn').addEventListener('click', newFile);
@@ -818,13 +731,6 @@ namespace NewNamespace
         document.getElementById('moveLineDown').addEventListener('click', moveLineDown);
         document.getElementById('sortLines').addEventListener('click', sortLines);
         document.getElementById('joinLines').addEventListener('click', joinLines);
-        
-        // Advanced buttons
-        document.getElementById('removeDuplicateLines').addEventListener('click', removeDuplicateLines);
-        document.getElementById('findReplace').addEventListener('click', openFindReplace);
-        document.getElementById('incrementalSearch').addEventListener('click', () => executeEditorAction('actions.find'));
-        document.getElementById('expandSelection').addEventListener('click', () => executeEditorAction('editor.action.smartSelect.expand'));
-        document.getElementById('contractSelection').addEventListener('click', () => executeEditorAction('editor.action.smartSelect.shrink'));
         
         // Comment buttons
         document.getElementById('toggleLineComment').addEventListener('click', toggleLineComment);
@@ -853,16 +759,16 @@ namespace NewNamespace
             spellCheckEnabled = !spellCheckEnabled;
             showAlert(`Spell check ${spellCheckEnabled ? 'enabled' : 'disabled'}`);
         });
-
+        
         document.getElementById('themeSelect').addEventListener('change', (e) => {
             currentTheme = e.target.value;
             monaco.editor.setTheme(currentTheme);
         });
-
+        
         document.getElementById('fontSizeSelect').addEventListener('change', (e) => {
             editor.updateOptions({ fontSize: parseInt(e.target.value) });
         });
-
+        
         document.getElementById('fileInput').addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (file) {
@@ -875,7 +781,6 @@ namespace NewNamespace
                 reader.readAsText(file);
             }
         });
-
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
             if (e.ctrlKey || e.metaKey) {
