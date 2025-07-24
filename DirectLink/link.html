@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আপনার সেরা সুযোগ!</title>
+    <!-- Tailwind CSS লোড করুন -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* ইন্টার ফন্ট ব্যবহার করুন */
+        body {
+            font-family: "Inter", sans-serif;
+            background: linear-gradient(135deg, #a7bfe8, #6190e8); /* রঙিন ব্যাকগ্রাউন্ড যা গ্লাস থিমের সাথে মানানসই */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* গ্লাস থিম বাটনের স্টাইল */
+        .glass-button {
+            /* রঙিন গ্রেডিয়েন্ট ব্যাকগ্রাউন্ড যা স্বচ্ছতা সহ */
+            background: linear-gradient(135deg, rgba(0, 120, 212, 0.7), rgba(138, 43, 226, 0.7));
+            backdrop-filter: blur(10px); /* গ্লাস ইফেক্টের জন্য ব্লার */
+            -webkit-backdrop-filter: blur(10px); /* সাফারি ব্রাউজারের জন্য */
+            border: 1px solid rgba(255, 255, 255, 0.4); /* হালকা সাদা বর্ডার */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2); /* গভীরতার জন্য শ্যাডো */
+            color: white; /* সাদা টেক্সট */
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* টেক্সটের পঠনযোগ্যতার জন্য শ্যাডো */
+            padding: 18px 35px;
+            border-radius: 15px; /* গোলাকার কোণ */
+            font-size: 1.5rem; /* বড় ফন্ট সাইজ */
+            font-weight: 700;
+            text-decoration: none; /* লিঙ্কের আন্ডারলাইন সরান */
+            transition: all 0.3s ease; /* হোভার ইফেক্টের জন্য মসৃণ ট্রানজিশন */
+            display: inline-block; /* বাটনকে ইনলাইন ব্লক হিসেবে প্রদর্শন */
+            position: relative; /* শাইন ইফেক্টের জন্য পজিশন */
+            overflow: hidden; /* শাইন ইফেক্ট লুকানোর জন্য */
+            cursor: pointer; /* কার্সারকে পয়েন্টার দেখান */
+        }
+
+        .glass-button:hover {
+            transform: translateY(-3px); /* হোভারে সামান্য উপরে উঠান */
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.3); /* হোভারে শ্যাডো বাড়ান */
+            /* হোভারে সামান্য কম স্বচ্ছতা */
+            background: linear-gradient(135deg, rgba(0, 120, 212, 0.8), rgba(138, 43, 226, 0.8));
+        }
+
+        /* শাইন ইফেক্ট */
+        .glass-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2); /* শাইনের রঙ */
+            transform: skewX(-30deg); /* তির্যক আকার */
+            transition: all 0.5s ease; /* মসৃণ ট্রানজিশন */
+        }
+
+        .glass-button:hover::before {
+            left: 100%; /* হোভারে শাইন ইফেক্ট */
+        }
+
+        /* হেডিং এবং প্যারাগ্রাফের স্টাইল */
+        #main-heading {
+            color: #ffffff; /* সাদা রঙ */
+            font-size: 2.5rem; /* বড় ফন্ট */
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* টেক্সট শ্যাডো */
+        }
+
+        #sub-paragraph {
+            color: #e2e8f0; /* হালকা সাদা রঙ */
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); /* টেক্সট শ্যাডো */
+        }
+
+        /* মোবাইল রেসপনসিভনেস */
+        @media (max-width: 640px) {
+            .glass-button {
+                font-size: 1.2rem; /* ছোট স্ক্রিনের জন্য ফন্ট সাইজ কমানো */
+                padding: 15px 25px;
+            }
+            #main-heading {
+                font-size: 2rem;
+            }
+            #sub-paragraph {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="main-heading"></h1>
+        <p id="sub-paragraph"></p>
+
+        <!-- আকর্ষণীয় গ্লাস থিম বাটন -->
+        <a href="#" target="_blank" class="glass-button" id="dynamic-button">
+            <!-- বাটন টেক্সট জাভাস্ক্রিপ্ট দ্বারা লোড হবে -->
+        </a>
+    </div>
+
+    <script>
+        // বিভিন্ন ভাষার জন্য টেক্সট সেট
+        const languagePacks = [
+            {
+                lang: "bn",
+                heading: "আপনার জন্য বিশেষ কিছু!",
+                paragraph: "আর অপেক্ষা নয়! আপনার সেরা সুযোগটি খুঁজে নিতে এখনই ক্লিক করুন।",
+                buttonText: "আপনার সেরা সুযোগটি খুঁজে নিন! ✨"
+            },
+            {
+                lang: "en",
+                heading: "Something Special For You!",
+                paragraph: "Don't wait! Click now to discover your best opportunity.",
+                buttonText: "Discover Your Best Opportunity! ✨"
+            },
+            {
+                lang: "hi",
+                heading: "आपके लिए कुछ खास!",
+                paragraph: "इंतजार न करें! अपना सबसे अच्छा अवसर खोजने के लिए अभी क्लिक करें।",
+                buttonText: "अपना सर्वश्रेष्ठ अवसर खोजें! ✨"
+            }
+        ];
+
+        const allLinks = [
+            "https://otieu.com/4/9570463",
+            "https://otieu.com/4/9621191",
+            "https://www.profitableratecpm.com/m7j44g75?key=90f36207646d410dc5c03e6c6816a890", 
+            "https://otieu.com/4/9621194" 
+        ];
+
+        // পেজ লোড হলে এই ফাংশনটি চলবে
+        window.onload = function() {
+            // র্যান্ডমভাবে একটি ভাষা প্যাক নির্বাচন করুন
+            const randomLangPack = languagePacks[Math.floor(Math.random() * languagePacks.length)];
+
+            // র্যান্ডমভাবে একটি লিঙ্ক নির্বাচন করুন
+            const randomLink = allLinks[Math.floor(Math.random() * allLinks.length)];
+
+            // HTML উপাদানগুলি নির্বাচন করুন
+            const mainHeading = document.getElementById('main-heading');
+            const subParagraph = document.getElementById('sub-paragraph');
+            const dynamicButton = document.getElementById('dynamic-button');
+
+            // নির্বাচিত ভাষা প্যাক অনুযায়ী টেক্সট আপডেট করুন
+            if (mainHeading) {
+                mainHeading.textContent = randomLangPack.heading;
+            }
+            if (subParagraph) {
+                subParagraph.textContent = randomLangPack.paragraph;
+            }
+            if (dynamicButton) {
+                dynamicButton.textContent = randomLangPack.buttonText;
+                dynamicButton.href = randomLink; // বাটনের লিঙ্ক সেট করুন
+            }
+        };
+    </script>
+</body>
+</html>
