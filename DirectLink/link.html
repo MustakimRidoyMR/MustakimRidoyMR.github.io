@@ -1,14 +1,18 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আপনার সেরা সুযোগ!</title>
+    <title>Your Best Opportunity!</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
+        
         body {
-            font-family: "Inter", sans-serif;
-            background: linear-gradient(135deg, #a7bfe8, #6190e8);
+            font-family: "Segoe UI", "Inter", sans-serif;
+            background: linear-gradient(45deg, #ff6ec7, #87ceeb, #ffc0cb, #87cefa);
+            background-size: 400% 400%;
+            animation: gradientFlow 6s ease infinite;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -18,6 +22,32 @@
             padding: 10px;
             box-sizing: border-box;
             overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+            animation: floatingOrbs 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes floatingOrbs {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(10px, -10px) scale(1.1); }
+            66% { transform: translate(-10px, 10px) scale(0.9); }
         }
 
         .container {
@@ -26,6 +56,17 @@
             text-align: center;
             padding: 20px;
             box-sizing: border-box;
+            position: relative;
+            backdrop-filter: blur(5px);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: containerPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes containerPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); }
+            50% { transform: scale(1.02); box-shadow: 0 0 30px rgba(255, 255, 255, 0.5); }
         }
 
         .glass-button {
@@ -50,10 +91,16 @@
             max-width: 260px;
             white-space: normal;
             word-wrap: break-word;
+            animation: buttonGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes buttonGlow {
+            0%, 100% { box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2); }
+            50% { box-shadow: 0 8px 32px 0 rgba(138, 43, 226, 0.4); }
         }
         
         .glass-button:hover {
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.05);
             box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.3);
             background: linear-gradient(135deg, rgba(0, 120, 212, 0.8), rgba(138, 43, 226, 0.8));
         }
@@ -80,18 +127,62 @@
             margin-bottom: 0.8rem;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             padding: 0 10px;
+            animation: textShimmer 2s ease-in-out infinite;
+            font-weight: 700;
+        }
+
+        @keyframes textShimmer {
+            0%, 100% { text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); }
+            50% { text-shadow: 0 2px 8px rgba(255, 255, 255, 0.6), 0 0 20px rgba(255, 255, 255, 0.3); }
         }
 
         #sub-paragraph {
-            color: #e2e8f0;
+            color: #f0f8ff;
             font-size: 0.9rem;
             margin-bottom: 1.5rem;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
             padding: 0 10px;
             line-height: 1.3;
+            animation: textFloat 4s ease-in-out infinite;
         }
 
-        /* মোবাইল ডিভাইসের জন্য অপ্টিমাইজেশন */
+        @keyframes textFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-2px); }
+        }
+
+        .loading-indicator {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Microsoft Fluent Design particles */
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleFloat 6s infinite ease-in-out;
+        }
+
+        @keyframes particleFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Mobile optimization */
         @media (max-width: 480px) {
             .container {
                 padding: 10px;
@@ -115,7 +206,6 @@
             }
         }
 
-        /* ছোট মোবাইল ডিভাইসের জন্য */
         @media (max-width: 320px) {
             .glass-button {
                 font-size: 1rem;
@@ -134,31 +224,104 @@
 </head>
 <body>
     <div class="container">
-        <h1 id="main-heading"></h1>
-        <p id="sub-paragraph"></p>
-        <a href="#" target="_blank" class="glass-button" id="dynamic-button"></a>
+        <div class="loading-indicator" id="loading"></div>
+        <h1 id="main-heading" style="display: none;"></h1>
+        <p id="sub-paragraph" style="display: none;"></p>
+        <a href="#" target="_blank" class="glass-button" id="dynamic-button" style="display: none;"></a>
     </div>
 
     <script>
         const languagePacks = [
-            {
-                lang: "bn",
-                heading: "আপনার জন্য বিশেষ কিছু!",
-                paragraph: "আর অপেক্ষা নয়! আপনার সেরা সুযোগটি খুঁজে নিতে এখনই ক্লিক করুন।",
-                buttonText: "আপনার সেরা সুযোগটি খুঁজে নিন! ✨"
-            },
-            {
-                lang: "en",
-                heading: "Something Special For You!",
-                paragraph: "Don't wait! Click now to discover your best opportunity.",
-                buttonText: "Discover Your Best Opportunity! ✨"
-            },
-            {
-                lang: "hi",
-                heading: "आपके लिए कुछ खास!",
-                paragraph: "इंतजार न करें! अपना सबसे अच्छा अवसर खोजने के लिए अभी क्लिक करें।",
-                buttonText: "अपना सर्वश्रेष्ठ अवसर खोजें! ✨"
-            }
+            // Major Languages
+            { lang: "en", country: ["US", "GB", "AU", "CA", "NZ"], heading: "Something Special For You!", paragraph: "Don't wait! Click now to discover your best opportunity.", buttonText: "Discover Your Best Opportunity! ✨" },
+            { lang: "zh", country: ["CN", "TW", "HK", "SG"], heading: "为您准备的特别惊喜！", paragraph: "不要等待！立即点击发现您的最佳机会。", buttonText: "发现您的最佳机会！✨" },
+            { lang: "hi", country: ["IN"], heading: "आपके लिए कुछ खास!", paragraph: "इंतजार न करें! अपना सबसे अच्छा अवसर खोजने के लिए अभी क्लिक करें।", buttonText: "अपना सर्वश्रेष्ठ अवसर खोजें! ✨" },
+            { lang: "es", country: ["ES", "MX", "AR", "CO", "PE", "VE", "CL"], heading: "¡Algo Especial Para Ti!", paragraph: "¡No esperes! Haz clic ahora para descubrir tu mejor oportunidad.", buttonText: "¡Descubre Tu Mejor Oportunidad! ✨" },
+            { lang: "ar", country: ["SA", "AE", "EG", "MA", "DZ"], heading: "شيء مميز لك!", paragraph: "لا تنتظر! اضغط الآن لاكتشاف أفضل فرصة لك.", buttonText: "اكتشف أفضل فرصة لك! ✨" },
+            { lang: "bn", country: ["BD"], heading: "আপনার জন্য বিশেষ কিছু!", paragraph: "আর অপেক্ষা নয়! আপনার সেরা সুযোগটি খুঁজে নিতে এখনই ক্লিক করুন।", buttonText: "আপনার সেরা সুযোগটি খুঁজে নিন! ✨" },
+            { lang: "pt", country: ["BR", "PT"], heading: "Algo Especial Para Você!", paragraph: "Não espere! Clique agora para descobrir sua melhor oportunidade.", buttonText: "Descubra Sua Melhor Oportunidade! ✨" },
+            { lang: "ru", country: ["RU", "BY", "KZ"], heading: "Что-то Особенное Для Вас!", paragraph: "Не ждите! Нажмите сейчас, чтобы найти свою лучшую возможность.", buttonText: "Найдите Свою Лучшую Возможность! ✨" },
+            { lang: "ja", country: ["JP"], heading: "あなたのための特別なもの！", paragraph: "待たないで！今すぐクリックして最高のチャンスを見つけてください。", buttonText: "最高のチャンスを見つけよう！✨" },
+            { lang: "de", country: ["DE", "AT", "CH"], heading: "Etwas Besonderes Für Sie!", paragraph: "Warten Sie nicht! Klicken Sie jetzt, um Ihre beste Gelegenheit zu entdecken.", buttonText: "Entdecken Sie Ihre Beste Gelegenheit! ✨" },
+            
+            // European Languages
+            { lang: "fr", country: ["FR", "BE", "CH", "CA"], heading: "Quelque Chose de Spécial Pour Vous!", paragraph: "N'attendez pas! Cliquez maintenant pour découvrir votre meilleure opportunité.", buttonText: "Découvrez Votre Meilleure Opportunité! ✨" },
+            { lang: "it", country: ["IT"], heading: "Qualcosa di Speciale Per Te!", paragraph: "Non aspettare! Clicca ora per scoprire la tua migliore opportunità.", buttonText: "Scopri La Tua Migliore Opportunità! ✨" },
+            { lang: "nl", country: ["NL", "BE"], heading: "Iets Speciaals Voor Jou!", paragraph: "Wacht niet! Klik nu om je beste kans te ontdekken.", buttonText: "Ontdek Je Beste Kans! ✨" },
+            { lang: "pl", country: ["PL"], heading: "Coś Wyjątkowego Dla Ciebie!", paragraph: "Nie czekaj! Kliknij teraz, aby odkryć swoją najlepszą szansę.", buttonText: "Odkryj Swoją Najlepszą Szansę! ✨" },
+            { lang: "tr", country: ["TR"], heading: "Senin İçin Özel Bir Şey!", paragraph: "Bekleme! En iyi fırsatını keşfetmek için şimdi tıkla.", buttonText: "En İyi Fırsatını Keşfet! ✨" },
+            { lang: "sv", country: ["SE"], heading: "Något Speciellt För Dig!", paragraph: "Vänta inte! Klicka nu för att upptäcka din bästa möjlighet.", buttonText: "Upptäck Din Bästa Möjlighet! ✨" },
+            { lang: "no", country: ["NO"], heading: "Noe Spesielt For Deg!", paragraph: "Ikke vent! Klikk nå for å oppdage din beste mulighet.", buttonText: "Oppdag Din Beste Mulighet! ✨" },
+            { lang: "da", country: ["DK"], heading: "Noget Særligt Til Dig!", paragraph: "Vent ikke! Klik nu for at opdage din bedste mulighed.", buttonText: "Opdag Din Bedste Mulighed! ✨" },
+            { lang: "fi", country: ["FI"], heading: "Jotain Erityistä Sinulle!", paragraph: "Älä odota! Klikkaa nyt löytääksesi parhaan mahdollisuutesi.", buttonText: "Löydä Paras Mahdollisuutesi! ✨" },
+            { lang: "cs", country: ["CZ"], heading: "Něco Speciálního Pro Vás!", paragraph: "Nečekejte! Klikněte nyní a objevte svou nejlepší příležitost.", buttonText: "Objevte Svou Nejlepší Příležitost! ✨" },
+            
+            // Asian Languages
+            { lang: "ko", country: ["KR"], heading: "당신을 위한 특별한 것!", paragraph: "기다리지 마세요! 지금 클릭하여 최고의 기회를 발견하세요.", buttonText: "최고의 기회를 발견하세요! ✨" },
+            { lang: "th", country: ["TH"], heading: "สิ่งพิเศษสำหรับคุณ!", paragraph: "อย่ารอ! คลิกเลยเพื่อค้นหาโอกาสที่ดีที่สุดของคุณ", buttonText: "ค้นหาโอกาสที่ดีที่สุดของคุณ! ✨" },
+            { lang: "vi", country: ["VN"], heading: "Điều Gì Đó Đặc Biệt Cho Bạn!", paragraph: "Đừng chờ đợi! Nhấp ngay để khám phá cơ hội tốt nhất của bạn.", buttonText: "Khám Phá Cơ Hội Tốt Nhất! ✨" },
+            { lang: "id", country: ["ID"], heading: "Sesuatu Yang Istimewa Untuk Anda!", paragraph: "Jangan tunggu! Klik sekarang untuk menemukan kesempatan terbaik Anda.", buttonText: "Temukan Kesempatan Terbaik Anda! ✨" },
+            { lang: "ms", country: ["MY"], heading: "Sesuatu Yang Istimewa Untuk Anda!", paragraph: "Jangan tunggu! Klik sekarang untuk menemui peluang terbaik anda.", buttonText: "Temui Peluang Terbaik Anda! ✨" },
+            { lang: "ur", country: ["PK"], heading: "آپ کے لیے کچھ خاص!", paragraph: "انتظار نہ کریں! اپنا بہترین موقع دریافت کرنے کے لیے ابھی کلک کریں۔", buttonText: "اپنا بہترین موقع دریافت کریں! ✨" },
+            { lang: "fa", country: ["IR"], heading: "چیزی ویژه برای شما!", paragraph: "منتظر نمانید! همین حالا کلیک کنید تا بهترین فرصت خود را کشف کنید.", buttonText: "بهترین فرصت خود را کشف کنید! ✨" },
+            
+            // African Languages
+            { lang: "sw", country: ["KE", "TZ"], heading: "Kitu Cha Kipekee Kwako!", paragraph: "Usisubiri! Bonyeza sasa ili kugundua fursa yako bora zaidi.", buttonText: "Gundua Fursa Yako Bora Zaidi! ✨" },
+            { lang: "am", country: ["ET"], heading: "ለእርስዎ የተለየ ነገር!", paragraph: "አይጠብቁ! የእርስዎን ምርጥ እድል ለማግኘት አሁን ጠቅ ያድርጉ።", buttonText: "የእርስዎን ምርጥ እድል ያግኙ! ✨" },
+            { lang: "ha", country: ["NG"], heading: "Wani Abu Na Musamman Gare Ka!", paragraph: "Kar ka jira! Danna yanzu don gano mafi kyawun damar ka.", buttonText: "Gano Mafi Kyawun Damar Ka! ✨" },
+            
+            // More European Languages
+            { lang: "ro", country: ["RO"], heading: "Ceva Special Pentru Tine!", paragraph: "Nu aştepta! Dă click acum pentru a-ţi descoperi cea mai bună oportunitate.", buttonText: "Descoperă-ţi Cea Mai Bună Oportunitate! ✨" },
+            { lang: "hu", country: ["HU"], heading: "Valami Különleges Neked!", paragraph: "Ne várj! Kattints most, hogy felfedezd a legjobb lehetőségedet.", buttonText: "Fedezd Fel A Legjobb Lehetőségedet! ✨" },
+            { lang: "bg", country: ["BG"], heading: "Нещо Специално За Теб!", paragraph: "Не чакай! Кликни сега, за да откриеш най-добрата си възможност.", buttonText: "Открий Най-добрата Си Възможност! ✨" },
+            { lang: "hr", country: ["HR"], heading: "Nešto Posebno Za Tebe!", paragraph: "Ne čekaj! Klikni sada da otkriješ svoju najbolju priliku.", buttonText: "Otkrij Svoju Najbolju Priliku! ✨" },
+            { lang: "sk", country: ["SK"], heading: "Niečo Špeciálne Pre Teba!", paragraph: "Nečakaj! Klikni teraz a objav svoju najlepšiu príležitosť.", buttonText: "Objav Svoju Najlepšiu Príležitosť! ✨" },
+            { lang: "sl", country: ["SI"], heading: "Nekaj Posebnega Za Tebe!", paragraph: "Ne čakaj! Klikni zdaj, da odkriješ svojo najboljšo priložnost.", buttonText: "Otkrij Svojo Najboljšo Priložnost! ✨" },
+            { lang: "lv", country: ["LV"], heading: "Kas Īpašs Tev!", paragraph: "Negaidi! Noklikšķini tagad, lai atklātu savu labāko iespēju.", buttonText: "Atklāj Savu Labāko Iespēju! ✨" },
+            { lang: "lt", country: ["LT"], heading: "Kažkas Ypatingo Tau!", paragraph: "Nelaukite! Spustelėkite dabar, kad rastumėte savo geriausią galimybę.", buttonText: "Raskite Savo Geriausią Galimybę! ✨" },
+            { lang: "et", country: ["EE"], heading: "Midagi Erilist Sulle!", paragraph: "Ära oota! Kliki kohe, et avastada oma parim võimalus.", buttonText: "Avasta Oma Parim Võimalus! ✨" },
+            
+            // More Global Languages
+            { lang: "he", country: ["IL"], heading: "משהו מיוחד בשבילך!", paragraph: "אל תחכה! לחץ עכשיו כדי לגלות את ההזדמנות הטובה ביותר שלך.", buttonText: "גלה את ההזדמנות הטובה ביותר שלך! ✨" },
+            { lang: "el", country: ["GR"], heading: "Κάτι Ιδιαίτερο Για Εσένα!", paragraph: "Μην περιμένεις! Κάνε κλικ τώρα για να ανακαλύψεις την καλύτερη ευκαιρία σου.", buttonText: "Ανακάλυψε Την Καλύτερη Ευκαιρία Σου! ✨" },
+            { lang: "ka", country: ["GE"], heading: "რაღაც განსაკუთრებული შენთვის!", paragraph: "ნუ დაიცდი! დააწექი ახლა შენი საუკეთესო შესაძლებლობის აღმოსაჩენად.", buttonText: "აღმოაჩინე შენი საუკეთესო შესაძლებლობა! ✨" },
+            { lang: "hy", country: ["AM"], heading: "Ինչ-որ հատուկ քեզ համար!", paragraph: "Մի սպասիր: Սեղմիր հիմա՝ քո լավագույն հնարավորությունը բացահայտելու համար:", buttonText: "Բացահայտիր քո լավագույն հնարավորությունը! ✨" },
+            { lang: "az", country: ["AZ"], heading: "Sənin Üçün Xüsusi Bir Şey!", paragraph: "Gözləmə! Ən yaxşı fürsətini kəşf etmək üçün indi klik et.", buttonText: "Ən Yaxşı Fürsətini Kəşf Et! ✨" },
+            { lang: "kk", country: ["KZ"], heading: "Сіз үшін ерекше нәрсе!", paragraph: "Күтпеңіз! Ең жақсы мүмкіндігіңізді табу үшін қазір басыңыз.", buttonText: "Ең Жақсы Мүмкіндігіңізді Табыңыз! ✨" },
+            { lang: "ky", country: ["KG"], heading: "Сиз үчүн өзгөчө нерсе!", paragraph: "Күтпөңүз! Эң мыкты мүмкүнчүлүгүңүздү табуу үчүн азыр басыңыз.", buttonText: "Эң Мыкты Мүмкүнчүлүгүңүздү Табыңыз! ✨" },
+            { lang: "uz", country: ["UZ"], heading: "Siz uchun maxsus narsa!", paragraph: "Kutmang! Eng yaxshi imkoniyatingizni topish uchun hozir bosing.", buttonText: "Eng Yaxshi Imkoniyatingizni Toping! ✨" },
+            { lang: "tg", country: ["TJ"], heading: "Чизи махсус барои шумо!", paragraph: "Интизор нашавед! Барои кашфи беҳтарин имконияти худ ҳозир зер кунед.", buttonText: "Беҳтарин Имконияти Худро Кашф Кунед! ✨" },
+            { lang: "mn", country: ["MN"], heading: "Танд зориулсан онцгой зүйл!", paragraph: "Бүү хүлээ! Хамгийн сайн боломжоо олохын тулд одоо дар.", buttonText: "Хамгийн Сайн Боломжоо Ол! ✨" },
+            
+            // African Languages
+            { lang: "yo", country: ["NG"], heading: "Nkan Pataki Fun E!", paragraph: "Ma duro! Te lori bayi lati rii anfani to dara julo.", buttonText: "Rii Anfani To Dara Julo! ✨" },
+            { lang: "ig", country: ["NG"], heading: "Ihe Pụrụ Iche Maka Gị!", paragraph: "Echerekwala! Pịa ugbu a iji chọpụta ohere kacha mma gị.", buttonText: "Chọpụta Ohere Kacha Mma Gị! ✨" },
+            { lang: "zu", country: ["ZA"], heading: "Okuthile Okukhethekile Kuwe!", paragraph: "Ungalindi! Chofoza manje ukuze uthole ithuba lakho elihle kakhulu.", buttonText: "Thola Ithuba Lakho Elihle Kakhulu! ✨" },
+            { lang: "af", country: ["ZA"], heading: "Iets Spesiaal Vir Jou!", paragraph: "Moenie wag nie! Klik nou om jou beste geleentheid te ontdek.", buttonText: "Ontdek Jou Beste Geleentheid! ✨" },
+            
+            // Latin American Languages
+            { lang: "qu", country: ["PE", "BO"], heading: "Ima sapalla qampaq!", paragraph: "Ama suyaychu! Kunan ñit'iy aswan allin atiynikikunata tariyanaykipaq.", buttonText: "Aswan Allin Atiynikikunata Tariykuy! ✨" },
+            { lang: "gn", country: ["PY"], heading: "Peteĩ mba'e iporãva ndéve g̃uarã!", paragraph: "Ani reha'arõ! Eñemboja ko'ág̃a rejuhu hag̃ua nde rembiapo iporãvéva.", buttonText: "Ejuhu Nde Rembiapo Iporãvéva! ✨" },
+            
+            // More Languages
+            { lang: "is", country: ["IS"], heading: "Eitthvað Sérstakt Fyrir Þig!", paragraph: "Ekki bíða! Smelltu núna til að uppgötva besta tækifærið þitt.", buttonText: "Uppgötvaðu Besta Tækifærið Þitt! ✨" },
+            { lang: "mt", country: ["MT"], heading: "Xi Ħaġa Speċjali Għalik!", paragraph: "Tistenniex! Ikklikkja issa biex tiskopri l-aħjar opportunità tiegħek.", buttonText: "Iskopri L-Aħjar Opportunità Tiegħek! ✨" },
+            { lang: "ga", country: ["IE"], heading: "Rud Éigin Speisialta Duit!", paragraph: "Ná fan! Cliceáil anois chun do dheis is fearr a fháil amach.", buttonText: "Faigh Amach Do Dheis Is Fearr! ✨" },
+            { lang: "cy", country: ["GB"], heading: "Rhywbeth Arbennig I Chi!", paragraph: "Peidiwch ag aros! Cliciwch nawr i ddarganfod eich cyfle gorau.", buttonText: "Darganfyddwch Eich Cyfle Gorau! ✨" },
+            { lang: "eu", country: ["ES"], heading: "Zure Berariazko Zerbait!", paragraph: "Ez itxaron! Egin klik orain zure aukera onena aurkitzeko.", buttonText: "Aurkitu Zure Aukera Onena! ✨" },
+            { lang: "ca", country: ["ES"], heading: "Alguna Cosa Especial Per A Tu!", paragraph: "No esperis! Fes clic ara per descobrir la teva millor oportunitat.", buttonText: "Descobreix La Teva Millor Oportunitat! ✨" },
+            { lang: "gl", country: ["ES"], heading: "Algo Especial Para Ti!", paragraph: "Non esperes! Fai clic agora para descubrir a túa mellor oportunidade.", buttonText: "Descobre A Túa Mellor Oportunidade! ✨" },
+            
+            // Pacific Languages
+            { lang: "fj", country: ["FJ"], heading: "E Dua Na Ka Makawa Vei Iko!", paragraph: "Kua ni biu! Kiliki eke mada ni kila na ka vinaka duadua vei iko.", buttonText: "Kila Na Ka Vinaka Duadua Vei Iko! ✨" },
+            { lang: "sm", country: ["WS"], heading: "Se Mea Faapitoa Mo Oe!", paragraph: "Aua le faatali! Kiliki nei e maua ai lou avanoa sili.", buttonText: "Maua Lou Avanoa Sili! ✨" },
+            { lang: "to", country: ["TO"], heading: "'Oku 'Ai Ha Me'a Makehe Kiate Koe!", paragraph: "Oua 'e tatali! Lomi ni ke 'ilo ho me'angaue lelei taha.", buttonText: "'Ilo Ho Me'angaue Lelei Taha! ✨" },
+            
+            // More African Languages
+            { lang: "xh", country: ["ZA"], heading: "Into Ekhethekileyo Kuwe!", paragraph: "Musa ukulinda! Cofa ngoku ukuze ufumane elona thuba lakho lihle.", buttonText: "Fumana Elona Thuba Lakho Lihle! ✨" },
+            { lang: "sn", country: ["ZW"], heading: "Chimwe Chinhu Chakakosha Kwauri!", paragraph: "Usafanire! Dzvanya iye zvino kuti uwane mukana wako wakanakisa.", buttonText: "Wana Mukana Wako Wakanakisa! ✨" },
+            { lang: "rw", country: ["RW"], heading: "Ikintu Cyihariye Kwawe!", paragraph: "Ntutegereze! Kanda aha ubone amahirwe yawe meza.", buttonText: "Ubone Amahirwe Yawe Meza! ✨" },
+            { lang: "lg", country: ["UG"], heading: "Kintu Kyenjawulo Gye Woli!", paragraph: "Tolindiridde! Nyiga kati okuzuula omukisa gwo ogusingako.", buttonText: "Zuula Omukisa Gwo Ogusingako! ✨" },
         ];
 
         const allLinks = [
@@ -169,25 +332,173 @@
             "https://www.profitableratecpm.com/bgueicec6u?key=25ef22e0d741bad03030bc8ccc60f19d"
         ];
 
-        window.onload = function() {
-            const randomLangPack = languagePacks[Math.floor(Math.random() * languagePacks.length)];
-            const randomLink = allLinks[Math.floor(Math.random() * allLinks.length)];
+        // Create floating particles for Microsoft theme
+        function createParticles() {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.width = particle.style.height = (Math.random() * 4 + 2) + 'px';
+                    particle.style.animationDelay = Math.random() * 2 + 's';
+                    document.body.appendChild(particle);
+                    
+                    setTimeout(() => {
+                        if (particle.parentNode) {
+                            particle.parentNode.removeChild(particle);
+                        }
+                    }, 6000);
+                }, i * 1000);
+            }
+        }
 
+        // Enhanced country detection with multiple fallbacks
+        async function detectCountryAndLanguage() {
+            let detectedCountry = 'US';
+            let detectedLanguage = 'en';
+
+            try {
+                // Method 1: CloudFlare trace
+                try {
+                    const response = await fetch('https://www.cloudflare.com/cdn-cgi/trace');
+                    const data = await response.text();
+                    const lines = data.split('\n');
+                    for (const line of lines) {
+                        if (line.startsWith('loc=')) {
+                            detectedCountry = line.split('=')[1];
+                            break;
+                        }
+                    }
+                } catch (e) {
+                    console.log('CloudFlare detection failed');
+                }
+
+                // Method 2: IP-API.com
+                if (detectedCountry === 'US') {
+                    try {
+                        const response = await fetch('http://ip-api.com/json/?fields=countryCode');
+                        const data = await response.json();
+                        if (data.countryCode) {
+                            detectedCountry = data.countryCode;
+                        }
+                    } catch (e) {
+                        console.log('IP-API detection failed');
+                    }
+                }
+
+                // Method 3: Browser language detection
+                const browserLang = navigator.language || navigator.languages[0];
+                if (browserLang) {
+                    detectedLanguage = browserLang.split('-')[0].toLowerCase();
+                }
+
+                // Method 4: Timezone-based country estimation
+                if (detectedCountry === 'US') {
+                    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                    const countryFromTimezone = {
+                        'Asia/Tokyo': 'JP', 'Asia/Seoul': 'KR', 'Asia/Shanghai': 'CN',
+                        'Asia/Hong_Kong': 'HK', 'Asia/Singapore': 'SG', 'Asia/Kolkata': 'IN',
+                        'Asia/Dubai': 'AE', 'Europe/London': 'GB', 'Europe/Paris': 'FR',
+                        'Europe/Berlin': 'DE', 'Europe/Rome': 'IT', 'Europe/Madrid': 'ES',
+                        'Europe/Amsterdam': 'NL', 'Europe/Stockholm': 'SE', 'Europe/Oslo': 'NO',
+                        'America/New_York': 'US', 'America/Los_Angeles': 'US', 'America/Chicago': 'US',
+                        'America/Sao_Paulo': 'BR', 'America/Mexico_City': 'MX', 'America/Toronto': 'CA',
+                        'Australia/Sydney': 'AU', 'Pacific/Auckland': 'NZ'
+                    };
+                    if (countryFromTimezone[timezone]) {
+                        detectedCountry = countryFromTimezone[timezone];
+                    }
+                }
+
+            } catch (error) {
+                console.log('Detection error:', error);
+            }
+
+            // Find the best language pack for detected country
+            let selectedPack = languagePacks.find(pack => 
+                pack.country && pack.country.includes(detectedCountry)
+            );
+
+            // If no country match, try browser language
+            if (!selectedPack) {
+                selectedPack = languagePacks.find(pack => pack.lang === detectedLanguage);
+            }
+
+            // Default to English if nothing found
+            if (!selectedPack) {
+                selectedPack = languagePacks.find(pack => pack.lang === 'en');
+            }
+
+            return {
+                country: detectedCountry,
+                language: detectedLanguage,
+                pack: selectedPack
+            };
+        }
+
+        // Initialize the application
+        async function initializeApp() {
+            const loading = document.getElementById('loading');
             const mainHeading = document.getElementById('main-heading');
             const subParagraph = document.getElementById('sub-paragraph');
             const dynamicButton = document.getElementById('dynamic-button');
 
-            if (mainHeading) {
-                mainHeading.textContent = randomLangPack.heading;
+            // Start particle animation
+            createParticles();
+            setInterval(createParticles, 8000);
+
+            try {
+                // Detect country and language
+                const detection = await detectCountryAndLanguage();
+                const selectedPack = detection.pack;
+                const randomLink = allLinks[Math.floor(Math.random() * allLinks.length)];
+
+                // Hide loading and show content
+                loading.style.display = 'none';
+                
+                if (mainHeading && selectedPack) {
+                    mainHeading.textContent = selectedPack.heading;
+                    mainHeading.style.display = 'block';
+                }
+                
+                if (subParagraph && selectedPack) {
+                    subParagraph.textContent = selectedPack.paragraph;
+                    subParagraph.style.display = 'block';
+                }
+                
+                if (dynamicButton && selectedPack) {
+                    dynamicButton.textContent = selectedPack.buttonText;
+                    dynamicButton.href = randomLink;
+                    dynamicButton.style.display = 'inline-block';
+                }
+
+                console.log(`Detected: ${detection.country}, Language: ${detection.language}, Pack: ${selectedPack.lang}`);
+
+            } catch (error) {
+                console.error('Initialization error:', error);
+                // Fallback to English
+                const fallbackPack = languagePacks.find(pack => pack.lang === 'en');
+                const randomLink = allLinks[Math.floor(Math.random() * allLinks.length)];
+                
+                loading.style.display = 'none';
+                if (mainHeading && fallbackPack) {
+                    mainHeading.textContent = fallbackPack.heading;
+                    mainHeading.style.display = 'block';
+                }
+                if (subParagraph && fallbackPack) {
+                    subParagraph.textContent = fallbackPack.paragraph;
+                    subParagraph.style.display = 'block';
+                }
+                if (dynamicButton && fallbackPack) {
+                    dynamicButton.textContent = fallbackPack.buttonText;
+                    dynamicButton.href = randomLink;
+                    dynamicButton.style.display = 'inline-block';
+                }
             }
-            if (subParagraph) {
-                subParagraph.textContent = randomLangPack.paragraph;
-            }
-            if (dynamicButton) {
-                dynamicButton.textContent = randomLangPack.buttonText;
-                dynamicButton.href = randomLink;
-            }
-        };
+        }
+
+        // Start the application
+        window.addEventListener('load', initializeApp);
     </script>
 </body>
 </html>
