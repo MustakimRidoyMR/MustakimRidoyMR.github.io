@@ -279,25 +279,37 @@
     transform: translateX(0);
 }
 
-.sticky-link-button.vertical-mode {
-    writing-mode: vertical-rl; 
-    padding: 24px 12px;
+.sticky-link-button.iframe-mode {
+    opacity: 0.7;
+    writing-mode: unset; 
     border-radius: 50px 0 0 50px; 
-    border-left: 1px solid rgba(255, 255, 255, 0.2);
-    border-right: none;
-}
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
 
-.sticky-link-button.vertical-mode .icon-pulse,
-.sticky-link-button.vertical-mode .button-text {
-    display: inline-block;
-    margin: 0;
-    margin-bottom: 12px; 
+    padding: 12px 18px 12px 24px;
+}
+        .sticky-link-button.iframe-mode:hover {
+    transform: translateY(-50%) scale(1); 
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); 
+}
+        
+.sticky-link-button.iframe-mode:hover:before {
+    animation-duration: 6s;
+}
+        
+.sticky-link-button.iframe-mode .icon-pulse,
+.sticky-link-button.iframe-mode .button-text {
     transform: none; 
-    opacity: 1;
+    opacity: 1; 
+    margin: 0; 
 }
 
 .sticky-link-button.vertical-mode .button-text {
     transform: rotate(90deg);
+}
+        .sticky-link-button.iframe-mode .icon-pulse {
+    margin-right: 12px; 
 }
 
         .header-description {
@@ -1979,33 +1991,29 @@ Check out our collection now for regular updates, new app additions, and quick l
             });
 
         const stickyButton = document.querySelector('.sticky-link-button');
-        if (!stickyButton) return;
 
-        // চেক করুন পেজটি টপ উইন্ডোতে আছে নাকি iframe-এর ভেতরে
-        const isInsideIframe = (window.top !== window.self);
-        
-        // যদি এটি একটি iframe-এর ভেতরে চলে...
-        if (isInsideIframe) {
-    // ১. ভার্টিকাল মোড ক্লাস যোগ করুন
-    stickyButton.classList.add('vertical-mode');
+if (stickyButton) {
+    const isInsideIframe = (window.top !== window.self);
     
-    // ২. বাটনটিকে নিষ্ক্রিয় করুন
-    stickyButton.style.pointerEvents = 'none';
-    stickyButton.removeAttribute('href');
+    if (isInsideIframe) {
+        stickyButton.classList.add('iframe-mode');
+        
+        stickyButton.style.pointerEvents = 'none';
+        stickyButton.removeAttribute('href');
 
-    // ৩. ডিজাইন পরিবর্তন (ঐচ্ছিক)
-    stickyButton.style.background = 'linear-gradient(45deg, rgba(30, 150, 255, 0.2), rgba(0, 0, 0, 0.1))'; // নীল আভা
+        stickyButton.style.background = 'linear-gradient(135deg, rgba(30, 150, 255, 0.2), rgba(0, 0, 0, 0.1))'; 
 
-    // ৪. আইকন ও টেক্সট পরিবর্তন
-    const icon = stickyButton.querySelector('i');
-    const textSpan = stickyButton.querySelector('.button-text');
+        const icon = stickyButton.querySelector('i');
+        const textSpan = stickyButton.querySelector('.button-text');
 
-    if (icon) {
-        icon.className = 'fas fa-shield-alt'; // শিল্ড আইকন
-        icon.style.animation = 'none';
-    }
-    if (textSpan) {
-        textSpan.textContent = 'Ad-Free Content';
+        if (icon) {
+            icon.className = 'fas fa-shield-alt icon-pulse'; 
+            icon.style.animation = 'none'; 
+        }
+
+        if (textSpan) {
+            textSpan.textContent = 'Ad-Free Content';
+        }
     }
 }
         });
