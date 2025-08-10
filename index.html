@@ -283,8 +283,8 @@
     writing-mode: vertical-rl; 
     padding: 24px 12px;
     border-radius: 50px 0 0 50px; 
-    border-left: none;
-    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    border-right: none;
 }
 
 .sticky-link-button.vertical-mode .icon-pulse,
@@ -297,7 +297,8 @@
 }
 
 .sticky-link-button.vertical-mode .button-text {
-    transform: rotate(90deg); 
+    transform: rotate(180deg);
+    writing-mode: horizontal-tb;
 }
 
         .header-description {
