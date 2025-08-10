@@ -1650,7 +1650,6 @@ Check out our collection now for regular updates, new app additions, and quick l
       setTimeout(updateView, HOUR);
     });
 
-    window.addEventListener('load', updateView);
   </script>
   
     <!-- Ad container before footer -->
@@ -1973,7 +1972,7 @@ Check out our collection now for regular updates, new app additions, and quick l
             animateStats();
             createParticles();
             createFloatingShapes();
-            
+            updateView();
             // Dark mode detection
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 document.documentElement.classList.add('dark');
