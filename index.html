@@ -279,6 +279,27 @@
     transform: translateX(0);
 }
 
+        .sticky-link-button.vertical-mode {
+    writing-mode: vertical-rl; 
+    padding: 24px 12px;
+    border-radius: 0 50px 50px 0; 
+    border-left: none;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sticky-link-button.vertical-mode .icon-pulse,
+.sticky-link-button.vertical-mode .button-text {
+    display: inline-block;
+    margin: 0;
+    margin-bottom: 12px; 
+    transform: none; 
+    opacity: 1;
+}
+
+.sticky-link-button.vertical-mode .button-text {
+    transform: rotate(180deg); 
+}
+
         .header-description {
             max-width: 800px;
             margin: 20px auto 0;
@@ -1956,6 +1977,37 @@ Check out our collection now for regular updates, new app additions, and quick l
                     document.documentElement.classList.remove('dark');
                 }
             });
+
+        const stickyButton = document.querySelector('.sticky-link-button');
+        if (!stickyButton) return;
+
+        // চেক করুন পেজটি টপ উইন্ডোতে আছে নাকি iframe-এর ভেতরে
+        const isInsideIframe = (window.top !== window.self);
+        
+        // যদি এটি একটি iframe-এর ভেতরে চলে...
+        if (isInsideIframe) {
+    // ১. ভার্টিকাল মোড ক্লাস যোগ করুন
+    stickyButton.classList.add('vertical-mode');
+    
+    // ২. বাটনটিকে নিষ্ক্রিয় করুন
+    stickyButton.style.pointerEvents = 'none';
+    stickyButton.removeAttribute('href');
+
+    // ৩. ডিজাইন পরিবর্তন (ঐচ্ছিক)
+    stickyButton.style.background = 'linear-gradient(45deg, rgba(30, 150, 255, 0.2), rgba(0, 0, 0, 0.1))'; // নীল আভা
+
+    // ৪. আইকন ও টেক্সট পরিবর্তন
+    const icon = stickyButton.querySelector('i');
+    const textSpan = stickyButton.querySelector('.button-text');
+
+    if (icon) {
+        icon.className = 'fas fa-shield-alt'; // শিল্ড আইকন
+        icon.style.animation = 'none';
+    }
+    if (textSpan) {
+        textSpan.textContent = 'Ad-Free Content';
+    }
+}
         });
 
         // Ad popup scheduling
