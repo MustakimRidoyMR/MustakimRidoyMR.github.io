@@ -129,6 +129,8 @@
 
 scrip:
 
+document.addEventListener('DOMContentLoaded', () => {
+
 const stickyButton = document.querySelector('.sticky-link-button');
 
 if (stickyButton) {
@@ -155,3 +157,4 @@ if (stickyButton) {
         }
     }
 }
+});
