@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MR Fuzzies is a fun and addictive puzzle adventure game. Aim, shoot, and pop colorful fuzzy creatures to save their village. Available for free download!">
+    <meta name="keywords" content="mr fuzzies, puzzle game, bubble shooter, cute game, indie game, fun, family-friendly, pc game">
+    <meta name="author" content="MR Fuzzies Team">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="MR Fuzzies - A Fun Puzzle Adventure">
+    <meta property="og:description" content="Dive into a vibrant world, save adorable creatures, and solve hundreds of challenging puzzles in this delightful bubble shooter game.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MR Fuzzies">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MR Fuzzies - A Fun Puzzle Adventure">
+    <meta name="twitter:description" content="Dive into a vibrant world, save adorable creatures, and solve hundreds of challenging puzzles in this delightful bubble shooter game.">
+    
+    <title>MR Fuzzies - A Fun Puzzle Adventure</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Customizing Tailwind colors to match the game's theme
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4a7c59', // Game's Green
+                        secondary: '#2d5016', // Darker Green
+                        accent: '#FFD700' // Gold/Yellow
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #4a7c59 0%, #2d5016 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .dark-bg { background-color: #181818; }
+            .dark-card { background-color: #2d2d2d; }
+            .dark-text { color: #e5e5e5; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+
+    <!-- Dark mode detection script -->
+    <script>
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+    </script>
+
+    <!-- Header -->
+    <header class="gradient-bg text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <div class="mb-6">
+                <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <span class="text-3xl">🦜</span>
+                </div>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">MR Fuzzies</h1>
+            <p class="text-xl md:text-2xl opacity-90 mb-8">An Addictive Puzzle Adventure to Save a Village!</p>
+            <div class="inline-flex items-center bg-white/20 backdrop-blur-sm rounded-full px-6 py-3">
+                <span class="w-3 h-3 bg-green-400 rounded-full mr-3 animate-pulse"></span>
+                <span class="text-sm font-medium">Available Now • Endless Puzzle Fun</span>
+            </div>
+        </div>
+      <br>
+      <div class="container mx-auto px-1 text-center">
+          <div class="inline-flex items-center bg-white/20 backdrop-blur-sm rounded-full px-6 py-3">
+              <span class="w-2 h-2 bg-orange-400 rounded-full mr-3 animate-pulse"></span>
+              <a href="https://mustakimridoymr.github.io" class="text-sm font-medium">Developer's Home</a>
+          </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        
+        <!-- About Section -->
+        <section class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Welcome to the World of Fuzzies!</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    Dive into a vibrant and enchanting world, home to the adorable Fuzzies. Your mission is to solve challenging puzzles, save these cute creatures, and restore harmony to their village!
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg card-hover">
+                    <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mb-6">
+                        <span class="text-white text-xl">🎯</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Addictive Puzzle Gameplay</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Experience the classic joy of a bubble shooter! Aim, match, and pop colorful Fuzzies to clear hundreds of levels. Easy to learn but offers a rewarding challenge for masters.
+                    </p>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg card-hover">
+                    <div class="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center mb-6">
+                        <span class="text-white text-xl">😍</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Adorable Characters</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Fall in love with the Fuzzies! Each character is bursting with personality, from sleepy to happy, making your adventure feel truly alive and charming.
+                    </p>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg card-hover">
+                    <div class="w-12 h-12 bg-accent rounded-lg flex items-center justify-center mb-6">
+                        <span class="text-white text-xl">💖</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Heartwarming Story</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        This isn't just about popping bubbles. You're on a heroic quest to rescue a trapped parrot and save a village in peril. Every level you complete makes a difference!
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Game Features</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300">
+                    Discover what makes MR Fuzzies a delightful adventure
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <span class="text-white text-sm">✓</span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Hundreds of Levels</h3>
+                                <p class="text-gray-600 dark:text-gray-300">Embark on a journey through numerous hand-crafted levels that will test your puzzle-solving skills and strategic thinking.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <span class="text-white text-sm">✓</span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Satisfying Combos & Effects</h3>
+                                <p class="text-gray-600 dark:text-gray-300">Create huge chain reactions and combos to earn bonus points. The beautiful visual effects and fun sounds make every pop satisfying.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <span class="text-white text-sm">✓</span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Relaxing & Family-Friendly</h3>
+                                <p class="text-gray-600 dark:text-gray-300">With its charming graphics, soothing music, and intuitive gameplay, MR Fuzzies is the perfect game for players of all ages to relax and have fun.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl p-8">
+                    <div class="text-center">
+                        <div class="w-24 h-24 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                            <span class="text-3xl">💻</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Available on PC</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">
+                            Enjoy the full puzzle-popping experience on your Windows PC. Download and play today!
+                        </p>
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm">
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Find it on Itch.io and more platforms soon!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gameplay Tips Section -->
+        <section class="mb-16">
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 md:p-12">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">Tips for Heroes!</h2>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">✅ To Be a Great Hero</h3>
+                        <ul class="space-y-3 text-gray-600 dark:text-gray-300">
+                            <li class="flex items-start space-x-3">
+                                <span class="text-green-500 mt-1">•</span>
+                                <span>Aim for strategic bank shots off the walls.</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <span class="text-green-500 mt-1">•</span>
+                                <span>Set up and trigger large combos for extra points.</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <span class="text-green-500 mt-1">•</span>
+                                <span>Pop Fuzzies near the top to drop all the ones below them.</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <span class="text-green-500 mt-1">•</span>
+                                <span>Use the swap button to get the color you need!</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">❌ Obstacles to Watch Out For</h3>
+                        <ul class="space-y-3 text-gray-600 dark:text-gray-300">
+                            <li class="flex items-start space-x-3">
+                                <span class="text-red-500 mt-1">•</span>
+                                <span>Don't let the stack of Fuzzies reach the bottom line.</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <span class="text-red-500 mt-1">•</span>
+                                <span>Be careful with tricky angles and blocked shots.</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <span class="text-red-500 mt-1">•</span>
+                                <span>Some levels introduce new colors and challenges!</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <span class="text-red-500 mt-1">•</span>
+                                <span>Plan your moves carefully when your shots are limited.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Support the Game Section -->
+        <section class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Support The Game</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300">
+                    MR Fuzzies is a passion project. If you enjoy the game, please consider supporting its development!
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                        <span class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
+                            <span class="text-white text-sm">⭐</span>
+                        </span>
+                        Rate and Share
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        The easiest way to help is by giving the game a 5-star rating on its platform (like Itch.io) and sharing it with your friends and family. Every share helps!
+                    </p>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                        <span class="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center mr-3">
+                            <span class="text-white text-sm">❤️</span>
+                        </span>
+                        Pay What You Want
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        The game is free, but you can choose to support us by naming your own price on Itch.io. Any amount, big or small, helps us create more levels and new games in the future.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Support Section -->
+        <section class="mb-16">
+            <div class="bg-gradient-to-r from-primary to-secondary rounded-2xl p-8 md:p-12 text-white text-center">
+                <h2 class="text-3xl font-bold mb-4">Need Help or Have Feedback?</h2>
+                <p class="text-xl opacity-90 mb-8">
+                    We'd love to hear from you! Your feedback helps make the game better.
+                </p>
+                
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                        <span class="text-3xl mb-4 block">📧</span>
+                        <h3 class="font-semibold mb-2">Email Support</h3>
+                        <p class="text-sm opacity-80">Encountered a bug? Send us an email and we'll look into it.</p>
+                    </div>
+                    
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                        <span class="text-3xl mb-4 block">💡</span>
+                        <h3 class="font-semibold mb-2">Suggestions</h3>
+                        <p class="text-sm opacity-80">Have an idea for a new feature or level? Let us know!</p>
+                    </div>
+                    
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                        <span class="text-3xl mb-4 block">💬</span>
+                        <h3 class="font-semibold mb-2">Community Page</h3>
+                        <p class="text-sm opacity-80">Join the discussion on the game's page to share scores and tips.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Privacy & Data Section -->
+        <section class="mb-16">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Your Privacy Matters</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300">
+                    We believe in being transparent about data.
+                </p>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">🔒 Data Collection</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                           MR Fuzzies does not collect any personal user data. Your game progress, scores, and settings are saved locally on your own device and are not transmitted to us.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">⚙️ Advertisements</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                           The game may display advertisements from trusted third-party partners to support its development. These partners may collect non-personal data as per their own privacy policies to show relevant ads.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">MR Fuzzies</h3>
+                    <p class="text-gray-400">
+                        A colorful puzzle adventure.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Gameplay Tips</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Support Us</a></li>
+                    </ul>
+                </div>
+                                
+                <div>
+                    <h4 class="font-semibold mb-4">Download</h4>
+                    <p class="text-gray-400 mb-4">Available on PC (Windows)</p>
+                    <div class="bg-gray-800 rounded-lg p-3 inline-block">
+                        <span class="text-sm">💻 Download from Itch.io</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 MR Fuzzies. All rights reserved.</p>
+                <p class="mt-2 text-sm">Created with love, for puzzle lovers everywhere.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
