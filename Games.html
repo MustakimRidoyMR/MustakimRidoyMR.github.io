@@ -409,11 +409,16 @@
 
     // Get current coins
     function getCurrentCoins() {
-        if (isAppMode) {
-            return appCoins;
-        }
-        return parseInt(localStorage.getItem('gameCoins') || '10');
+    const urlParams = new URLSearchParams(window.location.search);
+    const coinsFromUrl = urlParams.get('coins');
+
+    if (coinsFromUrl !== null) {
+        isAppMode = true;
+        document.body.classList.add('app-mode');
+        return parseInt(coinsFromUrl);
     }
+    return parseInt(localStorage.getItem('gameCoins') || '10');
+}
 
     // Set coins
     function setCoins(amount) {
