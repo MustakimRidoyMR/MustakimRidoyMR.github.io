@@ -386,10 +386,23 @@
         <a href="https://www.profitableratecpm.com/m7j44g75?key=90f36207646d410dc5c03e6c6816a890" target="_blank" rel="noopener noreferrer" class="ad-button">Special Offer!</a>
     </div>
 </header>
-
+    
+<div id="container-1a6d5fbc149d94ff8c697b1327966995"></div>
+    
 <!-- Main container where content will be generated -->
 <main id="main-content" class="container"></main>
     
+    <script type="text/javascript">
+	atOptions = {
+		'key' : '8a0b4ecf5798ec7c88d15dedacd77708',
+		'format' : 'iframe',
+		'height' : 50,
+		'width' : 320,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//www.highperformanceformat.com/8a0b4ecf5798ec7c88d15dedacd77708/invoke.js"></script>
+
 <div class="reward-notice-container">
 <div>
 <h1>Listen up — here's a great opportunity for you! 🎮✨</h1>
@@ -412,6 +425,17 @@
 </div>
 </div>
     
+    <script type="text/javascript">
+	atOptions = {
+		'key' : '9d28964d0cf3efa6afb4b9626542fa30',
+		'format' : 'iframe',
+		'height' : 60,
+		'width' : 468,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//www.highperformanceformat.com/9d28964d0cf3efa6afb4b9626542fa30/invoke.js"></script>
+
 <footer>
         <a href="https://mymrroom.netlify.app/#https://mustakimridoymr.github.io" target="_blank" rel="noopener noreferrer" class="ad-button">GAME HOMEPAGE</a>
 </footer>
@@ -444,60 +468,7 @@
             coinCost: 5
         }
     ];
-    // --- GAME LIST ENDS HERE ---
 
-    // --- AD CODES START HERE ---
-    const nativeAd = `
-        <div id="container-1a6d5fbc149d94ff8c697b1327966995"></div>
-    `;
-    
-    const bannerAds = [
-        `<!-- Banner 300x250 -->
-        <script type="text/javascript">
-            atOptions = {'key' : '166cd95a37781f8e08654d0446ac7445', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {}};
-        <\/script>
-        <script type="text/javascript" src="//www.highperformanceformat.com/166cd95a37781f8e08654d0446ac7445/invoke.js"><\/script>`,
-        `<!-- Banner 468x60 -->
-        <script type="text/javascript">
-            atOptions = {'key' : '9d28964d0cf3efa6afb4b9626542fa30', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {}};
-        <\/script>
-        <script type="text/javascript" src="//www.highperformanceformat.com/9d28964d0cf3efa6afb4b9626542fa30/invoke.js"><\/script>`,
-        `<!-- Banner 320x50 -->
-        <script type="text/javascript">
-            atOptions = {'key' : '8a0b4ecf5798ec7c88d15dedacd77708', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {}};
-        <\/script>
-        <script type="text/javascript" src="//www.highperformanceformat.com/8a0b4ecf5798ec7c88d15dedacd77708/invoke.js"><\/script>`
-    ];
-    
-    // --- AD CODES END HERE ---
-        function loadAdScript(container, adHtml) {
-    // কন্টেইনারটি প্রথমে খালি করে নিন
-    container.innerHTML = '';
-    
-    // একটি অস্থায়ী div তৈরি করে সেখানে ad-এর HTML স্ট্রিংটি রাখুন
-    // এটি স্ট্রিংটিকে DOM নোডে পরিণত করবে
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = adHtml;
-    
-    // অস্থায়ী div থেকে সবগুলো স্ক্রিপ্ট ট্যাগ খুঁজে বের করুন
-    const scripts = tempDiv.querySelectorAll('script');
-    
-    scripts.forEach(oldScript => {
-        // প্রতিটি স্ক্রিপ্টের জন্য একটি নতুন, কার্যকরী <script> এলিমেন্ট তৈরি করুন
-        const newScript = document.createElement('script');
-        
-        // পুরানো স্ক্রিপ্টের অ্যাট্রিবিউটগুলো নতুনটিতে কপি করুন (যেমন: src, type)
-        oldScript.getAttributeNames().forEach(attr => {
-            newScript.setAttribute(attr, oldScript.getAttribute(attr));
-        });
-        
-        // যদি স্ক্রিপ্টের ভেতরে কোড থাকে, সেটাও কপি করুন
-        newScript.innerHTML = oldScript.innerHTML;
-        
-        // কার্যকরী নতুন স্ক্রিপ্টটিকে আসল কন্টেইনারে যোগ করুন
-        container.appendChild(newScript);
-    });
-}
     // --- COIN SYSTEM START ---
     let isAppMode = false;
     let appCoins = 0;
@@ -643,16 +614,7 @@
         const mainContent = document.getElementById("main-content");
         const categories = [...new Set(games.map(game => game.category))];
         const unlockedGames = getUnlockedGames();
-        let adCounter = 0;
-
-        // First, add the native ad (only if not in app mode)
-        //if (!isAppMode) {
-            const nativeAdContainer = document.createElement("div");
-            nativeAdContainer.className = "ad-container";
-            nativeAdContainer.innerHTML = nativeAd;
-            mainContent.appendChild(nativeAdContainer);
-        //}
-
+        
         categories.forEach(category => {
             // Create section label
             const sectionLabel = document.createElement("div");
@@ -688,16 +650,6 @@
                 projectContainer.appendChild(card);
             });
             mainContent.appendChild(projectContainer);
-
-            // Add a rotating banner ad container after each section (only if not in app mode)
-            //if (!isAppMode) {
-                const bannerAdContainer = document.createElement("div");
-                bannerAdContainer.className = "ad-container";
-                bannerAdContainer.innerHTML = bannerAds[adCounter % bannerAds.length];
-                //loadAdScript(bannerAdContainer, bannerAds[adCounter % bannerAds.length]);
-                mainContent.appendChild(bannerAdContainer);
-                adCounter++;
-            //}
         });
         
         initializePageEffects();
