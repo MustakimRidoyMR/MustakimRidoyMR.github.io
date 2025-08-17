@@ -165,6 +165,7 @@
         align-items: center;
         justify-content: center;
         border-radius: 15px;
+		cursor: pointer;
     }
 
     .lock-icon {
@@ -250,10 +251,18 @@
     }
 
     /* App-specific styles */
-    .app-mode header,
-    .app-mode footer {
-        display: none;
-    }
+.app-mode header {
+    display: block; 
+    background: transparent;
+    box-shadow: none;
+    padding: 10px 0;
+    margin-bottom: 20px;
+}
+.app-mode header h1,
+.app-mode header .subtitle {
+    display: none;
+}
+
 
     .special-reward-container {
     background: linear-gradient(135deg, #1d2b64, #f8cdda);
@@ -373,6 +382,7 @@
         <h1 class="animate__animated animate__fadeInDown">Unlimited Gaming Fun!</h1>
         <div class="subtitle animate__animated animate__fadeIn animate__delay-1s">The best way to pass the time. Play all the new and classic games for free.</div>
         
+        <a href="https://mymrroom.netlify.app/#https://mustakimridoymr.github.io" target="_blank" rel="noopener noreferrer" class="ad-button">Game Homepage</a>
         <!-- Coin Display -->
         <div class="coin-display">
             <div class="coin-icon">🪙</div>
@@ -394,7 +404,19 @@
 <!-- Main container where content will be generated -->
 <main id="main-content" class="container"></main>
 
-<div class="reward-notice-container">
+    <script type="text/javascript">
+	atOptions = {
+		'key' : '9d28964d0cf3efa6afb4b9626542fa30',
+		'format' : 'iframe',
+		'height' : 60,
+		'width' : 468,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//www.highperformanceformat.com/9d28964d0cf3efa6afb4b9626542fa30/invoke.js"></script>
+	
+<footer>
+	<div class="reward-notice-container">
 <div>
 <h1>Listen up — here's a great opportunity for you! 🎮✨</h1>
 <p>Once you win enough coins to unlock all games, you'll be rewarded with an ad-free Android APK — completely secure and won't use any private data. That is, enjoy a pure gaming experience!</p>
@@ -415,21 +437,6 @@
 <p>Every coin in your action counts — get started today! 🚀</p>
 </div>
 </div>
-
-	
-    <script type="text/javascript">
-	atOptions = {
-		'key' : '9d28964d0cf3efa6afb4b9626542fa30',
-		'format' : 'iframe',
-		'height' : 60,
-		'width' : 468,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/9d28964d0cf3efa6afb4b9626542fa30/invoke.js"></script>
-	
-<footer>
-        <a href="https://mymrroom.netlify.app/#https://mustakimridoymr.github.io" target="_blank" rel="noopener noreferrer" class="ad-button">GAME HOMEPAGE</a>
 </footer>
 
 <script>
@@ -641,7 +648,7 @@
        onclick="return handleGameClick(${JSON.stringify(game)}, ${isUnlocked})">
                         ${isUnlocked ? 'Play' : 'Locked'}
                     </a>
-                    ${!isUnlocked ? '<div class="lock-overlay"><div class="lock-icon">🔒</div></div>' : ''}
+                   ${!isUnlocked ? `<div class="lock-overlay" onclick="showAdsModal()"><div class="lock-icon">🔒</div></div>` : ''}
                 `;
                 projectContainer.appendChild(card);
             });
