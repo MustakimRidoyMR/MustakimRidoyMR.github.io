@@ -187,6 +187,29 @@
         backdrop-filter: blur(5px); border-radius: 10px;
     }
 
+    .reward-notice-container {
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    padding: 25px;
+    margin-bottom: 40px; 
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+.reward-notice-container h1 {
+    font-size: 2.2em;
+    color: var(--primary-color);
+}
+.reward-notice-container h2 {
+    font-size: 1.5em;
+    color: #444;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.reward-notice-container ul {
+    list-style-position: inside;
+    text-align: left;
+}
+
     footer { text-align: center; padding: 30px; margin-top: 60px; color: #fff; background: rgba(0, 0, 0, 0.2); border-top: 1px solid rgba(255, 255, 255, 0.1); }
     
     .ad-container { margin: 40px auto; display: flex; justify-content: center; align-items: center; min-height: 50px; }
@@ -374,7 +397,8 @@
 <!-- Main container where content will be generated -->
 <main id="main-content" class="container"></main>
     
-<div class="projects">
+<div class="container">
+<div class="reward-notice-container">
 <h1>Listen up — here's a great opportunity for you! 🎮✨</h1>
 <p>Once you win enough coins to unlock all games, you'll be rewarded with an ad-free Android APK — completely secure and won't use any private data. That is, enjoy a pure gaming experience!</p>
 
@@ -393,6 +417,7 @@
 <div>
 <p>Play now — earn coins, compete, and get your ad-free game at the first opportunity! 🔥</p>
 <p>Every coin in your action counts — get started today! 🚀</p>
+</div>
 </div>
 </div>
     
