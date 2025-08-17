@@ -645,7 +645,7 @@
     // Handle game click
     function handleGameClick(game, isUnlocked) {
         if (isUnlocked) {
-            if (!isAppMode && getCurrentCoins() > 10) {
+            if (!isAppMode) {
             const currentCoins = getCurrentCoins();
             setCoins(currentCoins - game.coinCost); // কয়েন কেটে নিন
             }
