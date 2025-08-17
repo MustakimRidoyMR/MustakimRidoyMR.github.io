@@ -487,7 +487,7 @@
     ];
     
     // --- AD CODES END HERE ---
-function loadAdInIframe(container, adHtml) {
+/*function loadAdInIframe(container, adHtml) {
     container.innerHTML = '';
 
     const iframe = document.createElement('iframe');
@@ -516,9 +516,35 @@ function loadAdInIframe(container, adHtml) {
         </html>
     `);
     iframeDoc.close();
-}
+}*/
+        function loadAdScript(container, adHtml) {
+    // কন্টেইনারটি প্রথমে খালি করে নিন
+    container.innerHTML = '';
     
-// --- নতুন কোড শেষ ---
+    // একটি অস্থায়ী div তৈরি করে সেখানে ad-এর HTML স্ট্রিংটি রাখুন
+    // এটি স্ট্রিংটিকে DOM নোডে পরিণত করবে
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = adHtml;
+    
+    // অস্থায়ী div থেকে সবগুলো স্ক্রিপ্ট ট্যাগ খুঁজে বের করুন
+    const scripts = tempDiv.querySelectorAll('script');
+    
+    scripts.forEach(oldScript => {
+        // প্রতিটি স্ক্রিপ্টের জন্য একটি নতুন, কার্যকরী <script> এলিমেন্ট তৈরি করুন
+        const newScript = document.createElement('script');
+        
+        // পুরানো স্ক্রিপ্টের অ্যাট্রিবিউটগুলো নতুনটিতে কপি করুন (যেমন: src, type)
+        oldScript.getAttributeNames().forEach(attr => {
+            newScript.setAttribute(attr, oldScript.getAttribute(attr));
+        });
+        
+        // যদি স্ক্রিপ্টের ভেতরে কোড থাকে, সেটাও কপি করুন
+        newScript.innerHTML = oldScript.innerHTML;
+        
+        // কার্যকরী নতুন স্ক্রিপ্টটিকে আসল কন্টেইনারে যোগ করুন
+        container.appendChild(newScript);
+    });
+}
     // --- COIN SYSTEM START ---
     let isAppMode = false;
     let appCoins = 0;
@@ -715,8 +741,8 @@ function loadAdInIframe(container, adHtml) {
                 const bannerAdContainer = document.createElement("div");
                 bannerAdContainer.className = "ad-container";
                 //bannerAdContainer.innerHTML = bannerAds[adCounter % bannerAds.length];
-                //loadAdScript(bannerAdContainer, bannerAds[adCounter % bannerAds.length]);
-                loadAdInIframe(bannerAdContainer, bannerAds[adCounter % bannerAds.length]);
+                loadAdScript(bannerAdContainer, bannerAds[adCounter % bannerAds.length]);
+                //loadAdInIframe(bannerAdContainer, bannerAds[adCounter % bannerAds.length]);
                 mainContent.appendChild(bannerAdContainer);
                 adCounter++;
             //}
