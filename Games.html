@@ -179,8 +179,17 @@
         backdrop-filter: blur(5px); border-radius: 10px;
     }
 
-    footer { text-align: center; padding: 30px; margin-top: 60px; color: #fff; background: rgba(0, 0, 0, 0.2); border-top: 1px solid rgba(255, 255, 255, 0.1); }
-    
+   /* footer { text-align: center; padding: 30px; margin-top: 60px; color: #fff; background: rgba(0, 0, 0, 0.2); border-top: 1px solid rgba(255, 255, 255, 0.1); }
+  */  footer {
+    display: flex; /* Flexbox ব্যবহার করুন */
+    justify-content: center; /* পাশাপাশি মাঝখানে আনুন */
+    align-items: center; /* লম্বালম্বি মাঝখানে আনুন */
+    padding: 30px;
+    margin-top: 60px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
     .ad-container { margin: 40px auto; display: flex; justify-content: center; align-items: center; min-height: 50px; }
 
     /* Modal Styles */
@@ -301,6 +310,30 @@
 }
 .reward-body ul li a:hover {
     text-decoration: underline;
+}
+
+    .reward-notice-container {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); 
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff; 
+    padding: 25px;
+    margin-bottom: 40px; 
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+.reward-notice-container h1, 
+.reward-notice-container h2 {
+    color: #fff; 
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.4); 
+.reward-notice-container p,
+.reward-notice-container li {
+    color: #f0f0f0; 
+}
+.reward-notice-container ul {
+    list-style-position: inside;
+    text-align: left;
 }
 
 .app-token {
@@ -565,7 +598,7 @@ function loadAdInIframe(container, adHtml) {
         }
     }
 
-    // Calculate unlocked games
+    /*// Calculate unlocked games
     function getUnlockedGames() {
         const currentCoins = getCurrentCoins();
         const sortedGames = [...games].sort((a, b) => a.coinCost - b.coinCost);
@@ -581,7 +614,21 @@ function loadAdInIframe(container, adHtml) {
         
         return unlockedGames;
     }
+*/
+    function getUnlockedGames() {
+    const currentCoins = getCurrentCoins();
+    const unlockedGames = [];
 
+    // প্রতিটি গেমের জন্য আলাদাভাবে চেক করুন, কয়েন বাদ দেবেন না
+    for (const game of games) {
+        if (currentCoins >= game.coinCost) {
+            unlockedGames.push(game.title);
+        }
+    }
+    
+    return unlockedGames;
+}
+    
     // Show ads modal
     function showAdsModal() {
         const modal = document.createElement('div');
