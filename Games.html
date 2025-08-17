@@ -589,9 +589,10 @@
             const currentCoins = getCurrentCoins();
             setCoins(currentCoins - 2); // ২ কয়েন কেটে নিন
             }
-            window.open(game.link, '_blank');
+           return true; 
         } else {
             showAdsModal();
+			return false; 
         }
     }
     // --- COIN SYSTEM END ---
@@ -634,7 +635,10 @@
                         ${game.coinCost} Coins Required
                     </div>
                     <p>${game.description}</p>
-                    <a href="#" class="project-link ${!isUnlocked ? 'locked' : ''}" onclick="handleGameClick(${JSON.stringify(game)}, ${isUnlocked}); return false;">
+                    <a href="${isUnlocked ? game.link : '#'}" 
+       target="${isUnlocked ? '_blank' : '_self'}" 
+       class="project-link ${!isUnlocked ? 'locked' : ''}" 
+       onclick="return handleGameClick(${JSON.stringify(game)}, ${isUnlocked})">
                         ${isUnlocked ? 'Play' : 'Locked'}
                     </a>
                     ${!isUnlocked ? '<div class="lock-overlay"><div class="lock-icon">🔒</div></div>' : ''}
