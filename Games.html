@@ -734,6 +734,8 @@
         document.getElementById('claim-reward-btn').addEventListener('click', () => {
             // পুরস্কারটি "claimed" হিসেবে মার্ক করুন
             localStorage.setItem('specialApkRewardClaimed', 'true');
+             setCoins(0);
+             updateCoinDisplay();
             // বক্সটি மறைয়ে দিন
             rewardContainer.style.display = 'none';
             alert('Thank you! Your reward has been accepted.');
