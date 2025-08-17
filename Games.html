@@ -693,8 +693,8 @@
             //if (!isAppMode) {
                 const bannerAdContainer = document.createElement("div");
                 bannerAdContainer.className = "ad-container";
-                //bannerAdContainer.innerHTML = bannerAds[adCounter % bannerAds.length];
-                loadAdScript(bannerAdContainer, bannerAds[adCounter % bannerAds.length]);
+                bannerAdContainer.innerHTML = bannerAds[adCounter % bannerAds.length];
+                //loadAdScript(bannerAdContainer, bannerAds[adCounter % bannerAds.length]);
                 mainContent.appendChild(bannerAdContainer);
                 adCounter++;
             //}
