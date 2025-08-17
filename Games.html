@@ -468,7 +468,7 @@
         <div id="container-1a6d5fbc149d94ff8c697b1327966995"></div>
     `;
     
-    /*const bannerAds = [
+    const bannerAds = [
         `<!-- Banner 300x250 -->
         <script type="text/javascript">
             atOptions = {'key' : '166cd95a37781f8e08654d0446ac7445', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {}};
@@ -484,59 +484,9 @@
             atOptions = {'key' : '8a0b4ecf5798ec7c88d15dedacd77708', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {}};
         <\/script>
         <script type="text/javascript" src="//www.highperformanceformat.com/8a0b4ecf5798ec7c88d15dedacd77708/invoke.js"><\/script>`
-    ];*/
-
-        const bannerAds = [
-    `<!-- Banner 300x250 -->
-    <script type="text/javascript">
-        atOptions = {'key' : '166cd95a37781f8e08654d0446ac7445', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {}};
-    <\/script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/166cd95a37781f8e08654d0446ac7445/invoke.js"><\/script>`,
-    
-    `<!-- Banner 468x60 -->
-    <script type="text/javascript">
-        atOptions = {'key' : '9d28964d0cf3efa6afb4b9626542fa30', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {}};
-    <\/script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/9d28964d0cf3efa6afb4b9626542fa30/invoke.js"><\/script>`,
-
-    `<!-- Banner 320x50 -->
-    <script type="text/javascript">
-        atOptions = {'key' : '8a0b4ecf5798ec7c88d15dedacd77708', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {}};
-    <\/script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/8a0b4ecf5798ec7c88d15dedacd77708/invoke.js"><\/script>`
-];
+    ];
     
     // --- AD CODES END HERE ---
-function loadAdInIframe(container, adHtml) {
-    container.innerHTML = '';
-
-    const iframe = document.createElement('iframe');
-
-    const widthMatch = adHtml.match(/'width'\s*:\s*(\d+)/);
-    const heightMatch = adHtml.match(/'height'\s*:\s*(\d+)/);
-    
-    const width = widthMatch ? widthMatch[1] : '300';  
-    const height = heightMatch ? heightMatch[1] : '250'; 
-
-    iframe.width = width;
-    iframe.height = height;
-    iframe.style.border = 'none'; 
-    iframe.scrolling = 'no'; 
-    container.appendChild(iframe);
-    const iframeDoc = iframe.contentWindow.document;
-    iframeDoc.open();
-    iframeDoc.write(`
-        <html>
-        <head>
-            <style>body { margin: 0; padding: 0; overflow: hidden; }</style>
-        </head>
-        <body>
-            ${adHtml}
-        </body>
-        </html>
-    `);
-    iframeDoc.close();
-}
         function loadAdScript(container, adHtml) {
     // কন্টেইনারটি প্রথমে খালি করে নিন
     container.innerHTML = '';
@@ -761,8 +711,7 @@ function loadAdInIframe(container, adHtml) {
                 const bannerAdContainer = document.createElement("div");
                 bannerAdContainer.className = "ad-container";
                 //bannerAdContainer.innerHTML = bannerAds[adCounter % bannerAds.length];
-                //loadAdScript(bannerAdContainer, bannerAds[adCounter % bannerAds.length]);
-                loadAdInIframe(bannerAdContainer, bannerAds[adCounter % bannerAds.length]);
+                loadAdScript(bannerAdContainer, bannerAds[adCounter % bannerAds.length]);
                 mainContent.appendChild(bannerAdContainer);
                 adCounter++;
             //}
