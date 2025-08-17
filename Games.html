@@ -263,6 +263,71 @@
         display: none;
     }
 
+    .special-reward-container {
+    background: linear-gradient(135deg, #1d2b64, #f8cdda);
+    color: white;
+    padding: 25px;
+    margin-top: 50px;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    border: 3px solid #fff;
+}
+
+.reward-header h3 {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.reward-body p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.reward-body ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    text-align: left;
+    display: inline-block;
+}
+
+.reward-body ul li {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.reward-body ul li a {
+    color: #ffd700;
+    font-weight: bold;
+    text-decoration: none;
+}
+.reward-body ul li a:hover {
+    text-decoration: underline;
+}
+
+.app-token {
+    font-family: 'Courier New', Courier, monospace;
+    background: #000;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #0f0;
+    user-select: all; /* টোকেনটি সহজে কপি করার জন্য */
+}
+
+.contact-info {
+    margin-top: 20px;
+    font-style: italic;
+}
+.contact-info a {
+    color: #f8cdda;
+}
+
     @media (max-width: 768px) {
         h1 { font-size: 2.5em; }
         .subtitle { font-size: 1.2em; }
@@ -308,7 +373,29 @@
 
 <!-- Main container where content will be generated -->
 <main id="main-content" class="container"></main>
+    
+<div>
+<h1>Listen up — here's a great opportunity for you! 🎮✨</h1>
+<p>Once you win enough coins to unlock all games, you'll be rewarded with an ad-free Android APK — completely secure and won't use any private data. That is, enjoy a pure gaming experience!</p>
 
+<div>
+<h2>The essence of the reward</h2>
+<ul>
+<li>✅ <strong>Conditions:</strong> Whenever a user finishes accumulating enough coins and can unlock all the games — he will receive the reward.</li>
+<li>✅ <strong>Reward:</strong> Ad-free Android game app (APK).</li>
+<li>✅ <strong>Data security:</strong> The app will not collect any personal data — completely safe.</li>
+<li>✅ <strong>Term:</strong> The app can only be used for 3 months for free.</li>
+<li>✅ <strong>Why you win:</strong> The app will contain your most played favorite game — so that the fun of playing doubles.</li>
+<li>✅ <strong>Only given once:</strong> The same user will receive the same reward every time.</li>
+</ul>
+</div>
+
+<div>
+<p>Play now — earn coins, compete, and get your ad-free game at the first opportunity! 🔥</p>
+<p>Every coin in your action counts — get started today! 🚀</p>
+</div>
+</div>
+    
 <footer>
         <a href="https://mymrroom.netlify.app/#https://mustakimridoymr.github.io" target="_blank" rel="noopener noreferrer" class="ad-button">GAME HOMEPAGE</a>
 </footer>
@@ -491,6 +578,10 @@
     // Handle game click
     function handleGameClick(game, isUnlocked) {
         if (isUnlocked) {
+            if (!isAppMode && getCurrentCoins() > 10) {
+            const currentCoins = getCurrentCoins();
+            setCoins(currentCoins - 2); // ২ কয়েন কেটে নিন
+            }
             window.open(game.link, '_blank');
         } else {
             showAdsModal();
@@ -503,6 +594,7 @@
         checkAppMode();
         checkDailyReward();
         updateCoinDisplay();
+        checkAndShowSpecialReward();
         
         const mainContent = document.getElementById("main-content");
         const categories = [...new Set(games.map(game => game.category))];
@@ -600,6 +692,54 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
     }
+
+    function checkAndShowSpecialReward() {
+    // এই পুরস্কার শুধুমাত্র ব্রাউজার ব্যবহারকারীদের জন্য
+    if (isAppMode) return;
+
+    const unlockedGames = getUnlockedGames();
+    const rewardClaimed = localStorage.getItem('specialApkRewardClaimed');
+
+    // যদি সব গেম আনলক হয়ে যায় এবং পুরস্কার আগে না নেওয়া হয়ে থাকে
+    if (unlockedGames.length === games.length && rewardClaimed !== 'true') {
+        
+        // ব্যবহারকারীর সবচেয়ে পছন্দের (কম দামী) গেমটি খুঁজুন
+        // যেহেতু আনলক করা গেমগুলো দাম অনুযায়ী সাজানো, প্রথমটাই সবচেয়ে কম দামী/বেশি খেলার মতো
+        const favoriteGame = games.sort((a, b) => a.coinCost - b.coinCost)[0];
+
+        // পুরস্কারের জন্য HTML কন্টেন্ট তৈরি করুন
+        const rewardContainer = document.createElement('div');
+        rewardContainer.className = 'special-reward-container';
+        rewardContainer.innerHTML = `
+            <div class="reward-header">
+<h3>🏆 Congratulations! You've won a special prize! 🏆</h3>
+</div>
+<div class="reward-body">
+<p>You're given an <strong>ad-free Android gaming app</strong> to unlock all the games. You can use the app for 3 months completely free.</p>
+<ul>
+<li><strong>Your favorite game:</strong> ${favoriteGame.title}</li>
+<li><strong>Download link:</strong> <a href="YOUR_APK_DOWNLOAD_LINK_HERE" target="_blank">Download APK (Ads Free)</a></li>
+<li><strong>App activation token:</strong> <span class="app-token">Aghd3sGyS6Fc5%shg&s45</span></li>
+</ul>
+<p class="contact-info">Contact us with the token and the name of your favorite game to activate your reward. <a href="YOUR_CONTACT_LINK_HERE" target="_blank">Contact us</a></p>
+<button id="claim-reward-btn" class="modal-button primary">Accept the reward</button>
+</div>
+        `;
+
+        // main-content এর শেষে পুরস্কারের বক্সটি যোগ করুন
+        const mainContent = document.getElementById('main-content');
+        mainContent.appendChild(rewardContainer);
+
+        // পুরস্কার গ্রহণ করার বাটনে ক্লিক ইভেন্ট যোগ করুন
+        document.getElementById('claim-reward-btn').addEventListener('click', () => {
+            // পুরস্কারটি "claimed" হিসেবে মার্ক করুন
+            localStorage.setItem('specialApkRewardClaimed', 'true');
+            // বক্সটি மறைয়ে দিন
+            rewardContainer.style.display = 'none';
+            alert('Thank you! Your reward has been accepted.');
+        });
+    }
+}
 </script>
 </body>
 </html>
