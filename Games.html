@@ -647,7 +647,7 @@
         if (isUnlocked) {
             if (!isAppMode && getCurrentCoins() > 10) {
             const currentCoins = getCurrentCoins();
-            setCoins(currentCoins - 2); // ২ কয়েন কেটে নিন
+            setCoins(currentCoins - game.coinCost); // কয়েন কেটে নিন
             }
            return true; 
         } else {
@@ -699,7 +699,7 @@
        target="${isUnlocked ? '_blank' : '_self'}" 
        class="project-link ${!isUnlocked ? 'locked' : ''}" 
        onclick="return handleGameClick(${JSON.stringify(game)}, ${isUnlocked})">
-                        ${isUnlocked ? 'Play' : 'Locked'}
+                        ${isUnlocked ? 'Play 🪙'${game.coinCost} : 'Locked'}
                     </a>
                    ${!isUnlocked ? `<div class="lock-overlay" onclick="showAdsModal()"><div class="lock-icon">🔒</div></div>` : ''}
                 `;
