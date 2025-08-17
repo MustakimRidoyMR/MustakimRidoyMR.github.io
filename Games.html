@@ -555,7 +555,7 @@
         }
     }
 
-    // Calculate unlocked games
+ /*   // Calculate unlocked games
     function getUnlockedGames() {
         const currentCoins = getCurrentCoins();
         const sortedGames = [...games].sort((a, b) => a.coinCost - b.coinCost);
@@ -571,7 +571,21 @@
         
         return unlockedGames;
     }
+*/
+	function getUnlockedGames() {
+    const currentCoins = getCurrentCoins();
+    const unlockedGames = [];
 
+    // প্রতিটি গেমের জন্য আপনার মোট কয়েন দিয়ে চেক করুন
+    for (const game of games) {
+        if (currentCoins >= game.coinCost) {
+            unlockedGames.push(game.title);
+        }
+    }
+    
+    return unlockedGames;
+}
+	
     // Show ads modal
     function showAdsModal() {
 		 if (document.querySelector('.modal')) return;
@@ -648,7 +662,9 @@
             if (!isAppMode) {
             const currentCoins = getCurrentCoins();
             setCoins(currentCoins - game.coinCost); // কয়েন কেটে নিন
-            }
+            } else{
+				//app e coin kata
+			}
            return true; 
         } else {
             showAdsModal();
