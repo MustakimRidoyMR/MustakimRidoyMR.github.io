@@ -574,6 +574,8 @@
 
     // Show ads modal
     function showAdsModal() {
+		 if (document.querySelector('.modal')) return;
+		
         const modal = document.createElement('div');
         modal.className = 'modal';
         modal.innerHTML = `
@@ -582,13 +584,67 @@
                 <p>You don't have enough coins to unlock this game. Watch ads to earn more coins!</p>
                 <div class="modal-buttons">
                     <button class="modal-button secondary" onclick="this.closest('.modal').remove()">Cancel</button>
-                    <button class="modal-button primary" onclick="window.open('https://mymrroom.netlify.app/Ads.html', '_blank'); this.closest('.modal').remove();">Watch Ads</button>
+                    <button class="modal-button primary" onclick="triggerAdAction()">Watch Ads</button>
                 </div>
             </div>
         `;
         document.body.appendChild(modal);
     }
 
+	function triggerAdAction() {
+    const levelBonusCoins = 0; // বিজ্ঞাপনের জন্য বোনাস কয়েন (প্রয়োজনে পরিবর্তনযোগ্য)
+
+    if (isAppMode) {
+        // যদি অ্যাপ মোড হয়, তবে নেটিভ বিজ্ঞাপন কল করার চেষ্টা করুন
+        try {
+            if (typeof AndroidApp !== "undefined" && typeof AndroidApp.onLevelComplete === "function") {
+                AndroidApp.onLevelComplete(levelBonusCoins);
+            } else if (window.chrome && window.chrome.webview && window.chrome.webview.hostObjects.csHost) {
+                window.chrome.webview.hostObjects.csHost.OnLevelComplete(levelBonusCoins);
+            } else {
+                console.log('Fallback: Native environment not fully detected. Could not call ad function.');
+            }
+        } catch (err) {
+            console.error("Fallback: Failed to call native host. No ad shown.", err);
+        }
+    } else {
+        // যদি ব্রাউজার মোড হয়, তবে নতুন ট্যাবে বিজ্ঞাপন লিঙ্কটি খুলুন
+        window.open('https://mymrroom.netlify.app/Ads.html', '_blank');
+		
+		setTimeout(() => {
+		const currentCoins = getCurrentCoins();
+        setCoins(currentCoins + 1);
+		}, 60000);
+        showAppInstallPrompt(); 
+    }
+    
+    // বিজ্ঞাপন দেখানোর পর মোডালটি বন্ধ করে দিন
+    const modal = document.querySelector('.modal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+	function showAppInstallPrompt() {
+    // আগের মোডাল থাকতে পারে, তাই আগে চেক করুন
+    if (document.querySelector('.modal')) return;
+
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <h3>🎉 You've Earned 2 Coin! 🎉</h3>
+			<p>Watch ads to get more coins</p>
+            <p>For more coins and a better experience, download our app. Enjoy unlimited ads and rewards!</p>
+            <div class="modal-buttons">
+                <button class="modal-button secondary" onclick="this.closest('.modal').remove()">Later</button>
+                <a href="https://mustakimmridoy.itch.io" target="_blank" class="modal-button primary" style="text-decoration: none;" onclick="this.closest('.modal').remove()">Download App</a>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
+	
     // Handle game click
     function handleGameClick(game, isUnlocked) {
         if (isUnlocked) {
