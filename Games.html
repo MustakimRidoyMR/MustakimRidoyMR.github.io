@@ -613,7 +613,7 @@
 		
 		setTimeout(() => {
 		const currentCoins = getCurrentCoins();
-        setCoins(currentCoins + 1);
+        setCoins(currentCoins + 2);
 		}, 60000);
         showAppInstallPrompt(); 
     }
@@ -626,9 +626,6 @@
 }
 
 	function showAppInstallPrompt() {
-    // আগের মোডাল থাকতে পারে, তাই আগে চেক করুন
-    if (document.querySelector('.modal')) return;
-
     const modal = document.createElement('div');
     modal.className = 'modal';
     modal.innerHTML = `
