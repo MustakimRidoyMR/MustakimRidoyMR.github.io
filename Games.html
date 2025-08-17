@@ -180,22 +180,23 @@
     }
 
     .reward-notice-container {
-    background: rgba(255, 255, 255, 0.9);
-    color: #333;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); 
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff; 
     padding: 25px;
     margin-bottom: 40px; 
     border-radius: 15px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
-.reward-notice-container h1 {
-    font-size: 2.2em;
-    color: var(--primary-color);
-}
+.reward-notice-container h1, 
 .reward-notice-container h2 {
-    font-size: 1.5em;
-    color: #444;
-    margin-top: 20px;
-    margin-bottom: 10px;
+    color: #fff; 
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.4); 
+.reward-notice-container p,
+.reward-notice-container li {
+    color: #f0f0f0; 
 }
 .reward-notice-container ul {
     list-style-position: inside;
@@ -394,7 +395,6 @@
 <h1>Listen up — here's a great opportunity for you! 🎮✨</h1>
 <p>Once you win enough coins to unlock all games, you'll be rewarded with an ad-free Android APK — completely secure and won't use any private data. That is, enjoy a pure gaming experience!</p>
 
-<div>
 <h2>The essence of the reward</h2>
 <ul>
 <li>✅ <strong>Conditions:</strong> Whenever a user finishes accumulating enough coins and can unlock all the games — he will receive the reward.</li>
@@ -409,7 +409,6 @@
 <div>
 <p>Play now — earn coins, compete, and get your ad-free game at the first opportunity! 🔥</p>
 <p>Every coin in your action counts — get started today! 🚀</p>
-</div>
 </div>
 </div>
     
