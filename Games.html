@@ -598,7 +598,7 @@ function loadAdInIframe(container, adHtml) {
         }
     }
 
-    /*// Calculate unlocked games
+    // Calculate unlocked games
     function getUnlockedGames() {
         const currentCoins = getCurrentCoins();
         const sortedGames = [...games].sort((a, b) => a.coinCost - b.coinCost);
@@ -614,21 +614,7 @@ function loadAdInIframe(container, adHtml) {
         
         return unlockedGames;
     }
-*/
-    function getUnlockedGames() {
-    const currentCoins = getCurrentCoins();
-    const unlockedGames = [];
 
-    // প্রতিটি গেমের জন্য আলাদাভাবে চেক করুন, কয়েন বাদ দেবেন না
-    for (const game of games) {
-        if (currentCoins >= game.coinCost) {
-            unlockedGames.push(game.title);
-        }
-    }
-    
-    return unlockedGames;
-}
-    
     // Show ads modal
     function showAdsModal() {
         const modal = document.createElement('div');
@@ -692,8 +678,8 @@ function loadAdInIframe(container, adHtml) {
             projectContainer.className = "projects";
             
             const gamesInCategory = games.filter(game => game.category === category);
-            //gamesInCategory.sort((a, b) => Number(unlockedGames.includes(b.title)) - Number(unlockedGames.includes(a.title)));
-             gamesInCategory.sort((a, b) => Number(Number(unlockedGames.includes(a.title) - unlockedGames.includes(b.title))));
+            gamesInCategory.sort((a, b) => Number(unlockedGames.includes(b.title)) - Number(unlockedGames.includes(a.title)));
+             //gamesInCategory.sort((a, b) => Number(Number(unlockedGames.includes(a.title) - unlockedGames.includes(b.title))));
             gamesInCategory.forEach(game => {
                 const isUnlocked = unlockedGames.includes(game.title);
                 const card = document.createElement("div");
