@@ -529,7 +529,8 @@
             projectContainer.className = "projects";
             
             const gamesInCategory = games.filter(game => game.category === category);
-            gamesInCategory.sort((a, b) => Number(unlockedGames.includes(b.title)) - Number(unlockedGames.includes(a.title)));
+            //gamesInCategory.sort((a, b) => Number(unlockedGames.includes(b.title)) - Number(unlockedGames.includes(a.title)));
+             gamesInCategory.sort((a, b) => Number(Number(unlockedGames.includes(a.title) - unlockedGames.includes(b.title))));
             gamesInCategory.forEach(game => {
                 const isUnlocked = unlockedGames.includes(game.title);
                 const card = document.createElement("div");
