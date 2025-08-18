@@ -474,7 +474,7 @@
     let isAppMode = false;
     let appCoins = 0;
 
-    // Check if running in app mode
+    /*// Check if running in app mode
     function checkAppMode() {
         try {
             if (typeof AndroidApp !== "undefined" && typeof AndroidApp.getCoins === "function") {
@@ -493,7 +493,45 @@
         }
         return false;
     }
+*/
 
+	function checkAppMode() {
+    let inApp = false; // অ্যাপ মোডে আছে কিনা, তা ট্র্যাক করার জন্য একটি ভেরিয়েবল
+    try {
+        if (typeof AndroidApp !== "undefined" && typeof AndroidApp.getCoins === "function") {
+            isAppMode = true;
+            appCoins = AndroidApp.getCoins();
+            inApp = true;
+        } else if (window.chrome && window.chrome.webview && window.chrome.webview.hostObjects) {
+            isAppMode = true;
+            appCoins = window.chrome.webview.hostObjects.csHost.GetCoins();
+            inApp = true;
+        }
+    } catch (err) {
+        console.log("Not running in app mode");
+    }
+    
+    // URL থেকেও অ্যাপ মোড চেক করুন
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('coins')) {
+        isAppMode = true;
+        inApp = true;
+    }
+
+    if (inApp) {
+        // যদি অ্যাপ মোড নিশ্চিত হয়, তবে body-তে ক্লাস যোগ করুন
+        document.body.classList.add('app-mode');
+        
+        // এবং Daily Reward বাটনটি লুকিয়ে দিন
+        const dailyReward = document.getElementById('daily-reward');
+        if (dailyReward) {
+            dailyReward.style.display = 'none';
+        }
+    }
+    
+    return inApp;
+}
+	
     // Get current coins
     function getCurrentCoins() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -667,7 +705,17 @@
             const currentCoins = getCurrentCoins();
             setCoins(currentCoins - game.coinCost); // কয়েন কেটে নিন
             } else{
-				//app e coin kata
+				const cost = game.coinCost;
+            try {
+                if (typeof AndroidApp !== "undefined" && typeof AndroidApp.deductCoins === "function") {
+                    AndroidApp.deductCoins(cost); // নতুন ফাংশন deductCoins(amount)
+                } else if (window.chrome && window.chrome.webview && window.chrome.webview.hostObjects.csHost) {
+                    window.chrome.webview.hostObjects.csHost.DeductCoins(cost); // নতুন ফাংশন DeductCoins(amount)
+                }
+            } catch (err) {
+                console.error("Failed to call native deductCoins function.", err);
+            }
+
 			}
            return true; 
         } else {
@@ -811,7 +859,6 @@
              updateCoinDisplay();
             // বক্সটি மறைয়ে দিন
             rewardContainer.style.display = 'none';
-            alert('Thank you! Your reward has been accepted.');
         });
     }
 }
