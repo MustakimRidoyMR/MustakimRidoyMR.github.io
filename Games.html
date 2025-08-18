@@ -506,7 +506,8 @@
     }
     return parseInt(localStorage.getItem('gameCoins') || '10');
 }
-
+	
+    const dailyReward = document.getElementById('daily-reward');
     // Set coins
     function setCoins(amount) {
         if (isAppMode) {
@@ -520,6 +521,7 @@
             } catch (err) {
                 console.error("Failed to set app coins:", err);
             }
+			dailyReward.style.display = 'none';
         } else {
             localStorage.setItem('gameCoins', amount.toString());
         }
@@ -539,7 +541,6 @@
             localStorage.setItem('lastVisit', today);
             
             // Show daily reward
-            const dailyReward = document.getElementById('daily-reward');
             if (dailyReward) {
                 dailyReward.style.display = 'inline-block';
                 setTimeout(() => {
