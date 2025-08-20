@@ -549,7 +549,7 @@ footer.open {
             image: "/Images/bubble.jpg",
             description: "Bubble pop when caught.",
             link: "/MR-Bot/Games/bubbleGame.html",
-            category: "Action",
+            category: ["Action", "Arcade"],
             coinCost: 50
         },
         { 
@@ -557,7 +557,7 @@ footer.open {
             image: "https://github.com/MustakimRidoyMR/MustakimRidoyMR.github.io/blob/main/Images/MR%20Fuzzies%20Icon.png?raw=true",
             description: "Save the Colorful Village!",
             link: "https://mymrroom.netlify.app/installedapps/fuzzies/",
-            category: "Popular",
+            category: ["Puzzle","Action"],
             coinCost: 30
         },
         {
@@ -565,7 +565,7 @@ footer.open {
             image: "https://github.com/MustakimRidoyMR/MustakimRidoyMR.github.io/blob/main/Images/GlassThemeIcon.png?raw=true",
             description: "Cooking Butterfly Chocolate Cake. Cooking Simulator",
             link: "https://mymrroom.netlify.app/installedapps/butterflychocolatecake/",
-            category: "Simulator",
+            category: ["Simulator", "Strategy","Educational","Adventure","Hypercasual"],
             coinCost: 5
         },
         {
@@ -573,10 +573,27 @@ footer.open {
             image: "https://avatars.githubusercontent.com/u/146649776?s=400&u=17ecc8290083a1c92999c9506c1c3ed839cbc21c&v=4",
             description: "Why just read the news? Play with the news! Learn about the current world with the \"Global News Game\" and test your knowledge with a variety of fun quizzes and puzzles. It's the best way to make reading the news enjoyable!",
             link: "https://mymrroom.netlify.app/systemapps/newsgame/",
-            category: "News",
+            category: ["News","Adventure","Arcade","Trivia","Educational"],
             coinCost: 2000
         }
     ];
+
+	/*
+ Action (অ্যাকশন - 👉 দ্রুত রিফ্লেক্স, লড়াই, শ্যুটিং বা মুভমেন্ট নির্ভর গেম।)
+Adventure (অ্যাডভেঞ্চার - 👉 গল্পভিত্তিক বা অনুসন্ধানমূলক গেম যেখানে প্লেয়ার মিশন সম্পূর্ণ করে।)
+Strategy (কৌশল - 👉 পরিকল্পনা, ম্যানেজমেন্ট বা সেনা/রিসোর্স ব্যবহার করে জেতার গেম।)
+Puzzle (ধাঁধা - 👉 বুদ্ধি খাটিয়ে সমস্যা সমাধানের গেম।)
+Arcade (আর্কেড - 👉 দ্রুত খেলা যায় এমন, স্কোরভিত্তিক ছোট ছোট মজার গেম।)
+Sports (খেলাধুলা)
+Racing (রেসিং - 👉 গাড়ি, বাইক, নৌকা বা অন্য যেকোনো যানবাহন রেস প্রতিযোগিতা।)
+Simulator (সিমুলেটর)
+Educational (শিক্ষামূলক)
+Card & Board (কার্ড ও বোর্ড - 👉 তাস ও বোর্ড ভিত্তিক গেম।)
+Trivia (ট্রিভিয়া - 👉 প্রশ্নোত্তর, সাধারণ জ্ঞান বা কুইজ গেম।)
+Hypercasual (হাইপারক্যাজুয়াল - খুব সাধারণ গেম - 👉 একেবারে সহজ, দ্রুত খেলা যায়, হালকা ধরনের গেম।)
+Popular (জনপ্রিয়)
+New (নতুন)
+*/
 
     // --- COIN SYSTEM START ---
     let isAppMode = false;
@@ -797,67 +814,103 @@ footer.open {
 			return false; 
         }
     }
+
+	function getGameCategories() {
+    let allCategories = new Set();
+    const newGamesCount = 10; // নতুন গেম হিসেবে শেষ কয়টি গেমকে ধরা হবে
+
+    games.forEach((game, index) => {
+        // একটি গেমের ম্যানুয়াল ক্যাটাগরিগুলো যোগ করুন
+        game.category.forEach(cat => allCategories.add(cat));
+
+        // স্বয়ংক্রিয় ক্যাটাগরি যোগ করুন
+        // "Popular" ক্যাটাগরি: দাম ১০০০-এর বেশি কিন্তু ১৭০০০-এর কম
+        if (game.coinCost > 1000 && game.coinCost < 17000) {
+            allCategories.add("Popular");
+        }
+        // "New" ক্যাটাগরি: লিস্টের শেষ ১০টি গেম
+        if (games.length - index <= newGamesCount) {
+            allCategories.add("New");
+        }
+    });
+		
+    const categoryOrder = ["New", "Popular"];
+    let sortedCategories = Array.from(allCategories);
+
+    sortedCategories.sort((a, b) => {
+        let indexA = categoryOrder.indexOf(a);
+        let indexB = categoryOrder.indexOf(b);
+        
+        indexA = indexA === -1 ? Infinity : indexA;
+        indexB = indexB === -1 ? Infinity : indexB;
+
+        return indexA - indexB;
+    });
+
+    return sortedCategories;
+}
+	
    function renderGames() {
     const mainContent = document.getElementById("main-content");
-    mainContent.innerHTML = ''; // গেম লিস্ট পরিষ্কার করুন
+    mainContent.innerHTML = ''; 
 
     const unlockedGames = getUnlockedGames();
+    const categoriesToDisplay = getGameCategories();
+    
+    const categoriesPerPage = 14;
+    totalPages = Math.ceil(categoriesToDisplay.length / categoriesPerPage);
 
-    // পেজিনেশনের জন্য গেমগুলোকে ফিল্টার করুন
-    const startIndex = (currentPage - 1) * gamesPerPage;
-    const endIndex = startIndex + gamesPerPage;
-    const paginatedGames = games.slice(startIndex, endIndex);
+    const startIndex = (currentPage - 1) * categoriesPerPage;
+    const endIndex = startIndex + categoriesPerPage;
+    const paginatedCategories = categoriesToDisplay.slice(startIndex, endIndex);
 
-    totalPages = Math.ceil(games.length / gamesPerPage);
-
-    // সব ক্যাটাগরি আনুন
-    const categories = [...new Set(paginatedGames.map(game => game.category))];
-    let adCounter = 0; // প্রতিবার রেন্ডার করার সময় অ্যাড কাউন্টার রিসেট করুন
-
-    categories.forEach(category => {
-        const sectionLabel = document.createElement("div");
-        sectionLabel.className = "section-label";
-        sectionLabel.textContent = `${category} Games`;
-        mainContent.appendChild(sectionLabel);
-        
-        const projectContainer = document.createElement("div");
-        projectContainer.className = "projects";
-        
-        const gamesInCategory = paginatedGames.filter(game => game.category === category);
-        // unlocked/locked অনুযায়ী সাজান (যদি চান)
-        gamesInCategory.sort((a, b) => Number(unlockedGames.includes(b.title)) - Number(unlockedGames.includes(a.title)));
-
-        gamesInCategory.forEach(game => {
-            const isUnlocked = unlockedGames.includes(game.title);
-            const card = document.createElement("div");
-            card.className = `project-card ${!isUnlocked ? 'locked' : ''}`;
-            
-            card.innerHTML = `
-                <h2>${game.title}</h2>
-                <img src="${game.image}" alt="${game.title} logo">
-                <div class="coin-requirement">
-                    <div class="coin-icon">🪙</div>
-                    ${game.coinCost} Coins Required
-                </div>
-                <p>${game.description}</p>
-                <a href="${isUnlocked ? game.link : '#'}" 
-                   target="${isUnlocked ? '_blank' : '_self'}" 
-                   class="project-link ${!isUnlocked ? 'locked' : ''}" 
-                   onclick="return handleGameClick(${JSON.stringify(game)}, ${isUnlocked})">
-                    ${isUnlocked ? `Play 🪙 -${game.coinCost}` : 'Locked'}
-                </a>
-                ${!isUnlocked ? `<div class="lock-overlay" onclick="showAdsModal()"><div class="lock-icon">🔒</div></div>` : ''}
-            `;
-            projectContainer.appendChild(card);
+    paginatedCategories.forEach(category => {
+        const gamesInCategory = games.filter(game => {
+            if (category === "Popular" && (game.coinCost > 1000 && game.coinCost < 17000)) {
+                return true;
+            }
+            if (category === "New" && (games.indexOf(game) >= games.length - 10)) {
+                return true;
+            }
+            return game.category.includes(category);
         });
-        mainContent.appendChild(projectContainer);
-        
-        // ... আপনার বিজ্ঞাপন দেখানোর লজিক ...
+
+        if (gamesInCategory.length > 0) {
+            const sectionLabel = document.createElement("div");
+            sectionLabel.className = "section-label";
+            sectionLabel.textContent = `${category} Games`; 
+            mainContent.appendChild(sectionLabel);
+            
+            const projectContainer = document.createElement("div");
+            projectContainer.className = "projects";
+            
+            gamesInCategory.sort((a, b) => Number(unlockedGames.includes(b.title)) - Number(unlockedGames.includes(a.title)));
+            gamesInCategory.forEach(game => {
+                const isUnlocked = unlockedGames.includes(game.title);
+                const card = document.createElement("div");
+                card.className = `project-card ${!isUnlocked ? 'locked' : ''}`;
+                card.innerHTML = `
+                    <h2>${game.title}</h2>
+                    <img src="${game.image}" alt="${game.title} logo">
+                    <div class="coin-requirement"><div class="coin-icon">🪙</div>${game.coinCost} Coins Required</div>
+                    <p>${game.description}</p>
+                    <a href="${isUnlocked ? game.link : '#'}" 
+                       target="${isUnlocked ? '_blank' : '_self'}" 
+                       class="project-link ${!isUnlocked ? 'locked' : ''}" 
+                       onclick="return handleGameClick(${JSON.stringify(game)}, ${isUnlocked})">
+                        ${isUnlocked ? `Play 🪙 -${game.coinCost}` : 'Locked'}
+                    </a>
+                    ${!isUnlocked ? `<div class="lock-overlay" onclick="showAdsModal()"><div class="lock-icon">🔒</div></div>` : ''}
+                `;
+                projectContainer.appendChild(card);
+            });
+            mainContent.appendChild(projectContainer);
+        }
     });
     
-    // পেজিনেশনের তথ্য এবং বাটন আপডেট করুন
     updatePaginationControls();
 }
+	
 	function updatePaginationControls() {
     const pageInfo = document.getElementById('page-info');
     const prevBtn = document.getElementById('prev-page-btn');
@@ -876,16 +929,11 @@ footer.open {
     }
 }
     document.addEventListener("DOMContentLoaded", () => {
-        // Initialize app mode and coin system
         checkAppMode();
         checkDailyReward();
         updateCoinDisplay();
         checkAndShowSpecialReward();
 		renderGames();
-		
-        const mainContent = document.getElementById("main-content");
-        const categories = [...new Set(games.map(game => game.category))];
-        const unlockedGames = getUnlockedGames();
 
 		const prevBtn = document.getElementById('prev-page-btn');
         const nextBtn = document.getElementById('next-page-btn');
@@ -917,46 +965,6 @@ footer.open {
         });
     }
 
-   /*     categories.forEach(category => {
-            // Create section label
-            const sectionLabel = document.createElement("div");
-            sectionLabel.className = "section-label";
-            sectionLabel.textContent = `${category} Games`;
-            mainContent.appendChild(sectionLabel);
-            
-            // Create projects container
-            const projectContainer = document.createElement("div");
-            projectContainer.className = "projects";
-            
-            const gamesInCategory = games.filter(game => game.category === category);
-            //gamesInCategory.sort((a, b) => Number(unlockedGames.includes(b.title)) - Number(unlockedGames.includes(a.title)));
-             gamesInCategory.sort((a, b) => Number(Number(unlockedGames.includes(a.title) - unlockedGames.includes(b.title))));
-            gamesInCategory.forEach(game => {
-                const isUnlocked = unlockedGames.includes(game.title);
-                const card = document.createElement("div");
-                card.className = `project-card ${!isUnlocked ? 'locked' : ''}`;
-                
-                card.innerHTML = `
-                    <h2>${game.title}</h2>
-                    <img src="${game.image}" alt="${game.title} logo">
-                    <div class="coin-requirement">
-                        <div class="coin-icon">🪙</div>
-                        ${game.coinCost} Coins Required
-                    </div>
-                    <p>${game.description}</p>
-                    <a href="${isUnlocked ? game.link : '#'}" 
-       target="${isUnlocked ? '_blank' : '_self'}" 
-       class="project-link ${!isUnlocked ? 'locked' : ''}" 
-       onclick="return handleGameClick(${JSON.stringify(game)}, ${isUnlocked})">
-                        ${isUnlocked ? `Play 🪙 -${game.coinCost}` : 'Locked'}
-                    </a>
-                   ${!isUnlocked ? `<div class="lock-overlay" onclick="showAdsModal()"><div class="lock-icon">🔒</div></div>` : ''}
-                `;
-                projectContainer.appendChild(card);
-            });
-            mainContent.appendChild(projectContainer);
-        });
-        */
         initializePageEffects();
 		const footer = document.querySelector('footer');
     const toggleButton = document.getElementById('toggle-footer-btn');
