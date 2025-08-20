@@ -981,7 +981,14 @@ New (নতুন)
             footer.classList.toggle('open');
         });
     }
-		
+
+		setTimeout(function() {
+            if (document.readyState === 'complete') {
+               loadAdScripts();
+          } else {
+            loadAdScripts();
+           }
+        }, 3000);
     });
 
     function initializePageEffects() {
