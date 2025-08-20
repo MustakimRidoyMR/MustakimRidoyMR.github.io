@@ -959,9 +959,7 @@ New (নতুন)
     
     if (refreshBtn) {
         refreshBtn.addEventListener('click', () => {
-            // শুধু কয়েন রিফ্রেশ করলেই গেম লিস্ট অটো-আপডেট হবে
-            updateCoinDisplay(); 
-            renderGames(); // নতুন কয়েন অনুযায়ী আবার রেন্ডার করুন
+            window.location.reload();
         });
     }
 
