@@ -335,7 +335,6 @@ footer.open {
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
 
-    /* App-specific styles */
 .app-mode header {
     display: block; 
     background: transparent;
@@ -429,7 +428,7 @@ footer.open {
     padding: 5px 10px;
     border-radius: 5px;
     color: #0f0;
-    user-select: all; /* টোকেনটি সহজে কপি করার জন্য */
+    user-select: all;
 }
 
 .contact-info {
@@ -438,6 +437,30 @@ footer.open {
 }
 .contact-info a {
     color: #f8cdda;
+}
+
+	#empty-games-fallback {
+    display: none; 
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
+    text-align: center;
+}
+	
+#fallback-refresh-btn {
+    font-size: 1.5em;
+    padding: 20px 40px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: 3px solid white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+#fallback-refresh-btn:hover {
+    transform: scale(1.05);
 }
 
     @media (max-width: 768px) {
@@ -490,7 +513,11 @@ footer.open {
     
 <!-- Main container where content will be generated -->
 <main id="main-content" class="container"></main>
-
+	
+<div id="empty-games-fallback" style="display: none;">
+    <button id="fallback-refresh-btn">🔄 Refresh Games</button>
+</div>
+	
     <script type="text/javascript">
 	atOptions = {
 		'key' : '9d28964d0cf3efa6afb4b9626542fa30',
@@ -504,7 +531,7 @@ footer.open {
 	
 <footer>
 	<div class="footer-actions">
-            <button id="refresh-games-btn" class="action-button">🔄 Refresh</button>
+            <button id="refresh-games-btn" class="action-button">🔄 Reload games</button>
             <div class="pagination-controls">
                 <button id="prev-page-btn" class="action-button"> &lt; Prev Page </button>
                 <span id="page-info">Page 1 of 1</span>
@@ -516,8 +543,8 @@ footer.open {
         🏆 View Reward Info 🏆
     </button>
 	
-	<div class="footer-content">
-	<div class="reward-notice-container">
+<div class="footer-content">
+<div class="reward-notice-container">
 <div>
 <h1>Listen up — here's a great opportunity for you! 🎮✨</h1>
 <p>Once you win enough coins to unlock all games, you'll be rewarded with an ad-free Android APK — completely secure and won't use any private data. That is, enjoy a pure gaming experience!</p>
@@ -542,7 +569,7 @@ footer.open {
 </footer>
 
 <script>
-    // --- GAME LIST STARTS HERE ---
+	
     const games = [
         { 
             title: "Bubble Game",
@@ -595,16 +622,15 @@ Popular (জনপ্রিয়)
 New (নতুন)
 */
 
-    // --- COIN SYSTEM START ---
     let isAppMode = false;
     let appCoins = 0;
 	
 	let currentPage = 1;
-    const gamesPerPage = 100; // প্রতি পেজে কয়টি গেম দেখাবে, তা এখানে ঠিক করুন
+    const gamesPerPage = 100; 
     let totalPages = 1;
 
 	function checkAppMode() {
-    let inApp = false; // অ্যাপ মোডে আছে কিনা, তা ট্র্যাক করার জন্য একটি ভেরিয়েবল
+    let inApp = false; 
     try {
         if (typeof AndroidApp !== "undefined" && typeof AndroidApp.getCoins === "function") {
             isAppMode = true;
@@ -619,7 +645,6 @@ New (নতুন)
         console.log("Not running in app mode");
     }
     
-    // URL থেকেও অ্যাপ মোড চেক করুন
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has('coins')) {
         isAppMode = true;
@@ -627,10 +652,8 @@ New (নতুন)
     }
 
     if (inApp) {
-        // যদি অ্যাপ মোড নিশ্চিত হয়, তবে body-তে ক্লাস যোগ করুন
         document.body.classList.add('app-mode');
         
-        // এবং Daily Reward বাটনটি লুকিয়ে দিন
         const dailyReward = document.getElementById('daily-reward');
         if (dailyReward) {
             dailyReward.style.display = 'none';
@@ -640,7 +663,6 @@ New (নতুন)
     return inApp;
 }
 	
-    // Get current coins
     function getCurrentCoins() {
     const urlParams = new URLSearchParams(window.location.search);
     const coinsFromUrl = urlParams.get('coins');
@@ -653,7 +675,6 @@ New (নতুন)
     return parseInt(localStorage.getItem('gameCoins') || '10');
 }
 	
-    // Set coins
     function setCoins(amount) {
         if (isAppMode) {
             try {
@@ -674,9 +695,8 @@ New (নতুন)
         updateCoinDisplay();
     }
 
-    // Check daily visit and give reward
     function checkDailyReward() {
-        if (isAppMode) return; // Apps handle their own rewards
+        if (isAppMode) return; 
         
         const today = new Date().toDateString();
         const lastVisit = localStorage.getItem('lastVisit');
@@ -686,7 +706,6 @@ New (নতুন)
             setCoins(currentCoins + 10);
             localStorage.setItem('lastVisit', today);
             
-            // Show daily reward
             if (dailyReward) {
 				const dailyReward = document.getElementById('daily-reward');
                 dailyReward.style.display = 'inline-block';
@@ -697,7 +716,6 @@ New (নতুন)
         }
     }
 
-    // Update coin display
     function updateCoinDisplay() {
         const coinCountElement = document.getElementById('coin-count');
         if (coinCountElement) {
@@ -709,7 +727,6 @@ New (নতুন)
     const currentCoins = getCurrentCoins();
     const unlockedGames = [];
 
-    // প্রতিটি গেমের জন্য আপনার মোট কয়েন দিয়ে চেক করুন
     for (const game of games) {
         if (currentCoins >= game.coinCost) {
             unlockedGames.push(game.title);
@@ -719,7 +736,6 @@ New (নতুন)
     return unlockedGames;
 }
 	
-    // Show ads modal
     function showAdsModal() {
 		 if (document.querySelector('.modal')) return;
 		
@@ -739,10 +755,9 @@ New (নতুন)
     }
 
 	function triggerAdAction() {
-    const levelBonusCoins = 10; // বিজ্ঞাপনের জন্য বোনাস কয়েন (প্রয়োজনে পরিবর্তনযোগ্য)
+    const levelBonusCoins = 10;
 
     if (isAppMode) {
-        // যদি অ্যাপ মোড হয়, তবে নেটিভ বিজ্ঞাপন কল করার চেষ্টা করুন
         try {
             if (typeof AndroidApp !== "undefined" && typeof AndroidApp.onLevelComplete === "function") {
                 AndroidApp.onLevelComplete(levelBonusCoins);
@@ -755,7 +770,6 @@ New (নতুন)
             console.error("Fallback: Failed to call native host. No ad shown.", err);
         }
     } else {
-        // যদি ব্রাউজার মোড হয়, তবে নতুন ট্যাবে বিজ্ঞাপন লিঙ্কটি খুলুন
         window.open('https://mymrroom.netlify.app/Ads.html', '_blank');
 		
 		setTimeout(() => {
@@ -765,7 +779,6 @@ New (নতুন)
         showAppInstallPrompt(); 
     }
     
-    // বিজ্ঞাপন দেখানোর পর মোডালটি বন্ধ করে দিন
     const modal = document.querySelector('.modal');
     if (modal) {
         modal.remove();
@@ -789,19 +802,18 @@ New (নতুন)
     document.body.appendChild(modal);
 }
 	
-    // Handle game click
     function handleGameClick(game, isUnlocked) {
         if (isUnlocked) {
             if (!isAppMode) {
             const currentCoins = getCurrentCoins();
-            setCoins(currentCoins - game.coinCost); // কয়েন কেটে নিন
+            setCoins(currentCoins - game.coinCost); 
             } else{
 				const cost = game.coinCost;
             try {
                 if (typeof AndroidApp !== "undefined" && typeof AndroidApp.deductCoins === "function") {
-                    AndroidApp.deductCoins(cost); // নতুন ফাংশন deductCoins(amount)
+                    AndroidApp.deductCoins(cost);
                 } else if (window.chrome && window.chrome.webview && window.chrome.webview.hostObjects.csHost) {
-                    window.chrome.webview.hostObjects.csHost.DeductCoins(cost); // নতুন ফাংশন DeductCoins(amount)
+                    window.chrome.webview.hostObjects.csHost.DeductCoins(cost);
                 }
             } catch (err) {
                 console.error("Failed to call native deductCoins function.", err);
@@ -817,18 +829,15 @@ New (নতুন)
 
 	function getGameCategories() {
     let allCategories = new Set();
-    const newGamesCount = 10; // নতুন গেম হিসেবে শেষ কয়টি গেমকে ধরা হবে
-
+    const newGamesCount = 10;
+		
     games.forEach((game, index) => {
-        // একটি গেমের ম্যানুয়াল ক্যাটাগরিগুলো যোগ করুন
         game.category.forEach(cat => allCategories.add(cat));
 
-        // স্বয়ংক্রিয় ক্যাটাগরি যোগ করুন
-        // "Popular" ক্যাটাগরি: দাম ১০০০-এর বেশি কিন্তু ১৭০০০-এর কম
         if (game.coinCost > 1000 && game.coinCost < 17000) {
             allCategories.add("Popular");
         }
-        // "New" ক্যাটাগরি: লিস্টের শেষ ১০টি গেম
+		
         if (games.length - index <= newGamesCount) {
             allCategories.add("New");
         }
@@ -909,6 +918,12 @@ New (নতুন)
     });
     
     updatePaginationControls();
+	   const fallbackContainer = document.getElementById('empty-games-fallback');
+    if (mainContent.children.length === 0) {
+        fallbackContainer.style.display = 'flex';
+    } else {
+        fallbackContainer.style.display = 'none';
+    }
 }
 	
 	function updatePaginationControls() {
@@ -938,6 +953,7 @@ New (নতুন)
 		const prevBtn = document.getElementById('prev-page-btn');
         const nextBtn = document.getElementById('next-page-btn');
         const refreshBtn = document.getElementById('refresh-games-btn');
+		const fallbackBtn = document.getElementById('fallback-refresh-btn');
 
     if (prevBtn) {
         prevBtn.addEventListener('click', () => {
@@ -961,6 +977,10 @@ New (নতুন)
         refreshBtn.addEventListener('click', () => {
             window.location.reload();
         });
+    }
+	
+	if (fallbackBtn) {
+        fallbackBtn.addEventListener('click', window.location.reload());
     }
 
         initializePageEffects();
