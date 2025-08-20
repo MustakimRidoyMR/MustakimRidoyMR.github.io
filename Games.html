@@ -30,6 +30,7 @@
         background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
         background-size: 400% 400%;
         animation: gradient 15s ease infinite;
+		padding-bottom: 150px;
     }
 
     @keyframes gradient {
@@ -187,7 +188,7 @@
     width: 100%;
     z-index: 100;
     
-    transform: translateY(calc(100% - 60px));
+    transform: translateY(calc(100% - 150px));
     transition: transform 0.4s ease-in-out;
     
     padding: 0;
@@ -220,9 +221,55 @@ footer.open {
     padding: 20px;
     background: rgba(0,0,0,0.2);
 }
+
+	.footer-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#page-info {
+    font-weight: bold;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 15px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.action-button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.action-button:hover {
+    background: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.action-button:disabled {
+    background: #555;
+    cursor: not-allowed;
+    transform: none;
+}
         .ad-container { margin: 40px auto; display: flex; justify-content: center; align-items: center; min-height: 50px; }
 
-    /* Modal Styles */
     .modal {
         position: fixed;
         top: 0;
@@ -456,9 +503,19 @@ footer.open {
 <script type="text/javascript" src="//www.highperformanceformat.com/9d28964d0cf3efa6afb4b9626542fa30/invoke.js"></script>
 	
 <footer>
+	<div class="footer-actions">
+            <button id="refresh-games-btn" class="action-button">🔄 Refresh</button>
+            <div class="pagination-controls">
+                <button id="prev-page-btn" class="action-button"> &lt; Prev Page </button>
+                <span id="page-info">Page 1 of 1</span>
+                <button id="next-page-btn" class="action-button"> Next Page &gt; </button>
+            </div>
+        </div>
+		
 	 <button id="toggle-footer-btn" class="footer-toggle-button">
         🏆 View Reward Info 🏆
     </button>
+	
 	<div class="footer-content">
 	<div class="reward-notice-container">
 <div>
@@ -524,27 +581,10 @@ footer.open {
     // --- COIN SYSTEM START ---
     let isAppMode = false;
     let appCoins = 0;
-
-    /*// Check if running in app mode
-    function checkAppMode() {
-        try {
-            if (typeof AndroidApp !== "undefined" && typeof AndroidApp.getCoins === "function") {
-                isAppMode = true;
-                appCoins = AndroidApp.getCoins();
-                document.body.classList.add('app-mode');
-                return true;
-            } else if (window.chrome && window.chrome.webview && window.chrome.webview.hostObjects) {
-                isAppMode = true;
-                appCoins = window.chrome.webview.hostObjects.csHost.GetCoins();
-                document.body.classList.add('app-mode');
-                return true;
-            }
-        } catch (err) {
-            console.log("Not running in app mode");
-        }
-        return false;
-    }
-*/
+	
+	let currentPage = 1;
+    const gamesPerPage = 1; // প্রতি পেজে কয়টি গেম দেখাবে, তা এখানে ঠিক করুন
+    let totalPages = 1;
 
 	function checkAppMode() {
     let inApp = false; // অ্যাপ মোডে আছে কিনা, তা ট্র্যাক করার জন্য একটি ভেরিয়েবল
@@ -648,23 +688,6 @@ footer.open {
         }
     }
 
- /*   // Calculate unlocked games
-    function getUnlockedGames() {
-        const currentCoins = getCurrentCoins();
-        const sortedGames = [...games].sort((a, b) => a.coinCost - b.coinCost);
-        let remainingCoins = currentCoins;
-        const unlockedGames = [];
-        
-        for (const game of sortedGames) {
-            if (remainingCoins >= game.coinCost) {
-                remainingCoins -= game.coinCost;
-                unlockedGames.push(game.title);
-            }
-        }
-        
-        return unlockedGames;
-    }
-*/
 	function getUnlockedGames() {
     const currentCoins = getCurrentCoins();
     const unlockedGames = [];
@@ -774,20 +797,127 @@ footer.open {
 			return false; 
         }
     }
-    // --- COIN SYSTEM END ---
+   function renderGames() {
+    const mainContent = document.getElementById("main-content");
+    mainContent.innerHTML = ''; // গেম লিস্ট পরিষ্কার করুন
+
+    const unlockedGames = getUnlockedGames();
+
+    // পেজিনেশনের জন্য গেমগুলোকে ফিল্টার করুন
+    const startIndex = (currentPage - 1) * gamesPerPage;
+    const endIndex = startIndex + gamesPerPage;
+    const paginatedGames = games.slice(startIndex, endIndex);
+
+    totalPages = Math.ceil(games.length / gamesPerPage);
+
+    // সব ক্যাটাগরি আনুন
+    const categories = [...new Set(paginatedGames.map(game => game.category))];
+    let adCounter = 0; // প্রতিবার রেন্ডার করার সময় অ্যাড কাউন্টার রিসেট করুন
+
+    categories.forEach(category => {
+        const sectionLabel = document.createElement("div");
+        sectionLabel.className = "section-label";
+        sectionLabel.textContent = `${category} Games`;
+        mainContent.appendChild(sectionLabel);
+        
+        const projectContainer = document.createElement("div");
+        projectContainer.className = "projects";
+        
+        const gamesInCategory = paginatedGames.filter(game => game.category === category);
+        // unlocked/locked অনুযায়ী সাজান (যদি চান)
+        gamesInCategory.sort((a, b) => Number(unlockedGames.includes(b.title)) - Number(unlockedGames.includes(a.title)));
+
+        gamesInCategory.forEach(game => {
+            const isUnlocked = unlockedGames.includes(game.title);
+            const card = document.createElement("div");
+            card.className = `project-card ${!isUnlocked ? 'locked' : ''}`;
+            
+            card.innerHTML = `
+                <h2>${game.title}</h2>
+                <img src="${game.image}" alt="${game.title} logo">
+                <div class="coin-requirement">
+                    <div class="coin-icon">🪙</div>
+                    ${game.coinCost} Coins Required
+                </div>
+                <p>${game.description}</p>
+                <a href="${isUnlocked ? game.link : '#'}" 
+                   target="${isUnlocked ? '_blank' : '_self'}" 
+                   class="project-link ${!isUnlocked ? 'locked' : ''}" 
+                   onclick="return handleGameClick(${JSON.stringify(game)}, ${isUnlocked})">
+                    ${isUnlocked ? `Play 🪙 -${game.coinCost}` : 'Locked'}
+                </a>
+                ${!isUnlocked ? `<div class="lock-overlay" onclick="showAdsModal()"><div class="lock-icon">🔒</div></div>` : ''}
+            `;
+            projectContainer.appendChild(card);
+        });
+        mainContent.appendChild(projectContainer);
+        
+        // ... আপনার বিজ্ঞাপন দেখানোর লজিক ...
+    });
     
+    // পেজিনেশনের তথ্য এবং বাটন আপডেট করুন
+    updatePaginationControls();
+}
+	function updatePaginationControls() {
+    const pageInfo = document.getElementById('page-info');
+    const prevBtn = document.getElementById('prev-page-btn');
+    const nextBtn = document.getElementById('next-page-btn');
+
+    if (pageInfo) {
+        pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+    }
+
+    if (prevBtn) {
+        prevBtn.disabled = currentPage === 1;
+    }
+
+    if (nextBtn) {
+        nextBtn.disabled = currentPage === totalPages;
+    }
+}
     document.addEventListener("DOMContentLoaded", () => {
         // Initialize app mode and coin system
         checkAppMode();
         checkDailyReward();
         updateCoinDisplay();
         checkAndShowSpecialReward();
-        
+		renderGames();
+		
         const mainContent = document.getElementById("main-content");
         const categories = [...new Set(games.map(game => game.category))];
         const unlockedGames = getUnlockedGames();
-        
-        categories.forEach(category => {
+
+		const prevBtn = document.getElementById('prev-page-btn');
+        const nextBtn = document.getElementById('next-page-btn');
+        const refreshBtn = document.getElementById('refresh-games-btn');
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderGames();
+            }
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderGames();
+            }
+        });
+    }
+    
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', () => {
+            // শুধু কয়েন রিফ্রেশ করলেই গেম লিস্ট অটো-আপডেট হবে
+            updateCoinDisplay(); 
+            renderGames(); // নতুন কয়েন অনুযায়ী আবার রেন্ডার করুন
+        });
+    }
+
+   /*     categories.forEach(category => {
             // Create section label
             const sectionLabel = document.createElement("div");
             sectionLabel.className = "section-label";
@@ -826,7 +956,7 @@ footer.open {
             });
             mainContent.appendChild(projectContainer);
         });
-        
+        */
         initializePageEffects();
 		const footer = document.querySelector('footer');
     const toggleButton = document.getElementById('toggle-footer-btn');
