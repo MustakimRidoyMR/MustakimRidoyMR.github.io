@@ -969,7 +969,9 @@ New (নতুন)
     }
 	
 	if (fallbackBtn) {
-        fallbackBtn.addEventListener('click', window.location.reload());
+        fallbackBtn.addEventListener('click', () => {
+            window.location.reload();
+        });
     }
 
         initializePageEffects();
@@ -983,11 +985,7 @@ New (নতুন)
     }
 
 		setTimeout(function() {
-            if (document.readyState === 'complete') {
                loadAdScripts();
-          } else {
-            loadAdScripts();
-           }
         }, 3000);
     });
 
