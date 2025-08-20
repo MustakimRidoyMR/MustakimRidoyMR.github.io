@@ -70,9 +70,3 @@ function loadAdScripts() {
 
     console.log("All ad scripts are being loaded.");
 }
-
-if (document.readyState === 'complete') {
-    loadAdScripts();
-} else {
-    window.addEventListener('load', loadAdScripts);
-}
