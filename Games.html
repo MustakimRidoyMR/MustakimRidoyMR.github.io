@@ -180,8 +180,46 @@
         backdrop-filter: blur(5px); border-radius: 10px;
     }
 
-   footer { text-align: center; padding: 30px; margin-top: 60px; color: #fff; background: rgba(0, 0, 0, 0.2); border-top: 1px solid rgba(255, 255, 255, 0.1); }
+   footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    
+    transform: translateY(calc(100% - 60px));
+    transition: transform 0.4s ease-in-out;
+    
+    padding: 0;
+    text-align: center; 
+    color: #fff; 
+    background: rgba(0, 0, 0, 0.4); 
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
 
+footer.open {
+    transform: translateY(0);
+}
+
+.footer-toggle-button {
+    width: 100%;
+    height: 60px;
+    padding: 15px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    cursor: pointer;
+    border-bottom: 3px solid var(--accent-color);
+}
+	
+.footer-content {
+    max-height: 80vh; 
+    overflow-y: auto; 
+    padding: 20px;
+    background: rgba(0,0,0,0.2);
+}
         .ad-container { margin: 40px auto; display: flex; justify-content: center; align-items: center; min-height: 50px; }
 
     /* Modal Styles */
@@ -418,6 +456,10 @@
 <script type="text/javascript" src="//www.highperformanceformat.com/9d28964d0cf3efa6afb4b9626542fa30/invoke.js"></script>
 	
 <footer>
+	 <button id="toggle-footer-btn" class="footer-toggle-button">
+        🏆 View Reward Info 🏆
+    </button>
+	<div class="footer-content">
 	<div class="reward-notice-container">
 <div>
 <h1>Listen up — here's a great opportunity for you! 🎮✨</h1>
@@ -437,6 +479,7 @@
 <div>
 <p>Play now — earn coins, compete, and get your ad-free game at the first opportunity! 🔥</p>
 <p>Every coin in your action counts — get started today! 🚀</p>
+</div>
 </div>
 </div>
 </footer>
@@ -785,6 +828,15 @@
         });
         
         initializePageEffects();
+		const footer = document.querySelector('footer');
+    const toggleButton = document.getElementById('toggle-footer-btn');
+
+    if (footer && toggleButton) {
+        toggleButton.addEventListener('click', () => {
+            footer.classList.toggle('open');
+        });
+    }
+		
     });
 
     function initializePageEffects() {
