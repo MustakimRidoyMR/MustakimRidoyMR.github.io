@@ -682,7 +682,7 @@ New (নতুন)
     
     return inApp;
 }
-	
+	/*
     function getCurrentCoins() {
     const urlParams = new URLSearchParams(window.location.search);
     const coinsFromUrl = urlParams.get('coins');
@@ -693,7 +693,32 @@ New (নতুন)
         return parseInt(coinsFromUrl);
     }
     return parseInt(localStorage.getItem('gameCoins') || '10');
-}
+}*/
+	function getCurrentCoins() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const coinsFromUrl = urlParams.get('coins');
+
+    if (coinsFromUrl !== null) {
+        isAppMode = true;
+        document.body.classList.add('app-mode');
+        return parseInt(coinsFromUrl);
+    }
+    
+    // ✅ App mode-এ থাকলে সরাসরি native থেকে coin নিন
+    if (isAppMode) {
+        try {
+            if (typeof AndroidApp !== "undefined" && typeof AndroidApp.getCoins === "function") {
+                return AndroidApp.getCoins();
+            } else if (window.chrome && window.chrome.webview && window.chrome.webview.hostObjects.csHost) {
+                return window.chrome.webview.hostObjects.csHost.GetCoins();
+            }
+        } catch (err) {
+            console.error("Failed to get coins from native app:", err);
+        }
+    }
+    
+    return parseInt(localStorage.getItem('gameCoins') || '10');
+	}
 	
     function setCoins(amount) {
         if (isAppMode) {
@@ -821,7 +846,7 @@ New (নতুন)
     `;
     document.body.appendChild(modal);
 }
-	
+	/*
     function handleGameClick(game, isUnlocked) {
         if (isUnlocked) {
             if (!isAppMode) {
@@ -845,7 +870,45 @@ New (নতুন)
             showAdsModal();
 			return false; 
         }
+    }*/
+	function handleGameClick(game, isUnlocked) {
+    if (isUnlocked) {
+        if (!isAppMode) {
+            const currentCoins = getCurrentCoins();
+            setCoins(currentCoins - game.coinCost); 
+        } else {
+            const cost = game.coinCost;
+            try {
+                if (typeof AndroidApp !== "undefined" && typeof AndroidApp.deductCoins === "function") {
+                    AndroidApp.deductCoins(cost);
+                    
+                    // ✅ Native থেকে নতুন coin amount নিয়ে UI update করুন
+                    appCoins = AndroidApp.getCoins();
+                    updateCoinDisplay();
+                    
+                    // ✅ Games re-render করুন যাতে locked/unlocked status আপডেট হয়
+                    renderGames();
+                    
+                } else if (window.chrome && window.chrome.webview && window.chrome.webview.hostObjects.csHost) {
+                    window.chrome.webview.hostObjects.csHost.DeductCoins(cost);
+                    
+                    // ✅ WebView থেকে নতুন coin amount নিয়ে UI update করুন
+                    appCoins = window.chrome.webview.hostObjects.csHost.GetCoins();
+                    updateCoinDisplay();
+                    
+                    // ✅ Games re-render করুন
+                    renderGames();
+                }
+            } catch (err) {
+                console.error("Failed to call native deductCoins function.", err);
+            }
+        }
+        return true; 
+    } else {
+        showAdsModal();
+        return false; 
     }
+}
 
 	function getGameCategories() {
     let allCategories = new Set();
