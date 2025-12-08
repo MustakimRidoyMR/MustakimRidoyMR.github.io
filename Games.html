@@ -846,7 +846,7 @@ New (নতুন)
     `;
     document.body.appendChild(modal);
 }
-	/*
+	
     function handleGameClick(game, isUnlocked) {
         if (isUnlocked) {
             if (!isAppMode) {
@@ -870,45 +870,7 @@ New (নতুন)
             showAdsModal();
 			return false; 
         }
-    }*/
-	function handleGameClick(game, isUnlocked) {
-    if (isUnlocked) {
-        if (!isAppMode) {
-            const currentCoins = getCurrentCoins();
-            setCoins(currentCoins - game.coinCost); 
-        } else {
-            const cost = game.coinCost;
-            try {
-                if (typeof AndroidApp !== "undefined" && typeof AndroidApp.deductCoins === "function") {
-                    AndroidApp.deductCoins(cost);
-                    
-                    // ✅ Native থেকে নতুন coin amount নিয়ে UI update করুন
-                    appCoins = AndroidApp.getCoins();
-                    updateCoinDisplay();
-                    
-                    // ✅ Games re-render করুন যাতে locked/unlocked status আপডেট হয়
-                    renderGames();
-                    
-                } else if (window.chrome && window.chrome.webview && window.chrome.webview.hostObjects.csHost) {
-                    window.chrome.webview.hostObjects.csHost.DeductCoins(cost);
-                    
-                    // ✅ WebView থেকে নতুন coin amount নিয়ে UI update করুন
-                    appCoins = window.chrome.webview.hostObjects.csHost.GetCoins();
-                    updateCoinDisplay();
-                    
-                    // ✅ Games re-render করুন
-                    renderGames();
-                }
-            } catch (err) {
-                console.error("Failed to call native deductCoins function.", err);
-            }
-        }
-        return true; 
-    } else {
-        showAdsModal();
-        return false; 
     }
-}
 
 	function getGameCategories() {
     let allCategories = new Set();
@@ -942,7 +904,7 @@ New (নতুন)
     return sortedCategories;
 }
 	
-   function renderGames() {
+   /*function renderGames() {
     const mainContent = document.getElementById("main-content");
     mainContent.innerHTML = ''; 
 
@@ -1007,7 +969,95 @@ New (নতুন)
     } else {
         fallbackContainer.style.display = 'none';
     }
-}
+}*/
+
+	function renderGames() {
+    const mainContent = document.getElementById("main-content");
+    mainContent.innerHTML = ''; 
+
+    const unlockedGames = getUnlockedGames();
+    const categoriesToDisplay = getGameCategories();
+    
+    const categoriesPerPage = 14;
+    totalPages = Math.ceil(categoriesToDisplay.length / categoriesPerPage);
+
+    const startIndex = (currentPage - 1) * categoriesPerPage;
+    const endIndex = startIndex + categoriesPerPage;
+    const paginatedCategories = categoriesToDisplay.slice(startIndex, endIndex);
+
+    paginatedCategories.forEach(category => {
+        const gamesInCategory = games.filter(game => {
+            if (category === "Popular" && (game.coinCost > 1000 && game.coinCost < 17000)) {
+                return true;
+            }
+            if (category === "New" && (games.indexOf(game) >= games.length - 10)) {
+                return true;
+            }
+            return game.category.includes(category);
+        });
+
+        if (gamesInCategory.length > 0) {
+            const sectionLabel = document.createElement("div");
+            sectionLabel.className = "section-label";
+            sectionLabel.textContent = `${category} Games`; 
+            mainContent.appendChild(sectionLabel);
+            
+            const projectContainer = document.createElement("div");
+            projectContainer.className = "projects";
+            
+            gamesInCategory.sort((a, b) => Number(unlockedGames.includes(b.title)) - Number(unlockedGames.includes(a.title)));
+            gamesInCategory.forEach(game => {
+                const isUnlocked = unlockedGames.includes(game.title);
+                const card = document.createElement("div");
+                card.className = `project-card ${!isUnlocked ? 'locked' : ''}`;
+                card.innerHTML = `
+                    <h2>${game.title}</h2>
+                    <img src="${game.image}" alt="${game.title} logo">
+                    <div class="coin-requirement"><div class="coin-icon">🪙</div>${game.coinCost} Coins Required</div>
+                    <p>${game.description}</p>
+                    <a href="${isUnlocked ? game.link : '#'}" 
+                       target="${isUnlocked ? '_blank' : '_self'}" 
+                       class="project-link ${!isUnlocked ? 'locked' : ''}" 
+                       data-game='${JSON.stringify(game)}' 
+                       data-unlocked="${isUnlocked}">
+                        ${isUnlocked ? `Play 🪙 -${game.coinCost}` : 'Locked'}
+                    </a>
+                    ${!isUnlocked ? `<div class="lock-overlay" onclick="showAdsModal()"><div class="lock-icon">🔒</div></div>` : ''}
+                `;
+                projectContainer.appendChild(card);
+            });
+            mainContent.appendChild(projectContainer);
+        }
+    });
+    
+    updatePaginationControls();
+    
+    const fallbackContainer = document.getElementById('empty-games-fallback');
+    if (mainContent.children.length === 0) {
+        fallbackContainer.style.display = 'flex';
+    } else {
+        fallbackContainer.style.display = 'none';
+    }
+    
+    // Event listener যোগ করা সব game link এ
+    const allGameLinks = mainContent.querySelectorAll('.project-link');
+    allGameLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const gameData = this.getAttribute('data-game');
+            const isUnlocked = this.getAttribute('data-unlocked') === 'true';
+            
+            if (gameData) {
+                const game = JSON.parse(gameData);
+                const shouldProceed = handleGameClick(game, isUnlocked);
+                
+                if (!shouldProceed) {
+                    e.preventDefault();
+                    return false;
+                }
+            }
+        });
+    });
+	}
 	
 	function updatePaginationControls() {
     const pageInfo = document.getElementById('page-info');
