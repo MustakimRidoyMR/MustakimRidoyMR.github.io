@@ -84,3 +84,38 @@
     "image": "https://m.media-amazon.com/images/I/51SDRqP4-0L._AC_SY450_.jpg"
   }
 ]
+
+
+এই text ফিল্ডটা সঠিকভাবে JSON ফর্ম্যাটে লিখে দিচ্ছি:
+
+"text": "2 INDEPENDENT BASKETS: The original Air Fryer with 2 independent baskets, the XL air fryer lets you cook 2 foods, 2 ways, at the same time, eliminating back-to-back cooking like a traditional single-basket air fryer.\nSMART FINISH & MATCH COOK: DualZone Technology allows you to choose between the Smart Finish feature, which unlocks cooking 2 foods 2 ways that finish at the same time, and the Match Cook button to easily copy settings across zones for full 8-qt capacity.\n6-IN-1 FUNCTIONALITY: Includes 6 versatile cooking programs: Air Fry, Air Broil, Roast, Bake, Reheat, and Dehydrate. The baskets can be washed in the dishwasher or by hand.\nXL CAPACITY: The 8-quart air fryer capacity lets you fit mains and sides at the same time for making quick family meals, or up to 4 lbs. of French fries or chicken wings.\nSEPARATE HEATING ZONES: 2 independent 4-quart zones have their own cooking baskets, cyclonic fans, and rapid heaters.\nEASY CLEANING: Easy-to-clean baskets and dishwasher-safe crisper plates.\nLESS FAT: Up to 75% less fat than traditional air frying methods. Tested against hand-cut, deep-fried French fries.\nWIDE TEMPERATURE RANGE: 105°F to 450°F allows you to gently remove moisture from foods or quickly cook and crisp foods with convection heat.\nWHAT'S INCLUDED: DualZone Air Fryer, (2) 4 Quart Baskets, (2) Nonstick Crisper Plates, 15 Recipes, Additional Meal Options & Cooking Charts.\nCord Length: 32\"",
+
+
+সব \n ঠিকভাবে এস্কেপ করা হয়েছে। পুরো JSON টা আপডেট করলে:
+
+[
+  {
+    "title": "Wireless Charging Bluetooth Earbuds",
+    "text": "D7 Mega Campaign is coming! Look at this great deal!\nProduct Name: AirPods Pro 2nd genaration Made in Dubai Wireless Charging Bluetooth Earbuds\nProduct Price: ৳2,400\nDiscount Price: ৳521",
+    "button": "Bay now ৳2,400",
+    "url": "https://s.daraz.com.bd/s.Z8xn8?cc",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9M02EYoFiFfNRRx3FzzLhwwJ7EZKAeE3bzHS-0ziBGE2L-1Jy-ZGL-ChB&s=10"
+  },
+  {
+    "title": "Lite, Bluetooth 5.4 Gaming Headphones with Noise Cancelling Microphone",
+    "text": "CG-01 2.4Ghz Wireless Gaming Headset for Nintendo Switch丨OLED丨Lite, Bluetooth 5.4 Gaming Headphones with Noise Cancelling Microphone, 40Hr Battery, USB & Type-C Connector for PS5, PS4, PC, Laptop, Mac",
+    "button": "Bay now $39.98",
+    "url": "https://amzn.to/3I8c7dh",
+    "image": "https://m.media-amazon.com/images/I/71Sr72TUwxL._AC_SY450_.jpg"
+  },
+  {
+    "title": "Ninja DZ201 Foodi 8 Quart 6-in-1 DualZone 2-Basket Air Fryer with 2 Independent Frying Baskets, Match Cook & Smart Finish to Roast, Broil, Dehydrate & More for Quick, Easy Meals, Grey",
+    "text": "2 INDEPENDENT BASKETS: The original Air Fryer with 2 independent baskets, the XL air fryer lets you cook 2 foods, 2 ways, at the same time, eliminating back-to-back cooking like a traditional single-basket air fryer.\nSMART FINISH & MATCH COOK: DualZone Technology allows you to choose between the Smart Finish feature, which unlocks cooking 2 foods 2 ways that finish at the same time, and the Match Cook button to easily copy settings across zones for full 8-qt capacity.\n6-IN-1 FUNCTIONALITY: Includes 6 versatile cooking programs: Air Fry, Air Broil, Roast, Bake, Reheat, and Dehydrate. The baskets can be washed in the dishwasher or by hand.\nXL CAPACITY: The 8-quart air fryer capacity lets you fit mains and sides at the same time for making quick family meals, or up to 4 lbs. of French fries or chicken wings.\nSEPARATE HEATING ZONES: 2 independent 4-quart zones have their own cooking baskets, cyclonic fans, and rapid heaters.\nEASY CLEANING: Easy-to-clean baskets and dishwasher-safe crisper plates.\nLESS FAT: Up to 75% less fat than traditional air frying methods. Tested against hand-cut, deep-fried French fries.\nWIDE TEMPERATURE RANGE: 105°F to 450°F allows you to gently remove moisture from foods or quickly cook and crisp foods with convection heat.\nWHAT'S INCLUDED: DualZone Air Fryer, (2) 4 Quart Baskets, (2) Nonstick Crisper Plates, 15 Recipes, Additional Meal Options & Cooking Charts.\nCord Length: 32\"",
+    "button": "Bay now $119.98",
+    "url": "https://amzn.to/4iFNN0m",
+    "image": "https://m.media-amazon.com/images/I/51SDRqP4-0L._AC_SY450_.jpg"
+  }
+]
+
+
+এটা এখন সঠিক JSON ফর্ম্যাটে আছে। 😄 চেক করে দেখো!
