@@ -1010,7 +1010,7 @@ const newGamesList = games.slice(-10).map(g => g.title);
     const paginatedCategories = categoriesToDisplay.slice(startIndex, endIndex);
 
     paginatedCategories.forEach(category => {
-        const gamesInCategory = games.filter(game => {
+    /*    const gamesInCategory = games.filter(game => {
             if (category === "Popular" && (game.coinCost > 1000 && game.coinCost < 17000)) {
                 return true;
             }
@@ -1019,7 +1019,18 @@ const newGamesList = games.slice(-10).map(g => g.title);
             }
             return game.category.includes(category);
         });
-
+*/
+		const gamesInCategory = games.filter(game => {
+    // স্মার্ট পপুলার চেক (সেরা ১০টি দামি গেম)
+    if (category === "Popular") return popularGamesList.includes(game.title);
+    
+    // স্মার্ট নিউ গেম চেক (লিস্টের শেষের ১০টি)
+    if (category === "New") return newGamesList.includes(game.title);
+    
+    // সাধারণ ক্যাটাগরি
+    return game.category.includes(category);
+});
+	
         if (gamesInCategory.length > 0) {
             const sectionLabel = document.createElement("div");
             sectionLabel.className = "section-label";
