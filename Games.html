@@ -998,6 +998,8 @@ New (নতুন)
     mainContent.innerHTML = ''; 
 
     const unlockedGames = getUnlockedGames();
+const popularGamesList = [...games].sort((a, b) => b.coinCost - a.coinCost).slice(0, 10).map(g => g.title);
+const newGamesList = games.slice(-10).map(g => g.title);
     const categoriesToDisplay = getGameCategories();
     
     const categoriesPerPage = 14;
