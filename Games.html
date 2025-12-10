@@ -801,11 +801,21 @@ New (নতুন)
                 <div class="modal-buttons">
                     <button class="modal-button secondary" onclick="this.closest('.modal').remove()">Cancel</button>
                     <button class="modal-button primary" onclick="triggerAdAction()">Watch Ads</button>
+					<p>or install to free use</p>
+					<button> class="model-button primary" onclick="openLink("https://amzn.to/3NOG3er")">Amazon AppStore</button>
                 </div>
             </div>
         `;
         document.body.appendChild(modal);
     }
+
+	function openLink(link){
+		window.location.href = link;
+		const modal = document.querySelector('.modal');
+    if (modal) {
+        modal.remove();
+	}
+	}
 
 	function triggerAdAction() {
     const levelBonusCoins = 10;
