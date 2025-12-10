@@ -813,28 +813,24 @@ New (নতুন)
         document.body.appendChild(modal);
     }
 
-function openAmazonAppstore(){
+function openAmazonAppstore() {
     const url = "https://amzn.to/3NOG3er";
     
-    // ১. প্রথমে একটি নতুন উইন্ডো বা অ্যাপ খোলার চেষ্টা করবে
-    // '_blank' ব্রাউজারে নতুন ট্যাব খুলে এবং মোবাইলে অ্যাপ সিলেক্টর ট্রিগার করে
-    const opened = window.open(url, '_blank');
-
-    // ২. যদি কোনো কারণে window.open পপআপ ব্লকারের কারণে আটকে যায় (কম্পিউটারে), 
-    // তবে এটি একটি লিংকে ক্লিক করার মতো আচরণ করবে
-    if (!opened) {
-        const link = document.createElement('a');
-        link.href = url;
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
-
+    // মোডাল বন্ধ করা
     const modal = document.querySelector('.modal');
-    if (modal) {
-        modal.remove();
+    if (modal) modal.remove();
+
+    // ১. যদি অ্যাপ মোড অন থাকে (Native App) এবং এটি এন্ড্রয়েড হয়
+    if (isAppMode && /android/i.test(navigator.userAgent)) {
+        const cleanUrl = url.replace(/^https?:\/\//, '');
+        // ইনটেন্ট ব্যবহার করে অ্যাপের বাইরে পাঠানো
+        const intentUrl = `intent://${cleanUrl}#Intent;scheme=https;action=android.intent.action.VIEW;S.browser_fallback_url=${url};end;`;
+        window.location.href = intentUrl;
+    } 
+    // ২. যদি সাধারণ ব্রাউজার হয় বা অন্য প্ল্যাটফর্ম হয়
+    else {
+        // নতুন ট্যাবে খুলবে (ব্রাউজারের স্বাভাবিক আচরণ)
+        window.open(url, '_blank');
     }
 }
 
