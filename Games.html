@@ -814,23 +814,31 @@ New (নতুন)
     }
 
 function openAmazonAppstore() {
-    const url = "https://amzn.to/3NOG3er";
+    // সরাসরি লিংকের বদলে অ্যাপ স্টোর স্কিম চেষ্টা করা ভালো, তবে এখানে আমরা ওয়েব লিংক রাখছি
+    const targetUrl = "https://amzn.to/3NOG3er";
     
     // মোডাল বন্ধ করা
     const modal = document.querySelector('.modal');
     if (modal) modal.remove();
 
-    // ১. যদি অ্যাপ মোড অন থাকে (Native App) এবং এটি এন্ড্রয়েড হয়
     if (isAppMode && /android/i.test(navigator.userAgent)) {
-        const cleanUrl = url.replace(/^https?:\/\//, '');
-        // ইনটেন্ট ব্যবহার করে অ্যাপের বাইরে পাঠানো
-        const intentUrl = `intent://${cleanUrl}#Intent;scheme=https;action=android.intent.action.VIEW;S.browser_fallback_url=${url};end;`;
-        window.location.href = intentUrl;
+        // কৌশল ১: ক্রোম ইনটেন্ট (সবচেয়ে শক্তিশালী পদ্ধতি)
+        // এটি সরাসরি অ্যান্ড্রয়েড সিস্টেমকে বলে VIEW অ্যাকশন চালাতে
+        const cleanUrl = targetUrl.replace(/^https?:\/\//, '');
+        
+        // এখানে end; এর আগে package উল্লেখ নেই, তাই এটি ডিফল্ট ব্রাউজার খুঁজবে
+        const intentUrl = `intent://${cleanUrl}#Intent;scheme=https;package=com.android.chrome;action=android.intent.action.VIEW;S.browser_fallback_url=${targetUrl};end;`;
+        
+        // যদি ক্রোম না থাকে বা ব্যর্থ হয়, ফলব্যাক হিসেবে সাধারণ পপআপ
+        try {
+            window.location.href = intentUrl;
+        } catch (e) {
+            window.open(targetUrl, '_system'); // কর্ডোভা বা অনেক ওয়েবভিউ এর জন্য
+        }
     } 
-    // ২. যদি সাধারণ ব্রাউজার হয় বা অন্য প্ল্যাটফর্ম হয়
     else {
-        // নতুন ট্যাবে খুলবে (ব্রাউজারের স্বাভাবিক আচরণ)
-        window.open(url, '_blank');
+        // সাধারণ ব্রাউজার বা আইফোন
+        window.open(targetUrl, '_blank');
     }
 }
 
