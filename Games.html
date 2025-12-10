@@ -47,24 +47,24 @@
         position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
     }
 
-    .container { max-width: 1200px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 3px; position: relative; z-index: 1; }
 
     header {
         background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        color: white; padding: 25px 0; text-align: center; margin-bottom: 40px; border-radius: 0 0 20px 20px;
+        color: white; padding: 5px 0; text-align: center; margin-bottom: 5px; border-radius: 0 0 20px 20px;
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); position: relative; overflow: hidden;
     }
 
-    h1 { font-size: 3.5em; margin-bottom: 20px; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); animation: fadeInDown 1s ease; font-weight: 700; }
+    h1 { font-size: 3.5em; margin-bottom: 5px; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); animation: fadeInDown 1s ease; font-weight: 700; }
     .subtitle { font-size: 1.4em; opacity: 0.9; animation: fadeIn 1.5s ease; font-weight: 300; }
 
     .coin-display {
         display: inline-flex;
         align-items: center;
         background: rgba(255, 215, 0, 0.2);
-        padding: 8px 16px;
+        padding: 2px 4px;
         border-radius: 25px;
-        margin: 15px 10px;
+        margin: 10px 5px;
         border: 2px solid var(--coin-color);
         font-size: 1.2em;
         font-weight: bold;
@@ -75,7 +75,7 @@
         height: 24px;
         background: var(--coin-color);
         border-radius: 50%;
-        margin-right: 8px;
+        margin-right: 2px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -87,9 +87,9 @@
     .daily-reward {
         background: #28a745;
         color: white;
-        padding: 10px 20px;
+        padding: 5px 10px;
         border-radius: 25px;
-        margin: 10px;
+        margin: 5px;
         display: inline-block;
         animation: pulse 2s infinite;
     }
@@ -104,8 +104,8 @@
         display: inline-block;
         background: #ffc107;
         color: #212529;
-        padding: 12px 28px;
-        margin-top: 20px;
+        padding: 5px 10px;
+        margin-top: 10px;
         border-radius: 50px;
         text-decoration: none;
         font-weight: bold;
@@ -147,7 +147,7 @@
     }
     
     .project-link {
-        display: inline-block; padding: 12px 24px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        display: inline-block; padding: 5px 10px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
         color: white; text-decoration: none; border-radius: 30px; font-weight: 600; width: 100%; text-align: center; transition: all 0.3s ease;
     }
     
@@ -180,7 +180,7 @@
     }
 
     .section-label {
-        width: 100%; text-align: center; padding: 15px 25px; margin: 40px 0 20px; font-weight: bold; color: #ffffff;
+        width: 100%; text-align: center; padding: 5px 10px; margin: 20px 0 10px; font-weight: bold; color: #ffffff;
         font-size: 1.5em; letter-spacing: 2px; text-transform: uppercase; background: rgba(0, 0, 0, 0.3);
         backdrop-filter: blur(5px); border-radius: 10px;
     }
@@ -222,7 +222,7 @@ footer.open {
 .footer-content {
     max-height: 80vh; 
     overflow-y: auto; 
-    padding: 20px;
+    padding: 5px;
     background: rgba(0,0,0,0.2);
 }
 
@@ -230,23 +230,23 @@ footer.open {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 20px;
+    padding: 5px 10px;
     background: rgba(0, 0, 0, 0.3);
     border-radius: 12px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .pagination-controls {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
 }
 
 #page-info {
     font-weight: bold;
     color: #fff;
     background: rgba(255, 255, 255, 0.1);
-    padding: 8px 15px;
+    padding: 4px 8px;
     border-radius: 20px;
     white-space: nowrap;
 }
@@ -255,7 +255,7 @@ footer.open {
     background: var(--primary-color);
     color: white;
     border: none;
-    padding: 10px 18px;
+    padding: 5px 10px;
     border-radius: 25px;
     font-weight: bold;
     cursor: pointer;
@@ -289,7 +289,7 @@ footer.open {
 
     .modal-content {
         background: white;
-        padding: 30px;
+        padding: 10px;
         border-radius: 15px;
         text-align: center;
         max-width: 500px;
@@ -299,24 +299,24 @@ footer.open {
 
     .modal-content h3 {
         color: var(--primary-color);
-        margin-bottom: 15px;
+        margin-bottom: 5px;
         font-size: 1.5em;
     }
 
     .modal-content p {
         color: #666;
-        margin-bottom: 20px;
+        margin-bottom: 5px;
         line-height: 1.5;
     }
 
     .modal-buttons {
         display: flex;
-        gap: 15px;
+        gap: 5px;
         justify-content: center;
     }
 
     .modal-button {
-        padding: 12px 24px;
+        padding: 5px 10px;
         border: none;
         border-radius: 25px;
         font-weight: bold;
@@ -343,8 +343,8 @@ footer.open {
     display: block; 
     background: transparent;
     box-shadow: none;
-    padding: 10px 0;
-    margin-bottom: 20px;
+    padding: 5px 0;
+    margin-bottom: 10px;
 }
 .app-mode header h1,
 .app-mode header .subtitle {
@@ -507,22 +507,13 @@ footer.open {
         <div id="daily-reward" class="daily-reward"">
             🎁 Daily Bonus: +10 Coins!
         </div>
-
+	
         <!-- Direct Link Ad -->
         <a href="https://www.profitableratecpm.com/m7j44g75?key=90f36207646d410dc5c03e6c6816a890" target="_blank" rel="noopener noreferrer" class="ad-button">Special Offer!</a>
     </div>
 </header>
-    
-<div id="container-1a6d5fbc149d94ff8c697b1327966995"></div>
-    
-<!-- Main container where content will be generated -->
-<main id="main-content" class="container"></main>
-	
-<div id="empty-games-fallback" style="display: none;">
-    <button id="fallback-refresh-btn">🔄 Refresh Games</button>
-</div>
-	
-    <script type="text/javascript">
+
+	<script type="text/javascript">
 	atOptions = {
 		'key' : '9d28964d0cf3efa6afb4b9626542fa30',
 		'format' : 'iframe',
@@ -533,6 +524,15 @@ footer.open {
 </script>
 <script type="text/javascript" src="//www.highperformanceformat.com/9d28964d0cf3efa6afb4b9626542fa30/invoke.js"></script>
 	
+<!-- Main container where content will be generated -->
+<main id="main-content" class="container"></main>
+	
+<div id="empty-games-fallback" style="display: none;">
+    <button id="fallback-refresh-btn">🔄 Refresh Games</button>
+</div>
+	
+<div id="container-1a6d5fbc149d94ff8c697b1327966995"></div>
+    
 <footer>
 	<div class="footer-actions">
             <button id="refresh-games-btn" class="action-button">🔄 Reload games</button>
@@ -597,7 +597,7 @@ footer.open {
             description: "Cooking Butterfly Chocolate Cake. Cooking Simulator",
             link: "https://mymrroom.netlify.app/installedapps/butterflychocolatecake/",
             category: ["Simulator", "Strategy","Educational","Adventure","Hypercasual"],
-            coinCost: 10
+            coinCost: 50
         },
         {
             title: "News Game",
@@ -608,7 +608,7 @@ footer.open {
             coinCost: 574400
         },
 		{
-             title: "Color Pixel Art",
+             title: "PixMaster: Relax Color Art",
              image: "https://raw.githubusercontent.com/MustakimRidoyMR/MustakimRidoyMR.github.io/refs/heads/main/Images/ColorPixelGame.png",
              description: "Unleash your inner artist with Color Pixel Art! Fill the grid with vibrant colors to create stunning retro-style masterpieces. A perfect blend of puzzle-solving and relaxation for all ages.",
              link: "https://mymrroom.netlify.app/installedApps/ColorPixelGame/index.html",
