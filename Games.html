@@ -813,13 +813,30 @@ New (নতুন)
         document.body.appendChild(modal);
     }
 
-	function openAmazonAppstore(){
-		window.location.href = "https://amzn.to/3NOG3er";
-		const modal = document.querySelector('.modal');
+function openAmazonAppstore(){
+    const url = "https://amzn.to/3NOG3er";
+    
+    // ১. প্রথমে একটি নতুন উইন্ডো বা অ্যাপ খোলার চেষ্টা করবে
+    // '_blank' ব্রাউজারে নতুন ট্যাব খুলে এবং মোবাইলে অ্যাপ সিলেক্টর ট্রিগার করে
+    const opened = window.open(url, '_blank');
+
+    // ২. যদি কোনো কারণে window.open পপআপ ব্লকারের কারণে আটকে যায় (কম্পিউটারে), 
+    // তবে এটি একটি লিংকে ক্লিক করার মতো আচরণ করবে
+    if (!opened) {
+        const link = document.createElement('a');
+        link.href = url;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    const modal = document.querySelector('.modal');
     if (modal) {
         modal.remove();
-	}
-	}
+    }
+}
 
 	function triggerAdAction() {
     const levelBonusCoins = 10;
